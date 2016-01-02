@@ -1,0 +1,2 @@
+#pragma once
+#include "../../../Source/Malterlib_Storage_LazyInit.h"
