@@ -699,13 +699,18 @@ namespace NMib
 		{
 			return TCTuple<t_PCTypes &...>(p_Params...);
 		}
-		
+
 		template <typename... tfp_CParams>
 		auto fg_TupleReferences(tfp_CParams &&... p_Params) -> decltype(std::tie(fg_Forward<tfp_CParams>(p_Params)...))
 		{
 			return std::tie(fg_Forward<tfp_CParams>(p_Params)...);
 		}
 
+		static inline_always TCTuple<> fg_TupleReferences() noexcept
+		{
+			return TCTuple<>();
+		}
+		
 		template <typename... tfp_CParams>
 		auto fg_Tuple(tfp_CParams &&... p_Params) -> decltype(std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...))
 		{
