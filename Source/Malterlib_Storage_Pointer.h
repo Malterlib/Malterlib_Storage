@@ -1236,13 +1236,13 @@ namespace NMib
 			template <typename tf_CType, typename... tfp_COptions>
 			bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
 			{
-				return f_Get() == _Other.f_Get();
+				return f_Get() == static_cast<t_CType *>(_Other.f_Get());
 			}
 
 			template <typename tf_CType, typename... tfp_COptions>
 			bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
 			{
-				return f_Get() == _Other.fp_GetContained();
+				return f_Get() == static_cast<t_CType *>(_Other.fp_GetContained());
 			}
 
 			template <typename tf_CType>
@@ -1259,13 +1259,13 @@ namespace NMib
 			template <typename tf_CType, typename... tfp_COptions>
 			bool operator < (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
 			{
-				return f_Get() < _Other.f_Get();
+				return f_Get() < static_cast<t_CType *>(_Other.f_Get());
 			}
 
 			template <typename tf_CType, typename... tfp_COptions>
 			bool operator < (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
 			{
-				return f_Get() < _Other.fp_GetContained();
+				return f_Get() < static_cast<t_CType *>(_Other.fp_GetContained());
 			}
 
 			bint f_IsEmpty() const
