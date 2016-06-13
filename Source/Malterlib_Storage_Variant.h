@@ -100,8 +100,7 @@ namespace NMib
 #endif
 		>
 		class TCStreamableFixedVariant;
-
-
+		
 		template 
 		<
 			typename t_CIndexType
@@ -5536,6 +5535,85 @@ private:
 			}
 		};
 
+		template <typename t_CType, typename t_CIndexType, t_CIndexType t_Name>
+		struct TCVariantMember
+		{
+			using CType = t_CType; 
+			static const t_CIndexType mc_Name = t_Name;
+		};
+		
+#define DMibVariantMember(d_Type, d_Name) d_Type, d_Type##_##d_Name 
+		
+		namespace NPrivate
+		{
+			template <typename t_CMember> 
+			struct TCGetMember_Type
+			{
+				using CType = void;
+			};
+
+			template <typename t_CType, typename t_CIndexType, t_CIndexType t_Name>
+			struct TCGetMember_Type<TCVariantMember<t_CType, t_CIndexType, t_Name>>
+			{
+				using CType = typename TCVariantMember<t_CType, t_CIndexType, t_Name>::CType;
+			};
+			
+			template <aint t_iMember, typename t_CMember> 
+			struct TCGetMember_Name
+			{
+				static const aint mc_Name = -t_iMember;
+			};
+			
+			template <aint t_iMember, typename t_CType, typename t_CIndexType, t_CIndexType t_Name>
+			struct TCGetMember_Name<t_iMember, TCVariantMember<t_CType, t_CIndexType, t_Name>>
+			{
+				static const auto mc_Name = TCVariantMember<t_CType, t_CIndexType, t_Name>::mc_Name;
+			};
+			
+			template <aint t_iMember, typename ...tp_CMembers> 
+			struct TCGetMember
+			{
+				using CVariantMember = typename NMeta::TCTypeList_GetOrVoid<t_iMember, NMeta::TCTypeList<tp_CMembers...>>::CType;
+				
+				using CType = typename TCGetMember_Type<CVariantMember>::CType;
+				static auto const mc_Name = TCGetMember_Name<t_iMember, CVariantMember>::mc_Name; 
+			};
+		}
+		
+		template <typename t_CIndexType, typename ...tp_CMembers>
+		using TCVariantMembers = TCStreamableVariant
+			<
+				t_CIndexType
+				, typename NPrivate::TCGetMember<0, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<0, tp_CMembers...>::mc_Name
+				, typename NPrivate::TCGetMember<1, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<1, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<2, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<2, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<3, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<3, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<4, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<4, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<5, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<5, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<6, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<6, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<7, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<7, tp_CMembers...>::mc_Name 
+#if DMibContainerVariantMany > 0
+				, typename NPrivate::TCGetMember<8, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<8, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<9, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<9, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<10, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<10, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<11, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<11, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<12, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<12, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<13, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<13, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<14, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<14, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<15, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<15, tp_CMembers...>::mc_Name 
+#if DMibContainerVariantMany > 1
+				, typename NPrivate::TCGetMember<16, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<16, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<17, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<17, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<18, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<18, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<19, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<19, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<20, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<20, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<21, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<21, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<22, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<22, tp_CMembers...>::mc_Name 
+				, typename NPrivate::TCGetMember<23, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<23, tp_CMembers...>::mc_Name
+#endif
+#endif
+			>
+		;
 	}
 
 	/***************************************************************************************************\
