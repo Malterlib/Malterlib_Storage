@@ -30,7 +30,7 @@ namespace NMib
 			
 			void f_Destruct()
 			{
-				((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
+				((t_CData *)m_ObjectSpace.m_Aligned)->t_CData::~t_CData();
 			}
 
 			void f_Construct()

@@ -255,8 +255,6 @@ namespace
 
 			NMib::NContainer::TCVariant<void, uint8> EmptyVariant;
 
-			auto pTesting = new((void *)nullptr) CTestArray2();
-			
 			CTest2DArray2V Blaha;
 			NMib::fg_CallDestructor(Blaha);
 //			Blaha.~CTest2DArray2V();
