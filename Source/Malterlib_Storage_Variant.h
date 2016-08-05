@@ -5539,7 +5539,7 @@ private:
 		struct TCVariantMember
 		{
 			using CType = t_CType; 
-			static const t_CIndexType mc_Name = t_Name;
+			static constexpr t_CIndexType mc_Name = t_Name;
 		};
 		
 #define DMibVariantMember(d_Type, d_Name) d_Type, d_Type##_##d_Name 
@@ -5561,13 +5561,13 @@ private:
 			template <aint t_iMember, typename t_CMember> 
 			struct TCGetMember_Name
 			{
-				static const aint mc_Name = -t_iMember;
+				static constexpr aint mc_Name = -t_iMember;
 			};
 			
 			template <aint t_iMember, typename t_CType, typename t_CIndexType, t_CIndexType t_Name>
 			struct TCGetMember_Name<t_iMember, TCVariantMember<t_CType, t_CIndexType, t_Name>>
 			{
-				static const auto mc_Name = TCVariantMember<t_CType, t_CIndexType, t_Name>::mc_Name;
+				static constexpr auto mc_Name = TCVariantMember<t_CType, t_CIndexType, t_Name>::mc_Name;
 			};
 			
 			template <aint t_iMember, typename ...tp_CMembers> 
@@ -5576,7 +5576,7 @@ private:
 				using CVariantMember = typename NMeta::TCTypeList_GetOrVoid<t_iMember, NMeta::TCTypeList<tp_CMembers...>>::CType;
 				
 				using CType = typename TCGetMember_Type<CVariantMember>::CType;
-				static auto const mc_Name = TCGetMember_Name<t_iMember, CVariantMember>::mc_Name; 
+				static auto constexpr mc_Name = TCGetMember_Name<t_iMember, CVariantMember>::mc_Name; 
 			};
 		}
 		

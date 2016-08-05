@@ -33,14 +33,14 @@ namespace NMib
 			template <typename t_CType, typename t_CTypeCleaned = typename NTraits::TCRemoveReferenceAndQualifiers<t_CType>::CType>
 			struct TCIsTuple
 			{
-				static const bool mc_Value = false;
+				static constexpr bool mc_Value = false;
 			};
 			
 			template <typename t_CType, typename... t_PCTypes>
 			struct TCIsTuple<t_CType, TCTuple<t_PCTypes...>>
 			{
-				static const bool mc_Value = true;
-				static const mint mc_nTypes = sizeof...(t_PCTypes);
+				static constexpr bool mc_Value = true;
+				static constexpr mint mc_nTypes = sizeof...(t_PCTypes);
 				typedef TCTuple<t_PCTypes...> CType;
 			};
 		}
@@ -173,14 +173,14 @@ namespace NMib
 			template <typename t_CType, typename t_CTypeCleaned = typename NTraits::TCRemoveReferenceAndQualifiers<t_CType>::CType>
 			struct TCTupleLeafTraits
 			{
-				static const bool mc_IsTupleLeaf = false;
+				static constexpr bool mc_IsTupleLeaf = false;
 				typedef void CType;
 			};
 			
 			template <typename t_CType, mint t_Index, typename t_CLeafType, bool t_bNoStorage>
 			struct TCTupleLeafTraits<t_CType, TCTupleLeaf<t_Index, t_CLeafType, t_bNoStorage>>
 			{
-				static const bool mc_IsTupleLeaf = true;
+				static constexpr bool mc_IsTupleLeaf = true;
 				typedef typename NTraits::TCPromoteQualifiersAndReference<t_CType, t_CLeafType>::CType CType;
 			};
 			
