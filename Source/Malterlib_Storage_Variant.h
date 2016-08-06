@@ -32,6 +32,19 @@ namespace NMib
 			struct CDummy
 			{
 			};
+			
+			template <typename t_CReturn>
+			function_does_not_return inline_never typename TCEnableIf<!NTraits::TCIsVoid<t_CReturn>::mc_Value, t_CReturn &>::CType fg_InvalidVariant()
+			{
+				DMibError("Corrupt variant");
+			}
+
+			template <typename t_CReturn>
+			function_does_not_return inline_never typename TCEnableIf<NTraits::TCIsVoid<t_CReturn>::mc_Value, void>::CType fg_InvalidVariant()
+			{
+				DMibError("Corrupt variant");
+			}
+
 		}
 
 		template 
@@ -1367,18 +1380,6 @@ private:
 				CType;
 			};
 
-			template <typename t_CReturn>
-			static typename TCEnableIf<!NTraits::TCIsVoid<t_CReturn>::mc_Value, t_CReturn &>::CType fsp_GetNullRet()
-			{
-				return *((t_CReturn *)nullptr);
-			}
-
-			template <typename t_CReturn>
-			static typename TCEnableIf<NTraits::TCIsVoid<t_CReturn>::mc_Value, void>::CType fsp_GetNullRet()
-			{
-			}
-
-
 			template <t_CIndexType t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 			struct TCCallVisitor
 			{
@@ -1421,7 +1422,7 @@ private:
 				template <typename t_CRet, typename t_CThis, typename t_CVisitor>
 				inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				{
-					return fsp_GetNullRet<t_CRet>();
+					return NPrivate::fg_InvalidVariant<t_CRet>();
 				}
 				template <typename t_CThis, typename t_CVisitor>
 				inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
@@ -1478,7 +1479,7 @@ private:
 				template <typename t_CRet, typename t_CThis, typename t_CVisitor>
 				inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				{
-					return fsp_GetNullRet<t_CRet>();
+					return NPrivate::fg_InvalidVariant<t_CRet>();
 				}
 				template <typename t_CThis, typename t_CVisitor>
 				inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
@@ -1535,7 +1536,7 @@ private:
 				inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				{
 					fg_Forward<t_CThis>(_pThis)->template f_Set<t_iMember>();
-					return fsp_GetNullRet<t_CRet>();
+					return NPrivate::fg_InvalidVariant<t_CRet>();
 				}
 				template <typename t_CThis, typename t_CVisitor>
 				inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
@@ -1891,7 +1892,7 @@ private:
 				{
 					DMibNeverGetHere;
 				}
-				return fsp_GetNullRet<t_CReturn>();
+				return NPrivate::fg_InvalidVariant<t_CReturn>();
 			}
 
 			template <typename t_CReturn, typename t_CVisitor>
@@ -1953,7 +1954,7 @@ private:
 				{
 					DMibNeverGetHere;
 				}
-				return fsp_GetNullRet<t_CReturn>();
+				return NPrivate::fg_InvalidVariant<t_CReturn>();
 			}
 
 			template <typename t_CVisitor>
@@ -2076,7 +2077,7 @@ private:
 				{
 					DMibNeverGetHere;
 				}				
-				return fsp_GetNullRet<t_CReturn>();
+				return NPrivate::fg_InvalidVariant<t_CReturn>();
 			}
 
 		private:
