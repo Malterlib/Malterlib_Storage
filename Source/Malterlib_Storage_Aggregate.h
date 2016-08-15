@@ -33,15 +33,10 @@ namespace NMib
 				((t_CData *)m_ObjectSpace.m_Aligned)->t_CData::~t_CData();
 			}
 
-			void f_Construct()
+			template <typename ...tfp_CParam>
+			void f_Construct(tfp_CParam && ...p_Params)
 			{
-				new(m_ObjectSpace.m_Aligned) t_CData();
-			}
-
-			template <typename tf_CP0>
-			void f_Construct(tf_CP0 &&_P0)
-			{
-				new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tf_CP0>(_P0));
+				new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tfp_CParam>(p_Params)...);
 			}
 
 			inline_small operator t_CData *()
