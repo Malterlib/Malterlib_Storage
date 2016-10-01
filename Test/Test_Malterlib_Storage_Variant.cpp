@@ -3,6 +3,7 @@
 
 #include <Mib/Storage/Variant>
 #include <Mib/String/Mixed>
+#include <Mib/Numeric/fp128>
 
 #include "../../Type/Test/Test_TypeTraits_TestTypes.h"
 
