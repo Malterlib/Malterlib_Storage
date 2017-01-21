@@ -937,6 +937,8 @@ namespace NMib
 			}
 
 		public:
+			using CWeakPointer = TCWeakPointer<t_CType, CAllocator>;
+			
 			TCSharedPointer()
 			{
 				m_Data.m_pPointTo = nullptr;
@@ -1071,6 +1073,11 @@ namespace NMib
 			bool f_Clear()
 			{
 				return fp_Delete();
+			}
+			
+			CWeakPointer f_Weak() const
+			{
+				return *this;
 			}
 
 			t_CType *f_Get() const
@@ -1277,7 +1284,6 @@ namespace NMib
 			{
 				return !f_IsEmpty();
 			}
-
 		};
 		
 		template <typename t_CType, typename... tp_COptions>

@@ -13,6 +13,40 @@ namespace NMib
 {
 	namespace NContainer
 	{
+		template 
+		<
+			typename t_CIndexType
+			, typename t_CType0, t_CIndexType t_iMember0
+			, typename t_CType1 = void, t_CIndexType t_iMember1 = t_CIndexType(-2)
+			, typename t_CType2 = void, t_CIndexType t_iMember2 = t_CIndexType(-3)
+			, typename t_CType3 = void, t_CIndexType t_iMember3 = t_CIndexType(-4)
+			, typename t_CType4 = void, t_CIndexType t_iMember4 = t_CIndexType(-5)
+			, typename t_CType5 = void, t_CIndexType t_iMember5 = t_CIndexType(-6)
+			, typename t_CType6 = void, t_CIndexType t_iMember6 = t_CIndexType(-7)
+			, typename t_CType7 = void, t_CIndexType t_iMember7 = t_CIndexType(-8)
+#if DMibContainerVariantMany > 0
+			, typename t_CType8 = void, t_CIndexType t_iMember8 = t_CIndexType(-9)
+			, typename t_CType9 = void, t_CIndexType t_iMember9 = t_CIndexType(-10)
+			, typename t_CType10 = void, t_CIndexType t_iMember10 = t_CIndexType(-11)
+			, typename t_CType11 = void, t_CIndexType t_iMember11 = t_CIndexType(-12)
+			, typename t_CType12 = void, t_CIndexType t_iMember12 = t_CIndexType(-13)
+			, typename t_CType13 = void, t_CIndexType t_iMember13 = t_CIndexType(-14)
+			, typename t_CType14 = void, t_CIndexType t_iMember14 = t_CIndexType(-15)
+			, typename t_CType15 = void, t_CIndexType t_iMember15 = t_CIndexType(-16)
+#if DMibContainerVariantMany > 1
+			, typename t_CType16 = void, t_CIndexType t_iMember16 = t_CIndexType(-17)
+			, typename t_CType17 = void, t_CIndexType t_iMember17 = t_CIndexType(-18)
+			, typename t_CType18 = void, t_CIndexType t_iMember18 = t_CIndexType(-19)
+			, typename t_CType19 = void, t_CIndexType t_iMember19 = t_CIndexType(-20)
+			, typename t_CType20 = void, t_CIndexType t_iMember20 = t_CIndexType(-21)
+			, typename t_CType21 = void, t_CIndexType t_iMember21 = t_CIndexType(-22)
+			, typename t_CType22 = void, t_CIndexType t_iMember22 = t_CIndexType(-23)
+			, typename t_CType23 = void, t_CIndexType t_iMember23 = t_CIndexType(-24)
+#endif
+#endif
+			, bint t_bStreamable = true
+		>
+		class TCStreamableVariant;
 
 		namespace NPrivate
 		{
@@ -44,7 +78,91 @@ namespace NMib
 			{
 				DMibError("Corrupt variant");
 			}
+			
+			template <typename t_CType>
+			struct TCIsVariant
+			{
+				enum
+				{
+					mc_Value = false
+				};
+			};
 
+			template 
+			<
+				typename t_CIndexTypeOther
+				, typename t_CType0Other, t_CIndexTypeOther t_iMember0Other
+				, typename t_CType1Other, t_CIndexTypeOther t_iMember1Other
+				, typename t_CType2Other, t_CIndexTypeOther t_iMember2Other
+				, typename t_CType3Other, t_CIndexTypeOther t_iMember3Other
+				, typename t_CType4Other, t_CIndexTypeOther t_iMember4Other
+				, typename t_CType5Other, t_CIndexTypeOther t_iMember5Other
+				, typename t_CType6Other, t_CIndexTypeOther t_iMember6Other
+				, typename t_CType7Other, t_CIndexTypeOther t_iMember7Other
+#if DMibContainerVariantMany > 0
+				, typename t_CType8Other, t_CIndexTypeOther t_iMember8Other
+				, typename t_CType9Other, t_CIndexTypeOther t_iMember9Other
+				, typename t_CType10Other, t_CIndexTypeOther t_iMember10Other
+				, typename t_CType11Other, t_CIndexTypeOther t_iMember11Other
+				, typename t_CType12Other, t_CIndexTypeOther t_iMember12Other
+				, typename t_CType13Other, t_CIndexTypeOther t_iMember13Other
+				, typename t_CType14Other, t_CIndexTypeOther t_iMember14Other
+				, typename t_CType15Other, t_CIndexTypeOther t_iMember15Other
+#if DMibContainerVariantMany > 1
+				, typename t_CType16Other, t_CIndexTypeOther t_iMember16Other
+				, typename t_CType17Other, t_CIndexTypeOther t_iMember17Other
+				, typename t_CType18Other, t_CIndexTypeOther t_iMember18Other
+				, typename t_CType19Other, t_CIndexTypeOther t_iMember19Other
+				, typename t_CType20Other, t_CIndexTypeOther t_iMember20Other
+				, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
+				, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
+				, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#endif
+#endif
+				, bint t_bStreamableOther
+			>
+			struct TCIsVariant
+			<
+				TCStreamableVariant
+				<
+					t_CIndexTypeOther, 
+					t_CType0Other, t_iMember0Other, 
+					t_CType1Other, t_iMember1Other, 
+					t_CType2Other, t_iMember2Other, 
+					t_CType3Other, t_iMember3Other, 
+					t_CType4Other, t_iMember4Other, 
+					t_CType5Other, t_iMember5Other,
+					t_CType6Other, t_iMember6Other,
+					t_CType7Other, t_iMember7Other,
+#if DMibContainerVariantMany > 0
+					t_CType8Other, t_iMember8Other,
+					t_CType9Other, t_iMember9Other,
+					t_CType10Other, t_iMember10Other,
+					t_CType11Other, t_iMember11Other,
+					t_CType12Other, t_iMember12Other,
+					t_CType13Other, t_iMember13Other,
+					t_CType14Other, t_iMember14Other,
+					t_CType15Other, t_iMember15Other,
+#if DMibContainerVariantMany > 1
+					t_CType16Other, t_iMember16Other,
+					t_CType17Other, t_iMember17Other,
+					t_CType18Other, t_iMember18Other,
+					t_CType19Other, t_iMember19Other,
+					t_CType20Other, t_iMember20Other,
+					t_CType21Other, t_iMember21Other,
+					t_CType22Other, t_iMember22Other,
+					t_CType23Other, t_iMember23Other,
+#endif
+#endif
+					t_bStreamableOther
+				>
+			>
+			{
+				enum
+				{
+					mc_Value = true
+				};
+			};
 		}
 
 		template 
@@ -118,34 +236,34 @@ namespace NMib
 		<
 			typename t_CIndexType
 			, typename t_CType0, t_CIndexType t_iMember0
-			, typename t_CType1 = void, t_CIndexType t_iMember1 = t_CIndexType(-2)
-			, typename t_CType2 = void, t_CIndexType t_iMember2 = t_CIndexType(-3)
-			, typename t_CType3 = void, t_CIndexType t_iMember3 = t_CIndexType(-4)
-			, typename t_CType4 = void, t_CIndexType t_iMember4 = t_CIndexType(-5)
-			, typename t_CType5 = void, t_CIndexType t_iMember5 = t_CIndexType(-6)
-			, typename t_CType6 = void, t_CIndexType t_iMember6 = t_CIndexType(-7)
-			, typename t_CType7 = void, t_CIndexType t_iMember7 = t_CIndexType(-8)
+			, typename t_CType1, t_CIndexType t_iMember1
+			, typename t_CType2, t_CIndexType t_iMember2
+			, typename t_CType3, t_CIndexType t_iMember3
+			, typename t_CType4, t_CIndexType t_iMember4
+			, typename t_CType5, t_CIndexType t_iMember5
+			, typename t_CType6, t_CIndexType t_iMember6
+			, typename t_CType7, t_CIndexType t_iMember7
 #if DMibContainerVariantMany > 0
-			, typename t_CType8 = void, t_CIndexType t_iMember8 = t_CIndexType(-9)
-			, typename t_CType9 = void, t_CIndexType t_iMember9 = t_CIndexType(-10)
-			, typename t_CType10 = void, t_CIndexType t_iMember10 = t_CIndexType(-11)
-			, typename t_CType11 = void, t_CIndexType t_iMember11 = t_CIndexType(-12)
-			, typename t_CType12 = void, t_CIndexType t_iMember12 = t_CIndexType(-13)
-			, typename t_CType13 = void, t_CIndexType t_iMember13 = t_CIndexType(-14)
-			, typename t_CType14 = void, t_CIndexType t_iMember14 = t_CIndexType(-15)
-			, typename t_CType15 = void, t_CIndexType t_iMember15 = t_CIndexType(-16)
+			, typename t_CType8, t_CIndexType t_iMember8
+			, typename t_CType9, t_CIndexType t_iMember9
+			, typename t_CType10, t_CIndexType t_iMember10
+			, typename t_CType11, t_CIndexType t_iMember11
+			, typename t_CType12, t_CIndexType t_iMember12
+			, typename t_CType13, t_CIndexType t_iMember13
+			, typename t_CType14, t_CIndexType t_iMember14
+			, typename t_CType15, t_CIndexType t_iMember15
 #if DMibContainerVariantMany > 1
-			, typename t_CType16 = void, t_CIndexType t_iMember16 = t_CIndexType(-17)
-			, typename t_CType17 = void, t_CIndexType t_iMember17 = t_CIndexType(-18)
-			, typename t_CType18 = void, t_CIndexType t_iMember18 = t_CIndexType(-19)
-			, typename t_CType19 = void, t_CIndexType t_iMember19 = t_CIndexType(-20)
-			, typename t_CType20 = void, t_CIndexType t_iMember20 = t_CIndexType(-21)
-			, typename t_CType21 = void, t_CIndexType t_iMember21 = t_CIndexType(-22)
-			, typename t_CType22 = void, t_CIndexType t_iMember22 = t_CIndexType(-23)
-			, typename t_CType23 = void, t_CIndexType t_iMember23 = t_CIndexType(-24)
+			, typename t_CType16, t_CIndexType t_iMember16
+			, typename t_CType17, t_CIndexType t_iMember17
+			, typename t_CType18, t_CIndexType t_iMember18
+			, typename t_CType19, t_CIndexType t_iMember19
+			, typename t_CType20, t_CIndexType t_iMember20
+			, typename t_CType21, t_CIndexType t_iMember21
+			, typename t_CType22, t_CIndexType t_iMember22
+			, typename t_CType23, t_CIndexType t_iMember23
 #endif
 #endif
-			, bint t_bStreamable = true
+			, bint t_bStreamable
 		>
 		class TCStreamableVariant
 		{
@@ -2511,7 +2629,7 @@ private:
 			///////////////////////////////////
 			///////////////////////////////////
 		protected:
-			template <typename t_CInType>
+			template <typename t_CInType, TCEnableIfType<!NPrivate::TCIsVariant<typename NTraits::TCRemoveReferenceAndQualifiers<t_CInType>::CType>::mc_Value> * = nullptr>
 			class TCEvalOneParamConstruction
 			{
 			public:
@@ -2522,12 +2640,12 @@ private:
 					mc_Value = TCChooseInt
 					<
 						int
-						, (TCMemberFromType<CInTypeNoRef>::mc_Value >= 0) && NTraits::TCIsConstructorCallableWith<CInTypeNoRef, void (t_CInType)>::mc_Value
+						, (TCMemberFromType<CInTypeNoRef>::mc_Value >= 0)
 						, TCMemberFromType<CInTypeNoRef>::mc_Value
 						, TCChooseInt
 						<
 							int
-							, (TCMemberFromType<CInTypeNoRefNoQualifier>::mc_Value >= 0) && NTraits::TCIsConstructorCallableWith<CInTypeNoRefNoQualifier, void (t_CInType)>::mc_Value
+							, (TCMemberFromType<CInTypeNoRefNoQualifier>::mc_Value >= 0)
 							, TCMemberFromType<CInTypeNoRefNoQualifier>::mc_Value
 							, TCChooseInt
 							<
@@ -3223,171 +3341,34 @@ private:
 			|___________________________________________________________________________________________________|
 			\***************************************************************************************************/
 
-			template <typename t_CParam0>
-			TCStreamableVariant(t_CParam0 &&_Param0)
+			template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
+			TCStreamableVariant(tf_CParam0 &&_Param0)
 			{
 #ifdef DMibDebuggerHelpers
 				(void)&ms_MemberValues;
 #endif
-				enum
-				{
-					s_ToConstruct = TCEvalOneParamConstruction<t_CParam0 &&>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (general constructor 1)");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam0>(_Param0));
+				fp_SetNoRet<(t_CIndexType)TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
 			}
 
 
-			template <typename t_CParam0, typename t_CParam1>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1)
+			template 
+			<
+				typename tf_CParam0
+				, typename tf_CParam1
+				, typename ...tfp_CParams, TCEnableIfType<TCEvalManyParamConstruction<void (tf_CParam0 &&, tf_CParam1 &&, tfp_CParams...)>::mc_Value >= 0> * = nullptr
+			>
+			TCStreamableVariant(tf_CParam0 &&_Param0, tf_CParam1 &&_Param1, tfp_CParams && ...p_RestOfParams)
 			{
 #ifdef DMibDebuggerHelpers
 				(void)&ms_MemberValues;
 #endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam0>(_Param0), fg_Forward<t_CParam1>(_Param1));
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1, t_CParam2 &&_Param2)
-			{
-#ifdef DMibDebuggerHelpers
-				(void)&ms_MemberValues;
-#endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&, t_CParam2 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam0>(_Param0), fg_Forward<t_CParam1>(_Param1), fg_Forward<t_CParam2>(_Param2));
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2, typename t_CParam3>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1, t_CParam2 &&_Param2, t_CParam3 &&_Param3)
-			{
-#ifdef DMibDebuggerHelpers
-				(void)&ms_MemberValues;
-#endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&, t_CParam2 &&, t_CParam3 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam0>(_Param0), fg_Forward<t_CParam1>(_Param1), fg_Forward<t_CParam2>(_Param2), fg_Forward<t_CParam3>(_Param3));
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2, typename t_CParam3, typename t_CParam4>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1, t_CParam2 &&_Param2, t_CParam3 &&_Param3, t_CParam4 &&_Param4)
-			{
-#ifdef DMibDebuggerHelpers
-				(void)&ms_MemberValues;
-#endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&, t_CParam2 &&, t_CParam3 &&, t_CParam4 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>
+				fp_SetNoRet<(t_CIndexType)TCEvalManyParamConstruction<void (tf_CParam0 &&, tf_CParam1 &&, tfp_CParams...)>::mc_Value>
 					(
-						fg_Forward<t_CParam0>(_Param0)
-						, fg_Forward<t_CParam1>(_Param1)
-						, fg_Forward<t_CParam2>(_Param2)
-						, fg_Forward<t_CParam3>(_Param3)
-						, fg_Forward<t_CParam4>(_Param4)
-					);
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2, typename t_CParam3, typename t_CParam4, typename t_CParam5>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1, t_CParam2 &&_Param2, t_CParam3 &&_Param3, t_CParam4 &&_Param4, t_CParam5 &&_Param5)
-			{
-#ifdef DMibDebuggerHelpers
-				(void)&ms_MemberValues;
-#endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&, t_CParam2 &&, t_CParam3 &&, t_CParam4 &&, t_CParam5 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>
-					(
-						fg_Forward<t_CParam0>(_Param0)
-						, fg_Forward<t_CParam1>(_Param1)
-						, fg_Forward<t_CParam2>(_Param2)
-						, fg_Forward<t_CParam3>(_Param3)
-						, fg_Forward<t_CParam4>(_Param4)
-						, fg_Forward<t_CParam5>(_Param5)
-					);
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2, typename t_CParam3, typename t_CParam4, typename t_CParam5, typename t_CParam6>
-			TCStreamableVariant(t_CParam0 &&_Param0, t_CParam1 &&_Param1, t_CParam2 &&_Param2, t_CParam3 &&_Param3, t_CParam4 &&_Param4, t_CParam5 &&_Param5, t_CParam6 &&_Param6)
-			{
-#ifdef DMibDebuggerHelpers
-				(void)&ms_MemberValues;
-#endif
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction<void (t_CParam0 &&, t_CParam1 &&, t_CParam2 &&, t_CParam3 &&, t_CParam4 &&, t_CParam5 &&, t_CParam6 &&)>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>
-					(
-						fg_Forward<t_CParam0>(_Param0)
-						, fg_Forward<t_CParam1>(_Param1)
-						, fg_Forward<t_CParam2>(_Param2)
-						, fg_Forward<t_CParam3>(_Param3)
-						, fg_Forward<t_CParam4>(_Param4)
-						, fg_Forward<t_CParam5>(_Param5)
-						, fg_Forward<t_CParam6>(_Param6)
-					);
-			}			
-
-			template <typename t_CParam0, typename t_CParam1, typename t_CParam2, typename t_CParam3, typename t_CParam4, typename t_CParam5, typename t_CParam6, typename t_CParam7>
-			TCStreamableVariant
-			(
-				t_CParam0 &&_Param0
-				, t_CParam1 &&_Param1
-				, t_CParam2 &&_Param2
-				, t_CParam3 &&_Param3
-				, t_CParam4 &&_Param4
-				, t_CParam5 &&_Param5
-				, t_CParam6 &&_Param6
-				, t_CParam7 &&_Param7
-			)
-			{
-				enum
-				{
-					s_ToConstruct = TCEvalManyParamConstruction
-					<
-						void 
-						(
-							t_CParam0 &&
-							, t_CParam1 &&
-							, t_CParam2 &&
-							, t_CParam3 &&
-							, t_CParam4 &&
-							, t_CParam5 &&
-							, t_CParam6 &&
-							, t_CParam7 &&
-						)
-					>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with these argument types");
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>
-					(
-						fg_Forward<t_CParam0>(_Param0)
-						, fg_Forward<t_CParam1>(_Param1)
-						, fg_Forward<t_CParam2>(_Param2)
-						, fg_Forward<t_CParam3>(_Param3)
-						, fg_Forward<t_CParam4>(_Param4)
-						, fg_Forward<t_CParam5>(_Param5)
-						, fg_Forward<t_CParam6>(_Param6)
-						, fg_Forward<t_CParam7>(_Param7)
-					);
+						fg_Forward<tf_CParam0>(_Param0)
+						, fg_Forward<tf_CParam1>(_Param1)
+						, fg_Forward<tfp_CParams>(p_RestOfParams)...
+					)
+				;
 			}			
 
 			/***************************************************************************************************\
@@ -3727,30 +3708,18 @@ private:
 			|___________________________________________________________________________________________________|
 			\***************************************************************************************************/
 
-			template <typename t_CParam>
-			typename TCEnableIf<TCIsNoThrowConstructibleWith<t_CParam &&>::mc_Value, TCStreamableVariant &>::CType operator = (t_CParam &&_Param)
+			template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0 && TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value> * = nullptr>
+			TCStreamableVariant &operator = (tf_CParam0 &&_Param)
 			{
-				enum
-				{
-					s_ToConstruct = TCEvalOneParamConstruction<t_CParam &&>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (general assign operator 1)");
-
 				fp_DestroyCurrent(); // Cannot throw
-				fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam>(_Param)); // Cannot throw
+				fp_SetNoRet<(t_CIndexType)TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
 
 				return *this;
 			}
 
-			template <typename t_CParam>
-			typename TCEnableIf<!TCIsNoThrowConstructibleWith<t_CParam &&>::mc_Value, TCStreamableVariant &>::CType operator = (t_CParam &&_Param)
+			template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0 && !TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value> * = nullptr>
+			TCStreamableVariant & operator = (tf_CParam0 &&_Param)
 			{
-				enum
-				{
-					s_ToConstruct = TCEvalOneParamConstruction<t_CParam &&>::mc_Value
-				};
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (general assign operator 2)");
-
 				static_assert
 				(
 					mcp_FirstNothrowDefaultConstructible != -1
@@ -3761,7 +3730,7 @@ private:
 
 				try
 				{
-					fp_SetNoRet<(t_CIndexType)s_ToConstruct>(fg_Forward<t_CParam>(_Param));
+					fp_SetNoRet<(t_CIndexType)TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param));
 				}
 				catch (...)
 				{
