@@ -21,7 +21,7 @@ namespace NMib
 			CTypeAligned m_ObjectSpace;
 
 #ifndef DMibNoAggregateConstexpr
-			TCAggregateSimple() = delete;
+			TCAggregateSimple() = default;
 			constexpr TCAggregateSimple(EAggregateInitialization _Init)
 				: m_ObjectSpace{}
 			{
