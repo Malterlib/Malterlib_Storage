@@ -11,14 +11,27 @@ namespace NMib
 	namespace NStorage
 	{
 		template <typename t_CType>
-		struct TCOptional : public TCStreamableVariant<int8, void, 0, t_CType, 1>
+		struct TCOptional : public NContainer::TCStreamableVariant<int8, void, 0, t_CType, 1>
 		{
-			using CVariant = TCStreamableVariant<int8, void, 0, t_CType, 1>;
+			using CVariant = NContainer::TCStreamableVariant<int8, void, 0, t_CType, 1>;
 			
 			TCOptional(t_CType const &_Value);
 			TCOptional(t_CType &&_Value);
 			TCOptional &operator = (t_CType const &_Value);
 			TCOptional &operator = (t_CType &&_Value);
+
+			template <typename tf_CType>
+			TCOptional &operator = (tf_CType &&_Value);
+
+			template <typename tf_CType>
+			TCOptional(TCOptional<tf_CType> const &_Value);
+			template <typename tf_CType>
+			TCOptional(TCOptional<tf_CType> &&_Value);
+
+			template <typename tf_CType>
+			TCOptional &operator = (TCOptional<tf_CType> const &_Value);
+			template <typename tf_CType>
+			TCOptional &operator = (TCOptional<tf_CType> &&_Value);
 			
 			TCOptional() = default;
 			TCOptional(TCOptional const &) = default;
@@ -35,6 +48,11 @@ namespace NMib
 			t_CType const &operator * () const;
 			t_CType *operator -> ();
 			t_CType &operator * ();
+			
+			template <typename tf_CStream>
+			void f_Feed(tf_CStream &_Stream) const;
+			template <typename tf_CStream>
+			void f_Consume(tf_CStream &_Stream);
 
 		private:
 			inline_never void fp_ThrowEmpty() const;

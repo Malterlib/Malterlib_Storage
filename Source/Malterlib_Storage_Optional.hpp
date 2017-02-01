@@ -16,6 +16,42 @@ namespace NMib::NStorage
 		: CVariant(fg_Move(_Value))
 	{
 	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	TCOptional<t_CType>::TCOptional(TCOptional<tf_CType> const &_Value)
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = *_Value;
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	TCOptional<t_CType>::TCOptional(TCOptional<tf_CType> &&_Value)
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = fg_Move(*_Value);
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> const &_Value) -> TCOptional &
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = *_Value;
+		else
+			static_cast<CVariant &>(*this) = CVariant();
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> &&_Value) -> TCOptional &
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = fg_Move(*_Value);
+		else
+			static_cast<CVariant &>(*this) = CVariant();
+	}
 
 	template <typename t_CType>
 	auto TCOptional<t_CType>::operator = (t_CType const &_Value) -> TCOptional &
@@ -28,6 +64,14 @@ namespace NMib::NStorage
 	auto TCOptional<t_CType>::operator = (t_CType &&_Value) -> TCOptional &
 	{
 		*((CVariant *)this) = fg_Move(_Value);
+		return *this;
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	auto TCOptional<t_CType>::operator = (tf_CType &&_Value) -> TCOptional &
+	{
+		*((CVariant *)this) = fg_Forward<tf_CType>(_Value);
 		return *this;
 	}
 	
@@ -89,6 +133,20 @@ namespace NMib::NStorage
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
 		return this->CVariant::template f_Get<1>(); 
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CStream>
+	void TCOptional<t_CType>::f_Feed(tf_CStream &_Stream) const
+	{
+		_Stream << static_cast<CVariant const &>(*this);
+	}
+
+	template <typename t_CType>
+	template <typename tf_CStream>
+	void TCOptional<t_CType>::f_Consume(tf_CStream &_Stream)
+	{
+		_Stream >> static_cast<CVariant &>(*this);
 	}
 
 	template <typename t_CType>
