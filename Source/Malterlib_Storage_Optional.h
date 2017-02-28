@@ -39,6 +39,11 @@ namespace NMib
 			TCOptional &operator = (TCOptional const &) = default;
 			TCOptional &operator = (TCOptional &&) = default;
 			
+			template <typename tf_CType>
+			bool operator == (TCOptional<tf_CType> const &_Right) const;
+			template <typename tf_CType>
+			bool operator < (TCOptional<tf_CType> const &_Right) const;
+			
 			explicit operator bool() const;
 			
 			void f_Clear();

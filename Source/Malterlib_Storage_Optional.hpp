@@ -154,4 +154,30 @@ namespace NMib::NStorage
 	{
 		DMibError("Empty optional access");
 	}
+			
+	template <typename t_CType>
+	template <typename tf_CType>
+	bool TCOptional<t_CType>::operator == (TCOptional<tf_CType> const &_Right) const
+	{
+		if (!*this)
+		{
+			if (!_Right)
+				return true;
+			return false;
+		}
+		return **this == *_Right;
+	}
+	
+	template <typename t_CType>
+	template <typename tf_CType>
+	bool TCOptional<t_CType>::operator < (TCOptional<tf_CType> const &_Right) const
+	{
+		if (!*this)
+		{
+			if (!_Right)
+				return false;
+			return true;
+		}
+		return **this < *_Right;
+	}
 }
