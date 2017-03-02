@@ -1285,6 +1285,9 @@ namespace NMib
 				return !f_IsEmpty();
 			}
 		};
+
+		template <typename t_CType, typename... tp_COptions>
+		using TCSharedPointerSupportWeak = TCSharedPointer<t_CType, CSupportWeakTag, tp_COptions...>;  
 		
 		template <typename t_CType, typename... tp_COptions>
 		class TCWeakPointer
