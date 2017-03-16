@@ -729,8 +729,35 @@ namespace NMib
 		{
 			return std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...);
 		}
+
+		template <typename tf_FFunctor, typename tf_CTuple>
+		auto fg_TupleApply(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
+		{
+			return std::apply(fg_Forward<tf_FFunctor>(_fFunctor), fg_Forward<tf_CTuple>(_Tuple));
+		}
+
+		namespace NPrivate
+		{
+			template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, mint ...tfp_Indices>
+			auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
+			{
+				return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);
+			}
+		}
+
+		template <typename tf_CTypeList, typename tf_FFunctor, typename tf_CTuple>
+		auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
+		{
+			return NPrivate::fg_TupleApplyAs
+				(
+					fg_Forward<tf_FFunctor>(_fFunctor)
+					, fg_Forward<tf_CTuple>(_Tuple)
+					, tf_CTypeList()
+					, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<tf_CTuple>::CType>::mc_Value>::CType()
+				)
+			;
+		}
 	}
-	
 }
 			
 #endif
