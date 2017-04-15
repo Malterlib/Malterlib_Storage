@@ -562,9 +562,9 @@ namespace
 				fg_Get<1>(fg_ConstVolatile(Tuple2));
 
 				fg_Get<1>(fg_Move(Tuple2));
-				fg_Get<1>(fg_Move(fg_Const(Tuple2)));
+				fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2)));
 				fg_Get<1>(fg_Move(fg_Volatile(Tuple2)));
-				fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2)));
+				fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2)));
 
 				fg_Get<1>(Tuple3);
 				fg_Get<1>(fg_Const(Tuple3));
@@ -572,9 +572,9 @@ namespace
 				fg_Get<1>(fg_ConstVolatile(Tuple3));
 				
 				fg_Get<1>(fg_Move(Tuple3));
-				fg_Get<1>(fg_Move(fg_Const(Tuple3)));
+				fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple3)));
 				fg_Get<1>(fg_Move(fg_Volatile(Tuple3)));
-				fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple3)));
+				fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple3)));
 				
 				
 			};
