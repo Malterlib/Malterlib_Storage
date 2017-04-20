@@ -58,6 +58,9 @@ namespace NMib
 			void f_Feed(tf_CStream &_Stream) const;
 			template <typename tf_CStream>
 			void f_Consume(tf_CStream &_Stream);
+			
+			template <typename tf_CString>
+			void f_Format(tf_CString &_String) const;
 
 		private:
 			inline_never void fp_ThrowEmpty() const;

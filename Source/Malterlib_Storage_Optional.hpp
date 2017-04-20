@@ -150,6 +150,16 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType>
+	template <typename tf_CString>
+	void TCOptional<t_CType>::f_Format(tf_CString &_String) const
+	{
+		if (*this)
+			_String += typename tf_CString::CFormat("{{{}}") << **this;
+		else
+			_String += "not set";
+	}
+	
+	template <typename t_CType>
 	inline_never void TCOptional<t_CType>::fp_ThrowEmpty() const
 	{
 		DMibError("Empty optional access");
