@@ -3,6 +3,10 @@
 
 #pragma once
 
+#ifndef DMibConfig_RefcountDebugging
+#define DMibConfig_RefcountDebugging 0
+#endif
+
 #include <Mib/Core/Core>
 #include <Mib/Function/BindMemberFunction>
 namespace NMib
@@ -646,13 +650,41 @@ namespace NMib
 			* Use a free function instead of f_RefCountIncrease. This wiill enable adaption of non modifiable third party refcounted objects
 
 		*/
+
+#if DMibConfig_RefcountDebugging
+		struct CRefCountDebugReference
+		{
+			CRefCountDebugReference();
+			~CRefCountDebugReference();
+
+			CRefCountDebugReference(CRefCountDebugReference const &_Other) = delete;
+			CRefCountDebugReference &operator =(CRefCountDebugReference const &_Other) = delete;
+
+			CRefCountDebugReference(CRefCountDebugReference &&_Other);
+			CRefCountDebugReference &operator =(CRefCountDebugReference &&_Other);
+
+			NException::CCallstack *m_pCallstack = nullptr;
+		};
+#define DMibRefcountDebuggingOnly(...) __VA_ARGS__
+#else
+#define DMibRefcountDebuggingOnly(...)
+#endif
+
 		namespace NPrivate
 		{
 			DMibTypeTraitsImplement_MemberTraits(f_RefCountIncrease);
 		}
 
 		template <typename t_CType>
-		struct TCHasIntrusiveRefcount : public NTraits::TCCompileTimeConstant<bool, NPrivate::TCIsMemberCallableWith_f_RefCountIncrease<t_CType, void ()>::mc_Value>
+		struct TCHasIntrusiveRefcount : public NTraits::TCCompileTimeConstant
+			<
+				bool
+				, NPrivate::TCIsMemberCallableWith_f_RefCountIncrease
+				<
+					t_CType
+					, void (DMibRefcountDebuggingOnly(NPtr::CRefCountDebugReference &o_DebugRef))
+				>::mc_Value
+			>
 		{
 		};
 
@@ -783,6 +815,7 @@ namespace NMib
 
 				typedef typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType CInternalData;
 				CInternalData *m_pPointTo;
+				DMibRefcountDebuggingOnly(mutable NPtr::CRefCountDebugReference m_DebugRef);
 
 				TCSharedPointerData()
 				{
@@ -811,7 +844,7 @@ namespace NMib
 			static_assert(sizeof(tf_CObjectType) > 0, "");
 			static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value, "");
 			_pObject->~tf_CObjectType();
-			if (_pObject->f_WeakRefCountDecrease() == 0)
+			if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
 				fg_Forward<tf_CAllocator>(_Allocator).f_Free(_pObject);
 		}
 
@@ -853,17 +886,23 @@ namespace NMib
 			{
 				fp_Delete();
 				if (_pPtr)
-					_pPtr->f_RefCountIncrease();
+					_pPtr->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 				m_Data.m_pPointTo = _pPtr;
 			}
 			void fp_SetInit(CInternalData *_pPtr)
 			{
 				if (_pPtr)
-					_pPtr->f_RefCountIncrease();
+					_pPtr->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 				m_Data.m_pPointTo = _pPtr;
 			}
 			
 			void fp_SetConstruct(CInternalData *_pPtr)
+			{
+				m_Data.m_pPointTo = _pPtr;
+				DMibRefcountDebuggingOnly(m_Data.m_pPointTo->f_InitialRef(m_Data.m_DebugRef));
+			}
+
+			void fp_SetCounted(CInternalData *_pPtr)
 			{
 				m_Data.m_pPointTo = _pPtr;
 			}
@@ -880,17 +919,17 @@ namespace NMib
 				bool bRet = false;
 				if (m_Data.m_pPointTo)
 				{
-					if (m_Data.m_pPointTo->f_RefCountDecrease() == 0)
+					if (m_Data.m_pPointTo->f_RefCountDecrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef)) == 0)
 					{
 						auto Cleanup
 							= g_OnScopeExit > [&]()
 							{
 								// Protect against exception in destructor
-								m_Data.m_pPointTo->f_RefCountIncrease();
+								m_Data.m_pPointTo->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 							}
 						;
 						
-						fg_DeleteWeakObject(fp_GetAllocator(), (CInternalData *)m_Data.m_pPointTo);		
+						fg_DeleteWeakObject(fp_GetAllocator(), (CInternalData *)m_Data.m_pPointTo);
 						Cleanup.f_Clear();
 						bRet = true;
 					}
@@ -905,13 +944,13 @@ namespace NMib
 				bool bRet = false;
 				if (m_Data.m_pPointTo)
 				{
-					if (m_Data.m_pPointTo->f_RefCountDecrease() == 0)
+					if (m_Data.m_pPointTo->f_RefCountDecrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef)) == 0)
 					{
 						auto Cleanup
 							= g_OnScopeExit > [&]()
 							{
 								// Protect against exception in destructor
-								m_Data.m_pPointTo->f_RefCountIncrease();
+								m_Data.m_pPointTo->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 							}
 						;
 
@@ -919,6 +958,7 @@ namespace NMib
 						Cleanup.f_Clear();
 						bRet = true;
 					}
+
 					m_Data.m_pPointTo = nullptr;
 				}
 				return bRet;
@@ -968,6 +1008,7 @@ namespace NMib
 			{
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 			}
 
 			template <typename tf_CType, typename... tfp_COptions>
@@ -996,6 +1037,7 @@ namespace NMib
 				;
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 			}
 
 			template <typename tf_CType, typename... tfp_CParams>
@@ -1140,6 +1182,7 @@ namespace NMib
 				fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 				return *this;
 			}
 
@@ -1164,6 +1207,7 @@ namespace NMib
 				;
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 				return *this;
 			}
 			
@@ -1319,14 +1363,14 @@ namespace NMib
 			{
 				fp_Delete();
 				if (_pPtr)
-					_pPtr->f_WeakRefCountIncrease();
+					_pPtr->f_WeakRefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 				m_Data.m_pPointTo = _pPtr;
 			}
 
 			void fp_SetInit(CInternalData *_pPtr)
 			{
 				if (_pPtr)
-					_pPtr->f_WeakRefCountIncrease();
+					_pPtr->f_WeakRefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 				m_Data.m_pPointTo = _pPtr;
 			}
 			
@@ -1342,7 +1386,7 @@ namespace NMib
 				bool bRet = false;
 				if (m_Data.m_pPointTo)
 				{
-					if (m_Data.m_pPointTo->f_WeakRefCountDecrease() == 0)
+					if (m_Data.m_pPointTo->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(&m_Data.m_DebugRef)) == 0)
 					{
 						fp_GetAllocator().f_Free(m_Data.m_pPointTo);
 						bRet = true;
@@ -1383,6 +1427,7 @@ namespace NMib
 			{
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 			}
 
 			template <typename tf_CType, typename... tfp_COptions>
@@ -1410,6 +1455,7 @@ namespace NMib
 				;
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 			}
 
 			explicit TCWeakPointer(t_CType *_pPtr)
@@ -1509,6 +1555,7 @@ namespace NMib
 				fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
+				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
 				return *this;
 			}
 
@@ -1571,10 +1618,10 @@ namespace NMib
 				if (!pData)
 					return pReturn;
 				
-				if (!pData->f_RefCountIncreaseWhileNot(-1))
+				if (!pData->f_RefCountIncreaseWhileNot(DMibRefcountDebuggingOnly(pReturn.m_Data.m_DebugRef, ) -1))
 					return pReturn;
 				
-				pReturn.fp_SetConstruct(pData);
+				pReturn.fp_SetCounted(pData);
 				
 				return pReturn;
 			}
