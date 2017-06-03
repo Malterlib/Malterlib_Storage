@@ -118,6 +118,8 @@ namespace NMib
 			return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 		}
 
+#ifndef DDocumentation_Doxygen
+		
 		template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 		template <typename t_CMemberPtr>
 		typename TCEnableIf
@@ -230,7 +232,8 @@ namespace NMib
 		TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
 		{
 			return (this->f_Get()).*_MemberPtr;
-		}			
+		}
+#endif
 
 		template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 		TCIndirection<t_CType, t_CAllocator, t_CPtr>::TCIndirection()

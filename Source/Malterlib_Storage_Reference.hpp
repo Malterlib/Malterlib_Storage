@@ -26,6 +26,7 @@ namespace NMib
 			return f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 		}
 
+#ifndef DDocumentation_Doxygen
 
 		template <typename t_CType, typename t_CPtr>
 		template <typename t_CMemberPtr>
@@ -54,6 +55,8 @@ namespace NMib
 		{
 			return f_Get().*_MemberPtr;
 		}
+		
+#endif
 
 		template <typename t_CType, typename t_CPtr>
 		TCReference<t_CType, t_CPtr>::TCReference(t_CType &_Param0)
