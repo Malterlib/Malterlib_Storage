@@ -113,25 +113,25 @@ namespace
 
 			//DMibStaticCheck(decltype(Test0));
 
-			auto Test2 = fg_Const(_Indirection.m_Undefined)();
-			auto Test3 = fg_Const(_Indirection.m_Defined)();
+			[[maybe_unused]] auto Test2 = fg_Const(_Indirection.m_Undefined)();
+			[[maybe_unused]] auto Test3 = fg_Const(_Indirection.m_Defined)();
 
-			auto Test4 = fg_Volatile(_Indirection.m_Undefined)();
-			auto Test5 = fg_Volatile(_Indirection.m_Defined)();
+			[[maybe_unused]] auto Test4 = fg_Volatile(_Indirection.m_Undefined)();
+			[[maybe_unused]] auto Test5 = fg_Volatile(_Indirection.m_Defined)();
 
-			auto Test6 = fg_ConstVolatile(_Indirection.m_Undefined)();
-			auto Test7 = fg_ConstVolatile(_Indirection.m_Defined)();
+			[[maybe_unused]] auto Test6 = fg_ConstVolatile(_Indirection.m_Undefined)();
+			[[maybe_unused]] auto Test7 = fg_ConstVolatile(_Indirection.m_Defined)();
 
-			auto Test8 = _Indirection.m_Undefined < 5.0f;
-			auto Test9 = _Indirection.m_Defined < 5.0f;
-			auto Test10 = 5.0f < _Indirection.m_Undefined;
-			auto Test11 = 5.0f < _Indirection.m_Defined ;
-			auto Test12 = _Indirection.m_Undefined < 5;
-			auto Test13 = _Indirection.m_Defined < 5;
-			auto Test14 = 5 < _Indirection.m_Undefined;
-			auto Test15 = 5 < _Indirection.m_Defined ;
-			auto Test16 = _Indirection.m_Defined < _Indirection.m_Undefined;
-			auto Test17 = _Indirection.m_Undefined < _Indirection.m_Defined;
+			[[maybe_unused]] auto Test8 = _Indirection.m_Undefined < 5.0f;
+			[[maybe_unused]] auto Test9 = _Indirection.m_Defined < 5.0f;
+			[[maybe_unused]] auto Test10 = 5.0f < _Indirection.m_Undefined;
+			[[maybe_unused]] auto Test11 = 5.0f < _Indirection.m_Defined ;
+			[[maybe_unused]] auto Test12 = _Indirection.m_Undefined < 5;
+			[[maybe_unused]] auto Test13 = _Indirection.m_Defined < 5;
+			[[maybe_unused]] auto Test14 = 5 < _Indirection.m_Undefined;
+			[[maybe_unused]] auto Test15 = 5 < _Indirection.m_Defined ;
+			[[maybe_unused]] auto Test16 = _Indirection.m_Defined < _Indirection.m_Undefined;
+			[[maybe_unused]] auto Test17 = _Indirection.m_Undefined < _Indirection.m_Defined;
 
 			TCIndirection<uint32> StreamTest = 50;
 
