@@ -4,6 +4,7 @@
 #pragma once
 
 #include <Mib/Core/Core>
+#include <Mib/Contract/Contract>
 
 #ifndef DMibContainerVariantMany
 #define DMibContainerVariantMany 1
