@@ -8,6 +8,13 @@ namespace NMib
 
 	class CSystem;
 	class CSystemModule;
+	namespace NThread
+	{
+		template <typename t_CEvent, bool t_bAllowRecursive>
+		class TCMutualAggregate;
+		
+		typedef TCMutualAggregate<CEventAutoResetAggregate, true> CMutualAggregate;
+	}
 	namespace NAggregate
 	{
 
