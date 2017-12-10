@@ -841,8 +841,8 @@ namespace NMib
 		template <typename tf_CObjectType, typename tf_CAllocator>
 		void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
 		{
-			static_assert(sizeof(tf_CObjectType) > 0, "");
-			static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value, "");
+			static_assert(sizeof(tf_CObjectType) > 0);
+			static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
 			_pObject->~tf_CObjectType();
 			if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
 				fg_Forward<tf_CAllocator>(_Allocator).f_Free(_pObject);
@@ -1021,7 +1021,7 @@ namespace NMib
 						, "Not a valid conversion"
 					)
 				;
-				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value), "");
+				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
 				fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			}
 
@@ -1222,7 +1222,7 @@ namespace NMib
 						, "Not a valid conversion"
 					)
 				;
-				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value), "");
+				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
 				fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 				return *this;
 			}

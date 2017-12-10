@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Tuple>
@@ -266,45 +266,45 @@ namespace
 			// Check sizes
 			{
 				TCTuple<> Tuple;
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 			}
 			{
 				TCTuple<CEmpty> Tuple;
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 			}
 			{
 #ifdef DMibContainer_TupleInternal
 				TCTuple<CEmpty, CEmpty, CEmpty> Tuple;
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 #endif
 			}
 			{
 				TCTuple<CEmpty0, CEmpty1, CEmpty2> Tuple;
 #ifndef DCompiler_MSVC
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 #endif
 			}
 			{
 #ifdef DMibContainer_TupleInternal
 				TCTuple<TCTuple<CEmpty, CEmpty>, TCTuple<CEmpty, CEmpty>> Tuple;
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 #endif
 			}
 			{
 				TCTuple<CNonEmpty> Tuple;
-				static_assert(sizeof(Tuple) == 1, "");
+				static_assert(sizeof(Tuple) == 1);
 			}
 			{
 				TCTuple<CNonEmpty, CNonEmpty, CNonEmpty> Tuple;
-				static_assert(sizeof(Tuple) == 3, "");
+				static_assert(sizeof(Tuple) == 3);
 			}
 			{
 				TCTuple<TCTuple<CNonEmpty, CNonEmpty>, TCTuple<CNonEmpty, CNonEmpty>> Tuple;
-				static_assert(sizeof(Tuple) == 4, "");
+				static_assert(sizeof(Tuple) == 4);
 			}
 			{
 				TCTuple<TCTuple<TCTuple<CNonEmpty, CNonEmpty>, TCTuple<CNonEmpty, CNonEmpty>>, TCTuple<TCTuple<CNonEmpty, CNonEmpty>, TCTuple<CNonEmpty, CNonEmpty>>> Tuple;
-				static_assert(sizeof(Tuple) == 8, "");
+				static_assert(sizeof(Tuple) == 8);
 			}
 			
 			DMibTestSuite("General")
@@ -315,8 +315,8 @@ namespace
 				TCTuple<int> Tuple_1;
 				
 #ifdef DMibContainer_TupleInternal
-				static_assert(NMib::NContainer::NPrivate::TCTuple_IsAssignable<TCTuple<int> const &, TCTuple<int>>::mc_Value, "");
-				static_assert(NMib::NContainer::NPrivate::TCTuple_IsAssignable<TCTuple<int> &&, TCTuple<int>>::mc_Value, "");
+				static_assert(NMib::NContainer::NPrivate::TCTuple_IsAssignable<TCTuple<int> const &, TCTuple<int>>::mc_Value);
+				static_assert(NMib::NContainer::NPrivate::TCTuple_IsAssignable<TCTuple<int> &&, TCTuple<int>>::mc_Value);
 #endif
 				Tuple_1 = Tuple;
 				DMibTest(DMibExpr(Tuple_1) == DMibExpr(Tuple))(ETestFlag_NoValues);
@@ -392,7 +392,7 @@ namespace
 #if defined(DMibContainer_TupleInternal)
 				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty(2, fg_Default());
 				TCTuple<int, CNonCopyable> TupleNonCopy(2, fg_Default());
-#elif defined(DCompiler_MSVC)
+#elif defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty;
 				fg_Get<0>(TupleNonCopyEmpty) = 2;
 				TCTuple<int, CNonCopyable> TupleNonCopy;
@@ -402,13 +402,9 @@ namespace
 				TCTuple<int, CNonCopyable> TupleNonCopy(2);
 #endif
 				
-#ifndef DCompiler_MSVC
-#ifndef DMibDefaultToolset
-				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyable>, void (TCTuple<int, CNonCopyable> const &)>::mc_Value, "");
-#endif
-				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value, "");
-				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value, "");
-#endif
+				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyable>, void (TCTuple<int, CNonCopyable> const &)>::mc_Value);
+				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value);
+				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value);
 				
 #if defined(DMibContainer_TupleInternal)
 				TCTuple<int, CMovableOnly> TupleMovable(2, fg_Default());
@@ -427,25 +423,15 @@ namespace
 				auto Moved = fg_Get<1>(fg_Move(TupleMovable2)); // Check that there are no hidden moves when getting a value
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovable2).m_MovedFrom) == DMibExpr(1) && DMibExpr("Should be moved"))(ETestFlag_NoValues);
 
-#ifndef DCompiler_MSVC
-#ifndef DMibDefaultToolset
-				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnly>, void (TCTuple<int, CMovableOnly> const &)>::mc_Value, "");
-#endif
-#endif
-#ifndef DCompiler_MSVC
-				static_assert(NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnly>, void (TCTuple<int, CMovableOnly> &&)>::mc_Value, "");
-#endif
-#ifndef DCompiler_MSVC
-				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyEmpty>, void (TCTuple<int, CMovableOnlyEmpty> const &)>::mc_Value, "");
-#endif
-#ifndef DCompiler_MSVC
-				static_assert(NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmpty>, void (TCTuple<int, CMovableOnlyEmpty> &&)>::mc_Value, "");
-#endif
+				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnly>, void (TCTuple<int, CMovableOnly> const &)>::mc_Value);
+				static_assert(NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnly>, void (TCTuple<int, CMovableOnly> &&)>::mc_Value);
+				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyEmpty>, void (TCTuple<int, CMovableOnlyEmpty> const &)>::mc_Value);
+				static_assert(NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmpty>, void (TCTuple<int, CMovableOnlyEmpty> &&)>::mc_Value);
 				
 				g_MovedEmpty = 0;
 #if defined(DMibContainer_TupleInternal)
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty(2, fg_Default());
-#elif defined(DCompiler_MSVC)
+#elif defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty;
 #else
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty(2);
@@ -457,7 +443,7 @@ namespace
 				
 #if defined(DMibContainer_TupleInternal)
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign(2, fg_Default());
-#elif defined(DCompiler_MSVC)
+#elif defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign;
 #else
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign(2);
@@ -469,48 +455,33 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_Moved) == DMibExpr(1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_MovedFrom) == DMibExpr(0))(ETestFlag_NoValues);
 				
-#ifndef DCompiler_MSVC
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<int, void (int)>::mc_Value, "");
-
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<CMovableAssignOnly, void (CMovableAssignOnly &&)>::mc_Value, "");
-#endif				
+				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<int, void (int)>::mc_Value);
+				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<CMovableAssignOnly, void (CMovableAssignOnly &&)>::mc_Value);
 #ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> const &)>::mc_Value, "");
+				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> const &)>::mc_Value);
 #endif
-#ifndef DCompiler_MSVC
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> &&)>::mc_Value);
 #ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> const &)>::mc_Value, "");
+				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> const &)>::mc_Value);
 #endif
-#ifndef DCompiler_MSVC
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> &&)>::mc_Value);
 
-				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value, "");
-#ifndef DCompiler_MSVC
-				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value);
+				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value);
 
-				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value, "");
-#ifndef DCompiler_MSVC
-				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value);
+				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value);
 
-				static_assert(NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value, "");
-#ifndef DCompiler_MSVC
-				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value);
+				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value);
 				
-				static_assert(NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value, "");
-#ifndef DCompiler_MSVC
-				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value, "");
-#endif
+				static_assert(NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value);
+				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value);
 				
 				g_MovedEmpty = 0;
 #if defined(DMibContainer_TupleInternal)
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty(2, fg_Default());
-#elif defined(DCompiler_MSVC)
+#elif defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty;
 #else
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty(2);
@@ -522,38 +493,38 @@ namespace
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1) && DMibExpr("Assign"));			
 
 				// LValue reference
-				static_assert(TCIsLValueReference<decltype(fg_Get<1>(Tuple2))>::mc_Value, "");
-				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>::CType>::mc_Value, "");
-				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>::CType>::mc_Value, "");
+				static_assert(TCIsLValueReference<decltype(fg_Get<1>(Tuple2))>::mc_Value);
+				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>::CType>::mc_Value);
+				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>::CType>::mc_Value);
 				
-				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::mc_Value, "");
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::CType>::mc_Value, "");
-				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::CType>::mc_Value, "");
+				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::CType>::mc_Value);
+				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>::CType>::mc_Value);
 				
-				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::mc_Value, "");
-				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::CType>::mc_Value, "");
-				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::CType>::mc_Value, "");
+				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::mc_Value);
+				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::CType>::mc_Value);
+				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>::CType>::mc_Value);
 				
-				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::mc_Value, "");
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::CType>::mc_Value, "");
-				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::CType>::mc_Value, "");
+				static_assert(TCIsLValueReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::CType>::mc_Value);
+				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>::CType>::mc_Value);
 
 				// RValue reference
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::mc_Value, "");
-				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value, "");
-				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value, "");
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::mc_Value);
+				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value);
+				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value);
 				
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::mc_Value, "");
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value, "");
-				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value, "");
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value);
+				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value);
 				
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::mc_Value, "");
-				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value, "");
-				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value, "");
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::mc_Value);
+				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value);
+				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value);
 				
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::mc_Value, "");
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value, "");
-				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value, "");
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
+				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
 
 				// Check that all get paths compile
 				fg_Get<1>(Tuple2);
@@ -694,7 +665,7 @@ namespace
 				DMibTest(DMibExpr(fg_Get<0>(MadeTuple2)) == DMibExpr(11));
 				
 				auto MadeTuple3 = fg_TuplePerfectForward(fg_Move(x));
-				static_assert(NMib::NTraits::TCIsSame<decltype(MadeTuple3), TCTuple<int &&>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(MadeTuple3), TCTuple<int &&>>::mc_Value);
 				++x;
 				int &&MadeTuple3Value = fg_GetForward<0>(fg_Move(MadeTuple3));
 				DMibTest(DMibExpr(MadeTuple3Value) == DMibExpr(12));
@@ -714,43 +685,43 @@ namespace
 				
 				auto Concatenated0 = fg_TupleConcatenate(Tuple);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated0)) == DMibExpr(7));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated0), TCTuple<int>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated0), TCTuple<int>>::mc_Value);
 
 				auto Concatenated1 = fg_TupleConcatenate(Tuple, Tuple);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated1)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated1)) == DMibExpr(7));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated1), TCTuple<int, int>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated1), TCTuple<int, int>>::mc_Value);
 
 				auto Concatenated2 = fg_TupleConcatenate(TupleLValueRef, TupleLValueRef);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated2)) == DMibExpr(6));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated2)) == DMibExpr(6));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated2), TCTuple<int &, int &>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated2), TCTuple<int &, int &>>::mc_Value);
 				
 				auto Concatenated3 = fg_TupleConcatenate(Tuple, TupleLValueRef);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated3)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated3)) == DMibExpr(6));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated3), TCTuple<int, int &>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated3), TCTuple<int, int &>>::mc_Value);
 				
 				auto Concatenated4 = fg_TupleConcatenate(Tuple, fg_Move(TupleLValueRef));
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated4)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated4)) == DMibExpr(6));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated4), TCTuple<int, int &>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated4), TCTuple<int, int &>>::mc_Value);
 
 				auto Concatenated5 = fg_TupleConcatenate(Tuple, fg_Move(TupleRValueRef));
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated5)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated5)) == DMibExpr(5));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated5), TCTuple<int, int &&>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated5), TCTuple<int, int &&>>::mc_Value);
 
 				auto Concatenated6 = fg_TupleConcatenate(Tuple, fg_Move(TupleLValueRef));
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated6)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated6)) == DMibExpr(6));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated6), TCTuple<int, int &>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated6), TCTuple<int, int &>>::mc_Value);
 
 				auto Concatenated7 = fg_TupleConcatenate(Tuple, fg_Move(TupleLValueRef), fg_Move(TupleRValueRef));
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated7)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated7)) == DMibExpr(6));
 				DMibTest(DMibExpr(fg_Get<2>(Concatenated7)) == DMibExpr(5));
-				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated7), TCTuple<int, int &, int &&>>::mc_Value, "");
+				static_assert(NMib::NTraits::TCIsSame<decltype(Concatenated7), TCTuple<int, int &, int &&>>::mc_Value);
 				
 			};
 			
@@ -804,8 +775,6 @@ namespace
 //			{NMib::NContainer::TCTuple<PFFunc0> Tuple;}
 //			{NMib::NContainer::TCTuple<PFFunc1> Tuple;}
 //			{NMib::NContainer::TCTuple<PFFunc2> Tuple;}
-#if !defined(DCompiler_MSVC) || DMibCompilerVersion >= 1700
-//#ifndef DMibCompiler_GCC
 			{NMib::NContainer::TCTuple<FFunc0Ref> Variant(fsg_FFunc0);}
 			{NMib::NContainer::TCTuple<FFunc1Ref> Variant(fsg_FFunc1);}
 			{NMib::NContainer::TCTuple<FFunc2Ref> Variant(fsg_FFunc2);}
@@ -813,8 +782,6 @@ namespace
 			{NMib::NContainer::TCTuple<FFunc0RRef> Variant(NMib::fg_Move(fsg_FFunc0));}
 			{NMib::NContainer::TCTuple<FFunc1RRef> Variant(NMib::fg_Move(fsg_FFunc1));}
 			{NMib::NContainer::TCTuple<FFunc2RRef> Variant(NMib::fg_Move(fsg_FFunc2));}
-#endif
-//#endif
 #endif
 			{NMib::NContainer::TCTuple<FFunc0Ptr> Tuple;}
 			{NMib::NContainer::TCTuple<FFunc1Ptr> Tuple;}
@@ -879,8 +846,6 @@ namespace
 //			{NMib::NContainer::TCTuple<PFFunc0El> Tuple;}
 //			{NMib::NContainer::TCTuple<PFFunc1El> Tuple;}
 //			{NMib::NContainer::TCTuple<PFFunc2El> Tuple;}
-#if !defined(DCompiler_MSVC) || DMibCompilerVersion >= 1700
-//#ifndef DMibCompiler_GCC
 			{NMib::NContainer::TCTuple<FFunc0ElRef> Variant(fsg_FFunc0El);}
 			{NMib::NContainer::TCTuple<FFunc1ElRef> Variant(fsg_FFunc1El);}
 			{NMib::NContainer::TCTuple<FFunc2ElRef> Variant(fsg_FFunc2El);}
@@ -888,8 +853,6 @@ namespace
 			{NMib::NContainer::TCTuple<FFunc0ElRRef> Variant(NMib::fg_Move(fsg_FFunc0El));}
 			{NMib::NContainer::TCTuple<FFunc1ElRRef> Variant(NMib::fg_Move(fsg_FFunc1El));}
 			{NMib::NContainer::TCTuple<FFunc2ElRRef> Variant(NMib::fg_Move(fsg_FFunc2El));}
-#endif
-//#endif
 #endif
 			{NMib::NContainer::TCTuple<FFunc0ElPtr> Tuple;}
 			{NMib::NContainer::TCTuple<FFunc1ElPtr> Tuple;}
@@ -967,12 +930,10 @@ namespace
 			{NMib::NContainer::TCTuple<CMCPtrCV> Tuple;}
 			{NMib::NContainer::TCTuple<CMVPtrCV> Tuple;}
 			{NMib::NContainer::TCTuple<CMCVPtrCV> Tuple;}
-#ifndef DCompiler_MSVC
 			{NMib::NContainer::TCTuple<CTestArray2> Tuple;}
 			{NMib::NContainer::TCTuple<CTestArray2C> Tuple;}
 			{NMib::NContainer::TCTuple<CTestArray2V> Tuple;}
 			{NMib::NContainer::TCTuple<CTestArray2CV> Tuple;}
-#endif
 //			{NMib::NContainer::TCTuple<CTestArray> Tuple;}
 //			{NMib::NContainer::TCTuple<CTestArrayC> Tuple;}
 //			{NMib::NContainer::TCTuple<CTestArrayV> Tuple;}

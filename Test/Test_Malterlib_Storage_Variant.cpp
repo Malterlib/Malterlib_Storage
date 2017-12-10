@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Variant>
@@ -330,16 +330,12 @@ namespace
 	//			{NMib::NContainer::TCVariant<PFFunc0> Variant;}
 	//			{NMib::NContainer::TCVariant<PFFunc1> Variant;}
 	//			{NMib::NContainer::TCVariant<PFFunc2> Variant;}
-	#if !defined(DCompiler_MSVC) || DMibCompilerVersion >= 1700
-	//#ifndef DMibCompiler_GCC
 				{NMib::NContainer::TCVariant<FFunc0Ref> Variant(fsg_FFunc0);}
 				{NMib::NContainer::TCVariant<FFunc1Ref> Variant(fsg_FFunc1);}
 				{NMib::NContainer::TCVariant<FFunc2Ref> Variant(fsg_FFunc2);}
 				{NMib::NContainer::TCVariant<FFunc0RRef> Variant(NMib::fg_Move(fsg_FFunc0));}
 				{NMib::NContainer::TCVariant<FFunc1RRef> Variant(NMib::fg_Move(fsg_FFunc1));}
 				{NMib::NContainer::TCVariant<FFunc2RRef> Variant(NMib::fg_Move(fsg_FFunc2));}
-	//#endif
-	#endif
 				{NMib::NContainer::TCVariant<FFunc0Ptr> Variant;}
 				{NMib::NContainer::TCVariant<FFunc1Ptr> Variant;}
 				{NMib::NContainer::TCVariant<FFunc2Ptr> Variant;}
@@ -403,16 +399,12 @@ namespace
 	//			{NMib::NContainer::TCVariant<PFFunc0El> Variant;}
 	//			{NMib::NContainer::TCVariant<PFFunc1El> Variant;}
 	//			{NMib::NContainer::TCVariant<PFFunc2El> Variant;}
-	#if !defined(DCompiler_MSVC) || DMibCompilerVersion >= 1700
-	//#ifndef DMibCompiler_GCC
 				{NMib::NContainer::TCVariant<FFunc0ElRef> Variant(fsg_FFunc0El);}
 				{NMib::NContainer::TCVariant<FFunc1ElRef> Variant(fsg_FFunc1El);}
 				{NMib::NContainer::TCVariant<FFunc2ElRef> Variant(fsg_FFunc2El);}
 				{NMib::NContainer::TCVariant<FFunc0ElRRef> Variant(NMib::fg_Move(fsg_FFunc0El));}
 				{NMib::NContainer::TCVariant<FFunc1ElRRef> Variant(NMib::fg_Move(fsg_FFunc1El));}
 				{NMib::NContainer::TCVariant<FFunc2ElRRef> Variant(NMib::fg_Move(fsg_FFunc2El));}
-	//#endif
-	#endif
 				{NMib::NContainer::TCVariant<FFunc0ElPtr> Variant;}
 				{NMib::NContainer::TCVariant<FFunc1ElPtr> Variant;}
 				{NMib::NContainer::TCVariant<FFunc2ElPtr> Variant;}

@@ -671,32 +671,32 @@ namespace NMib
 			};
 			typedef typename NTraits::TCIntFromSizeLarger<(mcp_NeededBits + 7) / 8>::CType CTypeIDStorageType;			
 
-			static_assert(TCCheckContracts<t_CType0>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType1>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType2>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType3>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType4>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType5>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType6>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType7>::mc_Value, "");
+			static_assert(TCCheckContracts<t_CType0>::mc_Value);
+			static_assert(TCCheckContracts<t_CType1>::mc_Value);
+			static_assert(TCCheckContracts<t_CType2>::mc_Value);
+			static_assert(TCCheckContracts<t_CType3>::mc_Value);
+			static_assert(TCCheckContracts<t_CType4>::mc_Value);
+			static_assert(TCCheckContracts<t_CType5>::mc_Value);
+			static_assert(TCCheckContracts<t_CType6>::mc_Value);
+			static_assert(TCCheckContracts<t_CType7>::mc_Value);
 #if DMibContainerVariantMany > 0
-			static_assert(TCCheckContracts<t_CType8>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType9>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType10>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType11>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType12>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType13>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType14>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType15>::mc_Value, "");
+			static_assert(TCCheckContracts<t_CType8>::mc_Value);
+			static_assert(TCCheckContracts<t_CType9>::mc_Value);
+			static_assert(TCCheckContracts<t_CType10>::mc_Value);
+			static_assert(TCCheckContracts<t_CType11>::mc_Value);
+			static_assert(TCCheckContracts<t_CType12>::mc_Value);
+			static_assert(TCCheckContracts<t_CType13>::mc_Value);
+			static_assert(TCCheckContracts<t_CType14>::mc_Value);
+			static_assert(TCCheckContracts<t_CType15>::mc_Value);
 #if DMibContainerVariantMany > 1
-			static_assert(TCCheckContracts<t_CType16>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType17>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType18>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType19>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType20>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType21>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType22>::mc_Value, "");
-			static_assert(TCCheckContracts<t_CType23>::mc_Value, "");
+			static_assert(TCCheckContracts<t_CType16>::mc_Value);
+			static_assert(TCCheckContracts<t_CType17>::mc_Value);
+			static_assert(TCCheckContracts<t_CType18>::mc_Value);
+			static_assert(TCCheckContracts<t_CType19>::mc_Value);
+			static_assert(TCCheckContracts<t_CType20>::mc_Value);
+			static_assert(TCCheckContracts<t_CType21>::mc_Value);
+			static_assert(TCCheckContracts<t_CType22>::mc_Value);
+			static_assert(TCCheckContracts<t_CType23>::mc_Value);
 #endif
 #endif
 
