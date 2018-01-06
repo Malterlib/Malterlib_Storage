@@ -34,6 +34,7 @@ namespace NMib
 			TCOptional &operator = (TCOptional<tf_CType> &&_Value);
 			
 			TCOptional() = default;
+			TCOptional(CNullPtr);
 			TCOptional(TCOptional const &) = default;
 			TCOptional(TCOptional &&) = default;
 			TCOptional &operator = (TCOptional const &) = default;

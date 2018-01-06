@@ -6,6 +6,11 @@
 namespace NMib::NStorage
 {
 	template <typename t_CType>
+	TCOptional<t_CType>::TCOptional(CNullPtr)
+	{
+	}
+
+	template <typename t_CType>
 	TCOptional<t_CType>::TCOptional(t_CType const &_Value)
 		: CVariant(_Value)
 	{
