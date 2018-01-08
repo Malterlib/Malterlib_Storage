@@ -845,7 +845,9 @@ namespace NMib
 			static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
 			if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value)
 			{
+#if defined(DCompiler_MSVC_Workaround)
 				static_assert(!NTraits::TCHasOperatorDelete<tf_CObjectType>::mc_Value);
+#endif
 #if defined(DMibPOverrideOperatorNew)
 
 				NMem::CCaptureDefaultDelete Captured;
