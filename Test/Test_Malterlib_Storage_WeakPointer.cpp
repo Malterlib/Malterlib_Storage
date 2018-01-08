@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 using namespace NMib::NDataProcessing;
@@ -87,7 +87,7 @@ namespace
 				{
 					DMibTestPath("After shared cleared");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(-1));
+					DMibTest(DMibExpr(pThis->f_RefCountGet()) <= DMibExpr(-1));
 					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(1));
 				}
 				
@@ -95,7 +95,7 @@ namespace
 				{
 					DMibTestPath("After weak cleared");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(-1));
+					DMibTest(DMibExpr(pThis->f_RefCountGet()) <= DMibExpr(-1));
 					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
 				}
 				pWeakPointer2.f_Clear();

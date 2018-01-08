@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -838,14 +838,46 @@ namespace NMib
 			};
 		}
 
-		template <typename tf_CObjectType, typename tf_CAllocator>
-		void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
+		template <typename tf_CObjectType>
+		mint fg_DeleteWeakObjectGetSize(tf_CObjectType *_pObject)
 		{
 			static_assert(sizeof(tf_CObjectType) > 0);
 			static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
-			_pObject->~tf_CObjectType();
+			if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value)
+			{
+				static_assert(!NTraits::TCHasOperatorDelete<tf_CObjectType>::mc_Value);
+#if defined(DMibPOverrideOperatorNew)
+
+				NMem::CCaptureDefaultDelete Captured;
+				delete _pObject;
+
+				DMibFastCheck(Captured.m_pMemory);
+
+				return Captured.m_Size;
+#else
+				return 0;
+#endif
+			}
+			else
+			{
+				_pObject->~tf_CObjectType();
+				return sizeof(tf_CObjectType);
+			}
+		}
+
+		template <typename tf_CObjectType, typename tf_CAllocator>
+		void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
+		{
+			mint Size = fg_DeleteWeakObjectGetSize(_pObject);
 			if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
-				fg_Forward<tf_CAllocator>(_Allocator).f_Free(_pObject);
+			{
+				if (Size)
+					fg_Forward<tf_CAllocator>(_Allocator).f_Free(_pObject, Size);
+				else
+					fg_Forward<tf_CAllocator>(_Allocator).f_FreeNoSize(_pObject);
+			}
+			else
+				_pObject->f_WeakRefCountSetSize(Size);
 		}
 
 		template <typename t_CType, typename... tp_COptions>
@@ -1384,11 +1416,16 @@ namespace NMib
 			bool fp_Delete()
 			{
 				bool bRet = false;
-				if (m_Data.m_pPointTo)
+				auto pPointTo = m_Data.m_pPointTo;
+				if (pPointTo)
 				{
-					if (m_Data.m_pPointTo->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(&m_Data.m_DebugRef)) == 0)
+					if (pPointTo->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(&m_Data.m_DebugRef)) == 0)
 					{
-						fp_GetAllocator().f_Free(m_Data.m_pPointTo);
+						mint Size = pPointTo->f_WeakRefCountGetSize();
+						if (Size)
+							fp_GetAllocator().f_Free(m_Data.m_pPointTo, Size);
+						else
+							fp_GetAllocator().f_FreeNoSize(m_Data.m_pPointTo);
 						bRet = true;
 					}
 					m_Data.m_pPointTo = nullptr;
@@ -1618,7 +1655,7 @@ namespace NMib
 				if (!pData)
 					return pReturn;
 				
-				if (!pData->f_RefCountIncreaseWhileNot(DMibRefcountDebuggingOnly(pReturn.m_Data.m_DebugRef, ) -1))
+				if (!pData->f_RefCountIncreaseWhileValid(DMibRefcountDebuggingOnly(pReturn.m_Data.m_DebugRef)))
 					return pReturn;
 				
 				pReturn.fp_SetCounted(pData);
