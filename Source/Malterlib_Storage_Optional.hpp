@@ -97,7 +97,7 @@ namespace NMib::NStorage
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return &this->CVariant::template f_Get<1>(); 
+		return this->CVariant::template f_Get<1>(); 
 	}
 
 	template <typename t_CType>
