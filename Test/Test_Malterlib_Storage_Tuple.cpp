@@ -5,6 +5,9 @@
 
 #include "../../Type/Test/Test_TypeTraits_TestTypes.h"
 
+#ifdef DCompiler_clang
+#	pragma GCC diagnostic ignored "-Wunused-variable"
+#endif
 
 namespace
 {
