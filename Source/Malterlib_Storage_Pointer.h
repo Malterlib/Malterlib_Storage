@@ -871,6 +871,7 @@ namespace NMib
 		void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
 		{
 			mint Size = fg_DeleteWeakObjectGetSize(_pObject);
+			_pObject->f_WeakRefCountSetSize(Size);
 			if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
 			{
 				if (Size)
@@ -878,8 +879,6 @@ namespace NMib
 				else
 					fg_Forward<tf_CAllocator>(_Allocator).f_FreeNoSize(_pObject);
 			}
-			else
-				_pObject->f_WeakRefCountSetSize(Size);
 		}
 
 		template <typename t_CType, typename... tp_COptions>
