@@ -1055,6 +1055,7 @@ namespace NMib
 					)
 				;
 				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+				static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 				fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			}
 
@@ -1068,6 +1069,7 @@ namespace NMib
 						, "Not a valid conversion"
 					)
 				;
+				static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
 				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
@@ -1238,6 +1240,8 @@ namespace NMib
 						, "Not a valid conversion"
 					)
 				;
+				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+				static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 				m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 				_Other.m_Data.m_pPointTo = nullptr;
 				DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
@@ -1256,6 +1260,7 @@ namespace NMib
 					)
 				;
 				static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+				static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 				fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 				return *this;
 			}
