@@ -1,12 +1,12 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
-using namespace NMib::NDataProcessing;
+using namespace NMib::NCryptography;
 using namespace NMib;
-using namespace NMib::NMem;
+using namespace NMib::NMemory;
 using namespace NMib::NStream;
 using namespace NMib::NContainer;
-using namespace NMib::NPtr;
+using namespace NMib::NStorage;
 
 namespace
 {

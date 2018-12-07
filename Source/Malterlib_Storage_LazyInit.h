@@ -1,4 +1,4 @@
-﻿
+
 /*¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯*\
 |	File:			Short_desscription															|
 |																								|
@@ -16,39 +16,34 @@
 
 #include <Mib/Core/Core>
 
-namespace NMib
+namespace NMib::NStorage
 {
-	namespace NStorage
+	template <typename t_CData, typename t_CLock = NThread::CMutual>
+	class TCLazyInit
 	{
-		template <typename t_CData, typename t_CLock = NThread::CMutual>
-		class TCLazyInit
-		{
-		public:
+	public:
 
-			TCLazyInit();
-			~TCLazyInit();
+		TCLazyInit();
+		~TCLazyInit();
 
-			template <typename ...tfp_CParam>
- 			inline_small t_CData *operator() (tfp_CParam && ...p_Param);
-			inline_small t_CData *operator ->();
-			inline_small t_CData &operator *();
+		template <typename ...tfp_CParam>
+		inline_small t_CData *operator() (tfp_CParam && ...p_Param);
+		inline_small t_CData *operator ->();
+		inline_small t_CData &operator *();
 
-		private:
-			template <typename... tfp_CData>
-			void fp_Construct(tfp_CData && ... p_Params);
+	private:
+		template <typename... tfp_CData>
+		void fp_Construct(tfp_CData && ... p_Params);
 
-			typedef t_CData CData;
-			typedef uint8 CObjectType[sizeof(CData)];
-			typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
+		typedef t_CData CData;
+		typedef uint8 CObjectType[sizeof(CData)];
+		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
 
-			CTypeAligned m_ObjectSpace;
-			t_CLock m_Lock;
-			bool m_bConstructed:1;
-			bool m_bDestructed:1;
-		};
-
-	}
-
+		CTypeAligned m_ObjectSpace;
+		t_CLock m_Lock;
+		bool m_bConstructed:1;
+		bool m_bDestructed:1;
+	};
 }
 
 #ifndef DMibPNoShortCuts

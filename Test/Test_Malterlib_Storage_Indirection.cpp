@@ -1,4 +1,4 @@
-﻿// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Indirection>
@@ -6,7 +6,7 @@
 namespace
 {
 	using namespace NMib;
-	using namespace NMib::NIndirection;
+	using namespace NMib::NStorage;
 	namespace 
 	{
 		class CTestClass

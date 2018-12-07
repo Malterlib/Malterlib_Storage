@@ -1,18 +1,18 @@
 // Copyright © 2015 Hansoft AB 
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
-using namespace NMib::NDataProcessing;
+using namespace NMib::NCryptography;
 using namespace NMib;
-using namespace NMib::NMem;
+using namespace NMib::NMemory;
 using namespace NMib::NStream;
 using namespace NMib::NContainer;
-using namespace NMib::NPtr;
+using namespace NMib::NStorage;
 
 #include <memory>
 
 namespace NMib
 {
-	namespace NPtr
+	namespace NStorage
 	{
 
 	}
@@ -24,7 +24,7 @@ namespace
 	{
 	public:
 
-		struct CTestWeakIntrusive : public NPtr::TCSharedPointerIntrusiveBase<NPtr::ESharedPointerOption_SupportWeakPointer>
+		struct CTestWeakIntrusive : public NStorage::TCSharedPointerIntrusiveBase<NStorage::ESharedPointerOption_SupportWeakPointer>
 		{
 			uint32 m_Value;
 			zbool m_bDestroyed;
@@ -40,7 +40,7 @@ namespace
 			}
 		};
 
-		struct CTestIntrusive : public NPtr::TCSharedPointerIntrusiveBase<>
+		struct CTestIntrusive : public NStorage::TCSharedPointerIntrusiveBase<>
 		{
 			uint32 m_Value;
 			zbool m_bDestroyed;
@@ -170,7 +170,7 @@ namespace
 				
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
 				
-				TCSharedPointer<CTestWeakIntrusive, NMib::NMem::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
+				TCSharedPointer<CTestWeakIntrusive, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
 				
 				DMibTest(!DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointer2.f_IsEmpty()));
@@ -189,7 +189,7 @@ namespace
 				
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
 				
-				TCSharedPointer<CTestWeakIntrusive, NMib::NMem::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
+				TCSharedPointer<CTestWeakIntrusive, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
 				
 				DMibTest(DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(DMibExpr(pPointer2.f_IsEmpty()));
@@ -206,7 +206,7 @@ namespace
 				
 				TCSharedPointer<int32, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
 				
-				TCSharedPointer<int32, NMib::NMem::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
+				TCSharedPointer<int32, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
 				
 				DMibTest(!DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointer2.f_IsEmpty()));
