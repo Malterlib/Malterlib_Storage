@@ -271,22 +271,7 @@ namespace NMib::NStorage
 
 		static_assert(sizeof(t_CIndexType) <= sizeof(int), "Index type must fit in enum");
 		static_assert(NTraits::TCIsSigned<t_CIndexType>::mc_Value || NTraits::TCIsEnum<t_CIndexType>::mc_Value, "Index type must be signed");
-#ifdef DMibDebuggerHelpers
-		struct CMemberValues
-		{
-			t_CIndexType m_Values
-			[
-#if DMibContainerVariantMany > 1
-				24
-#elif DMibContainerVariantMany > 0
-				16
-#else
-				8
-#endif
-			];
-		};
-		static CMemberValues ms_MemberValues;
-#endif
+
 	private:
 		template
 		<
@@ -3073,9 +3058,6 @@ private:
 
 		TCStreamableVariant()
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			static_assert(mcp_FirstDefaultConstructible != -1, "No suitable default constructible type exists in variant, variant cannot be default constructed.");
 			fp_SetNoRet<(t_CIndexType)mcp_FirstDefaultConstructible>();
 		}
@@ -3166,9 +3148,6 @@ private:
 
 		TCStreamableVariant(TCStreamableVariant &&_Other)
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			_Other.f_Visit(CVariantVisitor_Move(*this));
 		}
 
@@ -3247,17 +3226,11 @@ private:
 
 		TCStreamableVariant(TCStreamableVariant const &_Other)
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
 		}
 
 		TCStreamableVariant(TCStreamableVariant &_Other)
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
 		}
 
@@ -3343,9 +3316,6 @@ private:
 		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
 		TCStreamableVariant(tf_CParam0 &&_Param0)
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			fp_SetNoRet<(t_CIndexType)TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
 		}
 
@@ -3358,9 +3328,6 @@ private:
 		>
 		TCStreamableVariant(tf_CParam0 &&_Param0, tf_CParam1 &&_Param1, tfp_CParams && ...p_RestOfParams)
 		{
-#ifdef DMibDebuggerHelpers
-			(void)&ms_MemberValues;
-#endif
 			fp_SetNoRet<(t_CIndexType)TCEvalManyParamConstruction<void (tf_CParam0 &&, tf_CParam1 &&, tfp_CParams...)>::mc_Value>
 				(
 					fg_Forward<tf_CParam0>(_Param0)
@@ -4070,140 +4037,6 @@ private:
 
 	};
 
-#ifdef DMibDebuggerHelpers
-	template
-	<
-		typename t_CIndexType
-		, typename t_CType0, t_CIndexType t_iMember0
-		, typename t_CType1, t_CIndexType t_iMember1
-		, typename t_CType2, t_CIndexType t_iMember2
-		, typename t_CType3, t_CIndexType t_iMember3
-		, typename t_CType4, t_CIndexType t_iMember4
-		, typename t_CType5, t_CIndexType t_iMember5
-		, typename t_CType6, t_CIndexType t_iMember6
-		, typename t_CType7, t_CIndexType t_iMember7
-#if DMibContainerVariantMany > 0
-		, typename t_CType8, t_CIndexType t_iMember8
-		, typename t_CType9, t_CIndexType t_iMember9
-		, typename t_CType10, t_CIndexType t_iMember10
-		, typename t_CType11, t_CIndexType t_iMember11
-		, typename t_CType12, t_CIndexType t_iMember12
-		, typename t_CType13, t_CIndexType t_iMember13
-		, typename t_CType14, t_CIndexType t_iMember14
-		, typename t_CType15, t_CIndexType t_iMember15
-#if DMibContainerVariantMany > 1
-		, typename t_CType16, t_CIndexType t_iMember16
-		, typename t_CType17, t_CIndexType t_iMember17
-		, typename t_CType18, t_CIndexType t_iMember18
-		, typename t_CType19, t_CIndexType t_iMember19
-		, typename t_CType20, t_CIndexType t_iMember20
-		, typename t_CType21, t_CIndexType t_iMember21
-		, typename t_CType22, t_CIndexType t_iMember22
-		, typename t_CType23, t_CIndexType t_iMember23
-#endif
-#endif
-		, bint t_bStreamable
-	>
-	assure_used typename TCStreamableVariant
-		<
-			t_CIndexType
-			, t_CType0, t_iMember0
-			, t_CType1, t_iMember1
-			, t_CType2, t_iMember2
-			, t_CType3, t_iMember3
-			, t_CType4, t_iMember4
-			, t_CType5, t_iMember5
-			, t_CType6, t_iMember6
-			, t_CType7, t_iMember7
-#if DMibContainerVariantMany > 0
-			, t_CType8, t_iMember8
-			, t_CType9, t_iMember9
-			, t_CType10, t_iMember10
-			, t_CType11, t_iMember11
-			, t_CType12, t_iMember12
-			, t_CType13, t_iMember13
-			, t_CType14, t_iMember14
-			, t_CType15, t_iMember15
-#if DMibContainerVariantMany > 1
-			, t_CType16, t_iMember16
-			, t_CType17, t_iMember17
-			, t_CType18, t_iMember18
-			, t_CType19, t_iMember19
-			, t_CType20, t_iMember20
-			, t_CType21, t_iMember21
-			, t_CType22, t_iMember22
-			, t_CType23, t_iMember23
-#endif
-#endif
-			, t_bStreamable
-		>::CMemberValues TCStreamableVariant
-		<
-			t_CIndexType
-			, t_CType0, t_iMember0
-			, t_CType1, t_iMember1
-			, t_CType2, t_iMember2
-			, t_CType3, t_iMember3
-			, t_CType4, t_iMember4
-			, t_CType5, t_iMember5
-			, t_CType6, t_iMember6
-			, t_CType7, t_iMember7
-#if DMibContainerVariantMany > 0
-			, t_CType8, t_iMember8
-			, t_CType9, t_iMember9
-			, t_CType10, t_iMember10
-			, t_CType11, t_iMember11
-			, t_CType12, t_iMember12
-			, t_CType13, t_iMember13
-			, t_CType14, t_iMember14
-			, t_CType15, t_iMember15
-#if DMibContainerVariantMany > 1
-			, t_CType16, t_iMember16
-			, t_CType17, t_iMember17
-			, t_CType18, t_iMember18
-			, t_CType19, t_iMember19
-			, t_CType20, t_iMember20
-			, t_CType21, t_iMember21
-			, t_CType22, t_iMember22
-			, t_CType23, t_iMember23
-#endif
-#endif
-			, t_bStreamable
-		>::ms_MemberValues
-		=
-		{
-			{
-				t_iMember0
-				, t_iMember1
-				, t_iMember2
-				, t_iMember3
-				, t_iMember4
-				, t_iMember5
-				, t_iMember6
-				, t_iMember7
-	#if DMibContainerVariantMany > 0
-				, t_iMember8
-				, t_iMember9
-				, t_iMember10
-				, t_iMember11
-				, t_iMember12
-				, t_iMember13
-				, t_iMember14
-				, t_iMember15
-	#if DMibContainerVariantMany > 1
-				, t_iMember16
-				, t_iMember17
-				, t_iMember18
-				, t_iMember19
-				, t_iMember20
-				, t_iMember21
-				, t_iMember22
-				, t_iMember23
-	#endif
-	#endif
-			}
-		}
-	;
-#endif
 
 	/***************************************************************************************************\
 	|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
