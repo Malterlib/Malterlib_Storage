@@ -48,15 +48,15 @@ namespace NMib::NStorage::NIndirection
 
 	public:
 
-		t_CType const &f_Get() const;
-		t_CType volatile &f_Get() volatile;
-		t_CType const volatile &f_Get() const volatile;
-		t_CType &f_Get();
+		[[gnu::artificial]] inline_always t_CType const &f_Get() const;
+		[[gnu::artificial]] inline_always t_CType volatile &f_Get() volatile;
+		[[gnu::artificial]] inline_always t_CType const volatile &f_Get() const volatile;
+		[[gnu::artificial]] inline_always t_CType &f_Get();
 
 	public:
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
+		[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
 			, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
@@ -64,7 +64,7 @@ namespace NMib::NStorage::NIndirection
 		operator () (tfp_CParams &&... p_Params);
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
+		[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::mc_Value
 			, typename NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::CReturnType
@@ -72,7 +72,7 @@ namespace NMib::NStorage::NIndirection
 		operator () (tfp_CParams &&...p_Params) const;
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
+		[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::mc_Value
 			, typename NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::CReturnType
@@ -80,7 +80,7 @@ namespace NMib::NStorage::NIndirection
 		operator () (tfp_CParams &&...p_Params) volatile;
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
+		[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::mc_Value
 			, typename NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::CReturnType
@@ -195,10 +195,10 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection &operator =(TCIndirection const volatile &_Other);
 		TCIndirection &operator =(TCIndirection &_Other);
 		TCIndirection &operator =(TCIndirection &&_Other);
-		operator t_CType const & () const;
-		operator t_CType volatile & () volatile;
-		operator t_CType const volatile & () const volatile;
-		operator t_CType & ();
+		[[gnu::artificial]] inline_always operator t_CType const & () const;
+		[[gnu::artificial]] inline_always operator t_CType volatile & () volatile;
+		[[gnu::artificial]] inline_always operator t_CType const volatile & () const volatile;
+		[[gnu::artificial]] inline_always operator t_CType & ();
 	};
 
 	DMibTempImplementIndirectionBinaryOperator(==);

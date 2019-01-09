@@ -6,14 +6,14 @@
 namespace NMib::NStorage::NReference
 {
 	template <typename t_CType, typename t_CPtr>
-	t_CType &TCReference<t_CType, t_CPtr>::f_Get() const volatile
+	[[gnu::artificial]] inline_always t_CType &TCReference<t_CType, t_CPtr>::f_Get() const volatile
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CPtr>
 	template <typename... tfp_CParams>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
 		, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
@@ -27,7 +27,7 @@ namespace NMib::NStorage::NReference
 
 	template <typename t_CType, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 			, NFunction::TCMemberFunctionBoundFunctor
@@ -43,7 +43,7 @@ namespace NMib::NStorage::NReference
 
 	template <typename t_CType, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 		, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
@@ -92,7 +92,7 @@ namespace NMib::NStorage::NReference
 	}
 
 	template <typename t_CType, typename t_CPtr>
-	TCReference<t_CType, t_CPtr>::operator t_CType & () const volatile
+	[[gnu::artificial]] inline_always TCReference<t_CType, t_CPtr>::operator t_CType & () const volatile
 	{
 		return this->f_Get();
 	}

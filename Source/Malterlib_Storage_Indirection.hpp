@@ -44,32 +44,32 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	t_CType const &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() const
+	[[gnu::artificial]] inline_always t_CType const &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() const
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	t_CType volatile &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() volatile
+	[[gnu::artificial]] inline_always t_CType volatile &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() volatile
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	t_CType const volatile &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() const volatile
+	[[gnu::artificial]] inline_always t_CType const volatile &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get() const volatile
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	t_CType &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get()
+	[[gnu::artificial]] inline_always t_CType &TCIndirection<t_CType, t_CAllocator, t_CPtr>::f_Get()
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename... tfp_CParams>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
 		, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
@@ -81,7 +81,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename... tfp_CParams>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::mc_Value
 		, typename NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::CReturnType
@@ -93,7 +93,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename... tfp_CParams>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::mc_Value
 		, typename NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::CReturnType
@@ -105,7 +105,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename... tfp_CParams>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::mc_Value
 		, typename NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::CReturnType
@@ -119,7 +119,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 			, NFunction::TCMemberFunctionBoundFunctor
@@ -135,7 +135,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 		, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
@@ -147,7 +147,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 			, NFunction::TCMemberFunctionBoundFunctor
@@ -163,7 +163,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
@@ -176,7 +176,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 			, NFunction::TCMemberFunctionBoundFunctor
@@ -192,7 +192,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
@@ -205,7 +205,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 			, NFunction::TCMemberFunctionBoundFunctor
@@ -221,7 +221,7 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
 	template <typename t_CMemberPtr>
-	typename TCEnableIf
+	[[gnu::artificial]] inline_always typename TCEnableIf
 	<
 		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType>::CType
@@ -328,25 +328,25 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType const & () const
+	[[gnu::artificial]] inline_always TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType const & () const
 	{
 		return this->f_Get();
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType volatile & () volatile
+	[[gnu::artificial]] inline_always TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType volatile & () volatile
 	{
 		return this->f_Get();
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType const volatile & () const volatile
+	[[gnu::artificial]] inline_always TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType const volatile & () const volatile
 	{
 		return this->f_Get();
 	}
 
 	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType & ()
+	[[gnu::artificial]] inline_always TCIndirection<t_CType, t_CAllocator, t_CPtr>::operator t_CType & ()
 	{
 		return this->f_Get();
 	}
