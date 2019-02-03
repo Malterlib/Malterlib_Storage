@@ -48,44 +48,24 @@ namespace NMib::NStorage::NIndirection
 
 	public:
 
-		t_CType const &f_Get() const;
-		t_CType volatile &f_Get() volatile;
-		t_CType const volatile &f_Get() const volatile;
-		t_CType &f_Get();
+		mark_artificial inline_always t_CType const &f_Get() const;
+		mark_artificial inline_always t_CType volatile &f_Get() volatile;
+		mark_artificial inline_always t_CType const volatile &f_Get() const volatile;
+		mark_artificial inline_always t_CType &f_Get();
 
 	public:
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
-		<
-			NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
-			, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
-		>::CType
-		operator () (tfp_CParams &&... p_Params);
+		mark_artificial inline_always auto operator () (tfp_CParams &&... p_Params);
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
-		<
-			NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::mc_Value
-			, typename NTraits::TCIsCallableWith<t_CType const, void (tfp_CParams &&...)>::CReturnType
-		>::CType
-		operator () (tfp_CParams &&...p_Params) const;
+		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) const;
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
-		<
-			NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::mc_Value
-			, typename NTraits::TCIsCallableWith<t_CType volatile, void (tfp_CParams &&...)>::CReturnType
-		>::CType
-		operator () (tfp_CParams &&...p_Params) volatile;
+		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) volatile;
 
 		template <typename... tfp_CParams>
-		typename TCEnableIf
-		<
-			NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::mc_Value
-			, typename NTraits::TCIsCallableWith<t_CType const volatile, void (tfp_CParams &&...)>::CReturnType
-		>::CType
-		operator () (tfp_CParams &&...p_Params) const volatile;
+		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) const volatile;
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -195,10 +175,10 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection &operator =(TCIndirection const volatile &_Other);
 		TCIndirection &operator =(TCIndirection &_Other);
 		TCIndirection &operator =(TCIndirection &&_Other);
-		operator t_CType const & () const;
-		operator t_CType volatile & () volatile;
-		operator t_CType const volatile & () const volatile;
-		operator t_CType & ();
+		mark_artificial inline_always operator t_CType const & () const;
+		mark_artificial inline_always operator t_CType volatile & () volatile;
+		mark_artificial inline_always operator t_CType const volatile & () const volatile;
+		mark_artificial inline_always operator t_CType & ();
 	};
 
 	DMibTempImplementIndirectionBinaryOperator(==);

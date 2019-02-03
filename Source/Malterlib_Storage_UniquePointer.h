@@ -222,7 +222,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
+		mark_artificial inline_always typename TCEnableIf
 			<
 				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 				, NFunction::TCMemberFunctionBoundFunctor
@@ -237,7 +237,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
+		mark_artificial inline_always typename TCEnableIf
 			<
 				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType

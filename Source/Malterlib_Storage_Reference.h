@@ -38,10 +38,10 @@ namespace NMib::NStorage::NReference
 
 	public:
 
-		t_CType &f_Get() const volatile;
+		mark_artificial inline_always t_CType &f_Get() const volatile;
 	public:
 		template <typename... tfp_CParams>
-		typename TCEnableIf
+		mark_artificial inline_always typename TCEnableIf
 		<
 			NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
 			, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
@@ -53,7 +53,7 @@ namespace NMib::NStorage::NReference
 		/// =============
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
+		mark_artificial inline_always typename TCEnableIf
 			<
 				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 				, NFunction::TCMemberFunctionBoundFunctor
@@ -65,7 +65,7 @@ namespace NMib::NStorage::NReference
 		operator ->* (t_CMemberPtr const &_MemberPtr) const volatile;
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
+		mark_artificial inline_always typename TCEnableIf
 		<
 			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 			, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
@@ -88,7 +88,7 @@ namespace NMib::NStorage::NReference
 		TCReference(TCReference const volatile &_Other);
 		TCReference(TCReference &_Other);
 		TCReference(TCReference &&_Other);
-		operator t_CType & () const volatile;
+		mark_artificial inline_always operator t_CType & () const volatile;
 	};
 
 	DMibTempImplementReferenceBinaryOperator(==);
