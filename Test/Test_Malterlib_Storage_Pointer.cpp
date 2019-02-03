@@ -867,6 +867,451 @@ namespace
 			Test10 = fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1,2,3,4,5,6,7,8,9,10)) && DMibExpr(2)) (ETestFlag_NoValues);
 		}
+
+		void f_TestSharedPointerInheritance()
+		{
+			static constexpr bool s_bReportMemory = false;
+
+			using namespace NStr;
+
+			struct CBaseNonVirtual
+			{
+				mint m_Value0 = 0;
+			};
+
+			struct CBase
+			{
+				virtual ~CBase()
+				{
+					//DMibTraceSafe2("~CBase\n");
+				}
+
+				virtual mint f_GetValue()
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 0;
+				//NStr::CStr m_StrValue = "Base";
+			};
+
+			struct CDerived : public virtual CBase
+			{
+				~CDerived()
+				{
+					//DMibTraceSafe2("~CDerived\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 1;
+				//NStr::CStr m_StrValue = "Derived";
+			};
+
+			struct CDerived2 : public virtual CBase
+			{
+				~CDerived2()
+				{
+					//DMibTraceSafe2("~CDerived2\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 2;
+				//NStr::CStr m_StrValue = "Derived2";
+			};
+
+			struct CDerived3 : public CDerived, CDerived2
+			{
+				~CDerived3()
+				{
+					//DMibTraceSafe2("~CDerived3\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 3;
+				//NStr::CStr m_StrValue = "Derived3";
+			};
+
+
+			struct CBaseIntrusive : public TCSharedPointerIntrusiveBase<>
+			{
+				virtual ~CBaseIntrusive()
+				{
+					//DMibTraceSafe2("~CBase\n");
+				}
+
+				virtual mint f_GetValue()
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 0;
+				//NStr::CStr m_StrValue = "Base";
+			};
+
+			struct CDerivedIntrusive : public virtual CBaseIntrusive
+			{
+				~CDerivedIntrusive()
+				{
+					//DMibTraceSafe2("~CDerived\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 1;
+				//NStr::CStr m_StrValue = "Derived";
+			};
+
+			struct CDerived2Intrusive : public virtual CBaseIntrusive
+			{
+				~CDerived2Intrusive()
+				{
+					//DMibTraceSafe2("~CDerived2\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 2;
+				//NStr::CStr m_StrValue = "Derived2";
+			};
+
+			struct alignas(32) CDerived3Intrusive : public CDerivedIntrusive, CDerived2Intrusive
+			{
+				~CDerived3Intrusive()
+				{
+					//DMibTraceSafe2("~CDerived3\n");
+				}
+
+				mint f_GetValue() override
+				{
+					return m_Value0;
+				}
+
+				mint m_Value0 = 3;
+				//NStr::CStr m_StrValue = "Derived3";
+			};
+
+			struct CReportScope : public CReportMemory
+			{
+				CReportScope(CFStr256 const &_Description, mint _Size)
+					: m_Description(_Description)
+					, m_Size(_Size)
+				{
+#if DMibConfig_Memory_Shims_Enable
+					if constexpr (s_bReportMemory)
+						m_pScope = fg_Construct(*this);
+#endif
+				}
+				~CReportScope()
+				{
+					if constexpr (s_bReportMemory)
+						DMibTraceSafe2("{}   {}   ({} + {})\n", m_Description, m_Size + m_Allocated, m_Size, m_Allocated);
+				}
+
+				virtual void f_Alloc
+					(
+						mint _MemoryAllocator
+						, mint _AllocatorDepth
+						, ch8 const *_pAllocatorName
+						, mint _Address
+						, mint _RequestedAlignment
+						, mint _RequestedSize
+						, mint _ReturnedSize
+						, fp32 _nBytesOverhead
+						, void *_pAllocationInfo
+					) override
+				{
+					if (NStr::fg_StrCmp(_pAllocatorName, "Main memory manager") != 0)
+						return;
+					m_Allocated += _RequestedSize;
+				}
+
+				virtual void f_Resize
+					(
+						mint _MemoryAllocator
+						, mint _AllocatorDepth
+						, ch8 const *_pAllocatorName
+						, mint _OldAddress
+						, mint _OldSize
+						, void const *_pOldAllocationInfo
+						, mint _Address
+						, mint _RequestedAlignment
+						, mint _RequestedSize
+						, mint _ReturnedSize
+						, fp32 _nBytesOverhead
+						, void *_pAllocationInfo
+					) override
+				{
+				}
+
+				virtual void f_Realloc
+					(
+						mint _MemoryAllocator
+						, mint _AllocatorDepth
+						, ch8 const *_pAllocatorName
+						, mint _OldAddress
+						, mint _OldSize
+						, void const *_pOldAllocationInfo
+						, mint _Address
+						, mint _RequestedAlignment
+						, mint _RequestedSize
+						, mint _ReturnedSize
+						, fp32 _nBytesOverhead
+						, void *_pAllocationInfo
+					) override
+				{
+				}
+
+				virtual void f_Free(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, void const *_pAllocationInfo) override
+				{
+				}
+
+				virtual void f_GetSize(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, void const *_pAllocationInfo) override
+				{
+				}
+
+				virtual void f_Protect(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, uaint _Protect) override
+				{
+				}
+
+				virtual void f_Commit(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size) override
+				{
+				}
+
+				virtual void f_Decommit(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size) override
+				{
+				}
+
+				virtual void f_AllocatorDelete(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth) override
+				{
+				}
+
+				CFStr256 m_Description;
+				mint m_Size = 0;
+				mint m_Allocated = 0;
+#if DMibConfig_Memory_Shims_Enable
+				TCUniquePointer<CMemoryReportScope> m_pScope;
+#endif
+			};
+
+			{
+				DMibTestPath("BaseNonVirtual");
+				{
+					CReportScope ReportScope("TCUniquePointer            CBaseNonVirtual   ", sizeof(TCUniquePointer<CBaseNonVirtual>));
+					TCUniquePointer<CBaseNonVirtual> pMalterlibUniquePointer(fg_Construct<CBaseNonVirtual>());
+				}
+				{
+					CReportScope ReportScope("unique_ptr                 CBaseNonVirtual   ", sizeof(std::unique_ptr<CBaseNonVirtual>));
+					std::unique_ptr<CBaseNonVirtual> pUniquePointer(std::make_unique<CBaseNonVirtual>());
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CBaseNonVirtual   ", sizeof(TCSharedPointer<CBaseNonVirtual>));
+					TCSharedPointer<CBaseNonVirtual> pMalterlibSharedPointer(fg_Construct<CBaseNonVirtual>());
+				}
+				{
+					CReportScope ReportScope("TCSharedPointerSupportWeak CBaseNonVirtual   ", sizeof(TCSharedPointerSupportWeak<CBaseNonVirtual>));
+					TCSharedPointerSupportWeak<CBaseNonVirtual> pMalterlibSharedPointerSupportWeak(fg_Construct<CBaseNonVirtual>());
+				}
+				{
+					CReportScope ReportScope("shared_ptr                 CBaseNonVirtual   ", sizeof(std::shared_ptr<CBaseNonVirtual>));
+					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CBase>());
+				}
+			}
+			if constexpr (s_bReportMemory)
+				DMibTraceSafe2("\n");
+
+			{
+				DMibTestPath("Base");
+				{
+					CReportScope ReportScope("TCUniquePointer            CBase             ", sizeof(TCUniquePointer<CBase>));
+					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CBase>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 0);
+				}
+				{
+					CReportScope ReportScope("unique_ptr                 CBase             ", sizeof(std::unique_ptr<CBase>));
+					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CBase>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pUniquePointer->f_GetValue(), ==, 0);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CBaseIntrusive    ", sizeof(TCSharedPointer<CBaseIntrusive>));
+					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CBaseIntrusive>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 0);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CBase             ", sizeof(TCSharedPointer<CBase>));
+					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CBase>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 0);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointerSupportWeak CBase             ", sizeof(TCSharedPointerSupportWeak<CBase>));
+					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CBase>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 0);
+				}
+				{
+					CReportScope ReportScope("shared_ptr                 CBase             ", sizeof(std::shared_ptr<CBase>));
+					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CBase>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pSharedPointer->f_GetValue(), ==, 0);
+				}
+			}
+			if constexpr (s_bReportMemory)
+				DMibTraceSafe2("\n");
+
+			{
+				DMibTestPath("Derived");
+				{
+					CReportScope ReportScope("TCUniquePointer            CDerived          ", sizeof(TCUniquePointer<CBase>));
+					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerived>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 1);
+				}
+				{
+					CReportScope ReportScope("unique_ptr                 CDerived          ", sizeof(std::unique_ptr<CBase>));
+					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerived>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pUniquePointer->f_GetValue(), ==, 1);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerivedIntrusive ", sizeof(TCSharedPointer<CBaseIntrusive>));
+					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerivedIntrusive>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 1);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerived          ", sizeof(TCSharedPointer<CBase>));
+					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CDerived>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 1);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointerSupportWeak CDerived          ", sizeof(TCSharedPointerSupportWeak<CBase>));
+					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerived>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 1);
+				}
+				{
+					CReportScope ReportScope("shared_ptr                 CDerived          ", sizeof(std::shared_ptr<CBase>));
+					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerived>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pSharedPointer->f_GetValue(), ==, 1);
+				}
+			}
+			if constexpr (s_bReportMemory)
+				DMibTraceSafe2("\n");
+
+			{
+				DMibTestPath("Derived2");
+				{
+					CReportScope ReportScope("TCUniquePointer            CDerived2         ", sizeof(TCUniquePointer<CBase>));
+					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerived2>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 2);
+				}
+				{
+					CReportScope ReportScope("unique_ptr                 CDerived2         ", sizeof(std::unique_ptr<CBase>));
+					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerived2>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pUniquePointer->f_GetValue(), ==, 2);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerived2Intrusive", sizeof(TCSharedPointer<CBaseIntrusive>));
+					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerived2Intrusive>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 2);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerived2         ", sizeof(TCSharedPointer<CBase>));
+					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CDerived2>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 2);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointerSupportWeak CDerived2         ", sizeof(TCSharedPointerSupportWeak<CBase>));
+					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerived2>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 2);
+				}
+				{
+					CReportScope ReportScope("shared_ptr                 CDerived2         ", sizeof(std::shared_ptr<CBase>));
+					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerived2>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pSharedPointer->f_GetValue(), ==, 2);
+				}
+			}
+			if constexpr (s_bReportMemory)
+				DMibTraceSafe2("\n");
+
+			{
+				DMibTestPath("Derived3");
+				{
+					CReportScope ReportScope("TCUniquePointer            CDerived3         ", sizeof(TCUniquePointer<CBase>));
+					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerived3>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 3);
+				}
+				{
+					CReportScope ReportScope("unique_ptr                 CDerived3         ", sizeof(std::unique_ptr<CBase>));
+					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerived3>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pUniquePointer->f_GetValue(), ==, 3);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerived3Intrusive", sizeof(TCSharedPointer<CBaseIntrusive>));
+					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerived3Intrusive>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 3);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointer            CDerived3         ", sizeof(TCSharedPointer<CBase>));
+					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CDerived3>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 3);
+				}
+				{
+					CReportScope ReportScope("TCSharedPointerSupportWeak CDerived3         ", sizeof(TCSharedPointerSupportWeak<CBase>));
+					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerived3>());
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 3);
+				}
+				{
+					CReportScope ReportScope("shared_ptr                 CDerived3         ", sizeof(std::shared_ptr<CBase>));
+					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerived3>());
+
+					if constexpr (!s_bReportMemory)
+						DMibExpect(pSharedPointer->f_GetValue(), ==, 3);
+				}
+			}
+		}
+
 		void f_DoTests()
 		{
 			DMibTestSuite("Unique Pointer")
@@ -876,6 +1321,10 @@ namespace
 			DMibTestSuite("Shared Pointer")
 			{
 				f_TestSharedPointer();
+			};
+			DMibTestSuite("Shared Pointer Inheritance")
+			{
+				f_TestSharedPointerInheritance();
 			};
 		}
 	};
