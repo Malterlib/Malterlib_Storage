@@ -16,9 +16,9 @@ namespace NMib::NStorage
 	class CAutoClearPtr
 	{
 	public:
-		CAutoClearPtr()
-		{
-		}
+		CAutoClearPtr();
+		~CAutoClearPtr();
+
 		DMibListLinkDS_Link(CAutoClearPtr, m_Link);
 	};
 
@@ -40,23 +40,12 @@ namespace NMib::NStorage
 			return *this;
 		}
 	public:
-		CAutoClearPtrMember()
-		{
-		}
+		CAutoClearPtrMember();
+		~CAutoClearPtrMember();
+
+		void f_Clear();
+
 		DMibListLinkDS_List(CAutoClearPtr, m_Link) m_Linked;
-		~CAutoClearPtrMember()
-		{
-			f_Clear();
-		}
-		void f_Clear()
-		{
-			CAutoClearPtr *pPtr = m_Linked.f_Pop();
-			while (pPtr)
-			{
-				((CAutoClearPtrDefaultDummy *)pPtr)->m_pPointTo = nullptr;
-				pPtr = m_Linked.f_Pop();
-			}
-		}
 	};
 
 	class CAutoClearPtrMemberDebug : public CAutoClearPtrMember
@@ -72,6 +61,7 @@ namespace NMib::NStorage
 	public:
 		CAutoClearPtrMemberDebug();
 		~CAutoClearPtrMemberDebug();
+
 		void f_Clear();
 	};
 
