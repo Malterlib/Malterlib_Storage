@@ -827,45 +827,44 @@ namespace NMib::NStorage
 	}
 
 	template <typename tf_CObjectType>
-	mint fg_DeleteWeakObjectGetSize(tf_CObjectType *_pObject)
+	NMemory::CCapturedDelete fg_DeleteWeakObjectGetCapturedDelete(tf_CObjectType *_pObject)
 	{
 		static_assert(sizeof(tf_CObjectType) > 0);
 		static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
 		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value)
 		{
-#if defined(DCompiler_MSVC_Workaround)
 			static_assert(!NTraits::TCHasOperatorDelete<tf_CObjectType>::mc_Value);
-#endif
 #if defined(DMibPOverrideOperatorNew)
 
 			NMemory::CCaptureDefaultDelete Captured;
 			delete _pObject;
 
-			DMibFastCheck(Captured.m_pMemory);
+			DMibFastCheck(Captured.m_Captured.m_pMemory);
 
-			return Captured.m_Size;
+			return Captured.m_Captured;
 #else
-			return 0;
+			static_assert(!NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value); // Operator new has to be overridden for this to work
+			return {_pObject, 0};
 #endif
 		}
 		else
 		{
 			_pObject->~tf_CObjectType();
-			return sizeof(tf_CObjectType);
+			return {_pObject, sizeof(tf_CObjectType)};
 		}
 	}
 
 	template <typename tf_CObjectType, typename tf_CAllocator>
 	void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
 	{
-		mint Size = fg_DeleteWeakObjectGetSize(_pObject);
-		_pObject->f_WeakRefCountSetSize(Size);
+		NMemory::CCapturedDelete CapturedDelete = fg_DeleteWeakObjectGetCapturedDelete(_pObject);
+		_pObject->f_WeakRefCountSetCapturedDelete(CapturedDelete);
 		if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
 		{
-			if (Size)
-				fg_Forward<tf_CAllocator>(_Allocator).f_Free(_pObject, Size);
+			if (CapturedDelete.m_Size)
+				fg_Forward<tf_CAllocator>(_Allocator).f_Free(CapturedDelete.m_pMemory, CapturedDelete.m_Size);
 			else
-				fg_Forward<tf_CAllocator>(_Allocator).f_FreeNoSize(_pObject);
+				fg_Forward<tf_CAllocator>(_Allocator).f_FreeNoSize(CapturedDelete.m_pMemory);
 		}
 	}
 
@@ -1415,11 +1414,11 @@ namespace NMib::NStorage
 			{
 				if (pPointTo->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(&m_Data.m_DebugRef)) == 0)
 				{
-					mint Size = pPointTo->f_WeakRefCountGetSize();
-					if (Size)
-						fp_GetAllocator().f_Free(m_Data.m_pPointTo, Size);
+					NMemory::CCapturedDelete CapturedDelete = pPointTo->f_WeakRefCountGetCapturedDelete();
+					if (CapturedDelete.m_Size)
+						fp_GetAllocator().f_Free(CapturedDelete.m_pMemory, CapturedDelete.m_Size);
 					else
-						fp_GetAllocator().f_FreeNoSize(m_Data.m_pPointTo);
+						fp_GetAllocator().f_FreeNoSize(CapturedDelete.m_pMemory);
 					bRet = true;
 				}
 				m_Data.m_pPointTo = nullptr;
