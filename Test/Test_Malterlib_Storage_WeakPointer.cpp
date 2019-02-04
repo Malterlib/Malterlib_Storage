@@ -26,6 +26,7 @@ namespace
 
 		struct CTestWeakIntrusive : public NStorage::TCSharedPointerIntrusiveBase<NStorage::ESharedPointerOption_SupportWeakPointer>
 		{
+			mint m_Dummy = 0; // Will be overwritten after destructor is called
 			uint32 m_Value;
 			zbool m_bDestroyed;
 			CTestWeakIntrusive *m_pThis;
