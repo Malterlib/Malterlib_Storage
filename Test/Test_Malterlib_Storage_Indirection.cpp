@@ -2,6 +2,7 @@
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Indirection>
+#include <Mib/Stream/Streams/Indirection>
 
 namespace
 {
