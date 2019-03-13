@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+﻿// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -41,6 +41,16 @@ namespace NMib::NStorage
 		, typename t_CType21 = void, t_CIndexType t_iMember21 = t_CIndexType(-22)
 		, typename t_CType22 = void, t_CIndexType t_iMember22 = t_CIndexType(-23)
 		, typename t_CType23 = void, t_CIndexType t_iMember23 = t_CIndexType(-24)
+#if DMibContainerVariantMany > 2
+		, typename t_CType24 = void, t_CIndexType t_iMember24 = t_CIndexType(-25)
+		, typename t_CType25 = void, t_CIndexType t_iMember25 = t_CIndexType(-26)
+		, typename t_CType26 = void, t_CIndexType t_iMember26 = t_CIndexType(-27)
+		, typename t_CType27 = void, t_CIndexType t_iMember27 = t_CIndexType(-28)
+		, typename t_CType28 = void, t_CIndexType t_iMember28 = t_CIndexType(-29)
+		, typename t_CType29 = void, t_CIndexType t_iMember29 = t_CIndexType(-30)
+		, typename t_CType30 = void, t_CIndexType t_iMember30 = t_CIndexType(-31)
+		, typename t_CType31 = void, t_CIndexType t_iMember31 = t_CIndexType(-32)
+#endif
 #endif
 #endif
 		, bint t_bStreamable = true
@@ -116,6 +126,16 @@ namespace NMib::NStorage
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -151,6 +171,16 @@ namespace NMib::NStorage
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -192,6 +222,16 @@ namespace NMib::NStorage
 		, typename t_CType21 = void
 		, typename t_CType22 = void
 		, typename t_CType23 = void
+#if DMibContainerVariantMany > 2
+		, typename t_CType24 = void
+		, typename t_CType25 = void
+		, typename t_CType26 = void
+		, typename t_CType27 = void
+		, typename t_CType28 = void
+		, typename t_CType29 = void
+		, typename t_CType30 = void
+		, typename t_CType31 = void
+#endif
 #endif
 #endif
 	>
@@ -226,6 +266,16 @@ namespace NMib::NStorage
 		, typename t_CType21 = void
 		, typename t_CType22 = void
 		, typename t_CType23 = void
+#if DMibContainerVariantMany > 2
+		, typename t_CType24 = void
+		, typename t_CType25 = void
+		, typename t_CType26 = void
+		, typename t_CType27 = void
+		, typename t_CType28 = void
+		, typename t_CType29 = void
+		, typename t_CType30 = void
+		, typename t_CType31 = void
+#endif
 #endif
 #endif
 	>
@@ -260,6 +310,16 @@ namespace NMib::NStorage
 		, typename t_CType21, t_CIndexType t_iMember21
 		, typename t_CType22, t_CIndexType t_iMember22
 		, typename t_CType23, t_CIndexType t_iMember23
+#if DMibContainerVariantMany > 2
+		, typename t_CType24, t_CIndexType t_iMember24
+		, typename t_CType25, t_CIndexType t_iMember25
+		, typename t_CType26, t_CIndexType t_iMember26
+		, typename t_CType27, t_CIndexType t_iMember27
+		, typename t_CType28, t_CIndexType t_iMember28
+		, typename t_CType29, t_CIndexType t_iMember29
+		, typename t_CType30, t_CIndexType t_iMember30
+		, typename t_CType31, t_CIndexType t_iMember31
+#endif
 #endif
 #endif
 		, bint t_bStreamable
@@ -301,6 +361,16 @@ namespace NMib::NStorage
 			, typename t_CType2_21
 			, typename t_CType2_22
 			, typename t_CType2_23
+#if DMibContainerVariantMany > 2
+			, typename t_CType2_24
+			, typename t_CType2_25
+			, typename t_CType2_26
+			, typename t_CType2_27
+			, typename t_CType2_28
+			, typename t_CType2_29
+			, typename t_CType2_30
+			, typename t_CType2_31
+#endif
 #endif
 #endif
 		>
@@ -335,6 +405,16 @@ namespace NMib::NStorage
 			, typename t_CType2_21
 			, typename t_CType2_22
 			, typename t_CType2_23
+#if DMibContainerVariantMany > 2
+			, typename t_CType2_24
+			, typename t_CType2_25
+			, typename t_CType2_26
+			, typename t_CType2_27
+			, typename t_CType2_28
+			, typename t_CType2_29
+			, typename t_CType2_30
+			, typename t_CType2_31
+#endif
 #endif
 #endif
 		>
@@ -379,9 +459,21 @@ namespace NMib::NStorage
 			,EDebugHelper_Member21 = t_iMember21
 			,EDebugHelper_Member22 = t_iMember22
 			,EDebugHelper_Member23 = t_iMember23
+#if DMibContainerVariantMany > 2
+			, EDebugHelper_Member24 = t_iMember24
+			, EDebugHelper_Member25 = t_iMember25
+			, EDebugHelper_Member26 = t_iMember26
+			, EDebugHelper_Member27 = t_iMember27
+			, EDebugHelper_Member28 = t_iMember28
+			, EDebugHelper_Member29 = t_iMember29
+			, EDebugHelper_Member30 = t_iMember30
+			, EDebugHelper_Member31 = t_iMember31
 #endif
 #endif
-#if DMibContainerVariantMany > 1
+#endif
+#if DMibContainerVariantMany > 2
+			, EDebugHelper_MaxMembers = 32
+#elif DMibContainerVariantMany > 1
 			,EDebugHelper_MaxMembers = 24
 #elif DMibContainerVariantMany > 0
 			,EDebugHelper_MaxMembers = 16
@@ -489,7 +581,51 @@ namespace NMib::NStorage
 																									<
 																										int
 																										, t_iMember22
+#if DMibContainerVariantMany > 2
+																										, TCConstantMin
+																										<
+																											int
+																											, t_iMember23
+																											, TCConstantMin
+																											<
+																												int
+																												, t_iMember24
+																												, TCConstantMin
+																												<
+																													int
+																													, t_iMember25
+																													, TCConstantMin
+																													<
+																														int
+																														, t_iMember26
+																														, TCConstantMin
+																														<
+																															int
+																															, t_iMember27
+																															, TCConstantMin
+																															<
+																																int
+																																, t_iMember28
+																																, TCConstantMin
+																																<
+																																	int
+																																	, t_iMember29
+																																	, TCConstantMin
+																																	<
+																																		int
+																																		, t_iMember30
+																																		, t_iMember31
+																																	>::mc_Value
+																																>::mc_Value
+																															>::mc_Value
+																														>::mc_Value
+																													>::mc_Value
+																												>::mc_Value
+																											>::mc_Value
+																										>::mc_Value
+#else
 																										, t_iMember23
+#endif
 																									>::mc_Value
 																								>::mc_Value
 																							>::mc_Value
@@ -616,7 +752,51 @@ namespace NMib::NStorage
 																									<
 																										int
 																										, t_iMember22
+#if DMibContainerVariantMany > 2
+																										, TCConstantMax
+																										<
+																											int
+																											, t_iMember23
+																											, TCConstantMax
+																											<
+																												int
+																												, t_iMember24
+																												, TCConstantMax
+																												<
+																													int
+																													, t_iMember25
+																													, TCConstantMax
+																													<
+																														int
+																														, t_iMember26
+																														, TCConstantMax
+																														<
+																															int
+																															, t_iMember27
+																															, TCConstantMax
+																															<
+																																int
+																																, t_iMember28
+																																, TCConstantMax
+																																<
+																																	int
+																																	, t_iMember29
+																																	, TCConstantMax
+																																	<
+																																		int
+																																		, t_iMember30
+																																		, t_iMember31
+																																	>::mc_Value
+																																>::mc_Value
+																															>::mc_Value
+																														>::mc_Value
+																													>::mc_Value
+																												>::mc_Value
+																											>::mc_Value
+																										>::mc_Value
+#else
 																										, t_iMember23
+#endif
 																									>::mc_Value
 																								>::mc_Value
 																							>::mc_Value
@@ -680,6 +860,16 @@ namespace NMib::NStorage
 		static_assert(TCCheckContracts<t_CType21>::mc_Value);
 		static_assert(TCCheckContracts<t_CType22>::mc_Value);
 		static_assert(TCCheckContracts<t_CType23>::mc_Value);
+#if DMibContainerVariantMany > 2
+		static_assert(TCCheckContracts<t_CType24>::mc_Value);
+		static_assert(TCCheckContracts<t_CType25>::mc_Value);
+		static_assert(TCCheckContracts<t_CType26>::mc_Value);
+		static_assert(TCCheckContracts<t_CType27>::mc_Value);
+		static_assert(TCCheckContracts<t_CType28>::mc_Value);
+		static_assert(TCCheckContracts<t_CType29>::mc_Value);
+		static_assert(TCCheckContracts<t_CType30>::mc_Value);
+		static_assert(TCCheckContracts<t_CType31>::mc_Value);
+#endif
 #endif
 #endif
 
@@ -715,6 +905,16 @@ public:
 				typename TCChooseType<t_iMember == t_iMember21, t_CType21,
 				typename TCChooseType<t_iMember == t_iMember22, t_CType22,
 				typename TCChooseType<t_iMember == t_iMember23, t_CType23,
+#if DMibContainerVariantMany > 2
+				typename TCChooseType<t_iMember == t_iMember24, t_CType24,
+				typename TCChooseType<t_iMember == t_iMember25, t_CType25,
+				typename TCChooseType<t_iMember == t_iMember26, t_CType26,
+				typename TCChooseType<t_iMember == t_iMember27, t_CType27,
+				typename TCChooseType<t_iMember == t_iMember28, t_CType28,
+				typename TCChooseType<t_iMember == t_iMember29, t_CType29,
+				typename TCChooseType<t_iMember == t_iMember30, t_CType30,
+				typename TCChooseType<t_iMember == t_iMember31, t_CType31,
+#endif
 #endif
 #endif
 				void >::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
@@ -722,6 +922,9 @@ public:
 				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
 #if DMibContainerVariantMany > 1
 				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
+#if DMibContainerVariantMany > 2
+				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
+#endif
 #endif
 #endif
 				CType;
@@ -756,6 +959,16 @@ public:
 				typename TCChooseType<t_iIndex == 21, t_CType21,
 				typename TCChooseType<t_iIndex == 22, t_CType22,
 				typename TCChooseType<t_iIndex == 23, t_CType23,
+#if DMibContainerVariantMany > 2
+				typename TCChooseType<t_iIndex == 24, t_CType24,
+				typename TCChooseType<t_iIndex == 25, t_CType25,
+				typename TCChooseType<t_iIndex == 26, t_CType26,
+				typename TCChooseType<t_iIndex == 27, t_CType27,
+				typename TCChooseType<t_iIndex == 28, t_CType28,
+				typename TCChooseType<t_iIndex == 29, t_CType29,
+				typename TCChooseType<t_iIndex == 30, t_CType30,
+				typename TCChooseType<t_iIndex == 31, t_CType31,
+#endif
 #endif
 #endif
 				void >::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
@@ -763,6 +976,9 @@ public:
 				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
 #if DMibContainerVariantMany > 1
 				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
+#if DMibContainerVariantMany > 2
+				>::CType>::CType>::CType>::CType>::CType>::CType>::CType>::CType
+#endif
 #endif
 #endif
 				CType;
@@ -801,6 +1017,16 @@ public:
 				NTraits::TCIsSame<t_CType, t_CType21>::mc_Value ? t_iMember21 :
 				NTraits::TCIsSame<t_CType, t_CType22>::mc_Value ? t_iMember22 :
 				NTraits::TCIsSame<t_CType, t_CType23>::mc_Value ? t_iMember23 :
+#if DMibContainerVariantMany > 2
+				NTraits::TCIsSame<t_CType, t_CType24>::mc_Value ? t_iMember24 :
+				NTraits::TCIsSame<t_CType, t_CType25>::mc_Value ? t_iMember25 :
+				NTraits::TCIsSame<t_CType, t_CType26>::mc_Value ? t_iMember26 :
+				NTraits::TCIsSame<t_CType, t_CType27>::mc_Value ? t_iMember27 :
+				NTraits::TCIsSame<t_CType, t_CType28>::mc_Value ? t_iMember28 :
+				NTraits::TCIsSame<t_CType, t_CType29>::mc_Value ? t_iMember29 :
+				NTraits::TCIsSame<t_CType, t_CType30>::mc_Value ? t_iMember30 :
+				NTraits::TCIsSame<t_CType, t_CType31>::mc_Value ? t_iMember31 :
+#endif
 #endif
 #endif
 				-1
@@ -847,6 +1073,16 @@ private:
 		typedef typename TCEvalConstructType<t_iMember21>::CType CConstructType21;
 		typedef typename TCEvalConstructType<t_iMember22>::CType CConstructType22;
 		typedef typename TCEvalConstructType<t_iMember23>::CType CConstructType23;
+#if DMibContainerVariantMany > 2
+		typedef typename TCEvalConstructType<t_iMember24>::CType CConstructType24;
+		typedef typename TCEvalConstructType<t_iMember25>::CType CConstructType25;
+		typedef typename TCEvalConstructType<t_iMember26>::CType CConstructType26;
+		typedef typename TCEvalConstructType<t_iMember27>::CType CConstructType27;
+		typedef typename TCEvalConstructType<t_iMember28>::CType CConstructType28;
+		typedef typename TCEvalConstructType<t_iMember29>::CType CConstructType29;
+		typedef typename TCEvalConstructType<t_iMember30>::CType CConstructType30;
+		typedef typename TCEvalConstructType<t_iMember31>::CType CConstructType31;
+#endif
 #endif
 #endif
 
@@ -876,343 +1112,105 @@ private:
 		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType21>::mc_Value, CVoidTag, CConstructType21>::CType CDbgConstructType21;
 		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType22>::mc_Value, CVoidTag, CConstructType22>::CType CDbgConstructType22;
 		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType23>::mc_Value, CVoidTag, CConstructType23>::CType CDbgConstructType23;
+#if DMibContainerVariantMany > 2
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType24>::mc_Value, CVoidTag, CConstructType24>::CType CDbgConstructType24;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType25>::mc_Value, CVoidTag, CConstructType25>::CType CDbgConstructType25;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType26>::mc_Value, CVoidTag, CConstructType26>::CType CDbgConstructType26;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType27>::mc_Value, CVoidTag, CConstructType27>::CType CDbgConstructType27;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType28>::mc_Value, CVoidTag, CConstructType28>::CType CDbgConstructType28;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType29>::mc_Value, CVoidTag, CConstructType29>::CType CDbgConstructType29;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType30>::mc_Value, CVoidTag, CConstructType30>::CType CDbgConstructType30;
+		typedef typename TCChooseType<NTraits::TCIsVoid<CConstructType31>::mc_Value, CVoidTag, CConstructType31>::CType CDbgConstructType31;
+#endif
 #endif
 #endif
 
-
+	const static mint mcp_MaxSize =
+		fg_MaxConstexpr
+			(
+				NTraits::TCSizeOf<CConstructType0>::mc_Value
+				, NTraits::TCSizeOf<CConstructType1>::mc_Value
+				, NTraits::TCSizeOf<CConstructType2>::mc_Value
+				, NTraits::TCSizeOf<CConstructType3>::mc_Value
+				, NTraits::TCSizeOf<CConstructType4>::mc_Value
+				, NTraits::TCSizeOf<CConstructType5>::mc_Value
+				, NTraits::TCSizeOf<CConstructType6>::mc_Value
+				, NTraits::TCSizeOf<CConstructType7>::mc_Value
 #if DMibContainerVariantMany > 0
-		const static mint mcp_MaxSize =
-			TCConstantMax
-			<
-				mint
-				, TCConstantMax
-				<
-					mint
-					, TCConstantMax
-					<
-						mint
-						, TCConstantMax
-						<
-							mint
-							, TCConstantMax
-							<
-								mint
-								,NTraits::TCSizeOf<CConstructType0>::mc_Value
-								,NTraits::TCSizeOf<CConstructType1>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint
-								, NTraits::TCSizeOf<CConstructType2>::mc_Value
-								, NTraits::TCSizeOf<CConstructType3>::mc_Value
-							>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint
-							, TCConstantMax
-							<
-								mint
-								,NTraits::TCSizeOf<CConstructType4>::mc_Value
-								,NTraits::TCSizeOf<CConstructType5>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint
-								, NTraits::TCSizeOf<CConstructType6>::mc_Value
-								, NTraits::TCSizeOf<CConstructType7>::mc_Value
-							>::mc_Value
-						>::mc_Value
-					>::mc_Value
-					, TCConstantMax
-					<
-						mint
-						, TCConstantMax
-						<
-							mint
-							, TCConstantMax
-							<
-								mint
-								,NTraits::TCSizeOf<CConstructType8>::mc_Value
-								,NTraits::TCSizeOf<CConstructType9>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint
-								, NTraits::TCSizeOf<CConstructType10>::mc_Value
-								, NTraits::TCSizeOf<CConstructType11>::mc_Value
-							>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint
-							, TCConstantMax
-							<
-								mint
-								,NTraits::TCSizeOf<CConstructType12>::mc_Value
-								,NTraits::TCSizeOf<CConstructType13>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint
-								, NTraits::TCSizeOf<CConstructType14>::mc_Value
-								, NTraits::TCSizeOf<CConstructType15>::mc_Value
-							>::mc_Value
-						>::mc_Value
-					>::mc_Value
-				>::mc_Value
+				, NTraits::TCSizeOf<CConstructType8>::mc_Value
+				, NTraits::TCSizeOf<CConstructType9>::mc_Value
+				, NTraits::TCSizeOf<CConstructType10>::mc_Value
+				, NTraits::TCSizeOf<CConstructType11>::mc_Value
+				, NTraits::TCSizeOf<CConstructType12>::mc_Value
+				, NTraits::TCSizeOf<CConstructType13>::mc_Value
+				, NTraits::TCSizeOf<CConstructType14>::mc_Value
+				, NTraits::TCSizeOf<CConstructType15>::mc_Value
 #if DMibContainerVariantMany > 1
-				, TCConstantMax
-				<
-					mint
-					, TCConstantMax
-					<
-						mint
-						, TCConstantMax
-						<
-							mint
-							,NTraits::TCSizeOf<CConstructType16>::mc_Value
-							,NTraits::TCSizeOf<CConstructType17>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint
-							, NTraits::TCSizeOf<CConstructType18>::mc_Value
-							, NTraits::TCSizeOf<CConstructType19>::mc_Value
-						>::mc_Value
-					>::mc_Value
-					, TCConstantMax
-					<
-						mint
-						, TCConstantMax
-						<
-							mint
-							,NTraits::TCSizeOf<CConstructType20>::mc_Value
-							,NTraits::TCSizeOf<CConstructType21>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint
-							, NTraits::TCSizeOf<CConstructType22>::mc_Value
-							, NTraits::TCSizeOf<CConstructType23>::mc_Value
-						>::mc_Value
-					>::mc_Value
-				>::mc_Value
-#else
-				, 0u
+				, NTraits::TCSizeOf<CConstructType16>::mc_Value
+				, NTraits::TCSizeOf<CConstructType17>::mc_Value
+				, NTraits::TCSizeOf<CConstructType18>::mc_Value
+				, NTraits::TCSizeOf<CConstructType19>::mc_Value
+				, NTraits::TCSizeOf<CConstructType20>::mc_Value
+				, NTraits::TCSizeOf<CConstructType21>::mc_Value
+				, NTraits::TCSizeOf<CConstructType22>::mc_Value
+				, NTraits::TCSizeOf<CConstructType23>::mc_Value
+#if DMibContainerVariantMany > 2
+				, NTraits::TCSizeOf<CConstructType24>::mc_Value
+				, NTraits::TCSizeOf<CConstructType25>::mc_Value
+				, NTraits::TCSizeOf<CConstructType26>::mc_Value
+				, NTraits::TCSizeOf<CConstructType27>::mc_Value
+				, NTraits::TCSizeOf<CConstructType28>::mc_Value
+				, NTraits::TCSizeOf<CConstructType30>::mc_Value
+				, NTraits::TCSizeOf<CConstructType31>::mc_Value
 #endif
-			>::mc_Value
+#endif
+#endif
+			)
 		;
 
-		const static mint mcp_MaxAlignment =
-			TCConstantMax
-			<
-				mint,
-				TCConstantMax
-				<
-					mint,
-					TCConstantMax
-					<
-						mint,
-						TCConstantMax
-						<
-							mint,
-							TCConstantMax
-							<
-								mint,
-								TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType0>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType1>::mc_Value
-								>::mc_Value
-								, TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType2>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType3>::mc_Value
-								>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint,
-								TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType4>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType5>::mc_Value
-								>::mc_Value
-								, TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType6>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType7>::mc_Value
-								>::mc_Value
-							>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint,
-							TCConstantMax
-							<
-								mint,
-								TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType8>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType9>::mc_Value
-								>::mc_Value
-								, TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType10>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType11>::mc_Value
-								>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint,
-								TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType12>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType13>::mc_Value
-								>::mc_Value
-								, TCConstantMax
-								<
-									mint,
-									NTraits::TCAlignmentOf<CConstructType14>::mc_Value,
-									NTraits::TCAlignmentOf<CConstructType15>::mc_Value
-								>::mc_Value
-							>::mc_Value
-						>::mc_Value
-					>::mc_Value
+	const static mint mcp_MaxAlignment =
+		fg_MaxConstexpr
+			(
+				NTraits::TCAlignmentOf<CConstructType0>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType1>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType2>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType3>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType4>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType5>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType6>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType7>::mc_Value
+#if DMibContainerVariantMany > 0
+				, NTraits::TCAlignmentOf<CConstructType8>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType9>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType10>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType11>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType12>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType13>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType14>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType15>::mc_Value
 #if DMibContainerVariantMany > 1
-					, TCConstantMax
-					<
-						mint,
-						TCConstantMax
-						<
-							mint,
-							TCConstantMax
-							<
-								mint,
-								NTraits::TCAlignmentOf<CConstructType16>::mc_Value,
-								NTraits::TCAlignmentOf<CConstructType17>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint,
-								NTraits::TCAlignmentOf<CConstructType18>::mc_Value,
-								NTraits::TCAlignmentOf<CConstructType19>::mc_Value
-							>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint,
-							TCConstantMax
-							<
-								mint,
-								NTraits::TCAlignmentOf<CConstructType20>::mc_Value,
-								NTraits::TCAlignmentOf<CConstructType21>::mc_Value
-							>::mc_Value
-							, TCConstantMax
-							<
-								mint,
-								NTraits::TCAlignmentOf<CConstructType22>::mc_Value,
-								NTraits::TCAlignmentOf<CConstructType23>::mc_Value
-							>::mc_Value
-						>::mc_Value
-					>::mc_Value
-#else
-					, 0u
+				, NTraits::TCAlignmentOf<CConstructType16>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType17>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType18>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType19>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType20>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType21>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType22>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType23>::mc_Value
+#if DMibContainerVariantMany > 2
+				, NTraits::TCAlignmentOf<CConstructType24>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType25>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType26>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType27>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType28>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType29>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType30>::mc_Value
+				, NTraits::TCAlignmentOf<CConstructType31>::mc_Value
 #endif
-				>::mc_Value
-			, 1>::mc_Value
-		;
-#else
-		const static mint mcp_MaxSize =
-			TCConstantMax
-			<
-				mint
-				, TCConstantMax
-				<
-					mint
-					, TCConstantMax
-					<
-						mint
-						,NTraits::TCSizeOf<CConstructType0>::mc_Value
-						,NTraits::TCSizeOf<CConstructType1>::mc_Value
-					>::mc_Value
-					, TCConstantMax
-					<
-						mint
-						, NTraits::TCSizeOf<CConstructType2>::mc_Value
-						, NTraits::TCSizeOf<CConstructType3>::mc_Value
-					>::mc_Value
-				>::mc_Value
-				, TCConstantMax
-				<
-					mint
-					, TCConstantMax
-					<
-						mint
-						, NTraits::TCSizeOf<CConstructType4>::mc_Value
-						, NTraits::TCSizeOf<CConstructType5>::mc_Value
-					>::mc_Value
-					, TCConstantMax
-					<
-						mint
-						, NTraits::TCSizeOf<CConstructType6>::mc_Value
-						, NTraits::TCSizeOf<CConstructType7>::mc_Value
-					>::mc_Value
-				>::mc_Value
-			>::mc_Value
-		;
-
-		const static mint mcp_MaxAlignment =
-			TCConstantMax
-			<
-				mint,
-				TCConstantMax
-				<
-					mint,
-					TCConstantMax
-					<
-						mint,
-						TCConstantMax
-						<
-							mint,
-							NTraits::TCAlignmentOf<CConstructType0>::mc_Value,
-							NTraits::TCAlignmentOf<CConstructType1>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint,
-							NTraits::TCAlignmentOf<CConstructType2>::mc_Value,
-							NTraits::TCAlignmentOf<CConstructType3>::mc_Value
-						>::mc_Value
-					>::mc_Value
-					, TCConstantMax
-					<
-						mint,
-						TCConstantMax
-						<
-							mint,
-							NTraits::TCAlignmentOf<CConstructType4>::mc_Value,
-							NTraits::TCAlignmentOf<CConstructType5>::mc_Value
-						>::mc_Value
-						, TCConstantMax
-						<
-							mint,
-							NTraits::TCAlignmentOf<CConstructType6>::mc_Value,
-							NTraits::TCAlignmentOf<CConstructType7>::mc_Value
-						>::mc_Value
-					>::mc_Value
-				>::mc_Value
-			, 1>::mc_Value
-		;
 #endif
+#endif
+			)
+		;
 
 		enum
 		{
@@ -1243,6 +1241,16 @@ private:
 			!NTraits::TCIsReference<t_CType21>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType21, void ()>::mc_Value ? t_iMember21 :
 			!NTraits::TCIsReference<t_CType22>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType22, void ()>::mc_Value ? t_iMember22 :
 			!NTraits::TCIsReference<t_CType23>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType23, void ()>::mc_Value ? t_iMember23 :
+#if DMibContainerVariantMany > 2
+			!NTraits::TCIsReference<t_CType24>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType24, void()>::mc_Value ? t_iMember24 :
+			!NTraits::TCIsReference<t_CType25>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType25, void()>::mc_Value ? t_iMember25 :
+			!NTraits::TCIsReference<t_CType26>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType26, void()>::mc_Value ? t_iMember26 :
+			!NTraits::TCIsReference<t_CType27>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType27, void()>::mc_Value ? t_iMember27 :
+			!NTraits::TCIsReference<t_CType28>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType28, void()>::mc_Value ? t_iMember28 :
+			!NTraits::TCIsReference<t_CType29>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType29, void()>::mc_Value ? t_iMember29 :
+			!NTraits::TCIsReference<t_CType30>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType30, void()>::mc_Value ? t_iMember30 :
+			!NTraits::TCIsReference<t_CType31>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType31, void()>::mc_Value ? t_iMember31 :
+#endif
 #endif
 #endif
 			-1
@@ -1393,6 +1401,56 @@ private:
 				&& NTraits::TCHasNothrowDefaultConstructor<t_CType23>::mc_Value
 			)
 			? t_iMember23 :
+#if DMibContainerVariantMany > 2
+			(
+				!NTraits::TCIsReference<t_CType24>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType24, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType24>::mc_Value
+			)
+			? t_iMember24 :
+			(
+				!NTraits::TCIsReference<t_CType25>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType25, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType25>::mc_Value
+			)
+			? t_iMember25 :
+			(
+				!NTraits::TCIsReference<t_CType26>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType26, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType26>::mc_Value
+			)
+			? t_iMember26 :
+			(
+				!NTraits::TCIsReference<t_CType27>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType27, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType27>::mc_Value
+			)
+			? t_iMember27 :
+			(
+				!NTraits::TCIsReference<t_CType28>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType28, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType28>::mc_Value
+			)
+			? t_iMember28 :
+			(
+				!NTraits::TCIsReference<t_CType29>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType29, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType29>::mc_Value
+			)
+			? t_iMember29 :
+			(
+				!NTraits::TCIsReference<t_CType30>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType30, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType30>::mc_Value
+			)
+			? t_iMember30 :
+			(
+				!NTraits::TCIsReference<t_CType31>::mc_Value
+				&& NTraits::TCIsConstructorCallableWith<t_CType31, void ()>::mc_Value
+				&& NTraits::TCHasNothrowDefaultConstructor<t_CType31>::mc_Value
+			)
+			? t_iMember31 :
+#endif
 #endif
 #endif
 			-1
@@ -1422,6 +1480,16 @@ private:
 			&& (NTraits::TCHasNothrowCopyConstructor<t_CType21>::mc_Value || NTraits::TCIsVoid<t_CType21>::mc_Value)
 			&& (NTraits::TCHasNothrowCopyConstructor<t_CType22>::mc_Value || NTraits::TCIsVoid<t_CType22>::mc_Value)
 			&& (NTraits::TCHasNothrowCopyConstructor<t_CType23>::mc_Value || NTraits::TCIsVoid<t_CType23>::mc_Value)
+#if DMibContainerVariantMany > 2
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType24>::mc_Value || NTraits::TCIsVoid<t_CType24>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType25>::mc_Value || NTraits::TCIsVoid<t_CType25>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType26>::mc_Value || NTraits::TCIsVoid<t_CType26>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType27>::mc_Value || NTraits::TCIsVoid<t_CType27>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType28>::mc_Value || NTraits::TCIsVoid<t_CType28>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType29>::mc_Value || NTraits::TCIsVoid<t_CType29>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType30>::mc_Value || NTraits::TCIsVoid<t_CType30>::mc_Value)
+			&& (NTraits::TCHasNothrowCopyConstructor<t_CType31>::mc_Value || NTraits::TCIsVoid<t_CType31>::mc_Value)
+#endif
 #endif
 #endif
 		};
@@ -1802,6 +1870,24 @@ private:
 				TCCallVisitorStorage<t_iMember22>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (f_GetTypeID() == t_iMember23)
 				TCCallVisitorStorage<t_iMember23>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (f_GetTypeID() == t_iMember24)
+				TCCallVisitorStorage<t_iMember24>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember25)
+				TCCallVisitorStorage<t_iMember25>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember26)
+				TCCallVisitorStorage<t_iMember26>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember27)
+				TCCallVisitorStorage<t_iMember27>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember28)
+				TCCallVisitorStorage<t_iMember28>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember29)
+				TCCallVisitorStorage<t_iMember29>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember30)
+				TCCallVisitorStorage<t_iMember30>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember31)
+				TCCallVisitorStorage<t_iMember31>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -1865,6 +1951,24 @@ private:
 				TCCallVisitor<t_iMember22>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (f_GetTypeID() == t_iMember23)
 				TCCallVisitor<t_iMember23>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (f_GetTypeID() == t_iMember24)
+				TCCallVisitor<t_iMember24>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember25)
+				TCCallVisitor<t_iMember25>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember26)
+				TCCallVisitor<t_iMember26>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember27)
+				TCCallVisitor<t_iMember27>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember28)
+				TCCallVisitor<t_iMember28>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember29)
+				TCCallVisitor<t_iMember29>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember30)
+				TCCallVisitor<t_iMember30>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember31)
+				TCCallVisitor<t_iMember31>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -1926,6 +2030,24 @@ private:
 				TCCallVisitor<t_iMember22>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (f_GetTypeID() == t_iMember23)
 				TCCallVisitor<t_iMember23>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (f_GetTypeID() == t_iMember24)
+				TCCallVisitor<t_iMember24>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember25)
+				TCCallVisitor<t_iMember25>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember26)
+				TCCallVisitor<t_iMember26>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember27)
+				TCCallVisitor<t_iMember27>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember28)
+				TCCallVisitor<t_iMember28>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember29)
+				TCCallVisitor<t_iMember29>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember30)
+				TCCallVisitor<t_iMember30>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember31)
+				TCCallVisitor<t_iMember31>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -1988,6 +2110,24 @@ private:
 				return TCCallVisitor<t_iMember22>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (f_GetTypeID() == t_iMember23)
 				return TCCallVisitor<t_iMember23>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (f_GetTypeID() == t_iMember24)
+				return TCCallVisitor<t_iMember24>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember25)
+				return TCCallVisitor<t_iMember25>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember26)
+				return TCCallVisitor<t_iMember26>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember27)
+				return TCCallVisitor<t_iMember27>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember28)
+				return TCCallVisitor<t_iMember28>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember29)
+				return TCCallVisitor<t_iMember29>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember30)
+				return TCCallVisitor<t_iMember30>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember31)
+				return TCCallVisitor<t_iMember31>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -2050,6 +2190,24 @@ private:
 				return TCCallVisitor<t_iMember22>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (f_GetTypeID() == t_iMember23)
 				return TCCallVisitor<t_iMember23>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (f_GetTypeID() == t_iMember24)
+				return TCCallVisitor<t_iMember24>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember25)
+				return TCCallVisitor<t_iMember25>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember26)
+				return TCCallVisitor<t_iMember26>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember27)
+				return TCCallVisitor<t_iMember27>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember28)
+				return TCCallVisitor<t_iMember28>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember29)
+				return TCCallVisitor<t_iMember29>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember30)
+				return TCCallVisitor<t_iMember30>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (f_GetTypeID() == t_iMember31)
+				return TCCallVisitor<t_iMember31>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -2112,6 +2270,24 @@ private:
 				TCCallVisitorSet<t_iMember22>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (_Index == t_iMember23)
 				TCCallVisitorSet<t_iMember23>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (_Index == t_iMember24)
+				TCCallVisitorSet<t_iMember24>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember25)
+				TCCallVisitorSet<t_iMember25>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember26)
+				TCCallVisitorSet<t_iMember26>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember27)
+				TCCallVisitorSet<t_iMember27>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember28)
+				TCCallVisitorSet<t_iMember28>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember29)
+				TCCallVisitorSet<t_iMember29>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember30)
+				TCCallVisitorSet<t_iMember30>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember31)
+				TCCallVisitorSet<t_iMember31>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -2173,6 +2349,24 @@ private:
 				return TCCallVisitorSet<t_iMember22>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 			else if (_Index == t_iMember23)
 				return TCCallVisitorSet<t_iMember23>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#if DMibContainerVariantMany > 2
+			else if (_Index == t_iMember24)
+				return TCCallVisitorSet<t_iMember24>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember25)
+				return TCCallVisitorSet<t_iMember25>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember26)
+				return TCCallVisitorSet<t_iMember26>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember27)
+				return TCCallVisitorSet<t_iMember27>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember28)
+				return TCCallVisitorSet<t_iMember28>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember29)
+				return TCCallVisitorSet<t_iMember29>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember30)
+				return TCCallVisitorSet<t_iMember30>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+			else if (_Index == t_iMember31)
+				return TCCallVisitorSet<t_iMember31>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+#endif
 #endif
 #endif
 			else
@@ -2753,7 +2947,59 @@ private:
 																														int
 																														, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember23>::CType, void (t_CInType)>::mc_Value
 																														, t_iMember23
+#if DMibContainerVariantMany > 2
+																														, TCChooseInt
+																														<
+																															int
+																															, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember24>::CType, void (t_CInType)>::mc_Value
+																															, t_iMember24
+																															, TCChooseInt
+																															<
+																																int
+																																, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember25>::CType, void (t_CInType)>::mc_Value
+																																, t_iMember25
+																																, TCChooseInt
+																																<
+																																	int
+																																	, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember26>::CType, void (t_CInType)>::mc_Value
+																																	, t_iMember26
+																																	, TCChooseInt
+																																	<
+																																		int
+																																		, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember27>::CType, void (t_CInType)>::mc_Value
+																																		, t_iMember27
+																																		, TCChooseInt
+																																		<
+																																			int
+																																			, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember28>::CType, void (t_CInType)>::mc_Value
+																																			, t_iMember28
+																																			, TCChooseInt
+																																			<
+																																				int
+																																				, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember29>::CType, void (t_CInType)>::mc_Value
+																																				, t_iMember29
+																																				, TCChooseInt
+																																				<
+																																					int
+																																					, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember30>::CType, void (t_CInType)>::mc_Value
+																																					, t_iMember30
+																																					, TCChooseInt
+																																					<
+																																						int
+																																						, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember31>::CType, void (t_CInType)>::mc_Value
+																																						, t_iMember31
+																																						, -1
+																																					>::mc_Value
+																																				>::mc_Value
+																																			>::mc_Value
+																																		>::mc_Value
+																																	>::mc_Value
+																																>::mc_Value
+																															>::mc_Value
+																														>::mc_Value
+#else
 																														, -1
+#endif
 																													>::mc_Value
 																												>::mc_Value
 																											>::mc_Value
@@ -2944,7 +3190,60 @@ private:
 																												int
 																												, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember23>::CType, t_CInType>::mc_Value
 																												, t_iMember23
+
+#if DMibContainerVariantMany > 2
+																												, TCChooseInt
+																												<
+																													int
+																													, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember24>::CType, t_CInType>::mc_Value
+																													, t_iMember24
+																													, TCChooseInt
+																													<
+																														int
+																														, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember25>::CType, t_CInType>::mc_Value
+																														, t_iMember25
+																														, TCChooseInt
+																														<
+																															int
+																															, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember26>::CType, t_CInType>::mc_Value
+																															, t_iMember26
+																															, TCChooseInt
+																															<
+																																int
+																																, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember27>::CType, t_CInType>::mc_Value
+																																, t_iMember27
+																																, TCChooseInt
+																																<
+																																	int
+																																	, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember28>::CType, t_CInType>::mc_Value
+																																	, t_iMember28
+																																	, TCChooseInt
+																																	<
+																																		int
+																																		, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember29>::CType, t_CInType>::mc_Value
+																																		, t_iMember29
+																																		, TCChooseInt
+																																		<
+																																			int
+																																			, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember30>::CType, t_CInType>::mc_Value
+																																			, t_iMember30
+																																			, TCChooseInt
+																																			<
+																																				int
+																																				, NTraits::TCIsConstructorCallableWith<typename TCTypeFromMember<t_iMember31>::CType, t_CInType>::mc_Value
+																																				, t_iMember31
+																																				, -1
+																																			>::mc_Value
+																																		>::mc_Value
+																																	>::mc_Value
+																																>::mc_Value
+																															>::mc_Value
+																														>::mc_Value
+																													>::mc_Value
+																												>::mc_Value
+#else
 																												, -1
+#endif
 																											>::mc_Value
 																										>::mc_Value
 																									>::mc_Value
@@ -3102,6 +3401,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3137,6 +3446,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -3180,6 +3499,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3215,6 +3544,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -3263,6 +3602,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3298,6 +3647,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -3372,6 +3731,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3408,6 +3777,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -3481,6 +3860,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3516,6 +3905,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -3609,6 +4008,16 @@ private:
 			, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 			, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 			, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+			, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+			, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+			, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+			, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+			, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+			, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+			, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 			, bint t_bStreamableOther
@@ -3644,6 +4053,16 @@ private:
 				t_CType21Other, t_iMember21Other,
 				t_CType22Other, t_iMember22Other,
 				t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+				t_CType24Other, t_iMember24Other,
+				t_CType25Other, t_iMember25Other,
+				t_CType26Other, t_iMember26Other,
+				t_CType27Other, t_iMember27Other,
+				t_CType28Other, t_iMember28Other,
+				t_CType29Other, t_iMember29Other,
+				t_CType30Other, t_iMember30Other,
+				t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 				t_bStreamableOther
@@ -4074,6 +4493,16 @@ private:
 		, typename t_CType21
 		, typename t_CType22
 		, typename t_CType23
+#if DMibContainerVariantMany > 2
+		, typename t_CType24
+		, typename t_CType25
+		, typename t_CType26
+		, typename t_CType27
+		, typename t_CType28
+		, typename t_CType29
+		, typename t_CType30
+		, typename t_CType31
+#endif
 #endif
 #endif
 	>
@@ -4107,6 +4536,16 @@ private:
 			t_CType21, NMib::NTraits::TCIsVoid<t_CType21>::mc_Value ? -22 : 21,
 			t_CType22, NMib::NTraits::TCIsVoid<t_CType22>::mc_Value ? -23 : 22,
 			t_CType23, NMib::NTraits::TCIsVoid<t_CType23>::mc_Value ? -24 : 23,
+#if DMibContainerVariantMany > 2
+			t_CType24, NMib::NTraits::TCIsVoid<t_CType24>::mc_Value ? -25 : 24,
+			t_CType25, NMib::NTraits::TCIsVoid<t_CType25>::mc_Value ? -26 : 25,
+			t_CType26, NMib::NTraits::TCIsVoid<t_CType26>::mc_Value ? -27 : 26,
+			t_CType27, NMib::NTraits::TCIsVoid<t_CType27>::mc_Value ? -28 : 27,
+			t_CType28, NMib::NTraits::TCIsVoid<t_CType28>::mc_Value ? -29 : 28,
+			t_CType29, NMib::NTraits::TCIsVoid<t_CType29>::mc_Value ? -30 : 29,
+			t_CType30, NMib::NTraits::TCIsVoid<t_CType30>::mc_Value ? -31 : 30,
+			t_CType31, NMib::NTraits::TCIsVoid<t_CType31>::mc_Value ? -32 : 31,
+#endif
 #endif
 #endif
 			false
@@ -4141,6 +4580,16 @@ private:
 			t_CType21, NMib::NTraits::TCIsVoid<t_CType21>::mc_Value ? -22 : 21,
 			t_CType22, NMib::NTraits::TCIsVoid<t_CType22>::mc_Value ? -23 : 22,
 			t_CType23, NMib::NTraits::TCIsVoid<t_CType23>::mc_Value ? -24 : 23,
+#if DMibContainerVariantMany > 2
+			t_CType24, NMib::NTraits::TCIsVoid<t_CType24>::mc_Value ? -25 : 24,
+			t_CType25, NMib::NTraits::TCIsVoid<t_CType25>::mc_Value ? -26 : 25,
+			t_CType26, NMib::NTraits::TCIsVoid<t_CType26>::mc_Value ? -27 : 26,
+			t_CType27, NMib::NTraits::TCIsVoid<t_CType27>::mc_Value ? -28 : 27,
+			t_CType28, NMib::NTraits::TCIsVoid<t_CType28>::mc_Value ? -29 : 28,
+			t_CType29, NMib::NTraits::TCIsVoid<t_CType29>::mc_Value ? -30 : 29,
+			t_CType30, NMib::NTraits::TCIsVoid<t_CType30>::mc_Value ? -31 : 30,
+			t_CType31, NMib::NTraits::TCIsVoid<t_CType31>::mc_Value ? -32 : 31,
+#endif
 #endif
 #endif
 			false
@@ -4288,6 +4737,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4321,6 +4780,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> const &_Other
@@ -4358,6 +4827,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4391,6 +4870,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &_Other
@@ -4429,6 +4918,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4462,6 +4961,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &&_Other
@@ -4505,6 +5014,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4538,6 +5057,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> const &_Other
@@ -4575,6 +5104,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4608,6 +5147,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &_Other
@@ -4646,6 +5195,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4679,6 +5238,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &&_Other
@@ -4734,6 +5303,16 @@ private:
 		, typename t_CType21
 		, typename t_CType22
 		, typename t_CType23
+#if DMibContainerVariantMany > 2
+		, typename t_CType24
+		, typename t_CType25
+		, typename t_CType26
+		, typename t_CType27
+		, typename t_CType28
+		, typename t_CType29
+		, typename t_CType30
+		, typename t_CType31
+#endif
 #endif
 #endif
 	>
@@ -4767,6 +5346,16 @@ private:
 			t_CType21, NMib::NTraits::TCIsVoid<t_CType21>::mc_Value ? t_CEnum(-22) : t_CEnum(21),
 			t_CType22, NMib::NTraits::TCIsVoid<t_CType22>::mc_Value ? t_CEnum(-23) : t_CEnum(22),
 			t_CType23, NMib::NTraits::TCIsVoid<t_CType23>::mc_Value ? t_CEnum(-24) : t_CEnum(23),
+#if DMibContainerVariantMany > 2
+			t_CType24, NMib::NTraits::TCIsVoid<t_CType24>::mc_Value ? t_CEnum(-25) : t_CEnum(24),
+			t_CType25, NMib::NTraits::TCIsVoid<t_CType25>::mc_Value ? t_CEnum(-26) : t_CEnum(25),
+			t_CType26, NMib::NTraits::TCIsVoid<t_CType26>::mc_Value ? t_CEnum(-27) : t_CEnum(26),
+			t_CType27, NMib::NTraits::TCIsVoid<t_CType27>::mc_Value ? t_CEnum(-28) : t_CEnum(27),
+			t_CType28, NMib::NTraits::TCIsVoid<t_CType28>::mc_Value ? t_CEnum(-29) : t_CEnum(28),
+			t_CType29, NMib::NTraits::TCIsVoid<t_CType29>::mc_Value ? t_CEnum(-30) : t_CEnum(29),
+			t_CType30, NMib::NTraits::TCIsVoid<t_CType30>::mc_Value ? t_CEnum(-31) : t_CEnum(30),
+			t_CType31, NMib::NTraits::TCIsVoid<t_CType31>::mc_Value ? t_CEnum(-32) : t_CEnum(31),
+#endif
 #endif
 #endif
 			true
@@ -4801,6 +5390,16 @@ private:
 			t_CType21, NMib::NTraits::TCIsVoid<t_CType21>::mc_Value ? t_CEnum(-22) : t_CEnum(21),
 			t_CType22, NMib::NTraits::TCIsVoid<t_CType22>::mc_Value ? t_CEnum(-23) : t_CEnum(22),
 			t_CType23, NMib::NTraits::TCIsVoid<t_CType23>::mc_Value ? t_CEnum(-24) : t_CEnum(23),
+#if DMibContainerVariantMany > 2
+			t_CType24, NMib::NTraits::TCIsVoid<t_CType24>::mc_Value ? t_CEnum(-25) : t_CEnum(24),
+			t_CType25, NMib::NTraits::TCIsVoid<t_CType25>::mc_Value ? t_CEnum(-26) : t_CEnum(25),
+			t_CType26, NMib::NTraits::TCIsVoid<t_CType26>::mc_Value ? t_CEnum(-27) : t_CEnum(26),
+			t_CType27, NMib::NTraits::TCIsVoid<t_CType27>::mc_Value ? t_CEnum(-28) : t_CEnum(27),
+			t_CType28, NMib::NTraits::TCIsVoid<t_CType28>::mc_Value ? t_CEnum(-29) : t_CEnum(28),
+			t_CType29, NMib::NTraits::TCIsVoid<t_CType29>::mc_Value ? t_CEnum(-30) : t_CEnum(29),
+			t_CType30, NMib::NTraits::TCIsVoid<t_CType30>::mc_Value ? t_CEnum(-31) : t_CEnum(30),
+			t_CType31, NMib::NTraits::TCIsVoid<t_CType31>::mc_Value ? t_CEnum(-32) : t_CEnum(31),
+#endif
 #endif
 #endif
 			true
@@ -4849,6 +5448,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4883,6 +5492,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> const &_Other
@@ -4921,6 +5540,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -4955,6 +5584,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &_Other
@@ -4993,6 +5632,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -5027,6 +5676,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &&_Other
@@ -5071,6 +5730,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -5105,6 +5774,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> const &_Other
@@ -5143,6 +5822,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -5177,6 +5866,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &_Other
@@ -5215,6 +5914,16 @@ private:
 			, typename t_CType21Other
 			, typename t_CType22Other
 			, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+			, typename t_CType24Other
+			, typename t_CType25Other
+			, typename t_CType26Other
+			, typename t_CType27Other
+			, typename t_CType28Other
+			, typename t_CType29Other
+			, typename t_CType30Other
+			, typename t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -5249,6 +5958,16 @@ private:
 				, t_CType21Other
 				, t_CType22Other
 				, t_CType23Other
+#if DMibContainerVariantMany > 2
+				, t_CType24Other
+				, t_CType25Other
+				, t_CType26Other
+				, t_CType27Other
+				, t_CType28Other
+				, t_CType29Other
+				, t_CType30Other
+				, t_CType31Other
+#endif
 #endif
 #endif
 			> &&_Other
@@ -5344,7 +6063,7 @@ private:
 		static constexpr t_CIndexType mc_Name = t_Name;
 	};
 
-#define DMibVariantMember(d_Type, d_Name) d_Type, d_Type##_##d_Name 
+#define DMibVariantMember(d_Type, d_Name) d_Type, d_Type##_##d_Name
 
 	namespace NPrivate
 	{
@@ -5412,6 +6131,16 @@ private:
 			, typename NPrivate::TCGetMember<21, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<21, tp_CMembers...>::mc_Name
 			, typename NPrivate::TCGetMember<22, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<22, tp_CMembers...>::mc_Name
 			, typename NPrivate::TCGetMember<23, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<23, tp_CMembers...>::mc_Name
+#if DMibContainerVariantMany > 2
+			, typename NPrivate::TCGetMember<24, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<24, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<25, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<25, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<26, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<26, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<27, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<27, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<28, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<28, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<29, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<29, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<30, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<30, tp_CMembers...>::mc_Name
+			, typename NPrivate::TCGetMember<31, tp_CMembers...>::CType, (t_CIndexType)NPrivate::TCGetMember<31, tp_CMembers...>::mc_Name
+#endif
 #endif
 #endif
 		>
@@ -5516,6 +6245,16 @@ namespace NMib::NStream
 		, typename t_CType21Other, t_CIndexTypeOther t_iMember21Other
 		, typename t_CType22Other, t_CIndexTypeOther t_iMember22Other
 		, typename t_CType23Other, t_CIndexTypeOther t_iMember23Other
+#if DMibContainerVariantMany > 2
+		, typename t_CType24Other, t_CIndexTypeOther t_iMember24Other
+		, typename t_CType25Other, t_CIndexTypeOther t_iMember25Other
+		, typename t_CType26Other, t_CIndexTypeOther t_iMember26Other
+		, typename t_CType27Other, t_CIndexTypeOther t_iMember27Other
+		, typename t_CType28Other, t_CIndexTypeOther t_iMember28Other
+		, typename t_CType29Other, t_CIndexTypeOther t_iMember29Other
+		, typename t_CType30Other, t_CIndexTypeOther t_iMember30Other
+		, typename t_CType31Other, t_CIndexTypeOther t_iMember31Other
+#endif
 #endif
 #endif
 		, bint t_bStreamableOther
@@ -5552,6 +6291,16 @@ namespace NMib::NStream
 			t_CType21Other, t_iMember21Other,
 			t_CType22Other, t_iMember22Other,
 			t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+			t_CType24Other, t_iMember24Other,
+			t_CType25Other, t_iMember25Other,
+			t_CType26Other, t_iMember26Other,
+			t_CType27Other, t_iMember27Other,
+			t_CType28Other, t_iMember28Other,
+			t_CType29Other, t_iMember29Other,
+			t_CType30Other, t_iMember30Other,
+			t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 			t_bStreamableOther
@@ -5588,6 +6337,16 @@ namespace NMib::NStream
 			t_CType21Other, t_iMember21Other,
 			t_CType22Other, t_iMember22Other,
 			t_CType23Other, t_iMember23Other,
+#if DMibContainerVariantMany > 2
+			t_CType24Other, t_iMember24Other,
+			t_CType25Other, t_iMember25Other,
+			t_CType26Other, t_iMember26Other,
+			t_CType27Other, t_iMember27Other,
+			t_CType28Other, t_iMember28Other,
+			t_CType29Other, t_iMember29Other,
+			t_CType30Other, t_iMember30Other,
+			t_CType31Other, t_iMember31Other,
+#endif
 #endif
 #endif
 			t_bStreamableOther
@@ -5644,6 +6403,16 @@ namespace NMib::NStream
 		, typename t_CType21Other
 		, typename t_CType22Other
 		, typename t_CType23Other
+#if DMibContainerVariantMany > 2
+		, typename t_CType24Other
+		, typename t_CType25Other
+		, typename t_CType26Other
+		, typename t_CType27Other
+		, typename t_CType28Other
+		, typename t_CType29Other
+		, typename t_CType30Other
+		, typename t_CType31Other
+#endif
 #endif
 #endif
 	>
@@ -5679,6 +6448,16 @@ namespace NMib::NStream
 			, t_CType21Other
 			, t_CType22Other
 			, t_CType23Other
+#if DMibContainerVariantMany > 2
+			, t_CType24Other
+			, t_CType25Other
+			, t_CType26Other
+			, t_CType27Other
+			, t_CType28Other
+			, t_CType29Other
+			, t_CType30Other
+			, t_CType31Other
+#endif
 #endif
 #endif
 		>
@@ -5713,6 +6492,16 @@ namespace NMib::NStream
 			, t_CType21Other
 			, t_CType22Other
 			, t_CType23Other
+#if DMibContainerVariantMany > 2
+			, t_CType24Other
+			, t_CType25Other
+			, t_CType26Other
+			, t_CType27Other
+			, t_CType28Other
+			, t_CType29Other
+			, t_CType30Other
+			, t_CType31Other
+#endif
 #endif
 #endif
 		> CStreamableVariant;
@@ -5738,7 +6527,6 @@ namespace NMib::NStream
 			_Data.f_VisitCreate(TypeID, NPrivate::TCVariantVisitor_Consume<t_CStream>(_Stream));
 		}
 	};
-
 }
 
 namespace NMib
@@ -5766,7 +6554,7 @@ namespace NMib
 			, m_ToVisit(_ToVisit)
 		{
 		}
-		
+
 		template <typename t_CInnerVisitor, typename t_CValue>
 		struct TCValueVisitor
 		{
