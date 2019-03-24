@@ -7,7 +7,7 @@
 
 namespace NMib::NStorage::NReference
 {
-	template <typename t_CType, typename t_CPtr>
+	template <typename t_CType>
 	class TCReference;
 }
 
@@ -25,13 +25,13 @@ namespace NMib::NStorage
 
 namespace NMib::NStorage::NReference
 {
-	template <typename t_CType, typename t_CPtr = TCDynamicPtr<typename NMib::NMemory::CDefaultAllocator::CPtrHolder, t_CType>>
+	template <typename t_CType>
 	class TCReference
 	{
 	protected:
 		struct CData
 		{
-			t_CPtr m_pPointTo;
+			t_CType *m_pPointTo;
 		};
 
 		CData m_Data;
@@ -140,8 +140,8 @@ namespace NMib::NStorage::NReference
 
 namespace NMib::NStorage
 {
-	template <typename t_CType, typename t_CPtr = TCDynamicPtr<typename NMib::NMemory::CDefaultAllocator::CPtrHolder, t_CType>>
-	using TCReference = NReference::TCReference<t_CType, t_CPtr>;
+	template <typename t_CType>
+	using TCReference = NReference::TCReference<t_CType>;
 }
 
 namespace NMib

@@ -316,8 +316,8 @@ namespace NMib::NStorage
 			typedef t_CType CType;
 		};
 
-		template <typename t_CType, typename t_CPtr>
-		struct TCMakeTupleReturnHelper0<NStorage::TCReference<t_CType, t_CPtr>>
+		template <typename t_CType>
+		struct TCMakeTupleReturnHelper0<NStorage::TCReference<t_CType>>
 		{
 			typedef t_CType& CType;
 		};

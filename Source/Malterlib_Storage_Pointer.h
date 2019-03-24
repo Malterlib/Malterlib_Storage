@@ -1028,7 +1028,12 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_RefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
@@ -1059,7 +1064,12 @@ namespace NMib::NStorage
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_RefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 		}
 
 		template <typename tf_CType, typename... tfp_CParams>
@@ -1204,7 +1214,12 @@ namespace NMib::NStorage
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_RefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 			return *this;
 		}
 
@@ -1231,7 +1246,12 @@ namespace NMib::NStorage
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_RefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 			return *this;
 		}
 
@@ -1457,7 +1477,12 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_WeakRefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
@@ -1485,7 +1510,12 @@ namespace NMib::NStorage
 			;
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_WeakRefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 		}
 
 		explicit TCWeakPointer(t_CType *_pPtr)
@@ -1585,7 +1615,12 @@ namespace NMib::NStorage
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefcountDebuggingOnly(m_Data.m_DebugRef = fg_Move(_Other.m_Data.m_DebugRef));
+			DMibRefcountDebuggingOnly
+				(
+					if (m_Data.m_pPointTo)
+				 		m_Data.m_pPointTo->f_WeakRefCountMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+				)
+			;
 			return *this;
 		}
 

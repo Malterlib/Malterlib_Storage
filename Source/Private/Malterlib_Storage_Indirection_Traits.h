@@ -13,8 +13,8 @@ namespace NMib::NStorage::NPrivate
 			mc_Value = false
 		};
 	};
-	template <typename t_CType0, typename t_CType, typename t_CAllocator, typename t_CPtr>
-	struct TCIsIndirectionHelper<t_CType0, NStorage::NIndirection::TCIndirection<t_CType, t_CAllocator, t_CPtr>>
+	template <typename t_CType0, typename t_CType, typename t_CAllocator>
+	struct TCIsIndirectionHelper<t_CType0, NStorage::NIndirection::TCIndirection<t_CType, t_CAllocator>>
 	{
 		enum
 		{

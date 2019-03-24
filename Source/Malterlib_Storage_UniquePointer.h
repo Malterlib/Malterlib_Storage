@@ -31,32 +31,62 @@ namespace NMib::NStorage
 	}
 
 
-	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
-	void fg_Tag_UniquePointer(t_CType const volatile &_Type, t_CAllocator const volatile &_Allocator, t_CPtr const volatile &_Ptr);
+	template <typename t_CType, typename t_CAllocator>
+	void fg_Tag_UniquePointer(t_CType const volatile &_Type, t_CAllocator const volatile &_Allocator);
 
 	namespace NPrivate
 	{
-		template <typename t_CType, typename t_CAllocator, typename t_CPtr>
+		template <typename t_CType, typename t_CAllocator>
 		struct TCUniquePointerTag
 		{
-			typedef decltype(fg_Tag_UniquePointer(fg_GetReference<t_CType>(), fg_GetReference<t_CAllocator>(), fg_GetReference<t_CPtr>())) CType;
+			typedef decltype(fg_Tag_UniquePointer(fg_GetReference<t_CType>(), fg_GetReference<t_CAllocator>())) CType;
 		};
 
+		template <typename t_CEnableIf, typename... tp_CParams>
+		struct TCParseUniquePointerOptions;
+
+		template <>
+		struct TCParseUniquePointerOptions<void>
+		{
+			using CAllocator = NMemory::CDefaultAllocator;
+			using CTag = void;
+		};
+
+
+		template <typename t_CFirst, typename... tp_CParams>
+		struct TCParseUniquePointerOptions<typename TCEnableIf<NTraits::TCIsBaseOf<t_CFirst, NMemory::CAllocator_Base>::mc_Value>::CType, t_CFirst, tp_CParams...>
+		{
+			using CParent = TCParseUniquePointerOptions<void, tp_CParams...>;
+			using CAllocator = t_CFirst;
+			using CTag = typename CParent::CTag;
+		};
+
+		template <typename t_CFirst, typename... tp_CParams>
+		struct TCParseUniquePointerOptions<typename TCEnableIf<!NTraits::TCIsBaseOf<t_CFirst, NMemory::CAllocator_Base>::mc_Value>::CType, t_CFirst, tp_CParams...>
+		{
+			using CParent = TCParseUniquePointerOptions<void, tp_CParams...>;
+			using CAllocator = typename CParent::CAllocator;
+			using CTag = t_CFirst;
+		};
 	}
 
 	template
 	<
 		typename t_CType
-		, typename t_CAllocator = NMib::NMemory::CDefaultAllocator
-		, typename t_CPtr = TCDynamicPtr<typename t_CAllocator::CPtrHolder, t_CType>
-		, typename t_CTag = typename NPrivate::TCUniquePointerTag<t_CType, t_CAllocator, t_CPtr>::CType
+		, typename ...tp_COptions
 	>
 	class TCUniquePointer
 	{
-		template <typename t_CType2, typename t_CAllocator2, typename t_CPtr2, typename t_CTag2> friend class TCUniquePointer;
+		template <typename t_CType2, typename ...tp_COptions2> friend class TCUniquePointer;
 
+		using CParsedOptions = NPrivate::TCParseUniquePointerOptions<void, tp_COptions...>;
+	public:
+		using CAllocator = typename CParsedOptions::CAllocator;
+		using CTag = typename CParsedOptions::CTag;
 
-		struct CData : public t_CAllocator
+	private:
+
+		struct CData : public CAllocator
 		{
 		private:
 			CData(CData const &_Other)
@@ -66,36 +96,36 @@ namespace NMib::NStorage
 			{
 			}
 		public:
-			t_CPtr m_pPointTo;
+			t_CType *m_pPointTo;
 
 			CData()
 			{
 			}
 
-			CData(t_CAllocator const &_Other)
-				: t_CAllocator(_Other)
+			CData(CAllocator const &_Other)
+				: CAllocator(_Other)
 			{
 			}
-			CData(t_CAllocator &&_Other)
-				: t_CAllocator(fg_Move(_Other))
+			CData(CAllocator &&_Other)
+				: CAllocator(fg_Move(_Other))
 			{
 			}
 
 			template <typename t_CParam0>
 			CData(t_CParam0 &&_Other)
-				: t_CAllocator(fg_Forward<t_CParam0>(_Other))
+				: CAllocator(fg_Forward<t_CParam0>(_Other))
 			{
 			}
 		};
 
 		CData m_Data;
 
-		t_CAllocator &fp_GetAllocator()
+		CAllocator &fp_GetAllocator()
 		{
 			return m_Data;
 		}
 
-		t_CAllocator const &fp_GetAllocator() const
+		CAllocator const &fp_GetAllocator() const
 		{
 			return m_Data;
 		}
@@ -105,7 +135,7 @@ namespace NMib::NStorage
 		{
 			if (m_Data.m_pPointTo)
 			{
-				fg_DeleteObject(fp_GetAllocator(), (t_CType *)m_Data.m_pPointTo);
+				fg_DeleteObject(fp_GetAllocator(), m_Data.m_pPointTo);
 				m_Data.m_pPointTo = nullptr;
 			}
 		}
@@ -153,7 +183,7 @@ namespace NMib::NStorage
 		template <typename tf_CType, typename... tfp_CParams>
 		TCUniquePointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
-			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, t_CAllocator, t_CAllocator>::mc_Value, "Not a valid conversion");
+			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
 			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 		}
 
@@ -166,18 +196,18 @@ namespace NMib::NStorage
 		TCUniquePointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, tf_CAllocator &&_Allocator)
 			: m_Data(fg_Forward<tf_CAllocator>(_Allocator))
 		{
-			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, t_CAllocator, typename NTraits::TCRemoveReference<tf_CAllocator>::CType>::mc_Value, "Not a valid conversion");
+			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename NTraits::TCRemoveReference<tf_CAllocator>::CType>::mc_Value, "Not a valid conversion");
 			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 		}
 
-		template <typename t_CType2, typename t_CAllocator2, typename t_CPtr2, typename t_CTag2>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCUniquePointer
 		(
-			TCUniquePointer<t_CType2, t_CAllocator2, t_CPtr2, t_CTag2> &&_Other
+			TCUniquePointer<tf_CType, tfp_COptions...> &&_Other
 		)
 			: m_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			static_assert(NPrivate::TCIsValidConversion<t_CType, t_CType2, t_CAllocator, t_CAllocator2>::mc_Value, "Not a valid conversion");
+			static_assert(NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value, "Not a valid conversion");
 			m_Data.m_pPointTo = _Other.f_Detach();
 		}
 
@@ -285,10 +315,10 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		template <typename t_CType2, typename t_CAllocator2, typename t_CPtr2, typename t_CTag2>
-		TCUniquePointer & operator = (TCUniquePointer<t_CType2, t_CAllocator2, t_CPtr2, t_CTag2> &&_Other)
+		template <typename tf_CType, typename ...tfp_COptions>
+		TCUniquePointer & operator = (TCUniquePointer<tf_CType, tfp_COptions...> &&_Other)
 		{
-			static_assert(NPrivate::TCIsValidConversion<t_CType, t_CType2, t_CAllocator, t_CAllocator2>::mc_Value, "Not a valid conversion");
+			static_assert(NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value, "Not a valid conversion");
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.f_Detach();
@@ -298,7 +328,7 @@ namespace NMib::NStorage
 		template <typename tf_CType, typename... tfp_CParams>
 		TCUniquePointer &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
-			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, t_CAllocator, t_CAllocator>::mc_Value, "Not a valid conversion");
+			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
 			fp_Delete();
 			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 			return *this;
@@ -320,8 +350,8 @@ namespace NMib::NStorage
 			return f_Get() == _Other;
 		}
 
-		template <typename tf_CType1, typename tf_CAllocator1, typename tf_CPtr1, typename tf_CTag1>
-		bint operator == (const TCUniquePointer<tf_CType1, tf_CAllocator1, tf_CPtr1, tf_CTag1> &_Other) const
+		template <typename tf_CType, typename ...tfp_COptions>
+		bint operator == (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
 		{
 			return f_Get() == _Other.f_Get();
 		}
@@ -337,8 +367,8 @@ namespace NMib::NStorage
 			return f_Get() < _Other;
 		}
 
-		template <typename tf_CType1, typename tf_CAllocator1, typename tf_CPtr1, typename tf_CTag1>
-		bint operator < (const TCUniquePointer<tf_CType1, tf_CAllocator1, tf_CPtr1, tf_CTag1> &_Other) const
+		template <typename tf_CType, typename ...tfp_COptions>
+		bint operator < (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
 		{
 			return f_Get() < _Other.f_Get();
 		}
@@ -355,26 +385,26 @@ namespace NMib::NStorage
 	};
 
 
-	template <typename tf_CLeft, typename tf_CType, typename tf_CAllocator, typename tf_CPtr, typename tf_CTag>
-	bool operator == (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tf_CAllocator, tf_CPtr, tf_CTag> &_pRight)
+	template <typename tf_CLeft, typename tf_CType, typename ...tfp_COptions>
+	bool operator == (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
 	{
 		return _pLeft == _pRight.f_Get();
 	}
 
-	template <typename tf_CType, typename tf_CAllocator, typename tf_CPtr, typename tf_CTag>
-	bool operator == (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tf_CAllocator, tf_CPtr, tf_CTag> &_pRight)
+	template <typename tf_CType, typename ...tfp_COptions>
+	bool operator == (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
 	{
 		return _pLeft == _pRight.f_Get();
 	}
 
-	template <typename tf_CLeft, typename tf_CType, typename tf_CAllocator, typename tf_CPtr, typename tf_CTag>
-	bool operator < (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tf_CAllocator, tf_CPtr, tf_CTag> &_pRight)
+	template <typename tf_CLeft, typename tf_CType, typename ...tfp_COptions>
+	bool operator < (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
 	{
 		return _pLeft < _pRight.f_Get();
 	}
 
-	template <typename tf_CType, typename tf_CAllocator, typename tf_CPtr, typename tf_CTag>
-	bool operator < (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tf_CAllocator, tf_CPtr, tf_CTag> &_pRight)
+	template <typename tf_CType, typename ...tfp_COptions>
+	bool operator < (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
 	{
 		return _pLeft < _pRight.f_Get();
 	}

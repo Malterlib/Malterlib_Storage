@@ -7,7 +7,7 @@
 
 namespace NMib::NStorage::NIndirection
 {
-	template <typename t_CType, typename t_CAllocator, typename t_CPtr>
+	template <typename t_CType, typename t_CAllocator>
 	class TCIndirection;
 }
 
@@ -25,13 +25,13 @@ namespace NMib::NStorage
 
 namespace NMib::NStorage::NIndirection
 {
-	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator, typename t_CPtr = TCDynamicPtr<typename t_CAllocator::CPtrHolder, t_CType>>
+	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator>
 	class TCIndirection
 	{
 	protected:
 		struct CData : public t_CAllocator
 		{
-			t_CPtr m_pPointTo;
+			t_CType *m_pPointTo;
 		};
 
 		CData m_Data;
@@ -230,8 +230,8 @@ namespace NMib::NStorage::NIndirection
 
 namespace NMib::NStorage
 {
-	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator, typename t_CPtr = TCDynamicPtr<typename t_CAllocator::CPtrHolder, t_CType>>
-	using TCIndirection = NIndirection::TCIndirection<t_CType, t_CAllocator, t_CPtr>;
+	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator>
+	using TCIndirection = NIndirection::TCIndirection<t_CType, t_CAllocator>;
 }
 
 namespace NMib
