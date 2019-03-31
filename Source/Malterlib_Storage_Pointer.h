@@ -190,8 +190,6 @@ namespace NMib::NStorage
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
-
-
 	};
 
 	template <typename t_CType>
@@ -298,8 +296,6 @@ namespace NMib::NStorage
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
-
-
 	};
 
 #define DMibAutoClearPtrDeclare mutable NMib::NStorage::CAutoClearPtrMember m_AutoClearPtrMember
@@ -415,8 +411,6 @@ namespace NMib::NStorage
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
-
-
 	};
 
 #else
@@ -1364,6 +1358,28 @@ namespace NMib::NStorage
 			return f_Get() < static_cast<t_CType *>(_Other.fp_GetContained());
 		}
 
+		template <typename tf_CLeft>
+		friend bool operator == (tf_CLeft *_pLeft, const TCSharedPointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		friend bool operator == (CNullPtr _pLeft, const TCSharedPointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		template <typename tf_CLeft>
+		friend bool operator < (tf_CLeft *_pLeft, const TCSharedPointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
+
+		friend bool operator < (CNullPtr _pLeft, const TCSharedPointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
+
 		bint f_IsEmpty() const
 		{
 			return m_Data.m_pPointTo == nullptr;
@@ -1746,31 +1762,29 @@ namespace NMib::NStorage
 		{
 			return !f_IsEmpty();
 		}
+
+		template <typename tf_CLeft>
+		friend bool operator == (tf_CLeft *_pLeft, const TCWeakPointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		friend bool operator == (CNullPtr _pLeft, const TCWeakPointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		template <typename tf_CLeft>
+		friend bool operator < (tf_CLeft *_pLeft, const TCWeakPointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
+
+		friend bool operator < (CNullPtr _pLeft, const TCWeakPointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
 	};
-
-	template <typename tf_CLeft, typename tf_CType, typename... tfp_COptions>
-	bool operator == (tf_CLeft *_pLeft, const TCSharedPointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft == _pRight.f_Get();
-	}
-
-	template <typename tf_CType, typename... tfp_COptions>
-	bool operator == (CNullPtr _pLeft, const TCSharedPointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft == _pRight.f_Get();
-	}
-
-	template <typename tf_CLeft, typename tf_CType, typename... tfp_COptions>
-	bool operator < (tf_CLeft _pLeft, const TCSharedPointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft < _pRight.f_Get();
-	}
-
-	template <typename tf_CType, typename... tfp_COptions>
-	bool operator < (CNullPtr _pLeft, const TCSharedPointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft < _pRight.f_Get();
-	}
 }
 
 #ifndef DMibPNoShortCuts

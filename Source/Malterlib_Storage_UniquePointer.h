@@ -382,32 +382,29 @@ namespace NMib::NStorage
 		{
 			return !f_IsEmpty();
 		}
+
+		template <typename tf_CLeft>
+		friend bool operator == (tf_CLeft *_pLeft, const TCUniquePointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		friend bool operator == (CNullPtr _pLeft, const TCUniquePointer &_pRight)
+		{
+			return _pLeft == _pRight.f_Get();
+		}
+
+		template <typename tf_CLeft>
+		friend bool operator < (tf_CLeft *_pLeft, const TCUniquePointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
+
+		friend bool operator < (CNullPtr _pLeft, const TCUniquePointer &_pRight)
+		{
+			return _pLeft < _pRight.f_Get();
+		}
 	};
-
-
-	template <typename tf_CLeft, typename tf_CType, typename ...tfp_COptions>
-	bool operator == (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft == _pRight.f_Get();
-	}
-
-	template <typename tf_CType, typename ...tfp_COptions>
-	bool operator == (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft == _pRight.f_Get();
-	}
-
-	template <typename tf_CLeft, typename tf_CType, typename ...tfp_COptions>
-	bool operator < (tf_CLeft *_pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft < _pRight.f_Get();
-	}
-
-	template <typename tf_CType, typename ...tfp_COptions>
-	bool operator < (CNullPtr _pLeft, const TCUniquePointer<tf_CType, tfp_COptions...> &_pRight)
-	{
-		return _pLeft < _pRight.f_Get();
-	}
 }
 
 #ifndef DMibPNoShortCuts
