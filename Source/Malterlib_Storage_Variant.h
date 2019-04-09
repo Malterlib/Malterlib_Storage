@@ -919,7 +919,7 @@ namespace NMib::NStorage
 			if (TypeID == mcp_Member0Typed)
 				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 
-			NAggregate::TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<t_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
@@ -962,7 +962,7 @@ namespace NMib::NStorage
 			if (TypeID == mcp_Member0Typed)
 				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 
-			NAggregate::TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<t_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
@@ -1034,7 +1034,7 @@ namespace NMib::NStorage
 				return TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
 
 			auto TypeID = _Index;
-			NAggregate::TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<t_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;

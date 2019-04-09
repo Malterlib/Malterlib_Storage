@@ -115,7 +115,7 @@ namespace
 					<
 						int32
 						, NMib::NStorage::TCMember<void, int32(0)>
-						, NMib::NStorage::TCMember<NMib::NStorage::TCVector<int>, int32(1)>
+						, NMib::NStorage::TCMember<NMib::NContainer::TCVector<int>, int32(1)>
 						, NMib::NStorage::TCMember<fp32, int32(2)>
 						, NMib::NStorage::TCMember<fp64, int32(3)>
 						, NMib::NStorage::TCMember<int32, int32(4)>
