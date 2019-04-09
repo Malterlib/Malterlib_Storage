@@ -10,14 +10,13 @@
 
 namespace
 {
-
 	struct COne {};
 	struct CTwo {};
 	struct CThree {};
 	struct CFour {};
 
-	typedef NMib::NStorage::TCStreamableVariant<int, COne, 0> CVarA;
-	typedef NMib::NStorage::TCStreamableVariant<int, CTwo, 0> CVarB;
+	typedef NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>> CVarA;
+	typedef NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>> CVarB;
 
 	int operator * (CVarA _A, int _B)
 	{
@@ -63,22 +62,6 @@ namespace
 		struct CTest5 { };
 		struct CTest6 { };
 		struct CTest7 { };
-		struct CTest8 { };
-		struct CTest9 { };
-		struct CTest10 { };
-		struct CTest11 { };
-		struct CTest12 { };
-		struct CTest13 { };
-		struct CTest14 { };
-		struct CTest15 { };
-		struct CTest16 { };
-		struct CTest17 { };
-		struct CTest18 { };
-		struct CTest19 { };
-		struct CTest20 { };
-		struct CTest21 { };
-		struct CTest22 { };
-		struct CTest23 { };
 
 		void f_DoTests()
 		{
@@ -95,26 +78,6 @@ namespace
 							, CTest5
 							, CTest6
 							, CTest7
-	#if DMibContainerVariantMany > 0
-							, CTest8
-							, CTest9
-							, CTest10
-							, CTest11
-							, CTest12
-							, CTest13
-							, CTest14
-							, CTest15
-	#if DMibContainerVariantMany > 1
-							, CTest16
-							, CTest17
-							, CTest18
-							, CTest19
-							, CTest20
-							, CTest21
-							, CTest22
-							, CTest23
-	#endif
-	#endif
 						>
 						TestMany
 					;
@@ -127,26 +90,6 @@ namespace
 					TestMany = CTest5();
 					TestMany = CTest6();
 					TestMany = CTest7();
-	#if DMibContainerVariantMany
-					TestMany = CTest8();
-					TestMany = CTest9();
-					TestMany = CTest10();
-					TestMany = CTest11();
-					TestMany = CTest12();
-					TestMany = CTest13();
-					TestMany = CTest14();
-					TestMany = CTest15();
-	#if DMibContainerVariantMany > 1
-					TestMany = CTest16();
-					TestMany = CTest17();
-					TestMany = CTest18();
-					TestMany = CTest19();
-					TestMany = CTest20();
-					TestMany = CTest21();
-					TestMany = CTest22();
-					TestMany = CTest23();
-	#endif
-	#endif
 				}
 				{
 					CTestBase Test; 
@@ -168,8 +111,18 @@ namespace
 
 				NMib::NContainer::TCVector<int32> Test2 = Test;
 
-
-				typedef NMib::NStorage::TCStreamableVariant<int, void, 0, NMib::NContainer::TCVector<int>, 1, fp32, 2, fp64, 3, int32, 4, int64, 5> CManyVariant3;
+				typedef NMib::NStorage::TCStreamableVariant
+					<
+						int32
+						, NMib::NStorage::TCMember<void, int32(0)>
+						, NMib::NStorage::TCMember<NMib::NStorage::TCVector<int>, int32(1)>
+						, NMib::NStorage::TCMember<fp32, int32(2)>
+						, NMib::NStorage::TCMember<fp64, int32(3)>
+						, NMib::NStorage::TCMember<int32, int32(4)>
+						, NMib::NStorage::TCMember<int64, int32(5)>
+					>
+					CManyVariant3
+				;
 				
 				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64> CManyVariant;
 				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, const ch8 *> CManyVariant2;
@@ -274,7 +227,7 @@ namespace
 				{NMib::NStorage::TCVariant<CTest2DArray2V> Variant;}
 				{NMib::NStorage::TCVariant<CTest2DArray2CV> Variant;}*/
 
-	//			static_assert(NMib::NTraits::TCIsConstructorCallableWith<NMib::NStorage::TCVariant<FFunc0RRef>::TCTypeFromMember<0>::CType, void (decltype(NMib::fg_Move(fsg_FFunc0)))>::mc_Value, "hehe");
+	//			static_assert(NMib::NTraits::TCIsConstructorCallableWith<NMib::NStorage::TCVariant<FFunc0RRef>::TCTypeFromMember<0>, void (decltype(NMib::fg_Move(fsg_FFunc0)))>::mc_Value, "hehe");
 				
 		//		DMibDTrace("{}\r\n", sizeof(EmptyVariant));
 

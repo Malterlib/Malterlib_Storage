@@ -11,7 +11,13 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	struct TCOptional : public NStorage::TCStreamableVariant<int8, void, 0, t_CType, 1>
 	{
-		using CVariant = NStorage::TCStreamableVariant<int8, void, 0, t_CType, 1>;
+		using CVariant = NStorage::TCStreamableVariant
+			<
+				int8
+				, NStorage::TCMember<void, int8(0)>
+				, NStorage::TCMember<t_CType, int8(1)>
+			>
+		;
 
 		TCOptional(t_CType const &_Value);
 		TCOptional(t_CType &&_Value);
