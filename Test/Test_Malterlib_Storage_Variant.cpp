@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Variant>
@@ -92,13 +92,13 @@ namespace
 					TestMany = CTest7();
 				}
 				{
-					CTestBase Test; 
+					CTestBase Test;
 					NMib::NStorage::TCVariant<void, CTestRRef> Variant(NMib::fg_Move(Test));
 					auto &&test = Variant.f_Set<1>(NMib::fg_Move(Test));
 					int ntheounheo = 0;
 				}
 				{
-					CTestWithManyInit Test(6, 7, 8); 
+					CTestWithManyInit Test(6, 7, 8);
 					NMib::NStorage::TCVariant<void, CTestWithManyInit &&> Variant(NMib::fg_Move(Test));
 					NMib::NStorage::TCVariant<void, CTestWithManyInit> Variant2(5, 6, 7);
 				}
@@ -123,7 +123,7 @@ namespace
 					>
 					CManyVariant3
 				;
-				
+
 				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64> CManyVariant;
 				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, const ch8 *> CManyVariant2;
 				CManyVariant ManyVariant;
@@ -140,9 +140,9 @@ namespace
 
 				CManyVariant ManyVariant2 = Test;
 
-				CTestBase Test22; 
+				CTestBase Test22;
 				CTestCVRef Testing22(Test22);
-				
+
 				CManyVariant2 ManyVariant3 = ManyVariant2;
 
 				CManyVariant2 ManyVariant33 = NMib::fg_Const(ManyVariant2);
@@ -178,7 +178,7 @@ namespace
 				NMib::NStr::CFStr256 FStrTestUTF8 = MixedStr;
 				NMib::NStr::CFStr256 FEmpty;
 
-				NMib::NContainer::CRegistryPreserve_CStr TestingReg;
+				NMib::NContainer::CRegistryPreserveWhitespace TestingReg;
 				TestingReg.f_SetValue("ntaoheunh/notehunoethu", "anoetuhoanehu");
 				TestingReg.f_SetValue("ntaoheunh/notheuntoehu", "anoetuhoanehu");
 				TestingReg.f_SetValue("ntaoheunh", "anoetuhoanehu");
@@ -209,14 +209,14 @@ namespace
 				});
 
 				NMib::NStorage::TCVariant<void, uint8> EmptyVariant;
-				
+
 				EmptyVariant = 5;
-				
+
 				NMib::NStorage::TCVariant<void, NMib::NStorage::TCVariant<void, uint8>, int> RecursiveVariant{EmptyVariant};
-				
+
 				RecursiveVariant = EmptyVariant;
 				RecursiveVariant = NMib::fg_Move(EmptyVariant);
-				
+
 				DMibExpect(RecursiveVariant.f_Get<1>().f_Get<1>(), ==, 5);
 
 				CTest2DArray2V Blaha;
@@ -228,7 +228,7 @@ namespace
 				{NMib::NStorage::TCVariant<CTest2DArray2CV> Variant;}*/
 
 	//			static_assert(NMib::NTraits::TCIsConstructorCallableWith<NMib::NStorage::TCVariant<FFunc0RRef>::TCTypeFromMember<0>, void (decltype(NMib::fg_Move(fsg_FFunc0)))>::mc_Value, "hehe");
-				
+
 		//		DMibDTrace("{}\r\n", sizeof(EmptyVariant));
 
 
