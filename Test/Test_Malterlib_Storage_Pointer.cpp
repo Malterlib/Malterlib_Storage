@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 using namespace NMib::NCryptography;
@@ -17,7 +17,7 @@ namespace
 		struct CTestStruct
 		{
 			int m_0; int m_1; int m_2; int m_3; int m_4; int m_5; int m_6; int m_7; int m_8; int m_9;
-			
+
 			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
 				: m_0(_0), m_1(_1), m_2(_2), m_3(_3), m_4(_4), m_5(_5), m_6(_6), m_7(_7), m_8(_8), m_9(_9)
 			{
@@ -64,7 +64,7 @@ namespace
 			}
 
 
-			bint operator == (CTestStruct const &_Other) const
+			bool operator == (CTestStruct const &_Other) const
 			{
 				return m_0 == _Other.m_0
 					&& m_1 == _Other.m_1
@@ -82,7 +82,7 @@ namespace
 		struct CTestStructVirtual
 		{
 			int m_0; int m_1; int m_2; int m_3; int m_4; int m_5; int m_6; int m_7; int m_8; int m_9;
-			
+
 			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
 				: m_0(_0), m_1(_1), m_2(_2), m_3(_3), m_4(_4), m_5(_5), m_6(_6), m_7(_7), m_8(_8), m_9(_9)
 			{
@@ -133,7 +133,7 @@ namespace
 			}
 
 
-			bint operator == (CTestStructVirtual const &_Other) const
+			bool operator == (CTestStructVirtual const &_Other) const
 			{
 				return m_0 == _Other.m_0
 					&& m_1 == _Other.m_1

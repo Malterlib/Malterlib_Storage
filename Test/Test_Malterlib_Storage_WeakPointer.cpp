@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 using namespace NMib::NCryptography;
@@ -28,7 +28,7 @@ namespace
 		{
 			mint m_Dummy = 0; // Will be overwritten after destructor is called
 			uint32 m_Value;
-			zbool m_bDestroyed;
+			bool m_bDestroyed = false;
 			CTestWeakIntrusive *m_pThis;
 			CTestWeakIntrusive(uint32 _Value)
 				: m_Value(_Value)
@@ -44,7 +44,7 @@ namespace
 		struct CTestIntrusive : public NStorage::TCSharedPointerIntrusiveBase<>
 		{
 			uint32 m_Value;
-			zbool m_bDestroyed;
+			bool m_bDestroyed = false;
 			CTestIntrusive *m_pThis;
 			CTestIntrusive(uint32 _Value)
 				: m_Value(_Value)
@@ -56,14 +56,14 @@ namespace
 				m_bDestroyed = true;
 			}
 		};
-		
+
 		void f_TestRefCounting()
 		{
 			{
 				DMibTestPath("Weak destroys");
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer = fg_Construct(5);
 				auto pThis = pPointer->m_pThis;
-		
+
 				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
 				DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
 
@@ -81,7 +81,7 @@ namespace
 					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
 					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(2));
 				}
-				
+
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
 				pPointer.f_Clear();
 				DMibTest(DMibExpr(!!pThis->m_bDestroyed));
@@ -91,7 +91,7 @@ namespace
 					DMibTest(DMibExpr(pThis->f_RefCountGet()) <= DMibExpr(-1));
 					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(1));
 				}
-				
+
 				pWeakPointer.f_Clear();
 				{
 					DMibTestPath("After weak cleared");
@@ -106,7 +106,7 @@ namespace
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer = fg_Construct(5);
 
 				auto pThis = pPointer->m_pThis;
-				
+
 				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
 				DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
 
@@ -135,7 +135,7 @@ namespace
 					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
 					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
 				}
-				
+
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
 				pPointer.f_Clear();
 			}
@@ -144,35 +144,35 @@ namespace
 				TCSharedPointer<CTestIntrusive> pPointer = fg_Construct(5);
 
 				auto pThis = pPointer->m_pThis;
-				
+
 				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
 				pPointer.f_Clear();
 			}
-			
+
 				std::shared_ptr<int> pSharedPointer = std::make_shared<int>(5);
 				std::weak_ptr<int> pWeakPointer = pSharedPointer;
 				std::shared_ptr<int> pSharedPointer2 = pWeakPointer.lock();
-				
+
 				pSharedPointer = nullptr;
 				pSharedPointer2 = nullptr;
 				pWeakPointer = std::weak_ptr<int>();
-				
-			
+
+
 		}
-		
+
 		void f_TestLock()
 		{
 			{
 				DMibTestPath("Non-destroyed");
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer = fg_Construct(5);
-				
+
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer = pPointer;
-				
+
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
-				
+
 				TCSharedPointer<CTestWeakIntrusive, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
-				
+
 				DMibTest(!DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointer2.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointerDifferentOrder.f_IsEmpty()));
@@ -185,13 +185,13 @@ namespace
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer = fg_Construct(5);
 
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer = pPointer;
-				
+
 				pPointer.f_Clear();
-				
+
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
-				
+
 				TCSharedPointer<CTestWeakIntrusive, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
-				
+
 				DMibTest(DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(DMibExpr(pPointer2.f_IsEmpty()));
 				DMibTest(DMibExpr(pPointerDifferentOrder.f_IsEmpty()));
@@ -204,11 +204,11 @@ namespace
 				TCSharedPointer<int32, CSupportWeakTag> pPointer = fg_Construct(5);
 
 				TCWeakPointer<int32> pWeakPointer = pPointer;
-				
+
 				TCSharedPointer<int32, CSupportWeakTag> pPointer2 = pWeakPointer.f_Lock();
-				
+
 				TCSharedPointer<int32, NMib::NMemory::CDefaultAllocator, CSupportWeakTag> pPointerDifferentOrder = pWeakPointer.f_Lock();
-				
+
 				DMibTest(!DMibExpr(pPointer.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointer2.f_IsEmpty()));
 				DMibTest(!DMibExpr(pPointerDifferentOrder.f_IsEmpty()));
@@ -232,7 +232,7 @@ namespace
 			{
 				f_TestNonIntrusive();
 			};
-			
+
 		}
 	};
 

@@ -129,12 +129,12 @@ namespace NMib::NStorage
 			return m_Lock.f_Unlock();
 		}
 
-		bint f_IsConstructed()
+		bool f_IsConstructed()
 		{
 			return m_bConstructed;
 		}
 
-		bint f_WasDestructed()
+		bool f_WasDestructed()
 		{
 			return m_bDestructed;
 		}

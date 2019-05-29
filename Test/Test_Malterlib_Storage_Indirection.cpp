@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Indirection>
@@ -8,7 +8,7 @@ namespace
 {
 	using namespace NMib;
 	using namespace NMib::NStorage;
-	namespace 
+	namespace
 	{
 		class CTestClass
 		{
@@ -34,11 +34,11 @@ namespace
 					return 0;
 				}
 
-				bint operator < (float _Value) const
+				bool operator < (float _Value) const
 				{
 					return m_Data < _Value;
 				}
-				bint operator < (CTestUndefined const &_Other);
+				bool operator < (CTestUndefined const &_Other);
 			};
 			CTestClass();
 			~CTestClass();
@@ -56,7 +56,7 @@ namespace
 				CTestClass Indirection;
 				f_DoDefinedTests(Indirection);
 			}
-				
+
 		};
 
 		class CTestClass::CTestUndefined
@@ -78,25 +78,25 @@ namespace
 			{
 				return 0;
 			}
-			bint operator < (float _Value) const
+			bool operator < (float _Value) const
 			{
 				return m_Data < _Value;
 			}
-			bint operator < (CTestDefined const &_Other)
+			bool operator < (CTestDefined const &_Other)
 			{
 				return m_Data < _Other.m_Data;
 			}
 		};
 
-		bint CTestClass::CTestDefined::operator < (CTestUndefined const &_Other)
+		bool CTestClass::CTestDefined::operator < (CTestUndefined const &_Other)
 		{
 			return m_Data < _Other.m_Data;
 		}
-		bint operator < (float const &_Left, CTestClass::CTestDefined const &_Right)
+		bool operator < (float const &_Left, CTestClass::CTestDefined const &_Right)
 		{
 			return _Left < _Right.m_Data;
 		}
-		bint operator < (float const &_Left, CTestClass::CTestUndefined const &_Right)
+		bool operator < (float const &_Left, CTestClass::CTestUndefined const &_Right)
 		{
 			return _Left < _Right.m_Data;
 		}
@@ -155,7 +155,7 @@ namespace
 
 		}
 	}
-	
+
 	DMibTestRegister(CIndirection_Tests, Malterlib::Storage);
 }
 

@@ -340,40 +340,40 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bint operator == (tf_CType *_Other) const
+		bool operator == (tf_CType *_Other) const
 		{
 			return f_Get() == _Other;
 		}
 
-		bint operator == (CNullPtr _Other) const
+		bool operator == (CNullPtr _Other) const
 		{
 			return f_Get() == _Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		bint operator == (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
 		{
 			return f_Get() == _Other.f_Get();
 		}
 
 		template <typename tf_CType>
-		bint operator < (tf_CType *_Other) const
+		bool operator < (tf_CType *_Other) const
 		{
 			return f_Get() < _Other;
 		}
 
-		bint operator < (CNullPtr _Other) const
+		bool operator < (CNullPtr _Other) const
 		{
 			return f_Get() < _Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		bint operator < (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator < (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
 		{
 			return f_Get() < _Other.f_Get();
 		}
 
-		bint f_IsEmpty() const
+		bool f_IsEmpty() const
 		{
 			return m_Data.m_pPointTo == nullptr;
 		}

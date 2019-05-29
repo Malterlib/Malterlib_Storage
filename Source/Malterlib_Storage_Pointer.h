@@ -687,7 +687,7 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 
-		template <typename t_CType, CSharedPointerOptionUnderlaying t_Options, bint t_bHasRefCount = TCHasIntrusiveRefcount<typename NTraits::TCRemoveQualifiers<t_CType>::CType>::mc_Value>
+		template <typename t_CType, CSharedPointerOptionUnderlaying t_Options, bool t_bHasRefCount = TCHasIntrusiveRefcount<typename NTraits::TCRemoveQualifiers<t_CType>::CType>::mc_Value>
 		class TCChooseSharedPointerTypeImp
 		{
 		public:
@@ -702,7 +702,7 @@ namespace NMib::NStorage
 			typedef t_CType CType;
 		};
 
-		template <CSharedPointerOptionUnderlaying t_Options, bint t_bHasRefCount>
+		template <CSharedPointerOptionUnderlaying t_Options, bool t_bHasRefCount>
 		class TCChooseSharedPointerTypeImp<void, t_Options, t_bHasRefCount>
 		{
 		public:
@@ -1380,7 +1380,7 @@ namespace NMib::NStorage
 			return _pLeft < _pRight.f_Get();
 		}
 
-		bint f_IsEmpty() const
+		bool f_IsEmpty() const
 		{
 			return m_Data.m_pPointTo == nullptr;
 		}
@@ -1753,7 +1753,7 @@ namespace NMib::NStorage
 			return fp_GetContained() < _Other.f_Get();
 		}
 
-		bint f_IsEmpty() const
+		bool f_IsEmpty() const
 		{
 			return m_Data.m_pPointTo == nullptr;
 		}
