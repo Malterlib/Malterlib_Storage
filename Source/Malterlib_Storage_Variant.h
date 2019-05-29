@@ -1187,7 +1187,7 @@ namespace NMib::NStorage
 		}
 
 	protected:
-		template <typename t_CInType, TCEnableIfType<!NPrivate::TCIsVariant<typename NTraits::TCRemoveReferenceAndQualifiers<t_CInType>::CType>::mc_Value> * = nullptr>
+		template <typename t_CInType>
 		struct TCEvalOneParamConstruction
 		{
 			using CInTypeNoRef = typename NTraits::TCRemoveReferenceStorable<t_CInType>::CType;
