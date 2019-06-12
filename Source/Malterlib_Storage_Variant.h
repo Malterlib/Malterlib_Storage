@@ -40,7 +40,7 @@ namespace NMib::NStorage
 			CDummy() = delete;
 			~CDummy() = delete;
 		};
-		
+
 		template <typename t_CReturn>
 		function_does_not_return inline_never typename TCEnableIf<!NTraits::TCIsVoid<t_CReturn>::mc_Value, t_CReturn &>::CType fg_InvalidVariant()
 		{
@@ -52,7 +52,7 @@ namespace NMib::NStorage
 		{
 			DMibError("Corrupt variant");
 		}
-		
+
 		template <typename t_CType>
 		struct TCIsVariant
 		{
@@ -87,11 +87,11 @@ namespace NMib::NStorage
 		static_assert(NTraits::TCIsSame<t_CIndex, NPrivate::CDummy>::mc_Value, "Mismatched index type and member index types");
 	};
 
-		template <typename t_CIndex, typename t_CType, t_CIndex t_Member>
+	template <typename t_CIndex, typename t_CType, t_CIndex t_Member>
 	struct TCVariantMember
 	{
 		using CType = t_CType;
-		t_CIndex mc_Member = t_Member;
+		static constexpr t_CIndex mc_Member = t_Member;
 	};
 
 	template <typename t_CType, auto t_Member DMibStorageVariantTypeInMember(, typename t_CIndex = decltype(t_Member))>
@@ -367,8 +367,18 @@ namespace NMib::NStorage
 		};
 	}
 
+#ifdef DMibDebuggerHelpers
+	template <smint t_Member, typename t_CType>
+	struct TCVariantCommonDebugHelperMember
+	{
+	};
+#endif
+
 	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
 	struct TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>
+#ifdef DMibDebuggerHelpers
+		: public TCVariantCommonDebugHelperMember<tp_Member, tp_CTypes>...
+#endif
 	{
 		using CIndexType = t_CIndex;
 		static constexpr mint mc_Length = sizeof...(tp_CTypes);
@@ -444,7 +454,7 @@ namespace NMib::NStorage
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
 			using CType = typename TCChooseType
 				<
-					NTraits::TCIsReference<CMemberType>::mc_Value, 
+					NTraits::TCIsReference<CMemberType>::mc_Value,
 					typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<CMemberType>::CType>::CType,
 					typename NTraits::TCRemoveQualifiers<CMemberType>::CType
 				>::CType
@@ -506,7 +516,7 @@ namespace NMib::NStorage
 		{
 			struct CType {};
 		};
-		
+
 		struct CStorageType : public TCDetermineStorageType<mcp_MaxSize, mcp_MaxAlignment>::CType
 		{
 			CTypeIDStorageType m_CurrentType;
@@ -581,7 +591,7 @@ namespace NMib::NStorage
 			template <typename t_CThis, typename t_CVisitor>
 			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
-				
+
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
@@ -638,7 +648,7 @@ namespace NMib::NStorage
 			template <typename t_CThis, typename t_CVisitor>
 			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
-				
+
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
@@ -658,7 +668,7 @@ namespace NMib::NStorage
 				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
 		};
-		
+
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitorSet
 		{
@@ -786,7 +796,7 @@ namespace NMib::NStorage
 			using CReturnType = typename TCEvalReturnTypeConst<t_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
-		
+
 		template <CIndexInteger t_iMember>
 		inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType fp_GetAsStorage()
 		{
@@ -842,7 +852,7 @@ namespace NMib::NStorage
 
 			DMibCheck(bFound);
 		}
-		
+
 	public:
 		template <typename t_CVisitor>
 		void f_Visit(t_CVisitor &&_Visitor)
@@ -1079,7 +1089,7 @@ namespace NMib::NStorage
 #ifdef DCompiler_MSVC
 		void fp_ReferenceDebugInfo()
 		{
-			TCInitializerList<bool> Dumy = 
+			TCInitializerList<bool> Dumy =
 				{
 					[&]
 					{
@@ -1220,21 +1230,21 @@ namespace NMib::NStorage
 			using CTypeToConstruct = TCTypeFromMemberInt<mc_ToConstruct>;
 			enum
 			{
-				mc_Value 
-				= mc_ToConstruct >= 0 && NTraits::TCHasNothrowCopyConstructor<CTypeToConstruct>::mc_Value 
-				&& 
+				mc_Value
+				= mc_ToConstruct >= 0 && NTraits::TCHasNothrowCopyConstructor<CTypeToConstruct>::mc_Value
+				&&
 				(
 					NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<t_CParam>::CType>::mc_Value
-					|| 
+					||
 					(
-						!NTraits::TCIsReference<CTypeToConstruct>::mc_Value 
-						&& NTraits::TCIsReference<t_CParam>::mc_Value 
+						!NTraits::TCIsReference<CTypeToConstruct>::mc_Value
+						&& NTraits::TCIsReference<t_CParam>::mc_Value
 						&& NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CParam>::CType>::CType>::mc_Value
 					)
 				)
 			};
 		};
-	
+
 		template <typename t_FConstructorParams>
 		struct TCEvalManyParamConstruction
 		{
@@ -1349,7 +1359,7 @@ namespace NMib::NStorage
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
-		}			
+		}
 
 		TCVariantCommon(TCVariantCommon &&_Other)
 		{
@@ -1366,7 +1376,7 @@ namespace NMib::NStorage
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
-		}		
+		}
 
 		TCVariantCommon(TCVariantCommon const &_Other)
 		{
@@ -1391,7 +1401,7 @@ namespace NMib::NStorage
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
-		}		
+		}
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -1399,7 +1409,7 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template 
+		template
 		<
 			typename tf_CParam0
 			, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr
@@ -1412,7 +1422,7 @@ namespace NMib::NStorage
 #endif
 		}
 
-		template 
+		template
 		<
 			typename tf_CParam0
 			, typename ...tfp_CParams
@@ -1429,7 +1439,7 @@ namespace NMib::NStorage
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
-		}			
+		}
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -1458,7 +1468,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}		
+		}
 
 		TCVariantCommon &operator = (TCVariantCommon &&_Other)
 		{
@@ -1478,7 +1488,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}			
+		}
 
 		template <typename tf_CIndex, typename ...tfp_CMembers>
 		TCVariantCommon &operator = (TCVariantCommon<tf_CIndex, tfp_CMembers...> const &_Other)
@@ -1499,7 +1509,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}			
+		}
 
 		TCVariantCommon &operator = (TCVariantCommon const &_Other)
 		{
@@ -1519,7 +1529,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}			
+		}
 
 		TCVariantCommon &operator = (TCVariantCommon &_Other)
 		{
@@ -1539,7 +1549,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}			
+		}
 
 		template <typename tf_CIndex, typename ...tfp_CMembers>
 		TCVariantCommon &operator = (TCVariantCommon<tf_CIndex, tfp_CMembers...> &_Other)
@@ -1560,7 +1570,7 @@ namespace NMib::NStorage
 				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
 				throw;
 			}
-		}	
+		}
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -1600,7 +1610,7 @@ namespace NMib::NStorage
 
 			return *this;
 		}
-		 
+
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
 		| Misc functions																					|
@@ -1780,7 +1790,7 @@ namespace NMib::NStorage
 
 		TCVariant() = default;
 		~TCVariant() = default;
-		
+
 		TCVariant(TCVariant &&_Other)
 			: CParent(fg_Move(_Other.fp_GetStreamable()))
 		{
@@ -2059,7 +2069,7 @@ namespace NMib
 			, m_ToVisit(_ToVisit)
 		{
 		}
-		
+
 		template <typename t_CInnerVisitor, typename t_CValue>
 		struct TCValueVisitor
 		{
