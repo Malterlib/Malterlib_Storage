@@ -180,6 +180,9 @@ namespace NMib::NStorage
 				return true;
 			return false;
 		}
+		else if (!_Right)
+			return false;
+
 		return **this == *_Right;
 	}
 	
@@ -193,6 +196,9 @@ namespace NMib::NStorage
 				return false;
 			return true;
 		}
+		else if (!_Right)
+			return false;
+
 		return **this < *_Right;
 	}
 }
