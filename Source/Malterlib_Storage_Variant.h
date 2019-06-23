@@ -381,10 +381,11 @@ namespace NMib::NStorage
 #endif
 	{
 		using CIndexType = t_CIndex;
+		using CIndexInteger = typename NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>::CType;
+		using CIndexUnsignedInteger = typename NTraits::TCUnsigned<CIndexInteger>::CType;
 		static constexpr mint mc_Length = sizeof...(tp_CTypes);
 
 	private:
-		using CIndexInteger = typename NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>::CType;
 
 		template <typename ...tp_CTypes2>
 		friend struct TCVariant;
@@ -1078,6 +1079,9 @@ namespace NMib::NStorage
 
 			return fg_Move(*Ret);
 		}
+
+		bool operator == (TCVariantCommon const &_Right) const;
+		bool operator < (TCVariantCommon const &_Right) const;
 
 	private:
 
@@ -2114,6 +2118,63 @@ namespace NMib
 		TCInnerVisitor<t_CRet, t_CVisitor, t_CToVisit1> Visitor(_Visitor, _ToVisit1);
 		return fg_VisitRet<t_CRet>(Visitor, _ToVisit0);
 	}
+}
+
+namespace NMib::NStorage
+{
+	namespace NPrivate
+	{
+		struct CCompareVariant_LessThan
+		{
+			template <typename tf_CLeft, typename tf_CRight>
+			bool operator()(tf_CLeft const &_Left, tf_CRight const &_Right) const
+			{
+				return false;
+			}
+
+			template <typename tf_CSame>
+			bool operator()(tf_CSame const &_Left, tf_CSame const &_Right) const
+			{
+				return _Left < _Right;
+			}
+		};
+
+		struct CCompareVariant_Equal
+		{
+			template <typename tf_CLeft, typename tf_CRight>
+			bool operator()(tf_CLeft const &_Left, tf_CRight const &_Right) const
+			{
+				return false;
+			}
+
+			template <typename tf_CSame>
+			bool operator()(tf_CSame const &_Left, tf_CSame const &_Right) const
+			{
+				return _Left == _Right;
+			}
+		};
+	}
+
+	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
+	bool TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>::operator == (TCVariantCommon const &_Right) const
+	{
+		if (f_GetTypeID() != _Right.f_GetTypeID())
+			return false;
+
+		return fg_VisitRet<bool>(NPrivate::CCompareVariant_Equal(), *this, _Right);
+	}
+
+	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
+	bool TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>::operator < (TCVariantCommon const &_Right) const
+	{
+		if (f_GetTypeID() < _Right.f_GetTypeID())
+			return true;
+		else if (f_GetTypeID() > _Right.f_GetTypeID())
+			return false;
+
+		return fg_VisitRet<bool>(NPrivate::CCompareVariant_LessThan(), *this, _Right);
+	}
+
 }
 
 #ifndef DMibPNoShortCuts
