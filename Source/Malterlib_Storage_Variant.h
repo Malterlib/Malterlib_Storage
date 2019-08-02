@@ -561,25 +561,25 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
@@ -590,24 +590,24 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
-
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return NPrivate::fg_InvalidVariant<t_CRet>();
 			}
+
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
@@ -618,25 +618,25 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
@@ -647,24 +647,24 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
-
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return NPrivate::fg_InvalidVariant<t_CRet>();
 			}
+
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
@@ -675,24 +675,24 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
@@ -703,26 +703,27 @@ namespace NMib::NStorage
 		{
 		public:
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
 				return NPrivate::fg_InvalidVariant<t_CRet>();
 			}
+
 			template <typename t_CThis, typename t_CVisitor>
-			inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
 				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
 			}
 
 			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 			{
 				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
 				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());

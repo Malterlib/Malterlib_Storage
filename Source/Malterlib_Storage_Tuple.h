@@ -682,13 +682,13 @@ namespace NMib::NStorage
 namespace NMib
 {
 	template <mint tf_Index, typename tf_CType>
-	auto fg_Get(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>::CType
+	mark_artificial inline_always auto fg_Get(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>::CType
 	{
 		return fg_Forward<typename NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>::CType >(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))));
 	}
 
 	template <mint tf_Index, typename tf_CType>
-	auto fg_GetForward(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>::CType
+	mark_artificial inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>::CType
 	{
 		return fg_Forward<typename NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>::CType >(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)));
 	}
@@ -741,14 +741,14 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 		template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, mint ...tfp_Indices>
-		auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
+		mark_artificial inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
 		{
 			return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);
 		}
 	}
 
 	template <typename tf_CTypeList, typename tf_FFunctor, typename tf_CTuple>
-	auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
+	mark_artificial inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
 	{
 		return NPrivate::fg_TupleApplyAs
 			(
