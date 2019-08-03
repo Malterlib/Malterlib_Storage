@@ -1571,7 +1571,6 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo;
 		}
 
-
 		template <typename t_CDummy>
 		bool fp_Delete()
 		{
@@ -1677,6 +1676,10 @@ namespace NMib::NStorage
 			fp_SetInit(_pPtr);
 		}
 
+		CInternalData *f_UnsafeGetPointerValue() const
+		{
+			return m_Data.m_pPointTo;
+		}
 
 		template <typename tf_CType>
 		TCWeakPointer(TCExplicit<tf_CType> &&_Other)
@@ -1736,6 +1739,7 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
+
 
 
 		bool f_Clear()
