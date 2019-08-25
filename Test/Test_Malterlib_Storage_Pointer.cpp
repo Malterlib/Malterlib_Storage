@@ -1250,7 +1250,7 @@ namespace
 				}
 				{
 					CReportScope ReportScope("make_shared                CBaseNonVirtual                                    ", sizeof(std::shared_ptr<CBaseNonVirtual>));
-					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CBase>());
+					std::shared_ptr<CBase> pMakeShared(std::make_shared<CBase>());
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CBaseNonVirtual                                    ", sizeof(std::shared_ptr<CBaseNonVirtual>));
@@ -1301,10 +1301,10 @@ namespace
 				}
 				{
 					CReportScope ReportScope("make_shared                CBase                                              ", sizeof(std::shared_ptr<CBase>));
-					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CBase>());
+					std::shared_ptr<CBase> pMakeShared(std::make_shared<CBase>());
 
 					if constexpr (!s_bReportMemory)
-						DMibExpect(pSharedPointer->f_GetValue(), ==, 0);
+						DMibExpect(pMakeShared->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CBase                                              ", sizeof(std::shared_ptr<CBase>));
@@ -1358,10 +1358,10 @@ namespace
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerived                                           ", sizeof(std::shared_ptr<CBase>));
-					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerived>());
+					std::shared_ptr<CBase> pMakeShared(std::make_shared<CDerived>());
 
 					if constexpr (!s_bReportMemory)
-						DMibExpect(pSharedPointer->f_GetValue(), ==, 1);
+						DMibExpect(pMakeShared->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerived                                           ", sizeof(std::shared_ptr<CBase>));
@@ -1404,10 +1404,10 @@ namespace
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerivedVirtual                                    ", sizeof(std::shared_ptr<CBase>));
-					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerivedVirtual>());
+					std::shared_ptr<CBase> pMakeShared(std::make_shared<CDerivedVirtual>());
 
 					if constexpr (!s_bReportMemory)
-						DMibExpect(pSharedPointer->f_GetValue(), ==, 1);
+						DMibExpect(pMakeShared->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerivedVirtual                                    ", sizeof(std::shared_ptr<CBase>));
@@ -1449,10 +1449,10 @@ namespace
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerived2Virtual                                   ", sizeof(std::shared_ptr<CBase>));
-					std::shared_ptr<CBase> pSharedPointer(new CDerived2Virtual());
+					std::shared_ptr<CBase> pMakeShared(new CDerived2Virtual());
 
 					if constexpr (!s_bReportMemory)
-						DMibExpect(pSharedPointer->f_GetValue(), ==, 2);
+						DMibExpect(pMakeShared->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerived2Virtual                                   ", sizeof(std::shared_ptr<CBase>));
@@ -1493,11 +1493,11 @@ namespace
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 3);
 				}
 				{
-					CReportScope ReportScope("make_Shared                CAligned32DiamondDerivedVirtual                    ", sizeof(std::shared_ptr<CBase>));
-					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CAligned32DiamondDerivedVirtual>());
+					CReportScope ReportScope("make_shared                CAligned32DiamondDerivedVirtual                    ", sizeof(std::shared_ptr<CBase>));
+					std::shared_ptr<CBase> pMakeShared(std::make_shared<CAligned32DiamondDerivedVirtual>());
 
 					if constexpr (!s_bReportMemory)
-						DMibExpect(pSharedPointer->f_GetValue(), ==, 3);
+						DMibExpect(pMakeShared->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CAligned32DiamondDerivedVirtual                    ", sizeof(std::shared_ptr<CBase>));
