@@ -6,7 +6,7 @@
 namespace NMib::NStorage
 {
 	template <typename t_CType>
-	TCOptional<t_CType>::TCOptional(CNullPtr)
+	TCOptional<t_CType>::TCOptional(CNullPtr) noexcept
 	{
 	}
 
