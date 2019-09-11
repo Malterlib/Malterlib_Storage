@@ -1334,7 +1334,7 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		TCVariantCommon()
+		TCVariantCommon() noexcept(mcp_FirstNothrowDefaultConstructible != -1)
 		{
 			static_assert(mcp_FirstDefaultConstructible != -1, "No suitable default constructible type exists in variant, variant cannot be default constructed.");
 			fp_SetNoRet<mcp_FirstDefaultConstructible>();
