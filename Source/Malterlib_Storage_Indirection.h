@@ -124,6 +124,9 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection &operator =(TCIndirection &&_Other);
 		mark_artificial inline_always operator t_CType const & () const;
 		mark_artificial inline_always operator t_CType & ();
+
+		template <typename tf_CStr>
+		void f_Format(tf_CStr &o_String) const;
 	};
 
 	DMibTempImplementIndirectionBinaryOperator(==);

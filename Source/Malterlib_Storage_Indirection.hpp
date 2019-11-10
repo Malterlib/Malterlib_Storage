@@ -209,4 +209,11 @@ namespace NMib::NStorage::NIndirection
 	{
 		return this->f_Get();
 	}
+
+	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CStr>
+	void TCIndirection<t_CType, t_CAllocator>::f_Format(tf_CStr &o_String) const
+	{
+		o_String += typename tf_CStr::CFormat("{}") << f_Get();
+	}
 }
