@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -50,18 +50,6 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always t_CType volatile &TCIndirection<t_CType, t_CAllocator>::f_Get() volatile
-	{
-		return *m_Data.m_pPointTo;
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always t_CType const volatile &TCIndirection<t_CType, t_CAllocator>::f_Get() const volatile
-	{
-		return *m_Data.m_pPointTo;
-	}
-
-	template <typename t_CType, typename t_CAllocator>
 	mark_artificial inline_always t_CType &TCIndirection<t_CType, t_CAllocator>::f_Get()
 	{
 		return *m_Data.m_pPointTo;
@@ -77,20 +65,6 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename... tfp_CParams>
 	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams &&...p_Params) const
-	{
-		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename... tfp_CParams>
-	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams &&...p_Params) volatile
-	{
-		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename... tfp_CParams>
-	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams &&...p_Params) const volatile
 	{
 		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
@@ -153,63 +127,6 @@ namespace NMib::NStorage::NIndirection
 		return (this->f_Get()).*_MemberPtr;
 	}
 
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-			, NFunction::TCMemberFunctionBoundFunctor
-			<
-				t_CMemberPtr
-				, typename NTraits::TCAddVolatile<t_CType>::CType *
-			>
-		>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) volatile
-	{
-		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-	<
-		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-	>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) volatile
-	{
-		return (this->f_Get()).*_MemberPtr;
-	}
-
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-			, NFunction::TCMemberFunctionBoundFunctor
-			<
-				t_CMemberPtr
-				, typename NTraits::TCAddConst<typename NTraits::TCAddVolatile<t_CType>::CType>::CType *
-			>
-		>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-	{
-		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-	<
-		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType>::CType
-	>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-	{
-		return (this->f_Get()).*_MemberPtr;
-	}
 #endif
 
 	template <typename t_CType, typename t_CAllocator>
@@ -233,18 +150,6 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection const &_Other)
-	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection volatile &_Other)
-	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection const volatile &_Other)
 	{
 		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
 	}
@@ -278,20 +183,6 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection volatile &_Other)
-	{
-		this->f_Get() = _Other.f_Get();
-		return *this;
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection const volatile &_Other)
-	{
-		this->f_Get() = _Other.f_Get();
-		return *this;
-	}
-
-	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection &_Other)
 	{
 		this->f_Get() = _Other.f_Get();
@@ -309,18 +200,6 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator>
 	mark_artificial inline_always TCIndirection<t_CType, t_CAllocator>::operator t_CType const & () const
-	{
-		return this->f_Get();
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always TCIndirection<t_CType, t_CAllocator>::operator t_CType volatile & () volatile
-	{
-		return this->f_Get();
-	}
-
-	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always TCIndirection<t_CType, t_CAllocator>::operator t_CType const volatile & () const volatile
 	{
 		return this->f_Get();
 	}

@@ -49,8 +49,6 @@ namespace NMib::NStorage::NIndirection
 	public:
 
 		mark_artificial inline_always t_CType const &f_Get() const;
-		mark_artificial inline_always t_CType volatile &f_Get() volatile;
-		mark_artificial inline_always t_CType const volatile &f_Get() const volatile;
 		mark_artificial inline_always t_CType &f_Get();
 
 	public:
@@ -60,12 +58,6 @@ namespace NMib::NStorage::NIndirection
 
 		template <typename... tfp_CParams>
 		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) const;
-
-		template <typename... tfp_CParams>
-		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) volatile;
-
-		template <typename... tfp_CParams>
-		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) const volatile;
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -113,47 +105,6 @@ namespace NMib::NStorage::NIndirection
 		>::CType
 		operator ->* (t_CMemberPtr const &_MemberPtr) const;
 
-
-		template <typename t_CMemberPtr>
-		typename TCEnableIf
-			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, typename NTraits::TCAddVolatile<t_CType>::CType *
-				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) volatile;
-
-		template <typename t_CMemberPtr>
-		typename TCEnableIf
-		<
-			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-			, typename NTraits::TCAddLValueReference<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-		>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) volatile;
-
-
-		template <typename t_CMemberPtr>
-		typename TCEnableIf
-			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, typename NTraits::TCAddConst<typename NTraits::TCAddVolatile<t_CType>::CType>::CType *
-				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const volatile;
-
-		template <typename t_CMemberPtr>
-		typename TCEnableIf
-		<
-			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-			, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCAddVolatile<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType>::CType
-		>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const volatile;
 	public:
 		typedef t_CType CType;
 
@@ -164,20 +115,14 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection(tf_CParam0 &&_Param0, tfp_CParams && ... p_Params);
 
 		TCIndirection(TCIndirection const &_Other);
-		TCIndirection(TCIndirection volatile &_Other);
-		TCIndirection(TCIndirection const volatile &_Other);
 		TCIndirection(TCIndirection &_Other);
 		TCIndirection(TCIndirection &&_Other);
 		template <typename t_CParam0>
 		TCIndirection &operator =(t_CParam0 &&_Param0);
 		TCIndirection &operator =(TCIndirection const &_Other);
-		TCIndirection &operator =(TCIndirection volatile &_Other);
-		TCIndirection &operator =(TCIndirection const volatile &_Other);
 		TCIndirection &operator =(TCIndirection &_Other);
 		TCIndirection &operator =(TCIndirection &&_Other);
 		mark_artificial inline_always operator t_CType const & () const;
-		mark_artificial inline_always operator t_CType volatile & () volatile;
-		mark_artificial inline_always operator t_CType const volatile & () const volatile;
 		mark_artificial inline_always operator t_CType & ();
 	};
 

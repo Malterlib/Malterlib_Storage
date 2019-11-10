@@ -749,32 +749,14 @@ namespace
 			{NMib::NStorage::TCTuple<int> Tuple;}
 			{NMib::NStorage::TCTuple<CTestClass> Tuple;}
 			{NMib::NStorage::TCTuple<CTestC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCV> Tuple;}
 			{NMib::NStorage::TCTuple<CTestPtr> Tuple;}
 			{NMib::NStorage::TCTuple<CTestCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CTestVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCVPtr> Tuple;}
 			{NMib::NStorage::TCTuple<CTestPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<CTestCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCVPtrCV> Tuple;}
 			{CTestBase Test; NMib::NStorage::TCTuple<CTestRef> Variant(Test);}
 			{CTestBase Test; NMib::NStorage::TCTuple<CTestCRef> Variant(Test);}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestVRef> Variant(Test);}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestCVRef> Variant(Test);}
 			{CTestBase Test; NMib::NStorage::TCTuple<CTestRRef> Variant(NMib::fg_Move(Test));}
 			{CTestBase Test; NMib::NStorage::TCTuple<CTestCRRef> Variant(NMib::fg_Move(Test));}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestVRRef> Variant(NMib::fg_Move(Test));}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestCVRRef> Variant(NMib::fg_Move(Test));}
 //			{NMib::NStorage::TCTuple<PFFunc0> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc1> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc2> Tuple;}
@@ -792,60 +774,18 @@ namespace
 			{NMib::NStorage::TCTuple<FFunc0PtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc1PtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc2PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0PtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1PtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2PtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0Ptr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1Ptr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2Ptr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0PtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1PtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2PtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0PtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1PtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2PtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0CPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1CPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2CPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0CPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1CPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2CPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0VPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1VPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2VPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0VPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1VPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2VPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0VPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1VPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2VPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0VPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1VPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2VPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CVPtrCV> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc0El> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc1El> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc2El> Tuple;}
@@ -863,104 +803,38 @@ namespace
 			{NMib::NStorage::TCTuple<FFunc0ElPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc1ElPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc2ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0ElPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1ElPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2ElPtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0ElPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1ElPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2ElPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0ElPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1ElPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElPtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0ElCPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1ElCPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2ElCPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc0ElCPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc1ElCPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<FMFunc2ElCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCVPtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<CMPtr> Tuple;}
 			{NMib::NStorage::TCTuple<CMCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CMVPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CMCVPtr> Tuple;}
 			{NMib::NStorage::TCTuple<CMPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<CMCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CMVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CMCVPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CMPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CMCPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CMVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CMCVPtrV> Tuple;}
-			{NMib::NStorage::TCTuple<CMPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CMCPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CMVPtrCV> Tuple;}
-			{NMib::NStorage::TCTuple<CMCVPtrCV> Tuple;}
 			{NMib::NStorage::TCTuple<CTestArray2> Tuple;}
 			{NMib::NStorage::TCTuple<CTestArray2C> Tuple;}
-			{NMib::NStorage::TCTuple<CTestArray2V> Tuple;}
-			{NMib::NStorage::TCTuple<CTestArray2CV> Tuple;}
 //			{NMib::NStorage::TCTuple<CTestArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTestArrayC> Tuple;}
-//			{NMib::NStorage::TCTuple<CTestArrayV> Tuple;}
-//			{NMib::NStorage::TCTuple<CTestArrayCV> Tuple;}
 #ifdef DMibContainer_TupleInternal
 			{NMib::NStorage::TCTuple<CTest2DArray2> Tuple;}
 			{NMib::NStorage::TCTuple<CTest2DArray2C> Tuple;}
-			{NMib::NStorage::TCTuple<CTest2DArray2V> Tuple;}
-			{NMib::NStorage::TCTuple<CTest2DArray2CV> Tuple;}
 #endif
 //			{NMib::NStorage::TCTuple<CTest2DArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest2DArrayC> Tuple;}
-//			{NMib::NStorage::TCTuple<CTest2DArrayV> Tuple;}
-//			{NMib::NStorage::TCTuple<CTest2DArrayCV> Tuple;}
 #ifdef DMibContainer_TupleInternal
 			{NMib::NStorage::TCTuple<CTest3DArray2> Tuple;}
 			{NMib::NStorage::TCTuple<CTest3DArray2C> Tuple;}
-			{NMib::NStorage::TCTuple<CTest3DArray2V> Tuple;}
-			{NMib::NStorage::TCTuple<CTest3DArray2CV> Tuple;}
 #endif
 //			{NMib::NStorage::TCTuple<CTest3DArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest3DArrayC> Tuple;}
-//			{NMib::NStorage::TCTuple<CTest3DArrayV> Tuple;}
-//			{NMib::NStorage::TCTuple<CTest3DArrayCV> Tuple;}
 			{NMib::NStorage::TCTuple<void *> Tuple;}
 //			{NMib::NStorage::TCTuple<void> Tuple;}
 		}
