@@ -140,8 +140,6 @@ namespace
 
 				CManyVariant ManyVariant2 = Test;
 
-				CTestBase Test22;
-
 				CManyVariant2 ManyVariant3 = ManyVariant2;
 
 				CManyVariant2 ManyVariant33 = NMib::fg_Const(ManyVariant2);
