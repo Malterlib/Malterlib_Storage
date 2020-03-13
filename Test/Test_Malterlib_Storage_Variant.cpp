@@ -129,6 +129,7 @@ namespace
 				CManyVariant ManyVariant;
 				CManyVariant ManyVariantVoid;
 				ManyVariant = fp128(fp64(0.0));
+				ManyVariant = NMib::fg_Construct(fp128(fp64(0.0)));
 
 				{
 					CManyVariant3 Test0 = Test;
@@ -157,8 +158,11 @@ namespace
 
 				int notehuenothu = 0;
 
-				NMib::NStorage::TCVariant<CTestWithManyInit> VarManyInit(0,0,0);
-				NMib::NStorage::TCVariant<CTestWithManyInit> VarManyInit2(2.5,fp64(3.5),fp32(3.5f));
+				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit(0,0,0);
+				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit2(2.5,fp64(3.5),fp32(3.5f));
+
+				VarManyInit = NMib::fg_Construct(0,0,0);
+				VarManyInit2 = NMib::fg_Construct(2.5,fp64(3.5),fp32(3.5f));
 
 				NMib::NContainer::TCMap<NMib::NStr::CStr, NMib::NStr::CStr> TestMap;
 

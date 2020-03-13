@@ -24,6 +24,12 @@ namespace NMib::NStorage
 			>
 		;
 
+		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &);
+
+		template <typename tf_CType, typename... tfp_CParams>
+		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams);
+
 		TCOptional(t_CType const &_Value);
 		TCOptional(t_CType &&_Value);
 		TCOptional &operator = (t_CType const &_Value);
@@ -41,6 +47,9 @@ namespace NMib::NStorage
 		TCOptional &operator = (TCOptional<tf_CType> const &_Value);
 		template <typename tf_CType>
 		TCOptional &operator = (TCOptional<tf_CType> &&_Value);
+
+		template <typename tf_CType, typename... tfp_CParams>
+		TCOptional &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams);
 
 		TCOptional() noexcept = default;
 		TCOptional(CNullPtr) noexcept;

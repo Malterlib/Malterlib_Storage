@@ -1196,6 +1196,34 @@ namespace NMib::NStorage
 			fp_SetTypeID(t_iMember);
 		}
 
+		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
+		{
+			static_assert(TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value >= 0);
+			static_assert
+				(
+					mcp_FirstNothrowDefaultConstructible != -1
+					, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
+				)
+			;
+
+			fp_DestroyCurrent(); // Cannot throw
+
+			try
+			{
+				fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>
+					(
+						fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
+					)
+				;
+			}
+			catch (...)
+			{
+				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+				throw;
+			}
+		}
+
 		inline_small CIndexInteger fp_GetTypeID() const
 		{
 			return CIndexInteger(mp_Storage.m_CurrentType);
@@ -1583,36 +1611,43 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0 && TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value> * = nullptr>
+		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
 		TCVariantCommon &operator = (tf_CParam0 &&_Param)
 		{
-			fp_DestroyCurrent(); // Cannot throw
-			fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
+			if constexpr (TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value)
+			{
+				fp_DestroyCurrent(); // Cannot throw
+				fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
+			}
+			else
+			{
+				static_assert
+					(
+						mcp_FirstNothrowDefaultConstructible != -1
+						, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
+					)
+				;
+
+				fp_DestroyCurrent(); // Cannot throw
+
+				try
+				{
+					fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param));
+				}
+				catch (...)
+				{
+					fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+					throw;
+				}
+			}
 
 			return *this;
 		}
 
-		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0 && !TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value> * = nullptr>
-		TCVariantCommon &operator = (tf_CParam0 &&_Param)
+		template <typename tf_CType, typename... tfp_CParams>
+		TCVariantCommon &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
-
-			fp_DestroyCurrent(); // Cannot throw
-
-			try
-			{
-				fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param));
-			}
-			catch (...)
-			{
-				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
-				throw;
-			}
-
+			fp_AssignConstruct(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType());
 			return *this;
 		}
 

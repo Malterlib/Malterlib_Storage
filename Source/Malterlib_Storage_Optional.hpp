@@ -17,6 +17,23 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType>
+	template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+	TCOptional<t_CType>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
+		: CVariant
+		(
+			fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
+		)
+	{
+	}
+
+	template <typename t_CType>
+	template <typename tf_CType, typename... tfp_CParams>
+	TCOptional<t_CType>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
+		: TCOptional(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType())
+	{
+	}
+
+	template <typename t_CType>
 	TCOptional<t_CType>::TCOptional(t_CType &&_Value)
 		: CVariant(fg_Move(_Value))
 	{
@@ -79,7 +96,15 @@ namespace NMib::NStorage
 		*((CVariant *)this) = fg_Forward<tf_CType>(_Value);
 		return *this;
 	}
-	
+
+	template <typename t_CType>
+	template <typename tf_CType, typename... tfp_CParams>
+	auto TCOptional<t_CType>::operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams) -> TCOptional &
+	{
+		*((CVariant *)this) = (fg_Move(_CreateParams));
+		return *this;
+	}
+
 	template <typename t_CType>
 	void TCOptional<t_CType>::f_Clear()
 	{
