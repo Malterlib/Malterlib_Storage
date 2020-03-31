@@ -880,10 +880,7 @@ namespace NMib::NStorage
 		{
 			typedef NMeta::TCTypeList<> CFunctions;
 			typedef NMemory::CDefaultAllocator CAllocator;
-			enum
-			{
-				mc_bSupportWeak = false
-			};
+			static constexpr bool mc_bSupportWeak = false;
 		};
 
 		template <typename t_CFirst, typename... tp_CParams>
@@ -891,10 +888,7 @@ namespace NMib::NStorage
 		{
 			typedef TCParseSharedPointerOptions<tp_CParams...> CParent;
 			typedef t_CFirst CAllocator;
-			enum
-			{
-				mc_bSupportWeak = CParent::mc_bSupportWeak
-			};
+			static constexpr bool mc_bSupportWeak = CParent::mc_bSupportWeak;
 		};
 
 		template <typename... tp_CParams>
@@ -902,10 +896,7 @@ namespace NMib::NStorage
 		{
 			typedef TCParseSharedPointerOptions<tp_CParams...> CParent;
 			typedef typename CParent::CAllocator CAllocator;
-			enum
-			{
-				mc_bSupportWeak = true
-			};
+			static constexpr bool mc_bSupportWeak = true;
 		};
 
 		template <typename t_CType, typename t_CAllocator, CSharedPointerOptionUnderlaying t_Options>
@@ -1004,11 +995,7 @@ namespace NMib::NStorage
 		typedef NPrivate::TCParseSharedPointerOptions<tp_COptions...> COptions;
 		typedef typename COptions::CAllocator CAllocator;
 
-		enum
-		{
-			mc_bSupportWeak = COptions::mc_bSupportWeak
-		};
-
+		static constexpr bool mc_bSupportWeak = COptions::mc_bSupportWeak;
 
 		typedef NPrivate::TCSharedPointerData<t_CType, CAllocator, mc_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None > CData;
 
