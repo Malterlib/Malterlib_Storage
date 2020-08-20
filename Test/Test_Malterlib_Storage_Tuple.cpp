@@ -819,8 +819,10 @@ namespace
 			{NMib::NStorage::TCTuple<CMCPtr> Tuple;}
 			{NMib::NStorage::TCTuple<CMPtrC> Tuple;}
 			{NMib::NStorage::TCTuple<CMCPtrC> Tuple;}
+#ifndef DCompiler_MSVC_Workaround
 			{NMib::NStorage::TCTuple<CTestArray2> Tuple;}
 			{NMib::NStorage::TCTuple<CTestArray2C> Tuple;}
+#endif
 //			{NMib::NStorage::TCTuple<CTestArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTestArrayC> Tuple;}
 #ifdef DMibContainer_TupleInternal
