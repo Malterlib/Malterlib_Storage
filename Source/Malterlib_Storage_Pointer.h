@@ -945,6 +945,8 @@ namespace NMib::NStorage
 	template <typename tf_CObjectType>
 	NMemory::CCapturedDelete fg_DeleteWeakObjectGetCapturedDelete(tf_CObjectType *_pObject)
 	{
+		DMibFastCheck(_pObject->f_RefCountGet() == -1);
+
 		static_assert(sizeof(tf_CObjectType) > 0);
 		static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
 		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value)
@@ -974,6 +976,7 @@ namespace NMib::NStorage
 	void fg_DeleteWeakObject(tf_CAllocator &&_Allocator, tf_CObjectType *_pObject)
 	{
 		NMemory::CCapturedDelete CapturedDelete = fg_DeleteWeakObjectGetCapturedDelete(_pObject);
+
 		_pObject->f_WeakRefCountSetCapturedDelete(CapturedDelete);
 		if (_pObject->f_WeakRefCountDecrease(DMibRefcountDebuggingOnly(nullptr)) == 0)
 		{

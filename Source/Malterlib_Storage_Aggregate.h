@@ -77,6 +77,13 @@ namespace NMib::NStorage
 
 	typedef TCAggregate<aint, 128, NThread::CNoLock> CAggregate;
 
+	enum EAggregateLifeTimeFlag
+	{
+		EAggregateLifeTimeFlag_None = 0
+		, EAggregateLifeTimeFlag_Constructed = DMibBit(0)
+		, EAggregateLifeTimeFlag_Destructed = DMibBit(1)
+	};
+
 	template <typename t_CData, aint t_Priority, typename t_CLock>
 	class TCAggregate
 	{
@@ -88,8 +95,7 @@ namespace NMib::NStorage
 #ifndef DMibNoAggregateConstexpr
 		TCAggregate() = delete;
 		constexpr TCAggregate(EAggregateInitialization _Init)
-			: m_bConstructed{0}
-			, m_bDestructed{0}
+			: m_LifeTimeFlags{0}
 			, m_Link{_Init}
 			, m_Priority{0}
 			, m_fDestruct{nullptr}
@@ -99,8 +105,7 @@ namespace NMib::NStorage
 		}
 #endif
 		typedef void (PFAggregateDestruct)(CAggregate *_pThis);
-		uint32 m_bConstructed:1;
-		uint32 m_bDestructed:1;
+		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
 		DMibListLinkDA_Link(TCAggregate, m_Link);
 		aint m_Priority;
 
@@ -131,12 +136,12 @@ namespace NMib::NStorage
 
 		bool f_IsConstructed()
 		{
-			return m_bConstructed;
+			return m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed;
 		}
 
 		bool f_WasDestructed()
 		{
-			return m_bDestructed;
+			return m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Destructed;
 		}
 
 		template <typename tf_CFunctor>
@@ -148,7 +153,7 @@ namespace NMib::NStorage
 		template <typename tf_CFunctor>
 		inline_small t_CData * f_CreateFunctor(tf_CFunctor const &_fFunctor)
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 			{
 				f_ConstructFunctor(_fFunctor);
 			}
@@ -158,7 +163,7 @@ namespace NMib::NStorage
 
 		inline_small operator t_CData *()
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -172,7 +177,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0>
 		inline_small t_CData * operator() (tf_CData0 &_Data0)
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct(_Data0);
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -181,7 +186,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1>
 		inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1)
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct(_Data0, _Data1);
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -190,7 +195,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2>
 		inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2)
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct(_Data0, _Data1, _Data2);
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -199,7 +204,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2, typename tf_CData3>
 		inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2, tf_CData3 &_Data3)
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct(_Data0, _Data1, _Data2, _Data3);
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -207,7 +212,7 @@ namespace NMib::NStorage
 
 		inline_small t_CData * operator ->()
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
 			return ((t_CData *)m_ObjectSpace.m_Aligned);
@@ -215,7 +220,7 @@ namespace NMib::NStorage
 
 		inline_small t_CData & operator *()
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
 			return *((t_CData *)m_ObjectSpace.m_Aligned);
@@ -223,7 +228,7 @@ namespace NMib::NStorage
 
 /*			inline_small t_CData & operator &()
 		{
-			if (!m_bConstructed)
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
 			return *((t_CData *)m_ObjectSpace.m_Aligned);

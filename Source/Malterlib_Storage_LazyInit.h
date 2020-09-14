@@ -15,23 +15,34 @@
 \*_____________________________________________________________________________________________*/
 
 #include <Mib/Core/Core>
+#include <Mib/Atomic/Atomic>
+
+namespace NMib::NThread
+{
+	class CLowLevelLockAggregate;
+}
 
 namespace NMib::NStorage
 {
-	template <typename t_CData, typename t_CLock = NThread::CMutual>
-	class TCLazyInit
+	template <typename t_CData, typename t_CLock = NThread::CLowLevelLockAggregate>
+	struct TCLazyInit
 	{
-	public:
-
-		TCLazyInit();
+		constexpr TCLazyInit();
 		~TCLazyInit();
 
 		template <typename ...tfp_CParam>
-		inline_small t_CData *operator() (tfp_CParam && ...p_Param);
+		inline_small t_CData &operator() (tfp_CParam && ...p_Param);
 		inline_small t_CData *operator ->();
 		inline_small t_CData &operator *();
 
 	private:
+		enum ELifetimeFlag
+		{
+			ELifetimeFlag_None = 0
+			, ELifetimeFlag_Constructed = DMibBit(0)
+			, ELifetimeFlag_Destructed = DMibBit(1)
+		};
+
 		template <typename... tfp_CData>
 		void fp_Construct(tfp_CData && ... p_Params);
 
@@ -39,15 +50,12 @@ namespace NMib::NStorage
 		typedef uint8 CObjectType[sizeof(CData)];
 		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
 
-		CTypeAligned m_ObjectSpace;
+		CTypeAligned m_ObjectSpace = {};
 		t_CLock m_Lock;
-		bool m_bConstructed:1;
-		bool m_bDestructed:1;
+		NAtomic::TCAtomic<uint32> m_LifetimeFlags = ELifetimeFlag_None;
 	};
 }
 
 #ifndef DMibPNoShortCuts
 	using namespace NMib::NStorage;
 #endif
-
-#include "Malterlib_Storage_LazyInit.hpp"

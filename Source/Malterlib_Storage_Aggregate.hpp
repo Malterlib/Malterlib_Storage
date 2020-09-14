@@ -6,12 +6,19 @@ namespace NMib::NStorage
 	template <typename t_CData, aint t_Priority, typename t_CLock>
 	void TCAggregate<t_CData, t_Priority, t_CLock>::f_Destruct()
 	{
-		DMibSafeCheck(m_bConstructed && !m_bDestructed, "Should not arrive here unless we are constructed");
-		m_bDestructed = true;
+		auto OldFlags = m_LifeTimeFlags.f_Load();
+		DMibSafeCheck(!(OldFlags & EAggregateLifeTimeFlag_Destructed), "Should not arrive here unless we are constructed");
 		((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
 		fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
 		m_Link.f_Destruct();
-		m_bConstructed = false;
+		OldFlags = m_LifeTimeFlags.f_Exchange(EAggregateLifeTimeFlag_Destructed);
+		DMibSafeCheck
+			(
+				(OldFlags & EAggregateLifeTimeFlag_Constructed)
+				&& !(OldFlags & EAggregateLifeTimeFlag_Destructed)
+				, "Should not arrive here unless we are constructed"
+			)
+		;
 		m_Lock.f_Destruct();
 	}
 
@@ -20,16 +27,16 @@ namespace NMib::NStorage
 	void TCAggregate<t_CData, t_Priority, t_CLock>::f_ConstructFunctor(tf_CFunctor const &_fFunctor)
 	{
 		DMibLockTyped(t_CLock, m_Lock);
-		DMibSafeCheck(!m_bDestructed, "Already destructed, cannot construct again");
-		if (!m_bConstructed)
+		uint32 LifeTimeFlags = m_LifeTimeFlags.f_Load();
+		DMibSafeCheck(!(LifeTimeFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed, cannot construct again");
+		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
 		{
 			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
 			_fFunctor((void *)m_ObjectSpace.m_Aligned);
 			fg_GetModule()->f_AddAggregate((CAggregate*)this);
-			NMib::NAtomic::fg_MemoryFence();
-			m_bConstructed = true;
+			m_LifeTimeFlags.f_FetchOr(EAggregateLifeTimeFlag_Constructed);
 		}
 	}
 
@@ -38,16 +45,16 @@ namespace NMib::NStorage
 	void TCAggregate<t_CData, t_Priority, t_CLock>::f_Construct(tfp_CData && ... p_Params)
 	{
 		DMibLockTyped(t_CLock, m_Lock);
-		DMibSafeCheck(!m_bDestructed, "Already destructed, cannot construct again");
-		if (!m_bConstructed)
+		uint32 LifeTimeFlags = m_LifeTimeFlags.f_Load();
+		DMibSafeCheck(!(LifeTimeFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed, cannot construct again");
+		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
 		{
 			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
 			new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tfp_CData>(p_Params)...);
 			fg_GetModule()->f_AddAggregate((CAggregate*)this);
-			NMib::NAtomic::fg_MemoryFence();
-			m_bConstructed = true;
+			m_LifeTimeFlags.f_FetchOr(EAggregateLifeTimeFlag_Constructed);
 		}
 	}
 
@@ -55,13 +62,15 @@ namespace NMib::NStorage
 	void TCAggregate<t_CData, t_Priority, t_CLock>::f_Clear()
 	{
 		DMibLockTyped(t_CLock, m_Lock);
-		if (m_bConstructed)
+		uint32 LifeTimeFlags = m_LifeTimeFlags.f_Load();
+		DMibSafeCheck(!(LifeTimeFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed");
+		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
 		{
 			((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
 			fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
 			m_Link.f_Destruct();
-			NMib::NAtomic::fg_MemoryFence();
-			m_bConstructed = false;
+			[[maybe_unused]] auto OldFlags = m_LifeTimeFlags.f_Exchange(0);
+			DMibSafeCheck(!(OldFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed, race condition");
 		}
 	}
 }
