@@ -818,14 +818,14 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 
-		template <typename t_CType, CSharedPointerOptionUnderlaying t_Options, bool t_bHasRefCount = TCHasIntrusiveRefcount<typename NTraits::TCRemoveQualifiers<t_CType>::CType>::mc_Value>
+		template <typename t_CType, CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount = TCHasIntrusiveRefcount<typename NTraits::TCRemoveQualifiers<t_CType>::CType>::mc_Value>
 		class TCChooseSharedPointerTypeImp
 		{
 		public:
 
 		};
 
-		template <typename t_CType, CSharedPointerOptionUnderlaying t_Options>
+		template <typename t_CType, CSharedPointerOptionUnderlying t_Options>
 		class TCChooseSharedPointerTypeImp<t_CType, t_Options, true>
 		{
 		public:
@@ -833,14 +833,14 @@ namespace NMib::NStorage
 			typedef t_CType CType;
 		};
 
-		template <CSharedPointerOptionUnderlaying t_Options, bool t_bHasRefCount>
+		template <CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount>
 		class TCChooseSharedPointerTypeImp<void, t_Options, t_bHasRefCount>
 		{
 		public:
 			typedef void CType;
 		};
 
-		template <CSharedPointerOptionUnderlaying t_Options>
+		template <CSharedPointerOptionUnderlying t_Options>
 		class TCChooseSharedPointerTypeImp<void, t_Options, false>
 		{
 		public:
@@ -859,17 +859,17 @@ namespace NMib::NStorage
 			return _pIn;
 		}
 
-		template <typename t_CType, bool t_bVirtualDestructor, CSharedPointerOptionUnderlaying t_Options>
+		template <typename t_CType, bool t_bVirtualDestructor, CSharedPointerOptionUnderlying t_Options>
 		class TCSharedPointerCounter;
 
-		template <typename t_CType, CSharedPointerOptionUnderlaying t_Options>
+		template <typename t_CType, CSharedPointerOptionUnderlying t_Options>
 		class TCSharedPointerCounter<t_CType, true, t_Options>;
 
 
-		template <typename tf_CType, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlaying tf_Options>
+		template <typename tf_CType, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlying tf_Options>
 		tf_CType *fg_GetSharedPointerPointer(TCSharedPointerCounter<tf_CType, tf_bVirtualDestructor, tf_Options> *_pIn);
 
-		template <typename tf_CToType, typename tf_CType, bool tf_bToVirtualDestructor, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlaying tf_ToOptions, CSharedPointerOptionUnderlaying tf_Options>
+		template <typename tf_CToType, typename tf_CType, bool tf_bToVirtualDestructor, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlying tf_ToOptions, CSharedPointerOptionUnderlying tf_Options>
 		TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *fg_ConvertSharedPointer(TCSharedPointerCounter<tf_CType, tf_bVirtualDestructor, tf_Options> *_pIn, TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *_pDummy);
 
 		template <typename... tp_CParams>
@@ -899,7 +899,7 @@ namespace NMib::NStorage
 			static constexpr bool mc_bSupportWeak = true;
 		};
 
-		template <typename t_CType, typename t_CAllocator, CSharedPointerOptionUnderlaying t_Options>
+		template <typename t_CType, typename t_CAllocator, CSharedPointerOptionUnderlying t_Options>
 		struct TCSharedPointerData : public t_CAllocator
 		{
 		private:
