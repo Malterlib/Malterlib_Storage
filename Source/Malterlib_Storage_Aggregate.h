@@ -27,13 +27,11 @@ namespace NMib::NStorage
 		public:
 		CTypeAligned m_ObjectSpace;
 
-#ifndef DMibNoAggregateConstexpr
 		TCAggregateSimple() = default;
 		constexpr TCAggregateSimple(EAggregateInitialization _Init)
 			: m_ObjectSpace{}
 		{
 		}
-#endif
 
 		void f_Destruct()
 		{
@@ -90,9 +88,8 @@ namespace NMib::NStorage
 		typedef t_CData CData;
 		typedef uint8 CObjectType[sizeof(CData)];
 		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
-	public:
 
-#ifndef DMibNoAggregateConstexpr
+	public:
 		TCAggregate() = delete;
 		constexpr TCAggregate(EAggregateInitialization _Init)
 			: m_LifeTimeFlags{0}
@@ -103,7 +100,7 @@ namespace NMib::NStorage
 			, m_Lock{_Init}
 		{
 		}
-#endif
+
 		typedef void (PFAggregateDestruct)(CAggregate *_pThis);
 		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
 		DMibListLinkDA_Link(TCAggregate, m_Link);
