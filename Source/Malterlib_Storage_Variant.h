@@ -92,6 +92,11 @@ namespace NMib::NStorage
 	{
 		using CType = t_CType;
 		static constexpr t_CIndex mc_Member = t_Member;
+
+#ifdef DCompiler_MSVC
+		static constexpr bool mc_bDebugIsVoid = NTraits::TCIsVoid<CType>::mc_Value;
+		using CDebugType = typename TCChooseType<mc_bDebugIsVoid, uint8, t_CType>::CType;
+#endif
 	};
 
 	template <typename t_CType, auto t_Member DMibStorageVariantTypeInMember(, typename t_CIndex = decltype(t_Member))>
