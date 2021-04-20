@@ -857,7 +857,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 		}
 
 	public:
@@ -891,7 +891,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 		}
 
 		template <typename t_CVisitor>
@@ -924,7 +924,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 		}
 
 
@@ -966,7 +966,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 
 			return fg_Move(*Ret);
 		}
@@ -1009,7 +1009,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 
 			return fg_Move(*Ret);
 		}
@@ -1041,7 +1041,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 		}
 
 		template <typename t_CReturn, typename t_CVisitor>
@@ -1081,7 +1081,7 @@ namespace NMib::NStorage
 				}
 			;
 
-			DMibCheck(bFound);
+			DMibFastCheck(bFound);
 
 			return fg_Move(*Ret);
 		}
@@ -1682,7 +1682,7 @@ namespace NMib::NStorage
 		template <t_CIndex t_iMember>
 		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Get()
 		{
-			DMibRequire(f_GetTypeID() == t_iMember);
+			DMibFastCheck(f_GetTypeID() == t_iMember);
 
 			return fp_GetAs<CIndexInteger(t_iMember)>();
 		}
@@ -1690,7 +1690,7 @@ namespace NMib::NStorage
 		template <t_CIndex t_iMember>
 		typename TCEvalReturnTypeConst<CIndexInteger(t_iMember)>::CType f_Get() const
 		{
-			DMibRequire(f_GetTypeID() == t_iMember);
+			DMibFastCheck(f_GetTypeID() == t_iMember);
 
 			return fp_GetAs<CIndexInteger(t_iMember)>();
 		}
@@ -1701,7 +1701,7 @@ namespace NMib::NStorage
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
 			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
-			DMibRequire(fp_GetTypeID() == c_ToGet);
+			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
 			return fp_GetAs<c_ToGet>();
 		}
@@ -1712,7 +1712,7 @@ namespace NMib::NStorage
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
 			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
-			DMibRequire(fp_GetTypeID() == c_ToGet);
+			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
 			return fp_GetAs<c_ToGet>();
 		}
