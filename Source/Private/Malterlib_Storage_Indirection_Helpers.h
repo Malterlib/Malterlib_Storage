@@ -112,5 +112,4 @@ namespace NMib::NStorage::NIndirection
 		{\
 			return fg_Forward<t_CRight>(_Right).f_Get() _Operator;\
 		}
-
 }

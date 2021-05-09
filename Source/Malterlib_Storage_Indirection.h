@@ -135,6 +135,8 @@ namespace NMib::NStorage::NIndirection
 	DMibTempImplementIndirectionBinaryOperator(<=);
 	DMibTempImplementIndirectionBinaryOperator(>);
 	DMibTempImplementIndirectionBinaryOperator(>=);
+
+	/*
 	DMibTempImplementIndirectionBinaryOperator(<<);
 	DMibTempImplementIndirectionBinaryOperator(>>);
 	DMibTempImplementIndirectionBinaryOperator(%);
@@ -173,6 +175,8 @@ namespace NMib::NStorage::NIndirection
 
 #		undef DMibTempImplementIndirectionUnaryOperator
 #		undef DMibTempImplementIndirectionUnaryPostfixOperator
+
+*/
 
 }
 
