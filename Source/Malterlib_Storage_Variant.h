@@ -171,22 +171,10 @@ namespace NMib::NStorage
 		template <typename t_CIndex, t_CIndex t_Member0, t_CIndex t_Member1, t_CIndex ...tp_Indices>
 		struct TCAllAreUniqueIndex<t_CIndex, t_Member0, t_Member1, tp_Indices...>
 		{
-#ifdef DCompiler_MSVC_Workaround
-			static constexpr bool fs_Calc()
-			{
-				return t_Member0 != t_Member1
-					&& ((t_Member0 != tp_Indices) && ...)
-					&& TCAllAreUniqueIndex<t_CIndex, t_Member1, tp_Indices...>::mc_Value
-				;
-			}
-
-			static constexpr bool mc_Value = fs_Calc();
-#else
 			static constexpr bool mc_Value = t_Member0 != t_Member1
 				&& ((t_Member0 != tp_Indices) && ...)
 				&& TCAllAreUniqueIndex<t_CIndex, t_Member1, tp_Indices...>::mc_Value
 			;
-#endif
 		};
 
 
@@ -395,16 +383,7 @@ namespace NMib::NStorage
 		template <typename ...tp_CTypes2>
 		friend struct TCVariant;
 
-#ifdef DCompiler_MSVC_Workaround
-		static constexpr bool fs_IndicesValid()
-		{
-			return ((CIndexInteger(tp_Member) >= CIndexInteger(0)) && ...);
-		}
-
-		static_assert(fs_IndicesValid(), "Member index value needs to be positive");
-#else
 		static_assert(((CIndexInteger(tp_Member) >= CIndexInteger(0)) && ...), "Member index value needs to be positive");
-#endif
 		static constexpr CIndexInteger mcp_MinIndex = fg_MinConstexpr(CIndexInteger(tp_Member)...);
 		static constexpr CIndexInteger mcp_MaxIndex = fg_MaxConstexpr(CIndexInteger(tp_Member)...);
 
@@ -424,16 +403,7 @@ namespace NMib::NStorage
 
 		using CTypeIDStorageType = typename NTraits::TCIntFromSizeLarger<(mcp_NeededBits + 7) / 8>::CType;
 
-#ifdef DCompiler_MSVC_Workaround
-		static constexpr bool fs_ContractsValid()
-		{
-			return (NPrivate::TCCheckVariantContracts<tp_CTypes>::mc_Value && ...);
-		}
-
-		static_assert(fs_ContractsValid());
-#else
 		static_assert((NPrivate::TCCheckVariantContracts<tp_CTypes>::mc_Value && ...));
-#endif
 
 		static_assert(NPrivate::TCAllAreUniqueIndex<t_CIndex, tp_Member...>::mc_Value);
 
@@ -499,16 +469,7 @@ namespace NMib::NStorage
 			: NPrivate::TCFirstNothrowDefaultConstructible<CIndexInteger, NTraits::CCompileTimeTrue, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::mc_Value
 		;
 
-#ifdef DCompiler_MSVC_Workaround
-		static constexpr bool fs_AllHasNothrowCopyConstructor()
-		{
-			return ((NTraits::TCHasNothrowCopyConstructor<tp_CTypes>::mc_Value || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
-		}
-
-		static constexpr bool mcp_bAllHasNothrowCopyConstructor = fs_AllHasNothrowCopyConstructor();
-#else
 		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::TCHasNothrowCopyConstructor<tp_CTypes>::mc_Value || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
-#endif
 
 		template <mint t_MaxSize, mint t_MaxAlignment, typename t_CDummy = void>
 		struct TCDetermineStorageType
