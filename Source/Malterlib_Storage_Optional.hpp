@@ -213,17 +213,20 @@ namespace NMib::NStorage
 	
 	template <typename t_CType>
 	template <typename tf_CType>
-	bool TCOptional<t_CType>::operator < (TCOptional<tf_CType> const &_Right) const
+	auto TCOptional<t_CType>::operator <=> (TCOptional<tf_CType> const &_Right) const
 	{
+		using COrdering = decltype(**this <=> *_Right);
+
 		if (!*this)
 		{
 			if (!_Right)
-				return false;
-			return true;
+				return COrdering::equivalent;
+			else
+				return COrdering::less;
 		}
 		else if (!_Right)
-			return false;
+			return COrdering::greater;
 
-		return **this < *_Right;
+		return **this <=> *_Right;
 	}
 }

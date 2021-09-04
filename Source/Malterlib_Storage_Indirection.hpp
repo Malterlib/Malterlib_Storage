@@ -44,15 +44,21 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always t_CType const &TCIndirection<t_CType, t_CAllocator>::f_Get() const
+	mark_artificial inline_always t_CType const &TCIndirection<t_CType, t_CAllocator>::f_Get() const &
 	{
 		return *m_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	mark_artificial inline_always t_CType &TCIndirection<t_CType, t_CAllocator>::f_Get()
+	mark_artificial inline_always t_CType &TCIndirection<t_CType, t_CAllocator>::f_Get() &
 	{
 		return *m_Data.m_pPointTo;
+	}
+
+	template <typename t_CType, typename t_CAllocator>
+	mark_artificial inline_always t_CType &&TCIndirection<t_CType, t_CAllocator>::f_Get() &&
+	{
+		return fg_Move(*m_Data.m_pPointTo);
 	}
 
 	template <typename t_CType, typename t_CAllocator>

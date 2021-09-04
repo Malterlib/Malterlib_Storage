@@ -34,11 +34,11 @@ namespace
 					return 0;
 				}
 
-				bool operator < (float _Value) const
+				auto operator <=> (float _Value) const
 				{
-					return m_Data < _Value;
+					return m_Data <=> _Value;
 				}
-				bool operator < (CTestUndefined const &_Other);
+				COrdering_Weak operator <=> (CTestUndefined const &_Other) const;
 			};
 			CTestClass();
 			~CTestClass();
@@ -78,27 +78,27 @@ namespace
 			{
 				return 0;
 			}
-			bool operator < (float _Value) const
+			auto operator <=> (float _Value) const
 			{
-				return m_Data < _Value;
+				return m_Data <=> _Value;
 			}
-			bool operator < (CTestDefined const &_Other)
+			auto operator <=> (CTestDefined const &_Other)
 			{
-				return m_Data < _Other.m_Data;
+				return m_Data <=> _Other.m_Data;
 			}
 		};
 
-		bool CTestClass::CTestDefined::operator < (CTestUndefined const &_Other)
+		COrdering_Weak CTestClass::CTestDefined::operator <=> (CTestUndefined const &_Other) const
 		{
-			return m_Data < _Other.m_Data;
+			return m_Data <=> _Other.m_Data;
 		}
-		bool operator < (float const &_Left, CTestClass::CTestDefined const &_Right)
+		auto operator <=> (float const &_Left, CTestClass::CTestDefined const &_Right)
 		{
-			return _Left < _Right.m_Data;
+			return _Left <=> _Right.m_Data;
 		}
-		bool operator < (float const &_Left, CTestClass::CTestUndefined const &_Right)
+		auto operator <=> (float const &_Left, CTestClass::CTestUndefined const &_Right)
 		{
-			return _Left < _Right.m_Data;
+			return _Left <=> _Right.m_Data;
 		}
 		CTestClass::CTestClass()
 		{

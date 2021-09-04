@@ -1457,48 +1457,26 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator < (tf_CType *_pOther) const
+		auto operator <=> (tf_CType *_pOther) const
 		{
-			return f_Get() < _pOther;
+			return f_Get() <=> _pOther;
 		}
 
-		bool operator < (CNullPtr _pOther) const
+		auto operator <=> (CNullPtr _pOther) const
 		{
-			return f_Get() < _pOther;
-		}
-
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator < (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
-		{
-			return f_Get() < static_cast<t_CType *>(_Other.f_Get());
+			return f_Get() <=> _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator < (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
 		{
-			return f_Get() < static_cast<t_CType *>(_Other.fp_GetContained());
+			return f_Get() <=> static_cast<t_CType *>(_Other.f_Get());
 		}
 
-		template <typename tf_CLeft>
-		friend bool operator == (tf_CLeft *_pLeft, const TCSharedPointer &_pRight)
+		template <typename tf_CType, typename... tfp_COptions>
+		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
 		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		friend bool operator == (CNullPtr _pLeft, const TCSharedPointer &_pRight)
-		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		template <typename tf_CLeft>
-		friend bool operator < (tf_CLeft *_pLeft, const TCSharedPointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
-		}
-
-		friend bool operator < (CNullPtr _pLeft, const TCSharedPointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
+			return f_Get() <=> static_cast<t_CType *>(_Other.fp_GetContained());
 		}
 
 		bool f_IsEmpty() const
@@ -1856,26 +1834,26 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator < (tf_CType *_pOther) const
+		auto operator <=> (tf_CType *_pOther) const
 		{
-			return fp_GetContained() < _pOther;
+			return fp_GetContained() <=> _pOther;
 		}
 
-		bool operator < (CNullPtr _pOther) const
+		auto operator <=> (CNullPtr _pOther) const
 		{
-			return fp_GetContained() < _pOther;
-		}
-
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator < (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
-		{
-			return fp_GetContained() < _Other.fp_GetContained();
+			return fp_GetContained() <=> _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator < (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
 		{
-			return fp_GetContained() < _Other.f_Get();
+			return fp_GetContained() <=> _Other.fp_GetContained();
+		}
+
+		template <typename tf_CType, typename... tfp_COptions>
+		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		{
+			return fp_GetContained() <=> _Other.f_Get();
 		}
 
 		bool f_IsEmpty() const
@@ -1886,28 +1864,6 @@ namespace NMib::NStorage
 		inline_small explicit operator bool() const
 		{
 			return !f_IsEmpty();
-		}
-
-		template <typename tf_CLeft>
-		friend bool operator == (tf_CLeft *_pLeft, const TCWeakPointer &_pRight)
-		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		friend bool operator == (CNullPtr _pLeft, const TCWeakPointer &_pRight)
-		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		template <typename tf_CLeft>
-		friend bool operator < (tf_CLeft *_pLeft, const TCWeakPointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
-		}
-
-		friend bool operator < (CNullPtr _pLeft, const TCWeakPointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
 		}
 	};
 }

@@ -1048,7 +1048,7 @@ namespace NMib::NStorage
 		}
 
 		bool operator == (TCVariantCommon const &_Right) const;
-		bool operator < (TCVariantCommon const &_Right) const;
+		auto operator <=> (TCVariantCommon const &_Right) const;
 
 	private:
 
@@ -2142,18 +2142,18 @@ namespace NMib::NStorage
 {
 	namespace NPrivate
 	{
-		struct CCompareVariant_LessThan
+		struct CCompareVariant_Spaceship
 		{
 			template <typename tf_CLeft, typename tf_CRight>
-			bool operator()(tf_CLeft const &_Left, tf_CRight const &_Right) const
+			COrdering_Strong operator()(tf_CLeft const &_Left, tf_CRight const &_Right) const
 			{
-				return false;
+				return COrdering_Strong::equivalent;
 			}
 
 			template <typename tf_CSame>
-			bool operator()(tf_CSame const &_Left, tf_CSame const &_Right) const
+			auto operator()(tf_CSame const &_Left, tf_CSame const &_Right) const
 			{
-				return _Left < _Right;
+				return _Left <=> _Right;
 			}
 		};
 
@@ -2171,6 +2171,21 @@ namespace NMib::NStorage
 				return _Left == _Right;
 			}
 		};
+
+		template <typename t_CType>
+		struct TCGetRefType
+		{
+			using CType = t_CType const &;
+		};
+
+		template <>
+		struct TCGetRefType<void>
+		{
+			using CType = CVoidTag const &;
+		};
+
+		template <typename tf_CType>
+		constexpr typename TCGetRefType<tf_CType>::CType fg_GetTypeRefOrVoidTag() noexcept;
 	}
 
 	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
@@ -2183,14 +2198,21 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
-	bool TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>::operator < (TCVariantCommon const &_Right) const
+	auto TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>::operator <=> (TCVariantCommon const &_Right) const
 	{
-		if (f_GetTypeID() < _Right.f_GetTypeID())
-			return true;
-		else if (f_GetTypeID() > _Right.f_GetTypeID())
-			return false;
+		using COrdering = TCCommonOrderingType
+			<
+				decltype
+				(
+					NPrivate::fg_GetTypeRefOrVoidTag<tp_CTypes>() <=> NPrivate::fg_GetTypeRefOrVoidTag<tp_CTypes>()
+				)...
+			>
+		;
 
-		return fg_VisitRet<bool>(NPrivate::CCompareVariant_LessThan(), *this, _Right);
+		if (auto Result = f_GetTypeID() <=> _Right.f_GetTypeID(); Result != 0)
+			return COrdering(Result);
+
+		return fg_VisitRet<COrdering>(NPrivate::CCompareVariant_Spaceship(), *this, _Right);
 	}
 
 }

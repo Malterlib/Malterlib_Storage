@@ -48,8 +48,9 @@ namespace NMib::NStorage::NIndirection
 
 	public:
 
-		mark_artificial inline_always t_CType const &f_Get() const;
-		mark_artificial inline_always t_CType &f_Get();
+		mark_artificial inline_always t_CType const &f_Get() const &;
+		mark_artificial inline_always t_CType &f_Get() &;
+		mark_artificial inline_always t_CType &&f_Get() &&;
 
 	public:
 
@@ -127,57 +128,31 @@ namespace NMib::NStorage::NIndirection
 
 		template <typename tf_CStr>
 		void f_Format(tf_CStr &o_String) const;
+
+		template <typename tf_CRight>
+		auto operator <=> (tf_CRight const &_Right) const
+		{
+			return this->f_Get() <=> _Right;
+		}
+
+		template <typename tf_CType, typename tf_CAllocator>
+		auto operator <=> (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const
+		{
+			return this->f_Get() <=> _Right.f_Get();
+		}
+
+		template <typename tf_CRight>
+		auto operator == (tf_CRight const &_Right) const
+		{
+			return this->f_Get() == _Right;
+		}
+
+		template <typename tf_CType, typename tf_CAllocator>
+		auto operator == (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const
+		{
+			return this->f_Get() == _Right.f_Get();
+		}
 	};
-
-	DMibTempImplementIndirectionBinaryOperator(==);
-	DMibTempImplementIndirectionBinaryOperator(!=);
-	DMibTempImplementIndirectionBinaryOperator(<);
-	DMibTempImplementIndirectionBinaryOperator(<=);
-	DMibTempImplementIndirectionBinaryOperator(>);
-	DMibTempImplementIndirectionBinaryOperator(>=);
-
-	/*
-	DMibTempImplementIndirectionBinaryOperator(<<);
-	DMibTempImplementIndirectionBinaryOperator(>>);
-	DMibTempImplementIndirectionBinaryOperator(%);
-	DMibTempImplementIndirectionBinaryOperator(&);
-	DMibTempImplementIndirectionBinaryOperator(*);
-	DMibTempImplementIndirectionBinaryOperator(+);
-	DMibTempImplementIndirectionBinaryOperator(-);
-	DMibTempImplementIndirectionBinaryOperator(/);
-	DMibTempImplementIndirectionBinaryOperator(^);
-	DMibTempImplementIndirectionBinaryOperator(|);
-	DMibTempImplementIndirectionBinaryOperator(%=);
-	DMibTempImplementIndirectionBinaryOperator(&=);
-	DMibTempImplementIndirectionBinaryOperator(*=);
-	DMibTempImplementIndirectionBinaryOperator(+=);
-	DMibTempImplementIndirectionBinaryOperator(-=);
-	DMibTempImplementIndirectionBinaryOperator(/=);
-	DMibTempImplementIndirectionBinaryOperator(<<=);
-	DMibTempImplementIndirectionBinaryOperator(>>=);
-	DMibTempImplementIndirectionBinaryOperator(^=);
-	DMibTempImplementIndirectionBinaryOperator(|=);
-
-	// DMibTempImplementIndirectionBinaryOperator(->*); Has special implementation
-
-#		undef DMibTempImplementIndirectionBinaryOperator
-
-	DMibTempImplementIndirectionUnaryOperator(!);
-	// DMibTempImplementIndirectionUnaryOperator(&); // Should not be overridden (unsafe)
-	DMibTempImplementIndirectionUnaryOperator(~);
-	DMibTempImplementIndirectionUnaryOperator(*);
-	DMibTempImplementIndirectionUnaryOperator(+);
-	DMibTempImplementIndirectionUnaryOperator(++);
-	DMibTempImplementIndirectionUnaryPostfixOperator(++);
-	DMibTempImplementIndirectionUnaryOperator(-);
-	DMibTempImplementIndirectionUnaryOperator(--);
-	DMibTempImplementIndirectionUnaryPostfixOperator(--);
-
-#		undef DMibTempImplementIndirectionUnaryOperator
-#		undef DMibTempImplementIndirectionUnaryPostfixOperator
-
-*/
-
 }
 
 namespace NMib::NStorage

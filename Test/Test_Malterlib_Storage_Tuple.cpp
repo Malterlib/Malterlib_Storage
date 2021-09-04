@@ -241,10 +241,10 @@ namespace
 			{
 			}
 			
-			bool operator < (CCompare const &_Right) const
+			auto operator <=> (CCompare const &_Right) const
 			{
 				++m_nCompares;
-				return m_Value < _Right.m_Value;
+				return m_Value <=> _Right.m_Value;
 			}
 			bool operator == (CCompare const &_Right) const
 			{
@@ -574,11 +574,15 @@ namespace
 						DMibTestPath("Differ second");
 						TCTuple<CCompare, CCompare> Left(0, 0);
 						TCTuple<CCompare, CCompare> Right(0, 1);
-						
+
 						DMibTest(DMibExpr(Left) < DMibExpr(Right))(ETestFlag_NoValues);
 						
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
+#ifdef DCompiler_clang // Tuple spaceship support not yet implemented
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(1));
+#else
+						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
+#endif
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(0));
 					}
@@ -590,10 +594,14 @@ namespace
 						DMibTest(!(DMibExpr(Left) < DMibExpr(Right)))(ETestFlag_NoValues);
 						
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
+#ifdef DCompiler_clang // Tuple spaceship support not yet implemented
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(1));
+#else
+						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
+#endif
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
 #ifdef DMibContainer_TupleInternal
-						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(1));
+						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(0));
 #endif
 					}
 				}

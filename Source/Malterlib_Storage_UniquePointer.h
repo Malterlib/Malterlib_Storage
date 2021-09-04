@@ -357,20 +357,20 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator < (tf_CType *_Other) const
+		auto operator <=> (tf_CType *_Other) const
 		{
-			return f_Get() < _Other;
+			return f_Get() <=> _Other;
 		}
 
-		bool operator < (CNullPtr _Other) const
+		auto operator <=> (CNullPtr _Other) const
 		{
-			return f_Get() < _Other;
+			return f_Get() <=> _Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		bool operator < (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
 		{
-			return f_Get() < _Other.f_Get();
+			return f_Get() <=> _Other.f_Get();
 		}
 
 		bool f_IsEmpty() const
@@ -381,28 +381,6 @@ namespace NMib::NStorage
 		inline_small explicit operator bool() const
 		{
 			return !f_IsEmpty();
-		}
-
-		template <typename tf_CLeft>
-		friend bool operator == (tf_CLeft *_pLeft, const TCUniquePointer &_pRight)
-		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		friend bool operator == (CNullPtr _pLeft, const TCUniquePointer &_pRight)
-		{
-			return _pLeft == _pRight.f_Get();
-		}
-
-		template <typename tf_CLeft>
-		friend bool operator < (tf_CLeft *_pLeft, const TCUniquePointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
-		}
-
-		friend bool operator < (CNullPtr _pLeft, const TCUniquePointer &_pRight)
-		{
-			return _pLeft < _pRight.f_Get();
 		}
 	};
 }
