@@ -64,7 +64,7 @@ namespace NMib::NStorage
 		DMibLockTyped(t_CLock, m_Lock);
 		uint32 LifeTimeFlags = m_LifeTimeFlags.f_Load();
 		DMibSafeCheck(!(LifeTimeFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed");
-		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
+		if (LifeTimeFlags & EAggregateLifeTimeFlag_Constructed)
 		{
 			((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
 			fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
