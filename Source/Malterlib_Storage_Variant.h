@@ -1008,6 +1008,35 @@ namespace NMib::NStorage
 			DMibFastCheck(bFound);
 		}
 
+		template <typename t_CVisitor>
+		bool f_TryVisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		{
+			if (_Index == mcp_Member0Typed)
+			{
+				TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				return true;
+			}
+
+			auto TypeID = _Index;
+
+			bool bFound = false;
+			[[maybe_unused]] TCInitializerList<bool> Dummy =
+				{
+					[&]
+					{
+						if (tp_Member == TypeID)
+						{
+							bFound = true;
+							TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+						}
+						return true;
+					}()...
+				}
+			;
+
+			return bFound;
+		}
+
 		template <typename t_CReturn, typename t_CVisitor>
 		t_CReturn f_VisitCreateReturn(t_CIndex const &_Index, t_CVisitor &&_Visitor)
 		{
@@ -2027,7 +2056,9 @@ namespace NMib::NStream
 		{
 			typename CStreamableVariant::CIndexType TypeID;
 			_Stream >> TypeID;
-			_Data.f_VisitCreate(TypeID, NPrivate::TCVariantVisitor_Consume<t_CStream>(_Stream));
+			bool bSuccess = _Data.f_TryVisitCreate(TypeID, NPrivate::TCVariantVisitor_Consume<t_CStream>(_Stream));
+			if (!bSuccess)
+				DMibErrorStream(NStr::CStr::CFormat("Unsupported type '{}' in variant") << TypeID);
 		}
 	};
 }
