@@ -41,36 +41,24 @@ namespace NMib::NStorage::NReference
 		mark_artificial inline_always t_CType &f_Get() const volatile;
 	public:
 		template <typename... tfp_CParams>
-		mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value
-			, typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType
-		>::CType
-		operator () (tfp_CParams &&...p_Params) const volatile;
+		mark_artificial inline_always typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType operator () (tfp_CParams &&...p_Params) const volatile
+			requires (NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value)
+		;
 
 		///
 		/// Member access
 		/// =============
 
 		template <typename t_CMemberPtr>
-		mark_artificial inline_always typename TCEnableIf
-			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const volatile;
+		mark_artificial inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
+			requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		;
 
 		template <typename t_CMemberPtr>
-		mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-			, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-		>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const volatile;
+		mark_artificial inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
+			-> typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
+			requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		;
 
 	private:
 		TCReference();

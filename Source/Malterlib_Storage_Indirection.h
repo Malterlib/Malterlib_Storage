@@ -67,44 +67,25 @@ namespace NMib::NStorage::NIndirection
 		\***************************************************************************************************/
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
-			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr);
+		NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> operator ->* (t_CMemberPtr const &_MemberPtr)
+			requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		;
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
-		<
-			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-			, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-		>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr);
+		typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType operator ->* (t_CMemberPtr const &_MemberPtr)
+			requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		;
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
-			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, typename NTraits::TCAddConst<t_CType>::CType *
-				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const;
+		NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, typename NTraits::TCAddConst<t_CType>::CType *> operator ->* (t_CMemberPtr const &_MemberPtr) const
+			requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		;
 
 		template <typename t_CMemberPtr>
-		typename TCEnableIf
-		<
-			NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-			, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-		>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const;
+		auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
+			requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		;
 
 	public:
 		typedef t_CType CType;

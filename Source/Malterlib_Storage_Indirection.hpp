@@ -75,65 +75,40 @@ namespace NMib::NStorage::NIndirection
 		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
-#ifndef DDocumentation_Doxygen
-
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-			, NFunction::TCMemberFunctionBoundFunctor
-			<
-				t_CMemberPtr
-				, t_CType *
-			>
-		>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+	mark_artificial inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+		requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-	<
-		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-		, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-	>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+		-> typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
+		requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-		<
-			NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
-			, NFunction::TCMemberFunctionBoundFunctor
-			<
-				t_CMemberPtr
-				, typename NTraits::TCAddConst<t_CType>::CType *
-			>
-		>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
+	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
+		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, typename NTraits::TCAddConst<t_CType>::CType *>
+		requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
-	mark_artificial inline_always typename TCEnableIf
-	<
-		NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-		, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-	>::CType
-	TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
+	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
+		-> typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
+		requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
-
-#endif
 
 	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection()

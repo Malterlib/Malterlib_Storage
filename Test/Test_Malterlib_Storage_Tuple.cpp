@@ -485,17 +485,17 @@ namespace
 				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value);
 				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>::CType>::mc_Value);
 				
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::mc_Value);
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value);
-				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Const(Tuple2))))>::CType>::mc_Value);
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>::CType>::mc_Value);
+				static_assert(!TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>::CType>::mc_Value);
 				
 				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::mc_Value);
 				static_assert(!TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value);
 				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>::CType>::mc_Value);
 				
-				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::mc_Value);
-				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
-				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
+				static_assert(TCIsRValueReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>::mc_Value);
+				static_assert(TCIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
+				static_assert(TCIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>::CType>::mc_Value);
 
 				// Check that all get paths compile
 				fg_Get<1>(Tuple2);
