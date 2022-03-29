@@ -1,6 +1,8 @@
 // Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
+#include <memory>
+
 using namespace NMib::NCryptography;
 using namespace NMib;
 using namespace NMib::NMemory;

@@ -23,7 +23,7 @@ namespace NMib::NStorage
 	{
 		typedef t_CData CData;
 		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
+		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 		public:
 		CTypeAligned m_ObjectSpace;
 
@@ -87,7 +87,7 @@ namespace NMib::NStorage
 	{
 		typedef t_CData CData;
 		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
+		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 
 	public:
 		TCAggregate() = delete;

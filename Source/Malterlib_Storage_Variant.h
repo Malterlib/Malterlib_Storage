@@ -450,12 +450,15 @@ namespace NMib::NStorage
 
 		static constexpr mint mcp_MaxAlignment = fg_MaxConstexpr
 			(
-				NTraits::TCAlignmentOf<typename TCChooseType
+				NTraits::TCAlignmentOf
 				<
-					NTraits::TCIsReference<tp_CTypes>::mc_Value,
-					typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType,
-					typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
-				>::CType>::mc_Value...
+					typename TCChooseType
+					<
+						NTraits::TCIsReference<tp_CTypes>::mc_Value
+						, typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType
+						, typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
+					>::CType
+				>::mc_Value...
 			)
 		;
 

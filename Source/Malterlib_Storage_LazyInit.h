@@ -48,7 +48,7 @@ namespace NMib::NStorage
 
 		typedef t_CData CData;
 		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, NTraits::TCAlignmentOf<CData>::mc_Value>::CType CTypeAligned;
+		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 
 		CTypeAligned m_ObjectSpace = {};
 		t_CLock m_Lock;

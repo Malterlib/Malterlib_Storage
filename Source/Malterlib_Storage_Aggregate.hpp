@@ -6,7 +6,7 @@ namespace NMib::NStorage
 	template <typename t_CData, aint t_Priority, typename t_CLock>
 	void TCAggregate<t_CData, t_Priority, t_CLock>::f_Destruct()
 	{
-		auto OldFlags = m_LifeTimeFlags.f_Load();
+		[[maybe_unused]] auto OldFlags = m_LifeTimeFlags.f_Load();
 		DMibSafeCheck(!(OldFlags & EAggregateLifeTimeFlag_Destructed), "Should not arrive here unless we are constructed");
 		((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
 		fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
