@@ -388,8 +388,15 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple3_2))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple3_2))) == DMibExpr(-4))(ETestFlag_NoValues);
 				
+#if defined(DCompiler_MSVC_Workaround)
+				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty;
+				fg_Get<0>(TupleNonCopyEmpty) = 2;
+				TCTuple<int, CNonCopyable> TupleNonCopy;
+				fg_Get<0>(TupleNonCopy) = 2;
+#else
 				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty(2, fg_Default());
 				TCTuple<int, CNonCopyable> TupleNonCopy(2, fg_Default());
+#endif
 
 				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyable>, void (TCTuple<int, CNonCopyable> const &)>::mc_Value);
 				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value);
@@ -424,7 +431,11 @@ namespace
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty2(fg_Move(TupleMovableEmpty));
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1));
 				
+#if defined(DCompiler_MSVC_Workaround)
+				TCTuple<int, CMovableAssignOnly> TupleMovableAssign;
+#else
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign(2, fg_Default());
+#endif
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign2;
 				TupleMovableAssign2 = fg_Move(TupleMovableAssign);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign).m_Moved) == DMibExpr(0))(ETestFlag_NoValues);
@@ -456,7 +467,11 @@ namespace
 				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value);
 				
 				g_MovedEmpty = 0;
+#if defined(DCompiler_MSVC_Workaround)
+				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty;
+#else
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty(2, fg_Default());
+#endif
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(0) && DMibExpr("Assign"));
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty2;
