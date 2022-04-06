@@ -905,7 +905,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit > [&]
+			auto Cleanup = g_OnScopeExit / [&]
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)
@@ -948,7 +948,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit > [&]
+			auto Cleanup = g_OnScopeExit / [&]
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)
@@ -1049,7 +1049,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit > [&]
+			auto Cleanup = g_OnScopeExit / [&]
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)

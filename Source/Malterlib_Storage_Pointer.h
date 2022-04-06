@@ -1057,7 +1057,7 @@ namespace NMib::NStorage
 				if (m_Data.m_pPointTo->f_RefCountDecrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef)) == 0)
 				{
 					auto Cleanup
-						= g_OnScopeExit > [&]()
+						= g_OnScopeExit / [&]()
 						{
 							// Protect against exception in destructor
 							m_Data.m_pPointTo->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
@@ -1082,7 +1082,7 @@ namespace NMib::NStorage
 				if (m_Data.m_pPointTo->f_RefCountDecrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef)) == 0)
 				{
 					auto Cleanup
-						= g_OnScopeExit > [&]()
+						= g_OnScopeExit / [&]()
 						{
 							// Protect against exception in destructor
 							m_Data.m_pPointTo->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
@@ -1395,7 +1395,7 @@ namespace NMib::NStorage
 				pNewObject = fg_ConstructObject<CInternalData>((*_Other).fp_GetAllocator(), *((*_Other).m_Data.m_pPointTo));
 			}
 			auto Cleanup
-				= g_OnScopeExit > [&]
+				= g_OnScopeExit / [&]
 				{
 					fg_DeleteObject((*_Other).fp_GetAllocator(), pNewObject);
 				}
@@ -1421,7 +1421,7 @@ namespace NMib::NStorage
 				)
 			;
 			auto Cleanup
-				= g_OnScopeExit > [&]
+				= g_OnScopeExit / [&]
 				{
 					fg_DeleteObject(fp_GetAllocator(), pNewObject);
 				}
