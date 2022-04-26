@@ -1016,7 +1016,6 @@ namespace NMib::NStorage
 			return m_Data;
 		}
 
-
 		void fp_Set(CInternalData *_pPtr)
 		{
 			fp_Delete();
@@ -1024,6 +1023,14 @@ namespace NMib::NStorage
 				_pPtr->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
 		}
+
+		void fp_SetAttach(CInternalData *_pPtr)
+		{
+			fp_Delete();
+			m_Data.m_pPointTo = _pPtr;
+			DMibRefcountDebuggingOnly(m_Data.m_pPointTo->f_InitialRef(m_Data.m_DebugRef));
+		}
+
 		void fp_SetInit(CInternalData *_pPtr)
 		{
 			if (_pPtr)
@@ -1060,7 +1067,21 @@ namespace NMib::NStorage
 						= g_OnScopeExit / [&]()
 						{
 							// Protect against exception in destructor
-							m_Data.m_pPointTo->f_RefCountIncrease(DMibRefcountDebuggingOnly(m_Data.m_DebugRef));
+							m_Data.m_pPointTo->f_RefCountIncrease
+								(
+#if DMibConfig_RefcountDebugging
+#	if DMibEnableSafeCheck > 0
+									m_Data.m_DebugRef, true
+#	else
+									m_Data.m_DebugRef
+#	endif
+#else
+#	if DMibEnableSafeCheck > 0
+									true
+#	endif
+#endif
+								)
+							;
 						}
 					;
 
@@ -1238,7 +1259,6 @@ namespace NMib::NStorage
 			fp_SetInit(_pPtr);
 		}
 
-
 		template <typename tf_CType>
 		TCSharedPointer(TCExplicit<tf_CType> &&_Other)
 		{
@@ -1252,6 +1272,18 @@ namespace NMib::NStorage
 			fp_SetInit(*_Other);
 		}
 
+		template <typename tf_CType>
+		TCSharedPointer(TCAttach<tf_CType> &&_Other)
+		{
+			fp_SetConstruct(*_Other);
+		}
+
+		template <typename tf_CType, typename tf_CAllocator>
+		TCSharedPointer(TCAttach<tf_CType> &&_Other, tf_CAllocator &&_Allocator)
+			: m_Data(fg_Forward<tf_CAllocator>(_Allocator))
+		{
+			fp_SetConstruct(*_Other);
+		}
 
 		TCSharedPointer(CNullPtr)
 		{
@@ -1320,6 +1352,13 @@ namespace NMib::NStorage
 		TCSharedPointer &operator = (TCExplicit<tf_CType> &&_Other)
 		{
 			fp_Set(*_Other);
+			return *this;
+		}
+
+		template <typename tf_CType>
+		TCSharedPointer &operator = (TCAttach<tf_CType> &&_Other)
+		{
+			fp_SetAttach(*_Other);
 			return *this;
 		}
 
