@@ -1472,6 +1472,12 @@ namespace NMib::NStorage
 			return *this;
 		}
 
+		template <typename tf_CStr>
+		void f_Format(tf_CStr &o_Str) const
+		{
+			o_Str += typename tf_CStr::CFormat("0x{}") << f_Get();
+		}
+
 		template <typename tf_CType>
 		bool operator == (tf_CType *_pOther) const
 		{
@@ -1686,6 +1692,12 @@ namespace NMib::NStorage
 		CInternalData *f_UnsafeGetPointerValue() const
 		{
 			return m_Data.m_pPointTo;
+		}
+
+		template <typename tf_CStr>
+		void f_Format(tf_CStr &o_Str) const
+		{
+			o_Str += typename tf_CStr::CFormat("0x{}") << fp_GetContained();
 		}
 
 		template <typename tf_CType>
