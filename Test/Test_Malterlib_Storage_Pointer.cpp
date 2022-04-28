@@ -962,7 +962,7 @@ namespace
 			};
 
 
-			struct CBaseIntrusive : public TCSharedPointerIntrusiveBase<>
+			struct CBaseIntrusive
 			{
 				virtual ~CBaseIntrusive()
 				{
@@ -974,11 +974,12 @@ namespace
 					return m_Value0;
 				}
 
+				NStorage::CIntrusiveRefCount m_RefCount;
 				mint m_Value0 = 0;
 				//NStr::CStr m_StrValue = "Base";
 			};
 
-			struct CBaseIntrusiveSupportWeak : public TCSharedPointerIntrusiveBase<ESharedPointerOption_SupportWeakPointer>
+			struct CBaseIntrusiveSupportWeak
 			{
 				virtual ~CBaseIntrusiveSupportWeak()
 				{
@@ -990,6 +991,7 @@ namespace
 					return m_Value0;
 				}
 
+				CIntrusiveRefCountWithWeak m_RefCount;
 				mint m_Value0 = 0;
 				//NStr::CStr m_StrValue = "Base";
 			};

@@ -24,8 +24,9 @@ namespace
 	{
 	public:
 
-		struct CTestWeakIntrusive : public NStorage::TCSharedPointerIntrusiveBase<NStorage::ESharedPointerOption_SupportWeakPointer>
+		struct CTestWeakIntrusive
 		{
+			NStorage::CIntrusiveRefCountWithWeak m_RefCount;
 			mint m_Dummy = 0; // Will be overwritten after destructor is called
 			uint32 m_Value;
 			bool m_bDestroyed = false;
@@ -41,8 +42,10 @@ namespace
 			}
 		};
 
-		struct CTestIntrusive : public NStorage::TCSharedPointerIntrusiveBase<>
+		struct CTestIntrusive
 		{
+			NStorage::CIntrusiveRefCount m_RefCount;
+
 			uint32 m_Value;
 			bool m_bDestroyed = false;
 			CTestIntrusive *m_pThis;
@@ -64,22 +67,22 @@ namespace
 				TCSharedPointer<CTestWeakIntrusive, CSupportWeakTag> pPointer = fg_Construct(5);
 				auto pThis = pPointer->m_pThis;
 
-				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-				DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
+				DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+				DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(0));
 
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer = pPointer;
 				{
 					DMibTestPath("After weak");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(1));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(1));
 				}
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer2 = pWeakPointer;
 				{
 					DMibTestPath("After weak 2");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(2));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(2));
 				}
 
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
@@ -88,16 +91,16 @@ namespace
 				{
 					DMibTestPath("After shared cleared");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) <= DMibExpr(-1));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(1));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) <= DMibExpr(-1));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(1));
 				}
 
 				pWeakPointer.f_Clear();
 				{
 					DMibTestPath("After weak cleared");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) <= DMibExpr(-1));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) <= DMibExpr(-1));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(0));
 				}
 				pWeakPointer2.f_Clear();
 			}
@@ -107,24 +110,24 @@ namespace
 
 				auto pThis = pPointer->m_pThis;
 
-				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-				DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
+				DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+				DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(0));
 
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer = pPointer;
 
 				{
 					DMibTestPath("After weak");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(1));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(1));
 				}
 
 				TCWeakPointer<CTestWeakIntrusive> pWeakPointer2 = pWeakPointer;
 				{
 					DMibTestPath("After weak 2");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(2));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(2));
 				}
 
 				pWeakPointer.f_Clear();
@@ -132,8 +135,8 @@ namespace
 				{
 					DMibTestPath("After weak cleared");
 
-					DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
-					DMibTest(DMibExpr(pThis->f_WeakRefCountGet()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
+					DMibTest(DMibExpr(pThis->m_RefCount.f_WeakGet()) == DMibExpr(0));
 				}
 
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
@@ -145,7 +148,7 @@ namespace
 
 				auto pThis = pPointer->m_pThis;
 
-				DMibTest(DMibExpr(pThis->f_RefCountGet()) == DMibExpr(0));
+				DMibTest(DMibExpr(pThis->m_RefCount.f_Get()) == DMibExpr(0));
 				DMibTest(DMibExpr(!pThis->m_bDestroyed));
 				pPointer.f_Clear();
 			}
