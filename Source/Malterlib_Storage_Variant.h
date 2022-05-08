@@ -525,6 +525,20 @@ namespace NMib::NStorage
 			;
 		};
 
+		template <CIndexInteger t_iMember>
+		struct TCEvalTryGetReturnType
+		{
+			using CMemberType = TCTypeFromMemberInt<t_iMember>;
+			using CType = typename NTraits::TCDecay<CMemberType>::CType *;
+		};
+
+		template <CIndexInteger t_iMember>
+		struct TCEvalTryGetReturnTypeConst
+		{
+			using CMemberType = TCTypeFromMemberInt<t_iMember>;
+			using CType = typename NTraits::TCAddConst<typename NTraits::TCDecay<CMemberType>::CType>::CType *;
+		};
+
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitor
 		{
@@ -1708,6 +1722,54 @@ namespace NMib::NStorage
 			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
 			return fp_GetAs<c_ToGet>();
+		}
+
+		/***************************************************************************************************\
+		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
+		| Try get already known type																		|
+		|___________________________________________________________________________________________________|
+		\***************************************************************************************************/
+
+		template <t_CIndex t_iMember>
+		typename TCEvalTryGetReturnType<CIndexInteger(t_iMember)>::CType f_TryGet()
+		{
+			if (f_GetTypeID() != t_iMember)
+				return nullptr;
+
+			return &fp_GetAs<CIndexInteger(t_iMember)>();
+		}
+
+		template <t_CIndex t_iMember>
+		typename TCEvalTryGetReturnTypeConst<CIndexInteger(t_iMember)>::CType f_TryGet() const
+		{
+			if (f_GetTypeID() != t_iMember)
+				return nullptr;
+
+			return &fp_GetAs<CIndexInteger(t_iMember)>();
+		}
+
+		template <typename t_CType>
+		typename TCEvalTryGetReturnType<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType()
+		{
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static_assert(c_ToGet >= 0, "The variant contains no such type");
+
+			if (fp_GetTypeID() != c_ToGet)
+				return nullptr;
+
+			return &fp_GetAs<c_ToGet>();
+		}
+
+		template <typename t_CType>
+		typename TCEvalTryGetReturnTypeConst<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType() const
+		{
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static_assert(c_ToGet >= 0, "The variant contains no such type");
+
+			if (fp_GetTypeID() != c_ToGet)
+				return nullptr;
+
+			return &fp_GetAs<c_ToGet>();
 		}
 
 		/***************************************************************************************************\
