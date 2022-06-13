@@ -761,6 +761,22 @@ namespace NMib::NStorage
 	}
 }
 
+#if defined(DCompiler_clang) && _LIBCPP_VERSION < 14000
+namespace std
+{
+	template <typename... tfp_CParamsLeft, typename... tfp_CParamsRight>
+	NMib::COrdering_Weak operator <=> (tuple<tfp_CParamsLeft...> const &_Left, tuple<tfp_CParamsRight...> const &_Right)
+	{
+		if (_Left < _Right)
+			return NMib::COrdering_Weak::less;
+		else if (_Left > _Right)
+			return NMib::COrdering_Weak::greater;
+
+		return NMib::COrdering_Weak::equivalent;
+	}
+}
+#endif
+
 #endif
 
 #ifndef DMibPNoShortCuts

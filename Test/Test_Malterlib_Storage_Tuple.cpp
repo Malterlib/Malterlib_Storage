@@ -561,7 +561,9 @@ namespace
 						DMibTest(DMibExpr(Left) < DMibExpr(Right))(ETestFlag_NoValues);
 						
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
+#if !(defined(DCompiler_clang) && _LIBCPP_VERSION < 14000)
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
+#endif
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(0));
 					}
@@ -573,7 +575,9 @@ namespace
 						DMibTest(!(DMibExpr(Left) < DMibExpr(Right)))(ETestFlag_NoValues);
 						
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
+#if !(defined(DCompiler_clang) && _LIBCPP_VERSION < 14000)
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
+#endif
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
 #ifdef DMibContainer_TupleInternal
 						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(0));
