@@ -1052,14 +1052,15 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo;
 		}
 
-
-		template <bool tf_bSupportWeak, typename TCEnableIf<tf_bSupportWeak>::CType * = nullptr>
 		bool fp_Delete()
 		{
+			if (!m_Data.m_pPointTo) [[unlikely]]
+				return false;
+
 			bool bRet = false;
-			if (m_Data.m_pPointTo)
+			if (m_Data.m_pPointTo->m_RefCount.f_Decrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef)) == 0)
 			{
-				if (m_Data.m_pPointTo->m_RefCount.f_Decrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef)) == 0)
+				if constexpr (mc_bSupportWeak)
 				{
 					auto Cleanup
 						= g_OnScopeExit / [&]()
@@ -1087,18 +1088,7 @@ namespace NMib::NStorage
 					Cleanup.f_Clear();
 					bRet = true;
 				}
-				m_Data.m_pPointTo = nullptr;
-			}
-			return bRet;
-		}
-
-		template <bool tf_bSupportWeak, typename TCEnableIf<!tf_bSupportWeak>::CType * = nullptr>
-		bool fp_Delete()
-		{
-			bool bRet = false;
-			if (m_Data.m_pPointTo)
-			{
-				if (m_Data.m_pPointTo->m_RefCount.f_Decrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef)) == 0)
+				else
 				{
 					auto Cleanup
 						= g_OnScopeExit / [&]()
@@ -1108,19 +1098,14 @@ namespace NMib::NStorage
 						}
 					;
 
-					fg_DeleteObject(fp_GetAllocator(), &fg_RemoveQualifiers(*((CInternalData *)m_Data.m_pPointTo)));
+					fg_DeleteObject(fp_GetAllocator(), m_Data.m_pPointTo);
 					Cleanup.f_Clear();
 					bRet = true;
 				}
-
-				m_Data.m_pPointTo = nullptr;
 			}
-			return bRet;
-		}
+			m_Data.m_pPointTo = nullptr;
 
-		bool fp_Delete()
-		{
-			return fp_Delete<mc_bSupportWeak>();
+			return bRet;
 		}
 
 		// Used by weak pointer
