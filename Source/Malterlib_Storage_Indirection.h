@@ -93,8 +93,10 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection();
 		~TCIndirection();
 
-		template <typename tf_CParam0, typename... tfp_CParams>
-		TCIndirection(tf_CParam0 &&_Param0, tfp_CParams && ... p_Params);
+		template <typename... tfp_CParams>
+		TCIndirection(tfp_CParams && ... p_Params)
+			requires NTraits::cConstructibleWith<t_CType, tfp_CParams &&...>
+		;
 
 		TCIndirection(TCIndirection const &_Other);
 		TCIndirection(TCIndirection &_Other);
@@ -106,6 +108,12 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection &operator =(TCIndirection &&_Other);
 		mark_artificial inline_always operator t_CType const & () const;
 		mark_artificial inline_always operator t_CType & ();
+
+		template <typename tf_CStream>
+		void f_Stream(tf_CStream &_Stream)
+		{
+			_Stream % this->f_Get();
+		}
 
 		template <typename tf_CStr>
 		void f_Format(tf_CStr &o_String) const;

@@ -123,10 +123,11 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename tf_CParam0, typename... tfp_CParams>
-	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tf_CParam0 &&_Param0, tfp_CParams && ... p_Params)
+	template <typename... tfp_CParams>
+	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tfp_CParams && ... p_Params)
+		requires NTraits::cConstructibleWith<t_CType, tfp_CParams &&...>
 	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tf_CParam0>(_Param0), fg_Forward<tfp_CParams>(p_Params)...);
+		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType, typename t_CAllocator>
