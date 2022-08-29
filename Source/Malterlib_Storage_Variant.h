@@ -806,7 +806,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CVisitor>
-		void fp_VisitStorage(t_CVisitor &&_Visitor)
+		inline_always void fp_VisitStorage(t_CVisitor &&_Visitor)
 		{
 			auto TypeID = f_GetTypeID();
 
@@ -817,22 +817,26 @@ namespace NMib::NStorage
 			}
 
 #if defined DMibContractConfigure_CheckEnabled
-			bool bFound = false;
+			bool bFound =
 #endif
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
+				(
+					...
+					||
+					[&]() inline_always_lambda
 					{
-						if (tp_Member == TypeID)
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
 						{
-#if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
-#endif
-							TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+							if (tp_Member == TypeID)
+							{
+								TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
@@ -840,7 +844,7 @@ namespace NMib::NStorage
 
 	public:
 		template <typename t_CVisitor>
-		void f_Visit(t_CVisitor &&_Visitor)
+		inline_always void f_Visit(t_CVisitor &&_Visitor)
 		{
 			auto TypeID = f_GetTypeID();
 
@@ -851,29 +855,33 @@ namespace NMib::NStorage
 			}
 
 #if defined DMibContractConfigure_CheckEnabled
-			bool bFound = false;
+			bool bFound =
 #endif
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
+				(
+					...
+					||
+					[&]() inline_always_lambda
 					{
-						if (tp_Member == TypeID)
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
 						{
-#if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
-#endif
-							TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+							if (tp_Member == TypeID)
+							{
+								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
 		}
 
 		template <typename t_CVisitor>
-		void f_Visit(t_CVisitor &&_Visitor) const
+		inline_always void f_Visit(t_CVisitor &&_Visitor) const
 		{
 			auto TypeID = f_GetTypeID();
 
@@ -884,22 +892,26 @@ namespace NMib::NStorage
 			}
 
 #if defined DMibContractConfigure_CheckEnabled
-			bool bFound = false;
+			bool bFound =
 #endif
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
+				(
+					...
+					||
+					[&]() inline_always_lambda
 					{
-						if (tp_Member == TypeID)
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
 						{
-#if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
-#endif
-							TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+							if (tp_Member == TypeID)
+							{
+								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
@@ -907,7 +919,7 @@ namespace NMib::NStorage
 
 
 		template <typename t_CReturn, typename t_CVisitor>
-		t_CReturn f_VisitRet(t_CVisitor &&_Visitor)
+		inline_always t_CReturn f_VisitRet(t_CVisitor &&_Visitor)
 		{
 			auto TypeID = f_GetTypeID();
 
@@ -919,7 +931,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit / [&]
+			auto Cleanup = g_OnScopeExit / [&]() inline_always_lambda
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)
@@ -928,20 +940,27 @@ namespace NMib::NStorage
 					Ret.f_Destruct();
 				}
 			;
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
-					{
-						if (tp_Member == TypeID)
-						{
 #if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
+			bFound =
 #endif
-							Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+				(
+					...
+					||
+					[&]() inline_always_lambda
+					{
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
+						{
+							if (tp_Member == TypeID)
+							{
+								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
@@ -950,7 +969,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CReturn, typename t_CVisitor>
-		t_CReturn f_VisitRet(t_CVisitor &&_Visitor) const
+		inline_always t_CReturn f_VisitRet(t_CVisitor &&_Visitor) const
 		{
 			auto TypeID = f_GetTypeID();
 
@@ -962,7 +981,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit / [&]
+			auto Cleanup = g_OnScopeExit / [&]() inline_always_lambda
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)
@@ -971,20 +990,27 @@ namespace NMib::NStorage
 					Ret.f_Destruct();
 				}
 			;
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
-					{
-						if (tp_Member == TypeID)
-						{
 #if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
+			bFound =
 #endif
-							Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+				(
+					...
+					||
+					[&]() inline_always_lambda
+					{
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
+						{
+							if (tp_Member == TypeID)
+							{
+								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
@@ -993,7 +1019,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CVisitor>
-		void f_VisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		inline_always void f_VisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
 		{
 			if (_Index == mcp_Member0Typed)
 				return TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
@@ -1001,29 +1027,33 @@ namespace NMib::NStorage
 			auto TypeID = _Index;
 
 #if defined DMibContractConfigure_CheckEnabled
-			bool bFound = false;
+			bool bFound =
 #endif
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
+				(
+					...
+					||
+					[&]() inline_always_lambda
 					{
-						if (tp_Member == TypeID)
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
 						{
-#if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
-#endif
-							TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+							if (tp_Member == TypeID)
+							{
+								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
 		}
 
 		template <typename t_CVisitor>
-		bool f_TryVisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		inline_always bool f_TryVisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
 		{
 			if (_Index == mcp_Member0Typed)
 			{
@@ -1033,26 +1063,32 @@ namespace NMib::NStorage
 
 			auto TypeID = _Index;
 
-			bool bFound = false;
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
+			bool bFound =
+				(
+					...
+					||
+					[&]() inline_always_lambda
 					{
-						if (tp_Member == TypeID)
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
 						{
-							bFound = true;
-							TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+							if (tp_Member == TypeID)
+							{
+								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			return bFound;
 		}
 
 		template <typename t_CReturn, typename t_CVisitor>
-		t_CReturn f_VisitCreateReturn(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		inline_always t_CReturn f_VisitCreateReturn(t_CIndex const &_Index, t_CVisitor &&_Visitor)
 		{
 			if (_Index == mcp_Member0Typed)
 				return TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
@@ -1063,7 +1099,7 @@ namespace NMib::NStorage
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
 #endif
-			auto Cleanup = g_OnScopeExit / [&]
+			auto Cleanup = g_OnScopeExit / [&]() inline_always_lambda
 				{
 #if defined DMibContractConfigure_CheckEnabled
 					if (!bFound)
@@ -1072,20 +1108,27 @@ namespace NMib::NStorage
 					Ret.f_Destruct();
 				}
 			;
-			[[maybe_unused]] TCInitializerList<bool> Dummy =
-				{
-					[&]
-					{
-						if (tp_Member == TypeID)
-						{
 #if defined DMibContractConfigure_CheckEnabled
-							bFound = true;
+			bFound =
 #endif
-							Ret.f_Construct(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+				(
+					...
+					||
+					[&]() inline_always_lambda
+					{
+						if constexpr (tp_Member == mcp_Member0Typed)
+							return false;
+						else
+						{
+							if (tp_Member == TypeID)
+							{
+								Ret.f_Construct(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								return true;
+							}
+							return false;
 						}
-						return true;
-					}()...
-				}
+					}()
+				)
 			;
 
 			DMibFastCheck(bFound);
@@ -1097,7 +1140,6 @@ namespace NMib::NStorage
 		auto operator <=> (TCVariantCommon const &_Right) const;
 
 	private:
-
 		void fp_DestroyCurrent()
 		{
 			fp_VisitStorage(NPrivate::CVariantVisitor_Destruct());

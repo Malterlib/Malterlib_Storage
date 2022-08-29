@@ -27,19 +27,19 @@ namespace NMib::NStorage
 		public:
 		CTypeAligned m_ObjectSpace;
 
-		TCAggregateSimple() = default;
+		inline_always TCAggregateSimple() = default;
 		constexpr TCAggregateSimple(EAggregateInitialization _Init)
 			: m_ObjectSpace{}
 		{
 		}
 
-		void f_Destruct()
+		inline_always void f_Destruct()
 		{
 			((t_CData *)m_ObjectSpace.m_Aligned)->t_CData::~t_CData();
 		}
 
 		template <typename ...tfp_CParam>
-		void f_Construct(tfp_CParam && ...p_Params)
+		inline_always void f_Construct(tfp_CParam && ...p_Params)
 		{
 			new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tfp_CParam>(p_Params)...);
 		}
