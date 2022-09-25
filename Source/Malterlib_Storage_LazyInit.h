@@ -19,7 +19,7 @@
 
 namespace NMib::NThread
 {
-	class CLowLevelLockAggregate;
+	struct CLowLevelLockAggregate;
 }
 
 namespace NMib::NStorage
