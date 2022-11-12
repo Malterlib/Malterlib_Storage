@@ -16,6 +16,7 @@ namespace NMib::NStorage
 			, NStorage::TCMember<t_CType, int8(1)>
 		>
 	{
+		using CType = t_CType;
 		using CVariant = NStorage::TCStreamableVariant
 			<
 				int8
@@ -84,6 +85,24 @@ namespace NMib::NStorage
 	private:
 		inline_never void fp_ThrowEmpty() const;
 	};
+
+	namespace NPrivate
+	{
+		template <typename t_CType>
+		struct TCIsOptional
+		{
+			constexpr static bool mc_bValue = false;
+		};
+
+		template <typename t_CType>
+		struct TCIsOptional<TCOptional<t_CType>>
+		{
+			constexpr static bool mc_bValue = true;
+		};
+	}
+
+	template <typename t_CType>
+	concept cIsOptional = NPrivate::TCIsOptional<t_CType>::mc_bValue;
 }
 
 #ifndef DMibPNoShortCuts
