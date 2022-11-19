@@ -26,12 +26,12 @@ Import "../Core/Lib_Malterlib.MTarget"
 
 Property
 {
-	MalterlibLibrary_Storage define bool = MalterlibLibrary_All
+	MalterlibLibrary_Storage: bool = MalterlibLibrary_All
 	MalterlibSubLibraries =+ "Storage"
 	{
 		!!MalterlibLibrary_Storage true
 	}
-//	MalterlibSubLibrarySeparate_Lib_Malterlib_Storage define bool = true
+//	MalterlibSubLibrarySeparate_Lib_Malterlib_Storage: bool = true
 	MalterlibIncludeRoots =+ "Include"->MakeAbsolute()
 	{
 		!!MalterlibLibrary_Storage true
@@ -43,5 +43,5 @@ Property
 	!!MalterlibEnableInternalTests true
 	
 	MalterlibTests =+ "Malterlib_Storage"
-	MalterlibTestFiles_Malterlib_Storage define [type(CEntity)] = ["Test/*"->MakeAbsolute()]
+	MalterlibTestFiles_Malterlib_Storage: [type(CEntity)] = ["Test/*"->MakeAbsolute()]
 }
