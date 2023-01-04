@@ -105,6 +105,7 @@ namespace NMib::NStorage::NReference
 	DMibTempImplementReferenceBinaryOperator(>>=);
 	DMibTempImplementReferenceBinaryOperator(^=);
 	DMibTempImplementReferenceBinaryOperator(|=);
+	DMibTempImplementReferenceBinaryOperator(<=>);
 
 	// DMibTempImplementReferenceBinaryOperator(->*); Has special implementation
 
