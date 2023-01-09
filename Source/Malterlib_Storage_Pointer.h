@@ -1369,6 +1369,11 @@ namespace NMib::NStorage
 		{
 			return !f_IsEmpty();
 		}
+
+		mint f_GetRefCount() const
+		{
+			return m_Data.m_pPointTo->m_RefCount.f_Get();
+		}
 	};
 
 	template <typename t_CType, typename... tp_COptions>
