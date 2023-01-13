@@ -2144,19 +2144,19 @@ namespace NMib::NStream
 		using CStreamableVariant = NStorage::TCVariantCommon<t_CIndex, tp_CMembers...>;
 
 	public:
-		static void fs_Feed(t_CStream &_Stream, CStreamableVariant const &_Data)
+		static constexpr void fs_Feed(t_CStream &_Stream, CStreamableVariant const &_Data)
 		{
 			_Stream << _Data.f_GetTypeID();
 			_Data.f_Visit(NPrivate::TCVariantVisitor_Feed<t_CStream>(_Stream));
 		}
 
-		static void fs_Feed(t_CStream &_Stream, CStreamableVariant &&_Data)
+		static constexpr void fs_Feed(t_CStream &_Stream, CStreamableVariant &&_Data)
 		{
 			_Stream << _Data.f_GetTypeID();
 			_Data.f_Visit(NPrivate::TCVariantVisitor_FeedMove<t_CStream>(_Stream));
 		}
 
-		static void fs_Consume(t_CStream &_Stream, CStreamableVariant &_Data)
+		static constexpr void fs_Consume(t_CStream &_Stream, CStreamableVariant &_Data)
 		{
 			typename CStreamableVariant::CIndexType TypeID;
 			_Stream >> TypeID;
