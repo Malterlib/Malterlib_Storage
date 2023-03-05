@@ -553,6 +553,11 @@ namespace NMib::NStorage
 			return *this;
 		}
 
+		void f_Clear()
+		{
+			m_pPointTo = nullptr;
+		}
+
 
 		// Access
 		t_CType *f_Get() const
