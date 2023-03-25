@@ -1008,7 +1008,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 		}
@@ -1044,7 +1044,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 		}
@@ -1212,7 +1212,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 			return *this;
@@ -1244,7 +1244,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 			return *this;
@@ -1485,7 +1485,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 		}
@@ -1518,7 +1518,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 		}
@@ -1634,7 +1634,7 @@ namespace NMib::NStorage
 			DMibRefCountDebuggingOnly
 				(
 					if (m_Data.m_pPointTo)
-				 		m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
+						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
 				)
 			;
 			return *this;

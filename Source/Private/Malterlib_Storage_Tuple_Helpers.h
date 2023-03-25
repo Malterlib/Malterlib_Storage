@@ -23,7 +23,7 @@ namespace NMib
 	template <typename tf_CDestinationType, typename tf_CType> 
 	inline_always_debug typename NPrivate::TCConvertMoveHelper<tf_CDestinationType, tf_CType>::CType fg_ConvertMove(tf_CType &&_ToMove) noexcept
 	{
-    	return ((typename NPrivate::TCConvertMoveHelper<tf_CDestinationType, tf_CType>::CType)_ToMove);
+		return ((typename NPrivate::TCConvertMoveHelper<tf_CDestinationType, tf_CType>::CType)_ToMove);
 	}
 }
 	

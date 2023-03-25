@@ -20,7 +20,7 @@ namespace NMib::NStorage
 					(
 						NTraits::TCHasVirtualDestructor<t_CType0>::mc_Value
 						&& NTraits::TCIsBaseOf<t_CType1, t_CType0>::mc_Value
-					 	&& NTraits::TCIsConvertible<t_CType1 *, t_CType0 *>::mc_Value
+						&& NTraits::TCIsConvertible<t_CType1 *, t_CType0 *>::mc_Value
 					)
 					|| NTraits::TCIsSame<t_CType1, t_CType0>::mc_Value
 					|| NTraits::TCIsSame<t_CType1, typename NTraits::TCRemoveQualifiers<t_CType0>::CType>::mc_Value

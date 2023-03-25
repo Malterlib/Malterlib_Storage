@@ -327,7 +327,7 @@ namespace NMib::NStorage
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-			 	, t_FConstructorParams
+				, t_FConstructorParams
 				, NTraits::TCCompileTimeTrue<NTraits::TCIsConstructorCallableWith<t_CType0, t_FConstructorParams>::mc_Value>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
@@ -340,7 +340,7 @@ namespace NMib::NStorage
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-			 	, t_FConstructorParams
+				, t_FConstructorParams
 				, NTraits::TCCompileTimeTrue<NTraits::TCIsConstructorCallableWith<t_CType0, t_FConstructorParams>::mc_Value>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
