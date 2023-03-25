@@ -46,7 +46,15 @@ namespace NMib::NStorage
 		if (_Value)
 			static_cast<CVariant &>(*this) = *_Value;
 	}
-	
+
+	template <typename t_CType>
+	template <typename tf_CType>
+	TCOptional<t_CType>::TCOptional(TCOptional<tf_CType> &_Value)
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = *_Value;
+	}
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	TCOptional<t_CType>::TCOptional(TCOptional<tf_CType> &&_Value)
@@ -64,7 +72,17 @@ namespace NMib::NStorage
 		else
 			static_cast<CVariant &>(*this) = CVariant();
 	}
-	
+
+	template <typename t_CType>
+	template <typename tf_CType>
+	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> &_Value) -> TCOptional &
+	{
+		if (_Value)
+			static_cast<CVariant &>(*this) = *_Value;
+		else
+			static_cast<CVariant &>(*this) = CVariant();
+	}
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> &&_Value) -> TCOptional &

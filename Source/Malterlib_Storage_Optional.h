@@ -42,10 +42,14 @@ namespace NMib::NStorage
 		template <typename tf_CType>
 		TCOptional(TCOptional<tf_CType> const &_Value);
 		template <typename tf_CType>
+		TCOptional(TCOptional<tf_CType> &_Value);
+		template <typename tf_CType>
 		TCOptional(TCOptional<tf_CType> &&_Value);
 
 		template <typename tf_CType>
 		TCOptional &operator = (TCOptional<tf_CType> const &_Value);
+		template <typename tf_CType>
+		TCOptional &operator = (TCOptional<tf_CType> &_Value);
 		template <typename tf_CType>
 		TCOptional &operator = (TCOptional<tf_CType> &&_Value);
 
@@ -55,8 +59,10 @@ namespace NMib::NStorage
 		TCOptional() noexcept = default;
 		TCOptional(CNullPtr) noexcept;
 		TCOptional(TCOptional const &) = default;
+		TCOptional(TCOptional &) = default;
 		TCOptional(TCOptional &&) = default;
 		TCOptional &operator = (TCOptional const &) = default;
+		TCOptional &operator = (TCOptional &) = default;
 		TCOptional &operator = (TCOptional &&) = default;
 
 		template <typename tf_CType>
