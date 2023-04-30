@@ -804,10 +804,11 @@ namespace NMib::NStorage
 		DMibFastCheck(_pObject->m_RefCount.f_Get() == -1);
 
 		static_assert(sizeof(tf_CObjectType) > 0);
-		static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value);
-		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value)
+		static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value || NTraits::cIsFinal<tf_CObjectType>);
+
+		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value && !NTraits::cIsFinal<tf_CObjectType>)
 		{
-			static_assert(!NTraits::TCHasOperatorDelete<tf_CObjectType>::mc_Value);
+			static_assert(!NTraits::cHasOperatorDelete<tf_CObjectType>);
 #if defined(DMibPOverrideOperatorNew)
 
 			NMemory::CCaptureDefaultDelete Captured;

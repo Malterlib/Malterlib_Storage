@@ -26,7 +26,7 @@ namespace NMib::NStorage
 namespace NMib::NStorage::NIndirection
 {
 	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator>
-	class TCIndirection
+	class TCIndirection final
 	{
 	protected:
 		struct CData : public t_CAllocator
