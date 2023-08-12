@@ -7,6 +7,10 @@
 #define DMibConfig_RefCountDebugging 0
 #endif
 
+#ifndef DMibConfig_RefCountLeakDebugging
+#define DMibConfig_RefCountLeakDebugging 0
+#endif
+
 #include <Mib/Core/Core>
 #include <Mib/Function/BindMemberFunction>
 namespace NMib::NStorage
@@ -837,6 +841,9 @@ namespace NMib::NStorage
 		_pObject->m_RefCount.f_WeakSetCapturedDelete(CapturedDelete);
 		if (_pObject->m_RefCount.f_WeakDecrease(DMibRefCountDebuggingOnly(nullptr)) == 0)
 		{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+			_pObject->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000001);
+#endif
 			if (CapturedDelete.m_Size)
 				fg_Forward<tf_CAllocator>(_Allocator).f_Free(CapturedDelete.m_pMemory, CapturedDelete.m_Size);
 			else
@@ -921,6 +928,9 @@ namespace NMib::NStorage
 			{
 				if constexpr (mc_bSupportWeak)
 				{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+					m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000010);
+#endif
 					auto Cleanup
 						= g_OnScopeExit / [&]()
 						{
@@ -949,9 +959,15 @@ namespace NMib::NStorage
 				}
 				else
 				{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+					m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000100);
+#endif
 					auto Cleanup
 						= g_OnScopeExit / [&]()
 						{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+							m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000001000);
+#endif
 							// Protect against exception in destructor
 							m_Data.m_pPointTo->m_RefCount.f_Increase(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
 						}
