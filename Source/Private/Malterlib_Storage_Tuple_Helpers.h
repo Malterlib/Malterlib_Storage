@@ -211,19 +211,15 @@ namespace NMib::NStorage::NPrivate
 		{
 		}
 		// Direct param
-		template
-		<
-			typename tf_CParam
-			, typename TCEnableIf
-			<
-				!TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::TCIsConstructorCallableWith<t_CType, void (tf_CParam &&)>::mc_Value
-				, bool
-			>::CType = false
-		>
+		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
 			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (tf_CParam &&)>::mc_Value)
+			requires
+			(
+				!TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
+				&& NTraits::cConstructibleWith<t_CType, tf_CParam &&>
+			)
 			: mp_Value(fg_Forward<tf_CParam>(_Param))
 		{
 			static_assert
@@ -263,19 +259,15 @@ namespace NMib::NStorage::NPrivate
 		{
 		}
 
-		template
-		<
-			typename tf_CParam
-			, typename TCEnableIf
-			<
-				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::TCIsConstructorCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value
-				, bool
-			>::CType = false
-		>
+		template <typename tf_CParam>
 		inline_always
 		TCTupleLeaf(tf_CParam &&_Param)
 			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value)
+			requires
+			(
+				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
+				&& NTraits::cConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
+			)
 			: mp_Value(fg_Forward<typename TCTupleLeafTraits<tf_CParam>::CType>(_Param.f_Get()))
 		{
 		}
@@ -345,19 +337,15 @@ namespace NMib::NStorage::NPrivate
 		}
 
 		// Direct param
-		template
-		<
-			typename tf_CParam
-			, typename TCEnableIf
-			<
-				!TCTupleLeafTraits<tf_CParam &&>::mc_IsTupleLeaf
-				&& NTraits::TCIsConstructorCallableWith<t_CType, void (tf_CParam &&)>::mc_Value
-				, bool
-			>::CType = false
-		>
+		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
 			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (tf_CParam &&)>::mc_Value)
+			requires
+			(
+				!TCTupleLeafTraits<tf_CParam &&>::mc_IsTupleLeaf
+				&& NTraits::cConstructibleWith<t_CType, tf_CParam &&>
+			)
 		{
 			new((void *)&f_Get()) t_CType(fg_Forward<tf_CParam>(_Param));
 		}
@@ -376,19 +364,15 @@ namespace NMib::NStorage::NPrivate
 			new((void *)&f_Get()) t_CType(fg_ConvertMove<t_CType>(_Param.f_Get()));
 		}
 
-		template
-		<
-			typename tf_CParam
-			, typename TCEnableIf
-			<
-				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::TCIsConstructorCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value
-				, bool
-			>::CType = false
-		>
+		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
 			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value)
+			requires
+			(
+				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
+				&& NTraits::cConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
+			)
 		{
 			new((void *)&f_Get()) t_CType(fg_Forward<typename TCTupleLeafTraits<tf_CParam>::CType>(_Param.f_Get()));
 		}
