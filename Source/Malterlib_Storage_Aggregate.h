@@ -70,7 +70,7 @@ namespace NMib::NStorage
 		}*/
 	};
 
-	template <typename t_CData, aint t_Priority = 128, typename t_CLock = NThread::CMutualAggregate>
+	template <typename t_CData, aint t_Priority = 128, typename t_CLock = NThread::CLowLevelLockAggregate>
 	class TCAggregate;
 
 	typedef TCAggregate<aint, 128, NThread::CNoLock> CAggregate;
@@ -97,7 +97,7 @@ namespace NMib::NStorage
 			, m_Priority{0}
 			, m_fDestruct{nullptr}
 			, m_ObjectSpace{}
-			, m_Lock{_Init}
+			, m_Lock{}
 		{
 		}
 
