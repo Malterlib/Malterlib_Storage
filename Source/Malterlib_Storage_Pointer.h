@@ -1336,6 +1336,17 @@ namespace NMib::NStorage
 			o_Str += typename tf_CStr::CFormat("0x{}") << f_Get();
 		}
 
+		template <typename ...tf_CParams>
+		mark_artificial constexpr inline_always_debug auto operator ()(tf_CParams && ...p_Params) const
+			requires requires
+			{
+				(*(this->f_Get()))(fg_Forward<tf_CParams>(p_Params)...);
+			}
+		{
+			DMibFastCheck(!f_IsEmpty());
+			return (*f_Get())(fg_Forward<tf_CParams>(p_Params)...);
+		}
+		
 		template <typename tf_CType>
 		bool operator == (tf_CType *_pOther) const
 		{
