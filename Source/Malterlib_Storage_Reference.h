@@ -41,7 +41,7 @@ namespace NMib::NStorage::NReference
 		mark_artificial inline_always t_CType &f_Get() const volatile;
 	public:
 		template <typename... tfp_CParams>
-		mark_artificial inline_always typename NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::CReturnType operator () (tfp_CParams &&...p_Params) const volatile
+		mark_artificial inline_always NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams &&...)> operator () (tfp_CParams &&...p_Params) const volatile
 			requires (NTraits::TCIsCallableWith<t_CType, void (tfp_CParams &&...)>::mc_Value)
 		;
 

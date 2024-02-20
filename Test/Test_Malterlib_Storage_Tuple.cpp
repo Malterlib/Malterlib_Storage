@@ -443,22 +443,22 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_Moved) == DMibExpr(1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_MovedFrom) == DMibExpr(0))(ETestFlag_NoValues);
 				
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<int, void (int)>::mc_Value);
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<CMovableAssignOnly, void (CMovableAssignOnly &&)>::mc_Value);
+				static_assert(NTraits::cIsNoThrowAssignable<int &, int>);
+				static_assert(NTraits::cIsNoThrowAssignable<CMovableAssignOnly &, CMovableAssignOnly &&>);
 #ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> const &)>::mc_Value);
+				static_assert(!NTraits::cIsAssignable<TCTuple<int, CMovableAssignOnly> &, TCTuple<int, CMovableAssignOnly> const &>);
 #endif
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnly>, void (TCTuple<int, CMovableAssignOnly> &&)>::mc_Value);
+				static_assert(NTraits::cIsNoThrowAssignable<TCTuple<int, CMovableAssignOnly> &, TCTuple<int, CMovableAssignOnly> &&>);
 #ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> const &)>::mc_Value);
+				static_assert(!NTraits::cIsAssignable<TCTuple<int, CMovableAssignOnlyEmpty> &, TCTuple<int, CMovableAssignOnlyEmpty> const &>);
 #endif
-				static_assert(NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmpty>, void (TCTuple<int, CMovableAssignOnlyEmpty> &&)>::mc_Value);
+				static_assert(NTraits::cIsNoThrowAssignable<TCTuple<int, CMovableAssignOnlyEmpty> &, TCTuple<int, CMovableAssignOnlyEmpty> &&>);
 
-				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value);
-				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyExcept>, void (TCTuple<int, CMovableAssignOnlyExcept> &&)>::mc_Value);
+				static_assert(NTraits::cIsAssignable<TCTuple<int, CMovableAssignOnlyExcept> &, TCTuple<int, CMovableAssignOnlyExcept> &&>);
+				static_assert(!NTraits::cIsNoThrowAssignable<TCTuple<int, CMovableAssignOnlyExcept> &, TCTuple<int, CMovableAssignOnlyExcept> &&>);
 
-				static_assert(NTraits::TCIsOperatorCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value);
-				static_assert(!NTraits::TCIsOperatorNothrowCallableWith_Assign<TCTuple<int, CMovableAssignOnlyEmptyExcept>, void (TCTuple<int, CMovableAssignOnlyEmptyExcept> &&)>::mc_Value);
+				static_assert(NTraits::cIsAssignable<TCTuple<int, CMovableAssignOnlyEmptyExcept> &, TCTuple<int, CMovableAssignOnlyEmptyExcept> &&>);
+				static_assert(!NTraits::cIsNoThrowAssignable<TCTuple<int, CMovableAssignOnlyEmptyExcept> &, TCTuple<int, CMovableAssignOnlyEmptyExcept> &&>);
 
 				static_assert(NTraits::TCIsConstructorCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value);
 				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyExcept>, void (TCTuple<int, CMovableOnlyExcept> &&)>::mc_Value);
