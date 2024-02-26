@@ -931,9 +931,11 @@ namespace NMib::NStorage
 #if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
 					m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000010);
 #endif
-					auto Cleanup
-						= g_OnScopeExit / [&]()
+					auto Cleanup = g_OnScopeExit / [&]()
 						{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+							m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b10000000000);
+#endif
 							// Protect against exception in destructor
 							m_Data.m_pPointTo->m_RefCount.f_Increase
 								(
@@ -962,8 +964,7 @@ namespace NMib::NStorage
 #if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
 					m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000100);
 #endif
-					auto Cleanup
-						= g_OnScopeExit / [&]()
+					auto Cleanup = g_OnScopeExit / [&]()
 						{
 #if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
 							m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000001000);
