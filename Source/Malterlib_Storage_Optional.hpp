@@ -66,6 +66,10 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> const &_Value) -> TCOptional &
+		requires requires ()
+		{
+			static_cast<CVariant &>(*this) = *_Value;
+		}
 	{
 		if (_Value)
 			static_cast<CVariant &>(*this) = *_Value;
@@ -76,6 +80,10 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> &_Value) -> TCOptional &
+		requires requires ()
+		{
+			static_cast<CVariant &>(*this) = *_Value;
+		}
 	{
 		if (_Value)
 			static_cast<CVariant &>(*this) = *_Value;
@@ -86,6 +94,10 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> &&_Value) -> TCOptional &
+		requires requires ()
+		{
+			static_cast<CVariant &>(*this) = fg_Move(*_Value);
+		}
 	{
 		if (_Value)
 			static_cast<CVariant &>(*this) = fg_Move(*_Value);
@@ -95,6 +107,10 @@ namespace NMib::NStorage
 
 	template <typename t_CType>
 	auto TCOptional<t_CType>::operator = (t_CType const &_Value) -> TCOptional &
+		requires requires ()
+		{
+			*((CVariant *)this) = _Value;
+		}
 	{
 		*((CVariant *)this) = _Value;
 		return *this;
@@ -102,6 +118,10 @@ namespace NMib::NStorage
 
 	template <typename t_CType>
 	auto TCOptional<t_CType>::operator = (t_CType &&_Value) -> TCOptional &
+		requires requires ()
+		{
+			*((CVariant *)this) = fg_Move(_Value);
+		}
 	{
 		*((CVariant *)this) = fg_Move(_Value);
 		return *this;
@@ -110,6 +130,10 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (tf_CType &&_Value) -> TCOptional &
+		requires requires ()
+		{
+			*((CVariant *)this) = fg_Forward<tf_CType>(_Value);
+		}
 	{
 		*((CVariant *)this) = fg_Forward<tf_CType>(_Value);
 		return *this;
@@ -118,6 +142,10 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType, typename... tfp_CParams>
 	auto TCOptional<t_CType>::operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams) -> TCOptional &
+		requires requires ()
+		{
+			*((CVariant *)this) = (fg_Move(_CreateParams));
+		}
 	{
 		*((CVariant *)this) = (fg_Move(_CreateParams));
 		return *this;

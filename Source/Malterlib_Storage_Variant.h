@@ -56,28 +56,19 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCIsVariant
 		{
-			enum
-			{
-				mc_Value = false
-			};
+			constexpr static bool mc_Value = false;
 		};
 
 		template <typename t_CIndex, typename ...tp_CMembers>
 		struct TCIsVariant<TCVariantCommon<t_CIndex, tp_CMembers...>>
 		{
-			enum
-			{
-				mc_Value = true
-			};
+			constexpr static bool mc_Value = true;
 		};
 
 		template <typename ...tp_CTypes>
 		struct TCIsVariant<TCVariant<tp_CTypes...>>
 		{
-			enum
-			{
-				mc_Value = true
-			};
+			constexpr static bool mc_Value = true;
 		};
 	}
 
@@ -353,10 +344,7 @@ namespace NMib::NStorage
 		{
 			static_assert(!NTraits::TCIsArrayUnbounded<t_CType>::mc_Value, "You cannot store an unbounded array in a variant");
 			static_assert(!NTraits::TCIsFunction<t_CType>::mc_Value, "You cannot store function types in a variant");
-			enum
-			{
-				mc_Value = true
-			};
+			constexpr static bool mc_Value = true;
 		};
 	}
 
@@ -472,7 +460,8 @@ namespace NMib::NStorage
 			: NPrivate::TCFirstNothrowDefaultConstructible<CIndexInteger, NTraits::CCompileTimeTrue, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::mc_Value
 		;
 
-		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::TCHasNothrowCopyConstructor<tp_CTypes>::mc_Value || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
+		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::cHasNothrowCopyConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
+		static constexpr bool mcp_bAllHasNothrowMoveConstructor = ((NTraits::cHasNothrowMoveConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
 
 		template <mint t_MaxSize, mint t_MaxAlignment, typename t_CDummy = void>
 		struct TCDetermineStorageType
@@ -1160,129 +1149,6 @@ namespace NMib::NStorage
 			;
 		}
 #endif
-
-		////////////////////////////////////////
-		//
-		template <CIndexInteger t_iMember>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set()
-		{
-			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
-				fp_SetTypeID(t_iMember);
-			else
-			{
-				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-
-				auto pRet = new(&mp_Storage) CConstructType();
-
-				fp_SetTypeID(t_iMember);
-				using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
-				return TCEvalReturn<TCTypeFromMemberInt<t_iMember>>::template fs_Value<CReturnType>(pRet);
-			}
-		}
-
-		template <CIndexInteger t_iMember, typename t_CParam0>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0)
-		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			static_assert(NTraits::TCIsConstructorCallableWith<CType, void (t_CParam0 &&)>::mc_Value, "This type cannot be constructed with the arguments suppied");
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-
-			CConstructType *pRet;
-			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
-				pRet = new(&mp_Storage) CConstructType(&_Param0);
-			else
-				pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
-
-			fp_SetTypeID(t_iMember);
-			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
-			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
-		}
-
-		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			static_assert(NTraits::TCIsConstructorCallableWith<CType, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value, "This type cannot be constructed with the arguments suppied");
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-
-			auto pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
-			fp_SetTypeID(t_iMember);
-			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
-			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
-		}
-
-		template <CIndexInteger t_iMember>
-		void fp_SetNoRet()
-		{
-			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
-				fp_SetTypeID(t_iMember);
-			else
-			{
-				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-				new((void *)&mp_Storage) CConstructType();
-				fp_SetTypeID(t_iMember);
-			}
-		}
-
-		template <CIndexInteger t_iMember, typename t_CParam0>
-		void fp_SetNoRet(t_CParam0 &&_Param0)
-		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			static_assert(NTraits::TCIsConstructorCallableWith<CType, void (t_CParam0 &&)>::mc_Value, "This type cannot be constructed with the arguments suppied");
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType ;
-
-			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
-				new(&mp_Storage) CConstructType(&_Param0);
-			else
-				new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
-
-			fp_SetTypeID(t_iMember);
-		}
-
-		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
-		void fp_SetNoRet(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			static_assert(NTraits::TCIsConstructorCallableWith<CType, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value, "This type cannot be constructed with the arguments suppied");
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-
-			new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
-			fp_SetTypeID(t_iMember);
-		}
-
-		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
-		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
-		{
-			static_assert(TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value >= 0);
-			static_assert
-				(
-					mcp_FirstNothrowDefaultConstructible != -1
-					, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-				)
-			;
-
-			fp_DestroyCurrent(); // Cannot throw
-
-			try
-			{
-				fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>
-					(
-						fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
-					)
-				;
-			}
-			catch (...)
-			{
-				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
-				throw;
-			}
-		}
-
-		inline_small CIndexInteger fp_GetTypeID() const
-		{
-			return CIndexInteger(mp_Storage.m_CurrentType);
-		}
-
 	protected:
 		template <typename t_CInType>
 		struct TCEvalOneParamConstruction
@@ -1315,10 +1181,8 @@ namespace NMib::NStorage
 			static constexpr CIndexInteger mc_ToConstruct = TCEvalOneParamConstruction<t_CParam>::mc_Value;
 
 			using CTypeToConstruct = TCTypeFromMemberInt<mc_ToConstruct>;
-			enum
-			{
-				mc_Value
-				= mc_ToConstruct >= 0 && NTraits::TCHasNothrowCopyConstructor<CTypeToConstruct>::mc_Value
+			static constexpr bool mc_Value
+				= mc_ToConstruct >= 0 && NTraits::cHasNothrowCopyConstructor<CTypeToConstruct>
 				&&
 				(
 					NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<t_CParam>::CType>::mc_Value
@@ -1329,7 +1193,7 @@ namespace NMib::NStorage
 						&& NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CParam>::CType>::CType>::mc_Value
 					)
 				)
-			};
+			;
 		};
 
 		template <typename t_FConstructorParams>
@@ -1345,7 +1209,134 @@ namespace NMib::NStorage
 				::mc_Value
 			;
 		};
+		
 
+		////////////////////////////////////////
+		//
+		template <CIndexInteger t_iMember>
+		typename TCEvalReturnType<t_iMember>::CType fp_Set()
+		{
+			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
+				fp_SetTypeID(t_iMember);
+			else
+			{
+				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+
+				auto pRet = new(&mp_Storage) CConstructType();
+
+				fp_SetTypeID(t_iMember);
+				using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+				return TCEvalReturn<TCTypeFromMemberInt<t_iMember>>::template fs_Value<CReturnType>(pRet);
+			}
+		}
+
+		template <CIndexInteger t_iMember, typename t_CParam0>
+		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0)
+			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&)>::mc_Value)
+		{
+			using CType = TCTypeFromMemberInt<t_iMember>;
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+
+			CConstructType *pRet;
+			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
+				pRet = new(&mp_Storage) CConstructType(&_Param0);
+			else
+				pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+
+			fp_SetTypeID(t_iMember);
+			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
+		}
+
+		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
+		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
+			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value)
+		{
+			using CType = TCTypeFromMemberInt<t_iMember>;
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+
+			auto pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
+			fp_SetTypeID(t_iMember);
+			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
+		}
+
+		template <CIndexInteger t_iMember>
+		void fp_SetNoRet()
+		{
+			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
+				fp_SetTypeID(t_iMember);
+			else
+			{
+				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+				new((void *)&mp_Storage) CConstructType();
+				fp_SetTypeID(t_iMember);
+			}
+		}
+
+		template <CIndexInteger t_iMember, typename t_CParam0>
+		void fp_SetNoRet(t_CParam0 &&_Param0)
+			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&)>::mc_Value)
+		{
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType ;
+
+			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
+				new(&mp_Storage) CConstructType(&_Param0);
+			else
+				new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+
+			fp_SetTypeID(t_iMember);
+		}
+
+		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
+		void fp_SetNoRet(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
+			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value)
+		{
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+
+			new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
+			fp_SetTypeID(t_iMember);
+		}
+
+		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
+			requires
+			(
+				TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value >= 0 && mcp_FirstNothrowDefaultConstructible != -1
+				&& requires()
+				{
+					this->fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>
+						(
+							fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
+						)
+					;
+				}
+			)
+		{
+
+			fp_DestroyCurrent(); // Cannot throw
+
+			try
+			{
+				fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>
+					(
+						fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
+					)
+				;
+			}
+			catch (...)
+			{
+				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+				throw;
+			}
+		}
+
+		inline_small CIndexInteger fp_GetTypeID() const
+		{
+			return CIndexInteger(mp_Storage.m_CurrentType);
+		}
+
+	private:
 		TCVariantCommon &fp_GetStreamable()
 		{
 			return *this;
@@ -1416,9 +1407,16 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		TCVariantCommon() noexcept(mcp_FirstNothrowDefaultConstructible != -1)
+		TCVariantCommon() noexcept
+			requires 
+			(
+				mcp_FirstNothrowDefaultConstructible != -1
+				&& requires()
+				{
+					this->fp_SetNoRet<mcp_FirstDefaultConstructible>();
+				}
+			)
 		{
-			static_assert(mcp_FirstDefaultConstructible != -1, "No suitable default constructible type exists in variant, variant cannot be default constructed.");
 			fp_SetNoRet<mcp_FirstDefaultConstructible>();
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
@@ -1502,8 +1500,12 @@ namespace NMib::NStorage
 			, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr
 		>
 		TCVariantCommon(tf_CParam0 &&_Param0)
+			requires requires()
+			{
+				this->fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
+			}
 		{
-			fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
+			this->fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
 #ifdef DCompiler_MSVC
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
@@ -1516,8 +1518,17 @@ namespace NMib::NStorage
 			, TCEnableIfType<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value >= 0> * = nullptr
 		>
 		TCVariantCommon(tf_CParam0 &&_Param0, tfp_CParams && ...p_RestOfParams)
+			requires requires()
+			{
+				this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value>
+					(
+						fg_Forward<tf_CParam0>(_Param0)
+						, fg_Forward<tfp_CParams>(p_RestOfParams)...
+					)
+				;
+			}
 		{
-			fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value>
+			this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value>
 				(
 					fg_Forward<tf_CParam0>(_Param0)
 					, fg_Forward<tfp_CParams>(p_RestOfParams)...
@@ -1536,15 +1547,10 @@ namespace NMib::NStorage
 
 		template <typename tf_CIndex, typename ...tfp_CMembers>
 		TCVariantCommon &operator = (TCVariantCommon<tf_CIndex, tfp_CMembers...> &&_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1)
 		{
-			static_assert
-				(
-					mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-					, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-				)
-			;
-
 			fp_DestroyCurrent(); // Cannot throw
+
 			try
 			{
 				_Other.f_Visit(CVariantVisitor_Move(*this));
@@ -1558,33 +1564,34 @@ namespace NMib::NStorage
 		}
 
 		TCVariantCommon &operator = (TCVariantCommon &&_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowMoveConstructor)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
 			fp_DestroyCurrent(); // Cannot throw
-			try
+
+			if constexpr (mcp_bAllHasNothrowMoveConstructor)
 			{
 				_Other.f_Visit(CVariantVisitor_Move(*this));
 				return *this;
 			}
-			catch (...)
+			else
 			{
-				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
-				throw;
+				try
+				{
+					_Other.f_Visit(CVariantVisitor_Move(*this));
+					return *this;
+				}
+				catch (...)
+				{
+					fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+					throw;
+				}
 			}
 		}
 
 		template <typename tf_CIndex, typename ...tfp_CMembers>
 		TCVariantCommon &operator = (TCVariantCommon<tf_CIndex, tfp_CMembers...> const &_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
 			fp_DestroyCurrent(); // Cannot throw
 			try
 			{
@@ -1599,53 +1606,59 @@ namespace NMib::NStorage
 		}
 
 		TCVariantCommon &operator = (TCVariantCommon const &_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
 			fp_DestroyCurrent(); // Cannot throw
-			try
+
+			if constexpr (mcp_bAllHasNothrowCopyConstructor)
 			{
 				_Other.f_Visit(CVariantVisitor_Copy(*this));
 				return *this;
 			}
-			catch (...)
+			else
 			{
-				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
-				throw;
+				try
+				{
+					_Other.f_Visit(CVariantVisitor_Copy(*this));
+					return *this;
+				}
+				catch (...)
+				{
+					fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+					throw;
+				}
 			}
 		}
 
 		TCVariantCommon &operator = (TCVariantCommon &_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
 			fp_DestroyCurrent(); // Cannot throw
-			try
+
+			if constexpr (mcp_bAllHasNothrowCopyConstructor)
 			{
 				_Other.f_Visit(CVariantVisitor_Copy(*this));
 				return *this;
 			}
-			catch (...)
+			else
 			{
-				fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
-				throw;
+				try
+				{
+					_Other.f_Visit(CVariantVisitor_Copy(*this));
+					return *this;
+				}
+				catch (...)
+				{
+					fp_SetNoRet<mcp_FirstNothrowDefaultConstructible>();
+					throw;
+				}
 			}
 		}
 
 		template <typename tf_CIndex, typename ...tfp_CMembers>
 		TCVariantCommon &operator = (TCVariantCommon<tf_CIndex, tfp_CMembers...> &_Other)
+			requires (mcp_FirstNothrowDefaultConstructible != -1)
 		{
-			static_assert
-			(
-				mcp_FirstNothrowDefaultConstructible != -1 || mcp_bAllHasNothrowCopyConstructor
-				, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-			);
 			fp_DestroyCurrent(); // Cannot throw
 			try
 			{
@@ -1667,6 +1680,14 @@ namespace NMib::NStorage
 
 		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
 		TCVariantCommon &operator = (tf_CParam0 &&_Param)
+			requires 
+			(
+				(TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value || (mcp_FirstNothrowDefaultConstructible != -1))
+				&& requires()
+				{
+					this->fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
+				}
+			)
 		{
 			if constexpr (TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value)
 			{
@@ -1675,13 +1696,6 @@ namespace NMib::NStorage
 			}
 			else
 			{
-				static_assert
-					(
-						mcp_FirstNothrowDefaultConstructible != -1
-						, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-					)
-				;
-
 				fp_DestroyCurrent(); // Cannot throw
 
 				try
@@ -1700,6 +1714,10 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_CParams>
 		TCVariantCommon &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
+			requires requires()
+			{
+				this->fp_AssignConstruct(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType());
+			}
 		{
 			fp_AssignConstruct(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType());
 			return *this;
@@ -1746,9 +1764,9 @@ namespace NMib::NStorage
 
 		template <typename t_CType>
 		typename TCEvalReturnType<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_GetAsType()
+			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
 		{
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
-			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
 			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
@@ -1757,9 +1775,9 @@ namespace NMib::NStorage
 
 		template <typename t_CType>
 		typename TCEvalReturnTypeConst<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_GetAsType() const
+			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
 		{
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
-			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
 			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
@@ -1792,9 +1810,9 @@ namespace NMib::NStorage
 
 		template <typename t_CType>
 		typename TCEvalTryGetReturnType<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType()
+			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
 		{
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
-			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
 			if (fp_GetTypeID() != c_ToGet)
 				return nullptr;
@@ -1804,9 +1822,9 @@ namespace NMib::NStorage
 
 		template <typename t_CType>
 		typename TCEvalTryGetReturnTypeConst<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType() const
+			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
 		{
 			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
-			static_assert(c_ToGet >= 0, "The variant contains no such type");
 
 			if (fp_GetTypeID() != c_ToGet)
 				return nullptr;
@@ -1822,6 +1840,18 @@ namespace NMib::NStorage
 
 		template <t_CIndex t_iMember>
 		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Set()
+			requires
+			(
+				(
+					NTraits::TCIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>::mc_Value
+					|| NTraits::TCHasNothrowDefaultConstructor<TCTypeFromMemberInt<t_iMember>>::mc_Value
+					|| mcp_FirstNothrowDefaultConstructible != -1
+				)
+				&& requires()
+				{
+					this->fp_Set<CIndexInteger(t_iMember)>();
+				}
+			)
 		{
 			fp_DestroyCurrent();
 
@@ -1829,13 +1859,6 @@ namespace NMib::NStorage
 				return fp_Set<CIndexInteger(t_iMember)>();
 			else
 			{
-				static_assert
-					(
-						mcp_FirstNothrowDefaultConstructible != -1 || NTraits::TCHasNothrowDefaultConstructor<TCTypeFromMemberInt<t_iMember>>::mc_Value
-						, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-					)
-				;
-
 				try
 				{
 					return fp_Set<CIndexInteger(t_iMember)>();
@@ -1850,15 +1873,16 @@ namespace NMib::NStorage
 
 		template <t_CIndex t_iMember, typename ...tp_CParams>
 		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Set(tp_CParams && ...p_Params)
+			requires 
+			(
+				mcp_FirstNothrowDefaultConstructible != -1
+				&& requires()
+				{
+					this->fp_Set<CIndexInteger(t_iMember)>(fg_Forward<tp_CParams>(p_Params)...);
+				}
+			)
 		{
 			fp_DestroyCurrent();
-
-			static_assert
-				(
-					mcp_FirstNothrowDefaultConstructible != -1
-					, "No suitable nothrow default constructible type exists in variant. Without such a type exception safety cannot be guaranteed."
-				)
-			;
 
 			try
 			{
@@ -1968,18 +1992,30 @@ namespace NMib::NStorage
 		}
 
 		TCVariant &operator = (TCVariant &&_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = fg_Move(_Other.fp_GetStreamable());
+			}
 		{
 			this->fp_GetStreamable() = fg_Move(_Other.fp_GetStreamable());
 			return *this;
 		}
 
 		TCVariant &operator = (TCVariant const &_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = _Other.fp_GetStreamable();
+			}
 		{
 			this->fp_GetStreamable() = _Other.fp_GetStreamable();
 			return *this;
 		}
 
 		TCVariant &operator = (TCVariant &_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = _Other.fp_GetStreamable();
+			}
 		{
 			this->fp_GetStreamable() = _Other.fp_GetStreamable();
 			return *this;
@@ -2031,6 +2067,10 @@ namespace NMib::NStorage
 
 		template <typename ...tfp_CParams>
 		TCVariant &operator = (TCVariant<tfp_CParams...> const &_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = _Other.fp_GetStreamable();
+			}
 		{
 			this->fp_GetStreamable() = _Other.fp_GetStreamable();
 			return *this;
@@ -2038,6 +2078,10 @@ namespace NMib::NStorage
 
 		template <typename ...tfp_CParams>
 		TCVariant &operator = (TCVariant<tfp_CParams...> &_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = _Other.fp_GetStreamable();
+			}
 		{
 			this->fp_GetStreamable() = _Other.fp_GetStreamable();
 			return *this;
@@ -2045,6 +2089,10 @@ namespace NMib::NStorage
 
 		template <typename ...tfp_CParams>
 		TCVariant &operator = (TCVariant<tfp_CParams...> &&_Other)
+			requires requires()
+			{
+				this->fp_GetStreamable() = fg_Move(_Other.fp_GetStreamable());
+			}
 		{
 			this->fp_GetStreamable() = fg_Move(_Other.fp_GetStreamable());
 			return *this;
@@ -2058,8 +2106,12 @@ namespace NMib::NStorage
 
 		template <typename t_CParam>
 		inline_small TCVariant &operator = (t_CParam &&_Param)
+			requires requires()
+			{
+				this->CParent::operator = (fg_Forward<t_CParam>(_Param));
+			}
 		{
-			CParent::operator = (fg_Forward<t_CParam>(_Param));
+			this->CParent::operator = (fg_Forward<t_CParam>(_Param));
 			return *this;
 		}
 	};
