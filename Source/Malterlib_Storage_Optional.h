@@ -133,17 +133,22 @@ namespace NMib::NStorage
 		struct TCIsOptional
 		{
 			constexpr static bool mc_bValue = false;
+			using CType = t_CType;
 		};
 
 		template <typename t_CType>
 		struct TCIsOptional<TCOptional<t_CType>>
 		{
 			constexpr static bool mc_bValue = true;
+			using CType = t_CType;
 		};
 	}
 
 	template <typename t_CType>
 	concept cIsOptional = NPrivate::TCIsOptional<t_CType>::mc_bValue;
+
+	template <typename t_CType>
+	using TCOptionalType = typename NPrivate::TCIsOptional<t_CType>::CType;
 }
 
 #ifndef DMibPNoShortCuts
