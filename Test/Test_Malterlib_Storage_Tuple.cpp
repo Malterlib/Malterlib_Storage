@@ -65,23 +65,19 @@ namespace
 		
 		class CNonCopyableEmpty
 		{
-			CNonCopyableEmpty(CNonCopyableEmpty const &);
-			CNonCopyableEmpty &operator =(CNonCopyableEmpty const &);
 		public:
-			CNonCopyableEmpty()
-			{
-			}
+			CNonCopyableEmpty(CNonCopyableEmpty const &) = delete;
+			CNonCopyableEmpty &operator =(CNonCopyableEmpty const &) = delete;
+			CNonCopyableEmpty() = default;
 		};
 		
 		class CNonCopyable
 		{
 			uint8 m_Test;
-			CNonCopyable(CNonCopyable const &);
-			CNonCopyable &operator =(CNonCopyable const &);
 		public:
-			CNonCopyable()
-			{
-			}
+			CNonCopyable(CNonCopyable const &) = delete;
+			CNonCopyable &operator =(CNonCopyable const &) = delete;
+			CNonCopyable() = default;
 		};
 		
 
@@ -99,11 +95,10 @@ namespace
 		{
 		};
 
-		class CMovableOnly
+		struct CMovableOnly
 		{
-			CMovableOnly(CMovableOnly const &);
-			CMovableOnly &operator =(CMovableOnly const &);
-		public:
+			CMovableOnly(CMovableOnly const &) = delete;
+			CMovableOnly &operator =(CMovableOnly const &) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnly()
@@ -116,11 +111,10 @@ namespace
 			}
 		};
 
-		class CMovableOnlyExcept
+		struct CMovableOnlyExcept
 		{
-			CMovableOnlyExcept(CMovableOnlyExcept const &);
-			CMovableOnlyExcept &operator =(CMovableOnlyExcept const &);
-		public:
+			CMovableOnlyExcept(CMovableOnlyExcept const &) = delete;
+			CMovableOnlyExcept &operator =(CMovableOnlyExcept const &) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnlyExcept()
@@ -133,7 +127,7 @@ namespace
 			}
 		};
 		
-		class CMovableAssignOnly
+		struct CMovableAssignOnly
 		{
 			CMovableAssignOnly(CMovableAssignOnly const &);
 			CMovableAssignOnly &operator =(CMovableAssignOnly const &);
@@ -151,11 +145,11 @@ namespace
 			}
 		};
 		
-		class CMovableAssignOnlyExcept
+		struct CMovableAssignOnlyExcept
 		{
-			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &);
-			CMovableAssignOnlyExcept &operator =(CMovableAssignOnlyExcept const &);
-		public:
+			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &) = delete;
+			CMovableAssignOnlyExcept &operator =(CMovableAssignOnlyExcept const &) = delete;
+
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableAssignOnlyExcept()
@@ -169,11 +163,10 @@ namespace
 			}
 		};
 		
-		class CMovableOnlyEmpty
+		struct CMovableOnlyEmpty
 		{
-			CMovableOnlyEmpty(CMovableOnlyEmpty const &);
-			CMovableOnlyEmpty &operator =(CMovableOnlyEmpty const &);
-		public:
+			CMovableOnlyEmpty(CMovableOnlyEmpty const &) = delete;
+			CMovableOnlyEmpty &operator =(CMovableOnlyEmpty const &) = delete;
 			CMovableOnlyEmpty()
 			{
 			}
@@ -183,11 +176,11 @@ namespace
 			}
 		};
 
-		class CMovableOnlyEmptyExcept
+		struct CMovableOnlyEmptyExcept
 		{
-			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept const &);
-			CMovableOnlyEmptyExcept &operator =(CMovableOnlyEmptyExcept const &);
-		public:
+			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept const &) = delete;
+			CMovableOnlyEmptyExcept &operator =(CMovableOnlyEmptyExcept const &) = delete;
+
 			CMovableOnlyEmptyExcept()
 			{
 			}
@@ -197,11 +190,11 @@ namespace
 			}
 		};
 		
-		class CMovableAssignOnlyEmpty
+		struct CMovableAssignOnlyEmpty
 		{
-			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &);
-			CMovableAssignOnlyEmpty &operator =(CMovableAssignOnlyEmpty const &);
-		public:
+			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &) = delete;
+			CMovableAssignOnlyEmpty &operator =(CMovableAssignOnlyEmpty const &) = delete;
+
 			CMovableAssignOnlyEmpty()
 			{
 			}
@@ -212,11 +205,10 @@ namespace
 			}
 		};
 		
-		class CMovableAssignOnlyEmptyExcept
+		struct CMovableAssignOnlyEmptyExcept
 		{
-			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &);
-			CMovableAssignOnlyEmptyExcept &operator =(CMovableAssignOnlyEmptyExcept const &);
-		public:
+			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &) = delete;
+			CMovableAssignOnlyEmptyExcept &operator =(CMovableAssignOnlyEmptyExcept const &) = delete;
 			CMovableAssignOnlyEmptyExcept()
 			{
 			}
@@ -388,15 +380,10 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple3_2))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple3_2))) == DMibExpr(-4))(ETestFlag_NoValues);
 				
-#if defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty;
 				fg_Get<0>(TupleNonCopyEmpty) = 2;
 				TCTuple<int, CNonCopyable> TupleNonCopy;
 				fg_Get<0>(TupleNonCopy) = 2;
-#else
-				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty(2, fg_Default());
-				TCTuple<int, CNonCopyable> TupleNonCopy(2, fg_Default());
-#endif
 
 				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyable>, void (TCTuple<int, CNonCopyable> const &)>::mc_Value);
 				static_assert(!NTraits::TCIsConstructorCallableWith<TCTuple<int, CNonCopyableEmpty>, void (TCTuple<int, CNonCopyableEmpty> const &)>::mc_Value);
@@ -425,17 +412,13 @@ namespace
 				static_assert(NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmpty>, void (TCTuple<int, CMovableOnlyEmpty> &&)>::mc_Value);
 				
 				g_MovedEmpty = 0;
-				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty(2, fg_Default());
+				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty;
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(0));
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty2(fg_Move(TupleMovableEmpty));
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1));
 				
-#if defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign;
-#else
-				TCTuple<int, CMovableAssignOnly> TupleMovableAssign(2, fg_Default());
-#endif
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign2;
 				TupleMovableAssign2 = fg_Move(TupleMovableAssign);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign).m_Moved) == DMibExpr(0))(ETestFlag_NoValues);
@@ -467,11 +450,9 @@ namespace
 				static_assert(!NTraits::TCIsConstructorNothrowCallableWith<TCTuple<int, CMovableOnlyEmptyExcept>, void (TCTuple<int, CMovableOnlyEmptyExcept> &&)>::mc_Value);
 				
 				g_MovedEmpty = 0;
-#if defined(DCompiler_MSVC_Workaround)
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty;
-#else
-				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty(2, fg_Default());
-#endif
+				fg_Get<0>(TupleMovableAssignEmpty) = 2;
+
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(0) && DMibExpr("Assign"));
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty2;
