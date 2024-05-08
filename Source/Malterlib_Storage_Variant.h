@@ -84,7 +84,7 @@ namespace NMib::NStorage
 		using CType = t_CType;
 		static constexpr t_CIndex mc_Member = t_Member;
 
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 		static constexpr bool mc_bDebugIsVoid = NTraits::TCIsVoid<CType>::mc_Value;
 		using CDebugType = typename TCChooseType<mc_bDebugIsVoid, uint8, t_CType>::CType;
 #endif
@@ -1134,7 +1134,7 @@ namespace NMib::NStorage
 			fp_VisitStorage(NPrivate::CVariantVisitor_Destruct());
 		}
 
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 		void fp_ReferenceDebugInfo()
 		{
 			TCInitializerList<bool> Dumy =
@@ -1418,7 +1418,7 @@ namespace NMib::NStorage
 			)
 		{
 			fp_SetNoRet<mcp_FirstDefaultConstructible>();
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1426,7 +1426,7 @@ namespace NMib::NStorage
 		~TCVariantCommon()
 		{
 			fp_DestroyCurrent();
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1441,7 +1441,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon<tf_CIndex, tfp_CMembers...> &&_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Move(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1449,7 +1449,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon &&_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Move(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1458,7 +1458,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon<tf_CIndex, tfp_CMembers...> const &_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1466,7 +1466,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon const &_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1474,7 +1474,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon &_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1483,7 +1483,7 @@ namespace NMib::NStorage
 		TCVariantCommon(TCVariantCommon<tf_CIndex, tfp_CMembers...> &_Other)
 		{
 			_Other.f_Visit(CVariantVisitor_Copy(*this));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1506,7 +1506,7 @@ namespace NMib::NStorage
 			}
 		{
 			this->fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param0));
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}
@@ -1534,7 +1534,7 @@ namespace NMib::NStorage
 					, fg_Forward<tfp_CParams>(p_RestOfParams)...
 				)
 			;
-#ifdef DCompiler_MSVC
+#ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
 		}

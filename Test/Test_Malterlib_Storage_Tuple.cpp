@@ -271,7 +271,7 @@ namespace
 			}
 			{
 				TCTuple<CEmpty0, CEmpty1, CEmpty2> Tuple;
-#ifndef DCompiler_MSVC
+#if !defined(DCompiler_MSVC) && !defined(DCompiler_clang_cl) || defined(DCompiler_clang_cl) && defined(DMalterlibUseLibCxx)
 				static_assert(sizeof(Tuple) == 1);
 #endif
 			}

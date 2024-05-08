@@ -761,7 +761,7 @@ namespace NMib::NStorage
 	}
 }
 
-#if defined(DCompiler_clang) && _LIBCPP_VERSION < 14000
+#if DMalterlibUseLibCxx && _LIBCPP_VERSION < 14000
 namespace std
 {
 	template <typename... tfp_CParamsLeft, typename... tfp_CParamsRight>
