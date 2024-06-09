@@ -346,6 +346,30 @@ namespace NMib::NStorage
 			static_assert(!NTraits::TCIsFunction<t_CType>::mc_Value, "You cannot store function types in a variant");
 			constexpr static bool mc_Value = true;
 		};
+
+		template <typename t_CType>
+		struct TCSizeOf
+		{
+			static constexpr mint mc_Value = sizeof(t_CType);
+		};
+
+		template <>
+		struct TCSizeOf<void>
+		{
+			static constexpr mint mc_Value = 0;
+		};
+
+		template <typename t_CType>
+		struct TCAlignOf
+		{
+			static constexpr mint mc_Value = alignof(t_CType);
+		};
+
+		template <>
+		struct TCAlignOf<void>
+		{
+			static constexpr mint mc_Value = 0;
+		};
 	}
 
 #ifdef DMibDebuggerHelpers
@@ -427,18 +451,21 @@ namespace NMib::NStorage
 
 		static constexpr mint mcp_MaxSize = fg_MaxConstexpr
 			(
-				NTraits::TCSizeOf<typename TCChooseType
+				NPrivate::TCSizeOf
 				<
-					NTraits::TCIsReference<tp_CTypes>::mc_Value,
-					typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType,
-					typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
-				>::CType>::mc_Value...
+					typename TCChooseType
+					<
+						NTraits::TCIsReference<tp_CTypes>::mc_Value,
+						typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType,
+						typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
+					>::CType
+				>::mc_Value...
 			)
 		;
 
 		static constexpr mint mcp_MaxAlignment = fg_MaxConstexpr
 			(
-				NTraits::TCAlignmentOf
+				NPrivate::TCAlignOf
 				<
 					typename TCChooseType
 					<
@@ -463,22 +490,22 @@ namespace NMib::NStorage
 		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::cHasNothrowCopyConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
 		static constexpr bool mcp_bAllHasNothrowMoveConstructor = ((NTraits::cHasNothrowMoveConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
 
-		template <mint t_MaxSize, mint t_MaxAlignment, typename t_CDummy = void>
+		template <mint t_MaxSize, typename t_CDummy = void>
 		struct TCDetermineStorageType
 		{
-			using CSizedType = uint8[mcp_MaxSize];
-			using CType = typename NTraits::TCAlign<CSizedType, t_MaxAlignment>::CType;
+			using CType = uint8[mcp_MaxSize];
 		};
 
-		template <typename t_CDummy, mint t_MaxAlignment>
-		struct TCDetermineStorageType<0, t_MaxAlignment, t_CDummy>
+		template <typename t_CDummy>
+		struct TCDetermineStorageType<0, t_CDummy>
 		{
 			struct CType {};
 		};
 
-		struct CStorageType : public TCDetermineStorageType<mcp_MaxSize, mcp_MaxAlignment>::CType
+		struct CStorageType
 		{
-			CTypeIDStorageType m_CurrentType;
+			DMibNoUniqueAddress alignas(mcp_MaxAlignment) TCDetermineStorageType<mcp_MaxSize>::CType m_Storage = {};
+			DMibNoUniqueAddress CTypeIDStorageType m_CurrentType;
 		};
 
 		inline_small void fp_SetTypeID(CIndexInteger const &_TypeID)
@@ -749,7 +776,7 @@ namespace NMib::NStorage
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-			CConstructType *pRet = (CConstructType *)&mp_Storage;
+			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
 			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
@@ -765,7 +792,7 @@ namespace NMib::NStorage
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-			CConstructType const *pRet = (CConstructType const *)&mp_Storage;
+			CConstructType const *pRet = (CConstructType const *)mp_Storage.m_Storage;
 
 			using CReturnType = typename TCEvalReturnTypeConst<t_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
@@ -776,7 +803,7 @@ namespace NMib::NStorage
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-			CConstructType *pRet = (CConstructType *)&mp_Storage;
+			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
 			return *pRet;
 		}
 
@@ -790,7 +817,7 @@ namespace NMib::NStorage
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-			CConstructType const *pRet = (CConstructType const *)&mp_Storage;
+			CConstructType const *pRet = (CConstructType const *)mp_Storage.m_Storage;
 			return *pRet;
 		}
 
@@ -1222,7 +1249,7 @@ namespace NMib::NStorage
 			{
 				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-				auto pRet = new(&mp_Storage) CConstructType();
+				auto pRet = new(mp_Storage.m_Storage) CConstructType();
 
 				fp_SetTypeID(t_iMember);
 				using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
@@ -1239,9 +1266,9 @@ namespace NMib::NStorage
 
 			CConstructType *pRet;
 			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
-				pRet = new(&mp_Storage) CConstructType(&_Param0);
+				pRet = new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
-				pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+				pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
 
 			fp_SetTypeID(t_iMember);
 			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
@@ -1255,7 +1282,7 @@ namespace NMib::NStorage
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-			auto pRet = new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
+			auto pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
 			fp_SetTypeID(t_iMember);
 			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
@@ -1269,7 +1296,7 @@ namespace NMib::NStorage
 			else
 			{
 				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
-				new((void *)&mp_Storage) CConstructType();
+				new((void *)mp_Storage.m_Storage) CConstructType();
 				fp_SetTypeID(t_iMember);
 			}
 		}
@@ -1281,9 +1308,9 @@ namespace NMib::NStorage
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType ;
 
 			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
-				new(&mp_Storage) CConstructType(&_Param0);
+				new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
-				new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+				new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
 
 			fp_SetTypeID(t_iMember);
 		}
@@ -1294,7 +1321,7 @@ namespace NMib::NStorage
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
-			new(&mp_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
+			new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
 			fp_SetTypeID(t_iMember);
 		}
 

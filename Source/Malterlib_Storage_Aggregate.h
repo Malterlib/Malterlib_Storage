@@ -22,10 +22,9 @@ namespace NMib::NStorage
 	class TCAggregateSimple
 	{
 		typedef t_CData CData;
-		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 		public:
-		CTypeAligned m_ObjectSpace;
+
+		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 
 		inline_always TCAggregateSimple() = default;
 		constexpr TCAggregateSimple(EAggregateInitialization _Init)
@@ -35,38 +34,38 @@ namespace NMib::NStorage
 
 		inline_always void f_Destruct()
 		{
-			((t_CData *)m_ObjectSpace.m_Aligned)->t_CData::~t_CData();
+			((t_CData *)m_ObjectSpace)->t_CData::~t_CData();
 		}
 
 		template <typename ...tfp_CParam>
 		inline_always void f_Construct(tfp_CParam && ...p_Params)
 		{
-			new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tfp_CParam>(p_Params)...);
+			new(m_ObjectSpace) t_CData(fg_Forward<tfp_CParam>(p_Params)...);
 		}
 
 		inline_small operator t_CData *()
 		{
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small operator t_CData const *() const
 		{
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small t_CData * operator ->()
 		{
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small t_CData const * operator ->() const
 		{
-			return ((t_CData const *)m_ObjectSpace.m_Aligned);
+			return ((t_CData const *)m_ObjectSpace);
 		}
 
 /*			inline_small t_CData & operator &()
 		{
-			return *((t_CData *)m_ObjectSpace.m_Aligned);
+			return *((t_CData *)m_ObjectSpace);
 		}*/
 	};
 
@@ -86,8 +85,6 @@ namespace NMib::NStorage
 	class TCAggregate
 	{
 		typedef t_CData CData;
-		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 
 	public:
 		TCAggregate() = delete;
@@ -108,7 +105,7 @@ namespace NMib::NStorage
 
 		PFAggregateDestruct *m_fDestruct;
 
-		CTypeAligned m_ObjectSpace;
+		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 
 		t_CLock m_Lock;
 
@@ -155,7 +152,7 @@ namespace NMib::NStorage
 				f_ConstructFunctor(_fFunctor);
 			}
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small operator t_CData *()
@@ -163,12 +160,12 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small t_CData &f_GetUnsafe()
 		{
-			return *((t_CData *)m_ObjectSpace.m_Aligned);
+			return *((t_CData *)m_ObjectSpace);
 		}
 
 		template <typename tf_CData0>
@@ -177,7 +174,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0);
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		template <typename tf_CData0, typename tf_CData1>
@@ -186,7 +183,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1);
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2>
@@ -195,7 +192,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1, _Data2);
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2, typename tf_CData3>
@@ -204,7 +201,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1, _Data2, _Data3);
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small t_CData * operator ->()
@@ -212,7 +209,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
-			return ((t_CData *)m_ObjectSpace.m_Aligned);
+			return ((t_CData *)m_ObjectSpace);
 		}
 
 		inline_small t_CData & operator *()
@@ -220,7 +217,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
-			return *((t_CData *)m_ObjectSpace.m_Aligned);
+			return *((t_CData *)m_ObjectSpace);
 		}
 
 /*			inline_small t_CData & operator &()
@@ -228,7 +225,7 @@ namespace NMib::NStorage
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
-			return *((t_CData *)m_ObjectSpace.m_Aligned);
+			return *((t_CData *)m_ObjectSpace);
 		}*/
 	};
 }

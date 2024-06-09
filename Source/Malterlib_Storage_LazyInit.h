@@ -47,10 +47,8 @@ namespace NMib::NStorage
 		void fp_Construct(tfp_CData && ... p_Params);
 
 		typedef t_CData CData;
-		typedef uint8 CObjectType[sizeof(CData)];
-		typedef typename NTraits::TCAlign<CObjectType, alignof(CData)>::CType CTypeAligned;
 
-		CTypeAligned m_ObjectSpace = {};
+		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)] = {};
 		t_CLock m_Lock;
 		NAtomic::TCAtomic<uint32> m_LifetimeFlags = ELifetimeFlag_None;
 	};

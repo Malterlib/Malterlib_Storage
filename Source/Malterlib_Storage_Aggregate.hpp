@@ -8,7 +8,7 @@ namespace NMib::NStorage
 	{
 		[[maybe_unused]] auto OldFlags = m_LifeTimeFlags.f_Load();
 		DMibSafeCheck(!(OldFlags & EAggregateLifeTimeFlag_Destructed), "Should not arrive here unless we are constructed");
-		((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
+		((t_CData *)m_ObjectSpace)->~t_CData();
 		fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
 		m_Link.f_Destruct();
 		OldFlags = m_LifeTimeFlags.f_Exchange(EAggregateLifeTimeFlag_Destructed);
@@ -34,7 +34,7 @@ namespace NMib::NStorage
 			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
-			_fFunctor((void *)m_ObjectSpace.m_Aligned);
+			_fFunctor((void *)m_ObjectSpace);
 			fg_GetModule()->f_AddAggregate((CAggregate*)this);
 			m_LifeTimeFlags.f_FetchOr(EAggregateLifeTimeFlag_Constructed);
 		}
@@ -52,7 +52,7 @@ namespace NMib::NStorage
 			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
-			new(m_ObjectSpace.m_Aligned) t_CData(fg_Forward<tfp_CData>(p_Params)...);
+			new(m_ObjectSpace) t_CData(fg_Forward<tfp_CData>(p_Params)...);
 			fg_GetModule()->f_AddAggregate((CAggregate*)this);
 			m_LifeTimeFlags.f_FetchOr(EAggregateLifeTimeFlag_Constructed);
 		}
@@ -66,7 +66,7 @@ namespace NMib::NStorage
 		DMibSafeCheck(!(LifeTimeFlags & EAggregateLifeTimeFlag_Destructed), "Already destructed");
 		if (LifeTimeFlags & EAggregateLifeTimeFlag_Constructed)
 		{
-			((t_CData *)m_ObjectSpace.m_Aligned)->~t_CData();
+			((t_CData *)m_ObjectSpace)->~t_CData();
 			fg_GetModule()->f_RemoveAggregate((CAggregate*)this);
 			m_Link.f_Destruct();
 			[[maybe_unused]] auto OldFlags = m_LifeTimeFlags.f_Exchange(0);
