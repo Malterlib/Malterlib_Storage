@@ -11,6 +11,14 @@
 #define DMibConfig_RefCountLeakDebugging 0
 #endif
 
+#if DMibConfig_RefCountDebugging
+#	define DIfRefCountDebugging(...) __VA_ARGS__
+#	define DIfNotRefCountDebugging(...)
+#else
+#	define DIfRefCountDebugging(...)
+#	define DIfNotRefCountDebugging(...) __VA_ARGS__
+#endif
+
 #include <Mib/Core/Core>
 #include <Mib/Function/BindMemberFunction>
 namespace NMib::NStorage
@@ -640,9 +648,6 @@ namespace NMib::NStorage
 
 		NException::CCallstack *m_pCallstack = nullptr;
 	};
-#define DMibRefCountDebuggingOnly(...) __VA_ARGS__
-#else
-#define DMibRefCountDebuggingOnly(...)
 #endif
 
 	template <typename t_CType>
@@ -779,7 +784,7 @@ namespace NMib::NStorage
 
 			typedef typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType CInternalData;
 			CInternalData *m_pPointTo;
-			DMibRefCountDebuggingOnly(mutable NStorage::CRefCountDebugReference m_DebugRef);
+			DIfRefCountDebugging(mutable NStorage::CRefCountDebugReference m_DebugRef);
 
 			TCSharedPointerData()
 			{
@@ -839,7 +844,7 @@ namespace NMib::NStorage
 		NMemory::CCapturedDelete CapturedDelete = fg_DeleteWeakObjectGetCapturedDelete(_pObject);
 
 		_pObject->m_RefCount.f_WeakSetCapturedDelete(CapturedDelete);
-		if (_pObject->m_RefCount.f_WeakDecrease(DMibRefCountDebuggingOnly(nullptr)) == 0)
+		if (_pObject->m_RefCount.f_WeakDecrease(DIfRefCountDebugging(nullptr)) == 0)
 		{
 #if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
 			_pObject->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000000001);
@@ -884,7 +889,7 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			if (_pPtr)
-				_pPtr->m_RefCount.f_Increase(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
+				_pPtr->m_RefCount.f_Increase(DIfRefCountDebugging(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
 		}
 
@@ -892,20 +897,20 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			m_Data.m_pPointTo = _pPtr;
-			DMibRefCountDebuggingOnly(m_Data.m_pPointTo->m_RefCount.f_Initial(m_Data.m_DebugRef));
+			DIfRefCountDebugging(m_Data.m_pPointTo->m_RefCount.f_Initial(m_Data.m_DebugRef));
 		}
 
 		void fp_SetInit(CInternalData *_pPtr)
 		{
 			if (_pPtr)
-				_pPtr->m_RefCount.f_Increase(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
+				_pPtr->m_RefCount.f_Increase(DIfRefCountDebugging(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
 		}
 
 		void fp_SetConstruct(CInternalData *_pPtr)
 		{
 			m_Data.m_pPointTo = _pPtr;
-			DMibRefCountDebuggingOnly(m_Data.m_pPointTo->m_RefCount.f_Initial(m_Data.m_DebugRef));
+			DIfRefCountDebugging(m_Data.m_pPointTo->m_RefCount.f_Initial(m_Data.m_DebugRef));
 		}
 
 		void fp_SetCounted(CInternalData *_pPtr)
@@ -924,7 +929,7 @@ namespace NMib::NStorage
 				return false;
 
 			bool bRet = false;
-			if (m_Data.m_pPointTo->m_RefCount.f_Decrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef)) == 0)
+			if (m_Data.m_pPointTo->m_RefCount.f_Decrease(DIfRefCountDebugging(m_Data.m_DebugRef)) == 0)
 			{
 				if constexpr (mc_bSupportWeak)
 				{
@@ -970,7 +975,7 @@ namespace NMib::NStorage
 							m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b00000001000);
 #endif
 							// Protect against exception in destructor
-							m_Data.m_pPointTo->m_RefCount.f_Increase(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
+							m_Data.m_pPointTo->m_RefCount.f_Increase(DIfRefCountDebugging(m_Data.m_DebugRef));
 						}
 					;
 
@@ -1023,7 +1028,7 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1059,7 +1064,7 @@ namespace NMib::NStorage
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1227,7 +1232,7 @@ namespace NMib::NStorage
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1259,7 +1264,7 @@ namespace NMib::NStorage
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_Move(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1453,14 +1458,14 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			if (_pPtr)
-				_pPtr->m_RefCount.f_WeakIncrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
+				_pPtr->m_RefCount.f_WeakIncrease(DIfRefCountDebugging(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
 		}
 
 		void fp_SetInit(CInternalData *_pPtr)
 		{
 			if (_pPtr)
-				_pPtr->m_RefCount.f_WeakIncrease(DMibRefCountDebuggingOnly(m_Data.m_DebugRef));
+				_pPtr->m_RefCount.f_WeakIncrease(DIfRefCountDebugging(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
 		}
 
@@ -1476,7 +1481,7 @@ namespace NMib::NStorage
 			auto pPointTo = m_Data.m_pPointTo;
 			if (pPointTo)
 			{
-				if (pPointTo->m_RefCount.f_WeakDecrease(DMibRefCountDebuggingOnly(&m_Data.m_DebugRef)) == 0)
+				if (pPointTo->m_RefCount.f_WeakDecrease(DIfRefCountDebugging(&m_Data.m_DebugRef)) == 0)
 				{
 					NMemory::CCapturedDelete CapturedDelete = pPointTo->m_RefCount.f_WeakGetCapturedDelete();
 					if (CapturedDelete.m_Size)
@@ -1521,7 +1526,7 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1554,7 +1559,7 @@ namespace NMib::NStorage
 			;
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1670,7 +1675,7 @@ namespace NMib::NStorage
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
-			DMibRefCountDebuggingOnly
+			DIfRefCountDebugging
 				(
 					if (m_Data.m_pPointTo)
 						m_Data.m_pPointTo->m_RefCount.f_WeakMove(_Other.m_Data.m_DebugRef, m_Data.m_DebugRef);
@@ -1738,7 +1743,7 @@ namespace NMib::NStorage
 			if (!pData)
 				return pReturn;
 
-			if (!pData->m_RefCount.f_IncreaseWhileValid(DMibRefCountDebuggingOnly(pReturn.m_Data.m_DebugRef)))
+			if (!pData->m_RefCount.f_IncreaseWhileValid(DIfRefCountDebugging(pReturn.m_Data.m_DebugRef)))
 				return pReturn;
 
 			pReturn.fp_SetCounted(pData);
