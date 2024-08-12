@@ -1164,16 +1164,14 @@ namespace NMib::NStorage
 #ifdef DDebugger_VisualStudio
 		void fp_ReferenceDebugInfo()
 		{
-			TCInitializerList<bool> Dumy =
+			(
+				[&]
 				{
-					[&]
-					{
-						[[maybe_unused]] TCVariantMember<t_CIndex, tp_CTypes, tp_Member> Member;
-						return true;
-					}
-					()...
+					[[maybe_unused]] TCVariantMember<t_CIndex, tp_CTypes, tp_Member> Member;
 				}
-			;
+				()
+				, ...
+			);
 		}
 #endif
 	protected:
