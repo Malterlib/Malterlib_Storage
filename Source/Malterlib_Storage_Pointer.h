@@ -1003,9 +1003,33 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
+
 		~TCSharedPointer()
 		{
 			fp_Delete();
+		}
+
+		void f_ForceDelete()
+		{
+			DMibFastCheck(m_Data.m_pPointTo && m_Data.m_pPointTo->m_RefCount.f_Get() == 0);
+
+			DIfRefCountDebugging(m_Data.m_pPointTo->m_RefCount.f_Remove(m_Data.m_DebugRef));
+
+			if constexpr (mc_bSupportWeak)
+			{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+				m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b0000'0010'0000'0000);
+#endif
+				fg_DeleteWeakObject(fp_GetAllocator(), (CInternalData *)m_Data.m_pPointTo);
+			}
+			else
+			{
+#if DMibConfig_RefCountDebugging && DMibConfig_RefCountLeakDebugging
+				m_Data.m_pPointTo->m_RefCount.m_Debug->m_DestroyLocation.f_FetchOr(0b0000'1000'0000'0000);
+#endif
+				fg_DeleteObject(fp_GetAllocator(), m_Data.m_pPointTo);
+			}
+			m_Data.m_pPointTo = nullptr;
 		}
 
 		TCSharedPointer(TCCopy<TCSharedPointer> const &_Other)
