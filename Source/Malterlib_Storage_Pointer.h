@@ -818,18 +818,27 @@ namespace NMib::NStorage
 		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value && !NTraits::cIsFinal<tf_CObjectType>)
 		{
 			static_assert(!NTraits::cHasOperatorDelete<tf_CObjectType>);
+			if constexpr (NMib::NPrivate::cHas_m_VirtualAllocSize<tf_CObjectType>)
+			{
+				mint DeleteSize = _pObject->m_VirtualAllocSize;
+				_pObject->~tf_CObjectType();
+
+				return {_pObject, DeleteSize};
+			}
+			else
+			{
 #if defined(DMibPOverrideOperatorNew)
+				NMemory::CCaptureDefaultDelete Captured;
+				delete _pObject;
 
-			NMemory::CCaptureDefaultDelete Captured;
-			delete _pObject;
+				DMibFastCheck(Captured.m_Captured.m_pMemory);
 
-			DMibFastCheck(Captured.m_Captured.m_pMemory);
-
-			return Captured.m_Captured;
+				return Captured.m_Captured;
 #else
-			static_assert(!NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value); // Operator new has to be overridden for this to work
-			return {_pObject, 0};
+				static_assert(!NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value); // Operator new has to be overridden for this to work
+				return {_pObject, 0};
 #endif
+			}
 		}
 		else
 		{
