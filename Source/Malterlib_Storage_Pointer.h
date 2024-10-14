@@ -1452,10 +1452,10 @@ namespace NMib::NStorage
 	auto fg_ToSharedPointer(tf_CType &&_Value)
 		requires requires()
 		{
-			NTraits::TCRemoveReferenceAndQualifiersType<tf_CType>(fg_Forward<tf_CType>(_Value));
+			NTraits::TCDecayType<tf_CType>(fg_Forward<tf_CType>(_Value));
 		}
 	{
-		return TCSharedPointer<NTraits::TCRemoveReferenceAndQualifiersType<tf_CType>>{fg_Construct(fg_Forward<tf_CType>(_Value))};
+		return TCSharedPointer<NTraits::TCDecayType<tf_CType>>{fg_Construct(fg_Forward<tf_CType>(_Value))};
 	}
 
 	template <typename t_CType, typename... tp_COptions>
