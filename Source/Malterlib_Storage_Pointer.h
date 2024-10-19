@@ -1187,6 +1187,17 @@ namespace NMib::NStorage
 			m_Data.m_pPointTo = nullptr;
 		}
 
+		t_CType *f_Detach()
+		{
+			auto pReturn = fg_Exchange(m_Data.m_pPointTo, nullptr);
+			DIfRefCountDebugging
+				(
+					if (pReturn)
+						pReturn->m_RefCount.f_Remove(m_Data.m_DebugRef)
+				)
+			;
+			return pReturn;
+		}
 
 		bool f_Clear()
 		{
@@ -1605,6 +1616,17 @@ namespace NMib::NStorage
 			fp_SetInit(_pPtr);
 		}
 
+		template <typename tf_CType>
+		explicit TCWeakPointer(TCAttach<tf_CType> &&_Other)
+		{
+			m_Data.m_pPointTo = *_Other;
+			DIfRefCountDebugging
+				(
+					m_Data.m_pPointTo->m_RefCount.f_WeakInitial(m_Data.m_DebugRef);
+				)
+			;
+		}
+
 		template <typename t_CParam0>
 		explicit TCWeakPointer(t_CType *_pPtr, t_CParam0 &&_Param0)
 			: m_Data(fg_Forward<t_CParam0>(_Param0))
@@ -1615,6 +1637,18 @@ namespace NMib::NStorage
 		CInternalData *f_UnsafeGetPointerValue() const
 		{
 			return m_Data.m_pPointTo;
+		}
+
+		t_CType *f_Unsafe_Detach()
+		{
+			auto *pReturn = fg_Exchange(m_Data.m_pPointTo, nullptr);
+			DIfRefCountDebugging
+				(
+					if (pReturn)
+						pReturn->m_RefCount.f_WeakRemove(m_Data.m_DebugRef)
+				)
+			;
+			return pReturn;
 		}
 
 		template <typename tf_CStr>
