@@ -38,6 +38,18 @@ namespace NMib::NStorage
 			return *this;
 		}
 
+		void f_SetBoth(t_CType *_pPtr, mint _Bits)
+		{
+			mp_PointTo = fsp_ToInt(_pPtr);
+			mp_Bits = _Bits;
+		}
+
+		void f_SetBoth(TCBitStorePointer const &_Other)
+		{
+			mp_PointTo = _Other.mp_PointTo;
+			mp_Bits = _Other.mp_Bits;
+		}
+
 		TCBitStorePointer &operator = (TCBitStorePointer const &_Other)
 		{
 			mp_PointTo = _Other.mp_PointTo;
