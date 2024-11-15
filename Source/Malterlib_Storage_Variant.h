@@ -505,7 +505,7 @@ namespace NMib::NStorage
 		struct CStorageType
 		{
 			DMibNoUniqueAddress alignas(mcp_MaxAlignment) TCDetermineStorageType<mcp_MaxSize>::CType m_Storage = {};
-			DMibNoUniqueAddress CTypeIDStorageType m_CurrentType;
+			CTypeIDStorageType m_CurrentType;
 		};
 
 		inline_small void fp_SetTypeID(CIndexInteger const &_TypeID)
