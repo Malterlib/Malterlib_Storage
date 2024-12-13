@@ -48,9 +48,9 @@ namespace NMib::NStorage::NIndirection
 
 	public:
 
-		mark_artificial inline_always t_CType const &f_Get() const &;
-		mark_artificial inline_always t_CType &f_Get() &;
-		mark_artificial inline_always t_CType &&f_Get() &&;
+		mark_artificial mark_nodebug inline_always t_CType const &f_Get() const &;
+		mark_artificial mark_nodebug inline_always t_CType &f_Get() &;
+		mark_artificial mark_nodebug inline_always t_CType &&f_Get() &&;
 
 	public:
 
@@ -106,8 +106,8 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection &operator =(TCIndirection const &_Other);
 		TCIndirection &operator =(TCIndirection &_Other);
 		TCIndirection &operator =(TCIndirection &&_Other);
-		mark_artificial inline_always operator t_CType const & () const;
-		mark_artificial inline_always operator t_CType & ();
+		mark_artificial mark_nodebug inline_always operator t_CType const & () const;
+		mark_artificial mark_nodebug inline_always operator t_CType & ();
 
 		template <typename tf_CStream>
 		void f_Stream(tf_CStream &_Stream)

@@ -735,7 +735,7 @@ namespace NMib::NStorage
 		public:
 
 			template <typename tf_CType0, typename tf_CType1>
-			inline_small static auto fs_Value(tf_CType1 &&_pToRet) -> decltype(*_pToRet)
+			mark_nodebug inline_small static auto fs_Value(tf_CType1 &&_pToRet) -> decltype(*_pToRet)
 			{
 				return *_pToRet;
 			}
@@ -747,7 +747,7 @@ namespace NMib::NStorage
 		public:
 
 			template <typename tf_CType0, typename tf_CType1>
-			inline_small static t_CType &fs_Value(tf_CType1 &&_pToRet)
+			mark_nodebug inline_small static t_CType &fs_Value(tf_CType1 &&_pToRet)
 			{
 				return (t_CType &)*_pToRet;
 			}
@@ -759,20 +759,20 @@ namespace NMib::NStorage
 		public:
 
 			template <typename tf_CType0, typename tf_CType1>
-			inline_small static typename TCEnableIf<NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
+			mark_nodebug inline_small static typename TCEnableIf<NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
 			{
 				return *(*_pToRet);
 			}
 
 			template <typename tf_CType0, typename tf_CType1>
-			inline_small static typename TCEnableIf<!NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
+			mark_nodebug inline_small static typename TCEnableIf<!NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
 			{
 				return NMib::fg_Move(*(*_pToRet));
 			}
 		};
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs()
+		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs()
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
@@ -782,12 +782,12 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs() const
+		mark_nodebug inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs() const
 		{
 		}
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename TCEvalReturnTypeConst<t_iMember>::CType>::CType fp_GetAs() const
+		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename TCEvalReturnTypeConst<t_iMember>::CType>::CType fp_GetAs() const
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
@@ -799,7 +799,7 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType fp_GetAsStorage()
+		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType fp_GetAsStorage()
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
@@ -808,12 +808,12 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAsStorage() const
+		mark_nodebug inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAsStorage() const
 		{
 		}
 
 		template <CIndexInteger t_iMember>
-		inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType>::CType fp_GetAsStorage() const
+		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType>::CType fp_GetAsStorage() const
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 

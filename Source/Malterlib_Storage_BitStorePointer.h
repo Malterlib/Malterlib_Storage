@@ -84,23 +84,23 @@ namespace NMib::NStorage
 		}
 
 		// Access
-		t_CType *f_Get() const
+		mark_nodebug t_CType *f_Get() const
 		{
 			return fsp_FromInt(mp_PointTo);
 		}
 
-		operator t_CType *() const
+		mark_nodebug operator t_CType *() const
 		{
 			return fsp_FromInt(mp_PointTo);
 		}
 
-		t_CType *operator ->() const
+		mark_nodebug t_CType *operator ->() const
 		{
 			return fsp_FromInt(mp_PointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always typename TCEnableIf
 			<
 				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
 				, NFunction::TCMemberFunctionBoundFunctor
@@ -115,7 +115,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always typename TCEnableIf
 			<
 				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
 				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
@@ -125,7 +125,7 @@ namespace NMib::NStorage
 			return fsp_FromInt(mp_PointTo)->*_MemberPtr;
 		}
 
-		t_CType &operator *() const
+		mark_nodebug t_CType &operator *() const
 		{
 			return *fsp_FromInt(mp_PointTo);
 		}
