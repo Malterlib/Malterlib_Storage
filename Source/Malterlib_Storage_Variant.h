@@ -1741,10 +1741,10 @@ namespace NMib::NStorage
 		TCVariantCommon &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 			requires requires()
 			{
-				this->fp_AssignConstruct(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType());
+				this->fp_AssignConstruct(fg_Move(_CreateParams), NMeta::TCConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>());
 			}
 		{
-			fp_AssignConstruct(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType());
+			fp_AssignConstruct(fg_Move(_CreateParams), NMeta::TCConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>());
 			return *this;
 		}
 
@@ -1951,7 +1951,7 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-		template <typename t_CTypes, typename t_CIndices = typename NMeta::TCMakeConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>::CType>
+		template <typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>>
 		struct TCGetNonStreamableVariant
 		{
 		};
@@ -1970,7 +1970,7 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-		template <typename t_CIndex, typename t_CTypes, typename t_CIndices = typename NMeta::TCMakeConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>::CType>
+		template <typename t_CIndex, typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>>
 		struct TCGetStreamableVariant
 		{
 		};

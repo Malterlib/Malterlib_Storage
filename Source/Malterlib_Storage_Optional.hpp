@@ -29,7 +29,7 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	template <typename tf_CType, typename... tfp_CParams>
 	TCOptional<t_CType>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
-		: TCOptional(fg_Move(_CreateParams), typename NMeta::TCMakeConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>::CType())
+		: TCOptional(fg_Move(_CreateParams), NMeta::TCConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>())
 	{
 	}
 

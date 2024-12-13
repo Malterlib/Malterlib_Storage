@@ -111,7 +111,7 @@ namespace NMib::NStorage
 		<
 			NTraits::TCIsConstructorCallableWith
 			<
-				NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...>
+				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
 				, void (TCTuple<t_PCTypes...> const &)
 			>::mc_Value
 			, t_PCTypes...
@@ -120,7 +120,7 @@ namespace NMib::NStorage
 		<
 			NTraits::TCIsConstructorCallableWith
 			<
-				NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...>
+				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
 				, void (TCTuple<t_PCTypes...> &&)
 			>::mc_Value
 			, t_PCTypes...
@@ -129,7 +129,7 @@ namespace NMib::NStorage
 		<
 			NTraits::TCIsOperatorCallableWith_Assign
 			<
-				NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...>
+				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
 				, void (TCTuple<t_PCTypes...> const &)
 			>::mc_Value
 			, t_PCTypes...
@@ -138,14 +138,14 @@ namespace NMib::NStorage
 		<
 			NTraits::TCIsOperatorCallableWith_Assign
 			<
-				NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...>
+				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
 				, void (TCTuple<t_PCTypes...> &&)
 			>::mc_Value
 			, t_PCTypes...
 		>
-		, private NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...>
+		, private NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
 	{
-		typedef NPrivate::TCTupleImp<typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes)>::CType, t_PCTypes...> CBase;
+		typedef NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...> CBase;
 
 		template <mint tf_Index, typename tf_CType>
 		typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename TCTuple_Get<tf_Index, typename NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
@@ -193,9 +193,9 @@ namespace NMib::NStorage
 					CBase
 					, void
 					(
-						typename NMeta::TCMakeConsecutiveIndices<sizeof...(tf_PCTypes)>::CType
+						NMeta::TCConsecutiveIndices<sizeof...(tf_PCTypes)>
 						, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(tf_PCTypes)>::CType
-						, typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
+						, NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>()
 						, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
 						, tf_PCTypes &&...
 					)
@@ -203,9 +203,9 @@ namespace NMib::NStorage
 			)
 			: CBase
 			(
-				typename NMeta::TCMakeConsecutiveIndices<sizeof...(tf_PCTypes)>::CType()
+				NMeta::TCConsecutiveIndices<sizeof...(tf_PCTypes)>()
 				, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(tf_PCTypes)>::CType()
-				, typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
+				, NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>()
 				, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
 				, fg_Forward<tf_PCTypes>(_Params)...
 			)
@@ -476,7 +476,7 @@ namespace NMib::NStorage
 						, typename TCTuple_Get<t_PReturnIndices, typename NTraits::TCRemoveReference<t_CTuple0>::CType>::CType
 					>::CType...
 				>
-				, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple1>::CType>::mc_Value>::CType
+				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple1>>::mc_Value>::CType
 				, t_CTuple1
 				, t_PCTuples...
 			>
@@ -488,7 +488,7 @@ namespace NMib::NStorage
 			: public TCTupleCatReturnHelperRefImp
 			<
 				TCTuple<>
-				, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple0>::CType>::mc_Value>::CType
+				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple0>>::mc_Value>::CType
 				, t_CTuple0
 				, t_PCTuples...
 			>
@@ -529,8 +529,8 @@ namespace NMib::NStorage
 							t_PReturnTypes...
 							, typename NTraits::TCPromoteQualifiersAndReference<tf_CTuple0 &&, typename TCTuple_Get<t_CIndices1, CTuple0NoRef>::CType>::CType...
 						>
-						, typename NMeta::TCMakeConsecutiveIndices<sizeof...(t_PReturnTypes) + TCTuple_Len<CTuple0NoRef>::mc_Value>::CType
-						, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<CTuple1NoRef>::mc_Value>::CType
+						, NMeta::TCConsecutiveIndices<sizeof...(t_PReturnTypes) + TCTuple_Len<CTuple0NoRef>::mc_Value>
+						, NMeta::TCConsecutiveIndices<TCTuple_Len<CTuple1NoRef>::mc_Value>
 					>
 					()
 					(
@@ -568,7 +568,7 @@ namespace NMib::NStorage
 				<
 					TCTuple<>
 					, NMeta::TCIndices<>
-					, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<CFirstTuple>::mc_Value>::CType
+					, NMeta::TCConsecutiveIndices<TCTuple_Len<CFirstTuple>::mc_Value>
 				>
 				()
 				(
@@ -755,7 +755,7 @@ namespace NMib::NStorage
 				fg_Forward<tf_FFunctor>(_fFunctor)
 				, fg_Forward<tf_CTuple>(_Tuple)
 				, tf_CTypeList()
-				, typename NMeta::TCMakeConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<tf_CTuple>::CType>::mc_Value>::CType()
+				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<tf_CTuple>::CType>::mc_Value>()
 			)
 		;
 	}
