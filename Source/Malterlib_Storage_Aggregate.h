@@ -79,6 +79,7 @@ namespace NMib::NStorage
 		EAggregateLifeTimeFlag_None = 0
 		, EAggregateLifeTimeFlag_Constructed = DMibBit(0)
 		, EAggregateLifeTimeFlag_Destructed = DMibBit(1)
+		, EAggregateLifeTimeFlag_Destructing = DMibBit(2)
 	};
 
 	template <typename t_CData, aint t_Priority, typename t_CLock>
@@ -135,7 +136,7 @@ namespace NMib::NStorage
 
 		bool f_WasDestructed()
 		{
-			return m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Destructed;
+			return (m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)) != EAggregateLifeTimeFlag_None;
 		}
 
 		template <typename tf_CFunctor>
