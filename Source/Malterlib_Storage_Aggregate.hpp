@@ -31,7 +31,7 @@ namespace NMib::NStorage
 		DMibSafeCheck(!(LifeTimeFlags & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)), "Already destructed, cannot construct again");
 		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
 		{
-			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
+			m_fDestruct = (FAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
 			_fFunctor((void *)m_ObjectSpace);
@@ -49,7 +49,7 @@ namespace NMib::NStorage
 		DMibSafeCheck(!(LifeTimeFlags & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)), "Already destructed, cannot construct again");
 		if (!(LifeTimeFlags & EAggregateLifeTimeFlag_Constructed))
 		{
-			m_fDestruct = (PFAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
+			m_fDestruct = (FAggregateDestruct *)(TCAggregate<t_CData, t_Priority, t_CLock>::fs_Destruct);
 			m_Link.f_Construct();
 			m_Priority = t_Priority;
 			new(m_ObjectSpace) t_CData(fg_Forward<tfp_CData>(p_Params)...);

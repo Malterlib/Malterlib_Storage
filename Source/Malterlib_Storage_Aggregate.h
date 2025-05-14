@@ -99,12 +99,12 @@ namespace NMib::NStorage
 		{
 		}
 
-		typedef void (PFAggregateDestruct)(CAggregate *_pThis);
+		typedef void (FAggregateDestruct)(CAggregate *_pThis);
 		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
 		DMibListLinkDA_Link(TCAggregate, m_Link);
 		aint m_Priority;
 
-		PFAggregateDestruct *m_fDestruct;
+		FAggregateDestruct *m_fDestruct;
 
 		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 
