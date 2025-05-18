@@ -5,20 +5,15 @@
 
 namespace NMib::NStorage::NPrivate
 {
-	template <typename t_CType, typename t_CTypeStripped = typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CType>::CType>::CType>
+	template <typename t_CType, typename t_CTypeStripped = NTraits::TCRemoveReferenceAndQualifiers<t_CType>>
 	struct TCIsIndirectionHelper
 	{
-		enum
-		{
-			mc_Value = false
-		};
+		constexpr static bool mc_Value = false;
 	};
+	
 	template <typename t_CType0, typename t_CType, typename t_CAllocator>
 	struct TCIsIndirectionHelper<t_CType0, NStorage::NIndirection::TCIndirection<t_CType, t_CAllocator>>
 	{
-		enum
-		{
-			mc_Value = true
-		};
+		constexpr static bool mc_Value = true;
 	};
 }

@@ -5,21 +5,15 @@
 
 namespace NMib::NStorage::NReference::NPrivate
 {
-	template <typename t_CType, typename t_CTypeStripped = typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CType>::CType>::CType>
+	template <typename t_CType, typename t_CTypeStripped = NTraits::TCRemoveReferenceAndQualifiers<t_CType>>
 	struct TCIsReferenceHelper
 	{
-		enum
-		{
-			mc_Value = false
-		};
+		constexpr static bool mc_Value = false;
 	};
 
 	template <typename t_CType0, typename t_CType>
 	struct TCIsReferenceHelper<t_CType0, TCReference<t_CType>>
 	{
-		enum
-		{
-			mc_Value = true
-		};
+		constexpr static bool mc_Value = true;
 	};
 }

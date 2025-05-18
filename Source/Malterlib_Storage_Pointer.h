@@ -161,27 +161,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -267,27 +267,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -382,27 +382,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -471,27 +471,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -588,27 +588,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -650,30 +650,36 @@ namespace NMib::NStorage
 	};
 #endif
 
-	template <typename t_CType>
-	concept cHasIntrusiveRefCount = requires (t_CType const* _pValue)
-		{
-			_pValue->m_RefCount.f_Get();
-		}
-	;
+	namespace NPrivate
+	{
+		template <typename t_CType>
+		concept cHasIntrusiveRefCountHelper = requires (t_CType const* _pValue)
+			{
+				_pValue->m_RefCount.f_Get();
+			}
+		;
+
+	}
 
 	template <typename t_CType>
-	struct TCHasIntrusiveRefCount : public NTraits::TCCompileTimeConstant
-		<
-			bool
-			, cHasIntrusiveRefCount<t_CType>
-		>
+	struct TCHasIntrusiveRefCountOverride
 	{
+		constexpr static bool mc_bValue = NPrivate::cHasIntrusiveRefCountHelper<t_CType>;
 	};
 
+	template <typename t_CType>
+	concept cHasIntrusiveRefCount = TCHasIntrusiveRefCountOverride<t_CType>::mc_bValue;
+
 #define DMibDefineSharedPointerType(d_Type, d_HasRefCount, d_VirtualDestructor) \
-	template <>\
-	struct NMib::NStorage::TCHasIntrusiveRefCount<d_Type> : public NMib::NTraits::TCCompileTimeConstant<bool, d_HasRefCount>\
-	{\
-	};\
-	template <>\
-	struct NMib::NTraits::TCHasVirtualDestructor<d_Type> : public NMib::NTraits::TCCompileTimeConstant<bool, d_VirtualDestructor>\
+	template <> \
+	struct NMib::NStorage::TCHasIntrusiveRefCountOverride<d_Type> \
 	{ \
+		constexpr static bool mc_bValue = d_HasRefCount; \
+	}; \
+	template <> \
+	struct NMib::NTraits::TCHasVirtualDestructorOverride<d_Type> \
+	{ \
+		constexpr static bool mc_Value = d_HasRefCount; \
 	};
 
 	struct CSupportWeakTag
@@ -683,7 +689,7 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 
-		template <typename t_CType, CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount = TCHasIntrusiveRefCount<typename NTraits::TCRemoveQualifiers<t_CType>::CType>::mc_Value>
+		template <typename t_CType, CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount = cHasIntrusiveRefCount<NTraits::TCRemoveQualifiers<t_CType>>>
 		class TCChooseSharedPointerTypeImp
 		{
 		public:
@@ -813,9 +819,9 @@ namespace NMib::NStorage
 		DMibFastCheck(_pObject->m_RefCount.f_Get() == -1);
 
 		static_assert(sizeof(tf_CObjectType) > 0);
-		static_assert(!NTraits::TCIsAbstract<tf_CObjectType>::mc_Value || NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value || NTraits::cIsFinal<tf_CObjectType>);
+		static_assert(!NTraits::cIsAbstract<tf_CObjectType> || NTraits::cHasVirtualDestructor<tf_CObjectType> || NTraits::cIsFinal<tf_CObjectType>);
 
-		if constexpr (NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value && !NTraits::cIsFinal<tf_CObjectType>)
+		if constexpr (NTraits::cHasVirtualDestructor<tf_CObjectType> && !NTraits::cIsFinal<tf_CObjectType>)
 		{
 			static_assert(!NTraits::cHasOperatorDelete<tf_CObjectType>);
 			if constexpr (NMib::NPrivate::cHas_m_VirtualAllocSize<tf_CObjectType>)
@@ -835,7 +841,7 @@ namespace NMib::NStorage
 
 				return Captured.m_Captured;
 #else
-				static_assert(!NTraits::TCHasVirtualDestructor<tf_CObjectType>::mc_Value); // Operator new has to be overridden for this to work
+				static_assert(!NTraits::cHasVirtualDestructor<tf_CObjectType>); // Operator new has to be overridden for this to work
 				return {_pObject, 0};
 #endif
 			}
@@ -1079,7 +1085,7 @@ namespace NMib::NStorage
 					, "Not a valid conversion"
 				)
 			;
-			static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
@@ -1108,7 +1114,7 @@ namespace NMib::NStorage
 		template <typename tf_CType, typename... tfp_CParams>
 		TCSharedPointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
-			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
+			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
 			m_Data.m_pPointTo = nullptr; // Protect against exception in constructor
 			fp_SetConstruct
 				(
@@ -1127,8 +1133,8 @@ namespace NMib::NStorage
 		{
 			static_assert
 				(
-					NTraits::TCIsVoid<tf_CType>::mc_Value
-					|| NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename NTraits::TCRemoveReference<tf_CAllocator>::CType>::mc_Value
+					NTraits::cIsVoid<tf_CType>
+					|| NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, NTraits::TCRemoveReference<tf_CAllocator>>::mc_Value
 					, "Not a valid conversion"
 				)
 			;
@@ -1219,27 +1225,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo));
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return (NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo))->*_MemberPtr;
 		}
@@ -1304,7 +1310,7 @@ namespace NMib::NStorage
 					, "Not a valid conversion"
 				)
 			;
-			static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
@@ -1328,7 +1334,7 @@ namespace NMib::NStorage
 					, "Not a valid conversion"
 				)
 			;
-			static_assert((NTraits::TCIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>::mc_Value));
+			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			return *this;
@@ -1359,7 +1365,7 @@ namespace NMib::NStorage
 		template <typename tf_CType, typename... tfp_CParams>
 		TCSharedPointer &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
-			static_assert(NTraits::TCIsVoid<tf_CType>::mc_Value || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
+			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
 
 			auto *pNewObject = NPrivate::fg_ConvertSharedPointer
 				(
@@ -1463,10 +1469,10 @@ namespace NMib::NStorage
 	auto fg_ToSharedPointer(tf_CType &&_Value)
 		requires requires()
 		{
-			NTraits::TCDecayType<tf_CType>(fg_Forward<tf_CType>(_Value));
+			NTraits::TCDecay<tf_CType>(fg_Forward<tf_CType>(_Value));
 		}
 	{
-		return TCSharedPointer<NTraits::TCDecayType<tf_CType>>{fg_Construct(fg_Forward<tf_CType>(_Value))};
+		return TCSharedPointer<NTraits::TCDecay<tf_CType>>{fg_Construct(fg_Forward<tf_CType>(_Value))};
 	}
 
 	template <typename t_CType, typename... tp_COptions>

@@ -100,27 +100,27 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value
+				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
 				, NFunction::TCMemberFunctionBoundFunctor
 				<
 					t_CMemberPtr
 					, t_CType *
 				>
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+			>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, fsp_FromInt(mp_PointTo));
 		}
 
 		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always typename TCEnableIf
+		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf
 			<
-				NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value
-				, typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-			>::CType
-		operator ->* (t_CMemberPtr const &_MemberPtr) const
+				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
+				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+			>
 		{
 			return fsp_FromInt(mp_PointTo)->*_MemberPtr;
 		}

@@ -109,20 +109,20 @@ namespace NMib::NStorage
 	class TCTuple
 		: private NPrivate::TCDefaultCopy
 		<
-			NTraits::TCIsConstructorCallableWith
+			NTraits::cIsConstructibleWith
 			<
 				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
-				, void (TCTuple<t_PCTypes...> const &)
-			>::mc_Value
+				, TCTuple<t_PCTypes...> const &
+			>
 			, t_PCTypes...
 		>
 		, private NPrivate::TCDefaultMove
 		<
-			NTraits::TCIsConstructorCallableWith
+			NTraits::cIsConstructibleWith
 			<
 				NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...>
-				, void (TCTuple<t_PCTypes...> &&)
-			>::mc_Value
+				, TCTuple<t_PCTypes...> &&
+			>
 			, t_PCTypes...
 		>
 		, private NPrivate::TCDefaultAssign
@@ -148,18 +148,18 @@ namespace NMib::NStorage
 		typedef NPrivate::TCTupleImp<NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes)>, t_PCTypes...> CBase;
 
 		template <mint tf_Index, typename tf_CType>
-		typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename TCTuple_Get<tf_Index, typename NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+		NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename TCTuple_Get<tf_Index, typename NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 		friend NMib::fg_Get(tf_CType &&_Tuple) noexcept;
 
 		template <mint tf_Index, typename tf_CType>
-		typename NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename TCTuple_Get<tf_Index, typename NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+		NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename TCTuple_Get<tf_Index, typename NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 		friend NMib::fg_GetForward(tf_CType &&_Tuple) noexcept;
 
 	public:
 
 		inline_always
 		constexpr TCTuple()
-			noexcept(NMeta::TCAllIsTrue<NTraits::TCHasNothrowDefaultConstructor<t_PCTypes>::mc_Value...>::mc_Value)
+			noexcept(NMeta::TCAllIsTrue<NTraits::cIsNothrowDefaultConstructible<t_PCTypes>...>::mc_Value)
 		{
 		}
 
@@ -172,14 +172,11 @@ namespace NMib::NStorage
 				sizeof...(tf_PCTypes) <= sizeof...(t_PCTypes)
 				&& NMeta::TCAllIsTrue
 				<
-					NTraits::TCIsConstructorCallableWith
+					NTraits::cIsConstructibleWith
 					<
 						NPrivate::TCTupleLeaf<0, t_PCTypes>
-						, void
-						(
-							tf_PCTypes &&
-						)
-					>::mc_Value...
+						, tf_PCTypes &&
+					>...
 				>::mc_Value
 				, bool
 			>::CType = false
@@ -188,18 +185,15 @@ namespace NMib::NStorage
 		TCTuple(tf_PCTypes &&..._Params)
 			noexcept
 			(
-				NTraits::TCIsConstructorNothrowCallableWith
+				NTraits::cIsNothrowConstructibleWith
 				<
 					CBase
-					, void
-					(
-						NMeta::TCConsecutiveIndices<sizeof...(tf_PCTypes)>
-						, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(tf_PCTypes)>::CType
-						, NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>()
-						, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
-						, tf_PCTypes &&...
-					)
-				>::mc_Value
+					, NMeta::TCConsecutiveIndices<sizeof...(tf_PCTypes)>
+					, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(tf_PCTypes)>::CType
+					, NMeta::TCConsecutiveIndices<sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>()
+					, typename NPrivate::TCTuple_MakePromotedLValueRefList<TCTuple, sizeof...(t_PCTypes), sizeof...(tf_PCTypes)>::CType()
+					, tf_PCTypes &&...
+				>
 			)
 			: CBase
 			(
@@ -224,7 +218,7 @@ namespace NMib::NStorage
 		>
 		inline_always explicit
 		TCTuple(tf_CTuple &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<CBase, void (tf_CTuple &&)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<CBase, tf_CTuple &&>)
 			: CBase(fg_Forward<tf_CTuple>(_Param))
 		{
 		}
@@ -265,30 +259,30 @@ namespace NMib
 {
 
 	template <mint tf_Index, typename tf_CType>
-	typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+	NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 	fg_Get(tf_CType &&_Tuple) noexcept
 	{
 		typedef typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType CType;
-		return fg_Forward<typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, CType>::CType >
+		return fg_Forward<NTraits::TCCopyQualifiersAndReference<tf_CType &&, CType>>
 			(
 				static_cast
 				<
-					typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, NStorage::NPrivate::TCTupleLeaf<tf_Index, CType>>::CType
+					NTraits::TCCopyQualifiersAndReference<tf_CType &&, NStorage::NPrivate::TCTupleLeaf<tf_Index, CType>>
 				>(_Tuple).f_Get()
 			)
 		;
 	}
 
 	template <mint tf_Index, typename tf_CType>
-	typename NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+	NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 	fg_GetForward(tf_CType &&_Tuple) noexcept
 	{
 		typedef typename TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType CType;
-		return fg_Forward<typename NTraits::TCPromoteQualifiersAndReference<tf_CType &&, CType>::CType >
+		return fg_Forward<NTraits::TCPromoteQualifiersAndReference<tf_CType &&, CType>>
 			(
 				static_cast
 				<
-					typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, NStorage::NPrivate::TCTupleLeaf<tf_Index, CType>>::CType
+					NTraits::TCCopyQualifiersAndReference<tf_CType &&, NStorage::NPrivate::TCTupleLeaf<tf_Index, CType>>
 				>(_Tuple).f_Get()
 			)
 		;
@@ -325,7 +319,7 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCMakeTupleReturnHelper
 		{
-			typedef typename TCMakeTupleReturnHelper0<typename NTraits::TCDecay<t_CType>::CType>::CType CType;
+			typedef typename TCMakeTupleReturnHelper0<NTraits::TCDecay<t_CType>>::CType CType;
 		};
 	}
 
@@ -360,7 +354,7 @@ namespace NMib::NStorage
 		return NPrivate::TCTupleEqualImp
 			<
 				0
-				, TCTuple_Len<typename NTraits::TCRemoveReferenceAndQualifiers<tf_CTupleLeft>::CType>::mc_Value
+				, TCTuple_Len<NTraits::TCRemoveReferenceAndQualifiers<tf_CTupleLeft>>::mc_Value
 			>
 			()(fg_Forward<tf_CTupleLeft>(_Left), fg_Forward<tf_CTupleRight>(_Right))
 		;
@@ -380,7 +374,7 @@ namespace NMib::NStorage
 		return NPrivate::TCTupleLessImp
 			<
 				0
-				, TCTuple_Len<typename NTraits::TCRemoveReferenceAndQualifiers<tf_CTupleLeft>::CType>::mc_Value
+				, TCTuple_Len<NTraits::TCRemoveReferenceAndQualifiers<tf_CTupleLeft>>::mc_Value
 			>
 			()(fg_Forward<tf_CTupleLeft>(_Left), fg_Forward<tf_CTupleRight>(_Right))
 		;
@@ -408,7 +402,7 @@ namespace NMib::NStorage
 		struct TCTupleCatReturnHelper_1<TCTuple<t_PCResultTypes...>, true, t_CTupleToAdd>
 		{
 			typedef typename TCTupleCatImpType<TCTuple<t_PCResultTypes...>,
-			typename NPrivate::TCTuple_MakePromotedLValueRefList<typename NTraits::TCRemoveReference<t_CTupleToAdd>::CType>::CType>::CType CType;
+			typename NPrivate::TCTuple_MakePromotedLValueRefList<NTraits::TCRemoveReference<t_CTupleToAdd>>::CType>::CType CType;
 		};
 
 		template <typename... t_PCResultTypes, typename t_CTupleToAdd0, typename t_CTupleToAdd1, typename... t_PCTuplesToAdd>
@@ -418,9 +412,9 @@ namespace NMib::NStorage
 				typename TCTupleCatImpType
 				<
 					TCTuple<t_PCResultTypes...>
-					, typename NPrivate::TCTuple_MakePromotedLValueRefList<typename NTraits::TCRemoveReference<t_CTupleToAdd0>::CType>::CType
+					, typename NPrivate::TCTuple_MakePromotedLValueRefList<NTraits::TCRemoveReference<t_CTupleToAdd0>>::CType
 				>::CType
-				, NPrivate::TCTuple_CompatibleType<typename NTraits::TCRemoveReference<t_CTupleToAdd1>::CType>::mc_Value
+				, NPrivate::TCTuple_CompatibleType<NTraits::TCRemoveReference<t_CTupleToAdd1>>::mc_Value
 				, t_CTupleToAdd1
 				, t_PCTuplesToAdd...
 			>
@@ -435,7 +429,7 @@ namespace NMib::NStorage
 			: public TCTupleCatReturnHelper_1
 			<
 				TCTuple<>,
-				NPrivate::TCTuple_CompatibleType<typename NTraits::TCRemoveReference<t_CTuple>::CType>::mc_Value
+				NPrivate::TCTuple_CompatibleType<NTraits::TCRemoveReference<t_CTuple>>::mc_Value
 				, t_CTuple
 				, t_PCTuples...
 			>
@@ -454,11 +448,11 @@ namespace NMib::NStorage
 		template <typename... t_PReturnTypes, mint ...t_PReturnIndices, typename t_CTuple0>
 		struct TCTupleCatReturnHelperRefImp<TCTuple<t_PReturnTypes...>, NMeta::TCIndices<t_PReturnIndices...>, t_CTuple0>
 		{
-			typedef typename NTraits::TCRemoveReference<t_CTuple0>::CType CTuple0NoRef;
+			typedef NTraits::TCRemoveReference<t_CTuple0> CTuple0NoRef;
 			typedef TCTuple
 				<
 					t_PReturnTypes...
-					, typename NTraits::TCPromoteQualifiersAndReference<t_CTuple0, typename TCTuple_Get<t_PReturnIndices, CTuple0NoRef>::CType>::CType...
+					, NTraits::TCPromoteQualifiersAndReference<t_CTuple0, typename TCTuple_Get<t_PReturnIndices, CTuple0NoRef>::CType>...
 				> CType
 			;
 		};
@@ -470,13 +464,13 @@ namespace NMib::NStorage
 				TCTuple
 				<
 					t_PReturnTypes...
-					, typename NTraits::TCPromoteQualifiersAndReference
+					, NTraits::TCPromoteQualifiersAndReference
 					<
 						t_CTuple0
-						, typename TCTuple_Get<t_PReturnIndices, typename NTraits::TCRemoveReference<t_CTuple0>::CType>::CType
-					>::CType...
+						, typename TCTuple_Get<t_PReturnIndices, NTraits::TCRemoveReference<t_CTuple0>>::CType
+					>...
 				>
-				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple1>>::mc_Value>::CType
+				, NMeta::TCConsecutiveIndices<TCTuple_Len<NTraits::TCRemoveReference<t_CTuple1>>::mc_Value>::CType
 				, t_CTuple1
 				, t_PCTuples...
 			>
@@ -488,7 +482,7 @@ namespace NMib::NStorage
 			: public TCTupleCatReturnHelperRefImp
 			<
 				TCTuple<>
-				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<t_CTuple0>>::mc_Value>::CType
+				, NMeta::TCConsecutiveIndices<TCTuple_Len<NTraits::TCRemoveReference<t_CTuple0>>::mc_Value>::CType
 				, t_CTuple0
 				, t_PCTuples...
 			>
@@ -519,15 +513,15 @@ namespace NMib::NStorage
 			typename TCTupleCatReturnHelperRef<TCTuple<t_PReturnTypes...> &&, tf_CTuple0 &&, tf_CTuple1 &&, tf_PCTuples &&...>::CType
 			operator()(TCTuple<t_PReturnTypes...> &&_Tuple, tf_CTuple0 &&_TupleToAdd0, tf_CTuple1 &&_TupleToAdd1, tf_PCTuples &&..._OtherTuples)
 			{
-				typedef typename NTraits::TCRemoveReference<tf_CTuple0>::CType CTuple0NoRef;
-				typedef typename NTraits::TCRemoveReference<tf_CTuple1>::CType CTuple1NoRef;
+				typedef NTraits::TCRemoveReference<tf_CTuple0> CTuple0NoRef;
+				typedef NTraits::TCRemoveReference<tf_CTuple1> CTuple1NoRef;
 				return
 					TCTupleCatImp
 					<
 						TCTuple
 						<
 							t_PReturnTypes...
-							, typename NTraits::TCPromoteQualifiersAndReference<tf_CTuple0 &&, typename TCTuple_Get<t_CIndices1, CTuple0NoRef>::CType>::CType...
+							, NTraits::TCPromoteQualifiersAndReference<tf_CTuple0 &&, typename TCTuple_Get<t_CIndices1, CTuple0NoRef>::CType>...
 						>
 						, NMeta::TCConsecutiveIndices<sizeof...(t_PReturnTypes) + TCTuple_Len<CTuple0NoRef>::mc_Value>
 						, NMeta::TCConsecutiveIndices<TCTuple_Len<CTuple1NoRef>::mc_Value>
@@ -559,7 +553,7 @@ namespace NMib::NStorage
 	typename NPrivate::TCTupleCatReturnHelper<tf_CFirstTuple, tf_PCOtherTuples...>::CType
 	fg_TupleConcatenate(tf_CFirstTuple &&_FirstTuple, tf_PCOtherTuples &&..._OtherTuples)
 	{
-		typedef typename NTraits::TCRemoveReference<tf_CFirstTuple>::CType CFirstTuple;
+		typedef NTraits::TCRemoveReference<tf_CFirstTuple> CFirstTuple;
 
 		return
 			typename NPrivate::TCTupleCatReturnHelper<tf_CFirstTuple, tf_PCOtherTuples...>::CType
@@ -591,115 +585,120 @@ namespace NMib::NStorage
 {
 	template <typename... tp_CTypes>
 	using TCTuple = std::tuple<tp_CTypes...>;
-#define DMibTupleTemplate std::tuple
 
-	template <typename t_CTuple>
-	class TCTuple_Len;
+	namespace NPrivate
+	{
+		template <typename t_CTuple>
+		struct TCTuple_Len;
 
-	// Support any qualifiers
-	template <typename t_CType>
-	class TCTuple_Len<t_CType const>
-		: public TCTuple_Len<t_CType>
-	{
-	};
-	template <typename t_CType>
-	class TCTuple_Len<t_CType volatile>
-		: public TCTuple_Len<t_CType>
-	{
-	};
-	template <typename t_CType>
-	class TCTuple_Len<t_CType const volatile>
-		: public TCTuple_Len<t_CType>
-	{
-	};
+		// Support any qualifiers
+		template <typename t_CType>
+		struct TCTuple_Len<t_CType const>
+			: public TCTuple_Len<t_CType>
+		{
+		};
 
-	template <typename... t_PCTypes>
-	class TCTuple_Len<TCTuple<t_PCTypes...>>
-		: public NMeta::TCTypeList_Len<NMeta::TCTypeList<t_PCTypes...>>
+		template <typename t_CType>
+		struct TCTuple_Len<t_CType volatile>
+			: public TCTuple_Len<t_CType>
+		{
+		};
+
+		template <typename t_CType>
+		struct TCTuple_Len<t_CType const volatile>
+			: public TCTuple_Len<t_CType>
+		{
+		};
+
+		template <typename... tp_CTypes>
+		struct TCTuple_Len<TCTuple<tp_CTypes...>>
+			: public NMeta::NPrivate::TCTypeList_Len<NMeta::TCTypeList<tp_CTypes...>>
+		{
+		};
+	}
+
+	template <typename t_CType>
+	inline constexpr mint gc_Tuple_Len = NPrivate::TCTuple_Len<t_CType>::mc_Value;
+
+	namespace NPrivate
 	{
-	};
+		template <mint t_Index, typename t_CType>
+		struct TCTuple_Get;
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, const TCTuple<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, volatile TCTuple<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, const volatile TCTuple<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
+		};
+
+		template <mint t_Index, typename... tp_CTypes>
+		struct TCTuple_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>
+		{
+			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
+		};
+	}
 
 	template <mint t_Index, typename t_CType>
-	class TCTuple_Get;
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, TCTuple<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, const TCTuple<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, volatile TCTuple<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, const volatile TCTuple<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, NMeta::TCTypeList<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, const NMeta::TCTypeList<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, volatile NMeta::TCTypeList<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
-
-	template <mint t_Index, typename... t_PCTypes>
-	class TCTuple_Get<t_Index, const volatile NMeta::TCTypeList<t_PCTypes...>>
-	{
-	public:
-		typedef typename NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<t_PCTypes...>>::CType CType;
-	};
+	using TCTuple_Get = NPrivate::TCTuple_Get<t_Index, t_CType>::CType;
 }
 
 namespace NMib
 {
 	template <mint tf_Index, typename tf_CType>
-	mark_artificial mark_nodebug inline_always auto fg_Get(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>::CType
+	mark_artificial mark_nodebug inline_always auto fg_Get(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>
 	{
-		return fg_Forward<typename NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>::CType >(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))));
+		return fg_Forward<NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>>(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))));
 	}
 
 	template <mint tf_Index, typename tf_CType>
-	mark_artificial mark_nodebug inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept -> typename NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>::CType
+	mark_artificial mark_nodebug inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>
 	{
-		return fg_Forward<typename NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>::CType >(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)));
+		return fg_Forward<NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>>(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)));
 	}
 }
 
 namespace NMib::NStorage
 {
-	template <typename... t_PCTypes>
-	inline_always TCTuple<t_PCTypes &...> fg_TupleReferences(t_PCTypes &...p_Params) noexcept
+	template <typename... tp_CTypes>
+	inline_always TCTuple<tp_CTypes &...> fg_TupleReferences(tp_CTypes &...p_Params) noexcept
 	{
-		return TCTuple<t_PCTypes &...>(p_Params...);
+		return TCTuple<tp_CTypes &...>(p_Params...);
 	}
 
 	template <typename... tfp_CParams>
@@ -755,7 +754,7 @@ namespace NMib::NStorage
 				fg_Forward<tf_FFunctor>(_fFunctor)
 				, fg_Forward<tf_CTuple>(_Tuple)
 				, tf_CTypeList()
-				, NMeta::TCConsecutiveIndices<TCTuple_Len<typename NTraits::TCRemoveReference<tf_CTuple>::CType>::mc_Value>()
+				, NMeta::TCConsecutiveIndices<gc_Tuple_Len<NTraits::TCRemoveReference<tf_CTuple>>>()
 			)
 		;
 	}

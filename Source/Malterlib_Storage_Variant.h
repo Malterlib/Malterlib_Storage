@@ -42,13 +42,13 @@ namespace NMib::NStorage
 		};
 
 		template <typename t_CReturn>
-		function_does_not_return inline_never typename TCEnableIf<!NTraits::TCIsVoid<t_CReturn>::mc_Value, t_CReturn &>::CType fg_InvalidVariant()
+		function_does_not_return inline_never TCEnableIf<!NTraits::cIsVoid<t_CReturn>, t_CReturn &> fg_InvalidVariant()
 		{
 			DMibError("Corrupt variant");
 		}
 
 		template <typename t_CReturn>
-		function_does_not_return inline_never typename TCEnableIf<NTraits::TCIsVoid<t_CReturn>::mc_Value, void>::CType fg_InvalidVariant()
+		function_does_not_return inline_never TCEnableIf<NTraits::cIsVoid<t_CReturn>, void> fg_InvalidVariant()
 		{
 			DMibError("Corrupt variant");
 		}
@@ -75,7 +75,7 @@ namespace NMib::NStorage
 	template <typename t_CIndex, typename ...tp_CMembers>
 	struct TCVariantCommon
 	{
-		static_assert(NTraits::TCIsSame<t_CIndex, NPrivate::CDummy>::mc_Value, "Mismatched index type and member index types");
+		static_assert(NTraits::cIsSame<t_CIndex, NPrivate::CDummy>, "Mismatched index type and member index types");
 	};
 
 	template <typename t_CIndex, typename t_CType, t_CIndex t_Member>
@@ -85,8 +85,8 @@ namespace NMib::NStorage
 		static constexpr t_CIndex mc_Member = t_Member;
 
 #ifdef DDebugger_VisualStudio
-		static constexpr bool mc_bDebugIsVoid = NTraits::TCIsVoid<CType>::mc_Value;
-		using CDebugType = typename TCChooseType<mc_bDebugIsVoid, uint8, t_CType>::CType;
+		static constexpr bool mc_bDebugIsVoid = NTraits::cIsVoid<CType>;
+		using CDebugType = TCConditional<mc_bDebugIsVoid, uint8, t_CType>;
 #endif
 	};
 
@@ -179,7 +179,7 @@ namespace NMib::NStorage
 		struct TCFirstDefaultConstructible
 			<
 				t_CIndex
-				, NTraits::TCCompileTimeTrue<NTraits::TCIsReference<t_CType0>::mc_Value || !NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value>
+				, NTraits::TCCompileTimeTrue<NTraits::cIsReference<t_CType0> || !NTraits::cIsConstructibleWith<t_CType0>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
@@ -191,7 +191,7 @@ namespace NMib::NStorage
 		struct TCFirstDefaultConstructible
 			<
 				t_CIndex
-				, NTraits::TCCompileTimeTrue<NTraits::TCIsReference<t_CType0>::mc_Value || !NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value>
+				, NTraits::TCCompileTimeTrue<NTraits::cIsReference<t_CType0> || !NTraits::cIsConstructibleWith<t_CType0>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
 			: public TCFirstDefaultConstructible<t_CIndex, NTraits::CCompileTimeTrue>
@@ -202,7 +202,7 @@ namespace NMib::NStorage
 		struct TCFirstDefaultConstructible
 			<
 				t_CIndex
-				, NTraits::TCCompileTimeTrue<!NTraits::TCIsReference<t_CType0>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value>
+				, NTraits::TCCompileTimeTrue<!NTraits::cIsReference<t_CType0> && NTraits::cIsConstructibleWith<t_CType0>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
@@ -214,7 +214,7 @@ namespace NMib::NStorage
 		struct TCFirstDefaultConstructible
 			<
 				t_CIndex
-				, NTraits::TCCompileTimeTrue<!NTraits::TCIsReference<t_CType0>::mc_Value && NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value>
+				, NTraits::TCCompileTimeTrue<!NTraits::cIsReference<t_CType0> && NTraits::cIsConstructibleWith<t_CType0>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
 		{
@@ -235,9 +235,9 @@ namespace NMib::NStorage
 				t_CIndex
 				, NTraits::TCCompileTimeTrue
 				<
-					NTraits::TCIsReference<t_CType0>::mc_Value
-					|| !NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value
-					|| !NTraits::TCHasNothrowDefaultConstructor<t_CType0>::mc_Value
+					NTraits::cIsReference<t_CType0>
+					|| !NTraits::cIsConstructibleWith<t_CType0>
+					|| !NTraits::cIsNothrowDefaultConstructible<t_CType0>
 				>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
@@ -252,9 +252,9 @@ namespace NMib::NStorage
 				t_CIndex
 				, NTraits::TCCompileTimeTrue
 				<
-					NTraits::TCIsReference<t_CType0>::mc_Value
-					|| !NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value
-					|| !NTraits::TCHasNothrowDefaultConstructor<t_CType0>::mc_Value
+					NTraits::cIsReference<t_CType0>
+					|| !NTraits::cIsConstructibleWith<t_CType0>
+					|| !NTraits::cIsNothrowDefaultConstructible<t_CType0>
 				>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
@@ -268,9 +268,9 @@ namespace NMib::NStorage
 				t_CIndex
 				, NTraits::TCCompileTimeTrue
 				<
-					!NTraits::TCIsReference<t_CType0>::mc_Value
-					&& NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value
-					&& NTraits::TCHasNothrowDefaultConstructor<t_CType0>::mc_Value
+					!NTraits::cIsReference<t_CType0>
+					&& NTraits::cIsConstructibleWith<t_CType0>
+					&& NTraits::cIsNothrowDefaultConstructible<t_CType0>
 				>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
@@ -285,9 +285,9 @@ namespace NMib::NStorage
 				t_CIndex
 				, NTraits::TCCompileTimeTrue
 				<
-					!NTraits::TCIsReference<t_CType0>::mc_Value
-					&& NTraits::TCIsConstructorCallableWith<t_CType0, void ()>::mc_Value
-					&& NTraits::TCHasNothrowDefaultConstructor<t_CType0>::mc_Value
+					!NTraits::cIsReference<t_CType0>
+					&& NTraits::cIsConstructibleWith<t_CType0>
+					&& NTraits::cIsNothrowDefaultConstructible<t_CType0>
 				>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
@@ -301,25 +301,25 @@ namespace NMib::NStorage
 			static constexpr t_CIndex mc_Value = t_CIndex(-1);
 		};
 
-		template <typename t_CIndex, typename t_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-				, t_FConstructorParams
-				, NTraits::TCCompileTimeTrue<!NTraits::TCIsConstructorCallableWith<t_CType0, t_FConstructorParams>::mc_Value>
+				, t_CReturn (tp_FConstructorParams...)
+				, NTraits::TCCompileTimeTrue<!NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
-			: public TCFirstConstructibleWith<t_CIndex, t_FConstructorParams, NTraits::CCompileTimeTrue, tp_CMembers...>
+			: public TCFirstConstructibleWith<t_CIndex, t_CReturn (tp_FConstructorParams...), NTraits::CCompileTimeTrue, tp_CMembers...>
 		{
 		};
 
-		template <typename t_CIndex, typename t_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-				, t_FConstructorParams
-				, NTraits::TCCompileTimeTrue<NTraits::TCIsConstructorCallableWith<t_CType0, t_FConstructorParams>::mc_Value>
+				, t_CReturn (tp_FConstructorParams...)
+				, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
@@ -327,12 +327,12 @@ namespace NMib::NStorage
 			static constexpr t_CIndex mc_Value = t_Member0;
 		};
 
-		template <typename t_CIndex, typename t_FConstructorParams, typename t_CType0, t_CIndex t_Member0>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0>
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-				, t_FConstructorParams
-				, NTraits::TCCompileTimeTrue<NTraits::TCIsConstructorCallableWith<t_CType0, t_FConstructorParams>::mc_Value>
+				, t_CReturn (tp_FConstructorParams...)
+				, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			>
 		{
@@ -342,8 +342,8 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCCheckVariantContracts
 		{
-			static_assert(!NTraits::TCIsArrayUnbounded<t_CType>::mc_Value, "You cannot store an unbounded array in a variant");
-			static_assert(!NTraits::TCIsFunction<t_CType>::mc_Value, "You cannot store function types in a variant");
+			static_assert(!NTraits::cIsUnboundedArray<t_CType>, "You cannot store an unbounded array in a variant");
+			static_assert(!NTraits::cIsFunction<t_CType>, "You cannot store function types in a variant");
 			constexpr static bool mc_Value = true;
 		};
 
@@ -386,8 +386,8 @@ namespace NMib::NStorage
 #endif
 	{
 		using CIndexType = t_CIndex;
-		using CIndexInteger = typename NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>::CType;
-		using CIndexUnsignedInteger = typename NTraits::TCUnsigned<CIndexInteger>::CType;
+		using CIndexInteger = NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>;
+		using CIndexUnsignedInteger = NTraits::TCUnsigned<CIndexInteger>;
 		static constexpr mint mc_Length = sizeof...(tp_CTypes);
 
 	private:
@@ -399,21 +399,21 @@ namespace NMib::NStorage
 		static constexpr CIndexInteger mcp_MinIndex = fg_MinConstexpr(CIndexInteger(tp_Member)...);
 		static constexpr CIndexInteger mcp_MaxIndex = fg_MaxConstexpr(CIndexInteger(tp_Member)...);
 
-		static constexpr CIndexInteger mcp_Member0 = NMeta::TCIntegerSequence_Get<0, NMeta::TCIntegerSequence<CIndexInteger, CIndexInteger(tp_Member)...>>::mc_Value;
+		static constexpr CIndexInteger mcp_Member0 = NMeta::gc_IntegerSequence_Get<0, NMeta::TCIntegerSequence<CIndexInteger, CIndexInteger(tp_Member)...>>;
 		static constexpr t_CIndex mcp_Member0Typed = t_CIndex(mcp_Member0);
 
-		using CType0 = typename NMeta::TCTypeList_Get<0, NMeta::TCTypeList<tp_CTypes...>>::CType;
+		using CType0 = NMeta::TCTypeList_Get<0, NMeta::TCTypeList<tp_CTypes...>>;
 
-		static constexpr mint mcp_NeededBits = TCConstantMax
+		static constexpr mint mcp_NeededBits = gc_ConstantMax
 			<
 				mint
-				, TCHighestBitSet<CIndexInteger, mcp_MaxIndex>::mc_Value
-				, TCHighestBitSet<CIndexInteger, mcp_MinIndex>::mc_Value
+				, gc_HighestBitSet<CIndexInteger, mcp_MaxIndex>
+				, gc_HighestBitSet<CIndexInteger, mcp_MinIndex>
 			>
-			::mc_Value + 1
+			+ 1
 		;
 
-		using CTypeIDStorageType = typename NTraits::TCIntFromSizeLarger<(mcp_NeededBits + 7) / 8>::CType;
+		using CTypeIDStorageType = NTraits::TCIntFromSizeLarger<(mcp_NeededBits + 7) / 8>;
 
 		static_assert((NPrivate::TCCheckVariantContracts<tp_CTypes>::mc_Value && ...));
 
@@ -440,12 +440,12 @@ namespace NMib::NStorage
 		struct TCEvalConstructType
 		{
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
-			using CType = typename TCChooseType
+			using CType = TCConditional
 				<
-					NTraits::TCIsReference<CMemberType>::mc_Value,
-					typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<CMemberType>::CType>::CType,
-					typename NTraits::TCRemoveQualifiers<CMemberType>::CType
-				>::CType
+					NTraits::cIsReference<CMemberType>
+					, NTraits::TCAddPointer<NTraits::TCRemoveReference<CMemberType>>
+					, NTraits::TCRemoveQualifiers<CMemberType>
+				>
 			;
 		};
 
@@ -453,12 +453,12 @@ namespace NMib::NStorage
 			(
 				NPrivate::TCSizeOf
 				<
-					typename TCChooseType
+					TCConditional
 					<
-						NTraits::TCIsReference<tp_CTypes>::mc_Value,
-						typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType,
-						typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
-					>::CType
+						NTraits::cIsReference<tp_CTypes>
+						, NTraits::TCAddPointer<NTraits::TCRemoveReference<tp_CTypes>>
+						, NTraits::TCRemoveQualifiers<tp_CTypes>
+					>
 				>::mc_Value...
 			)
 		;
@@ -467,28 +467,28 @@ namespace NMib::NStorage
 			(
 				NPrivate::TCAlignOf
 				<
-					typename TCChooseType
+					TCConditional
 					<
-						NTraits::TCIsReference<tp_CTypes>::mc_Value
-						, typename NTraits::TCAddPointer<typename NTraits::TCRemoveReference<tp_CTypes>::CType>::CType
-						, typename NTraits::TCRemoveQualifiers<tp_CTypes>::CType
-					>::CType
+						NTraits::cIsReference<tp_CTypes>
+						, NTraits::TCAddPointer<NTraits::TCRemoveReference<tp_CTypes>>
+						, NTraits::TCRemoveQualifiers<tp_CTypes>
+					>
 				>::mc_Value...
 			)
 		;
 
-		static constexpr CIndexInteger mcp_FirstDefaultConstructible = NTraits::TCIsVoid<CType0>::mc_Value
+		static constexpr CIndexInteger mcp_FirstDefaultConstructible = NTraits::cIsVoid<CType0>
 			? mcp_Member0
 			: NPrivate::TCFirstDefaultConstructible<CIndexInteger, NTraits::CCompileTimeTrue, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::mc_Value
 		;
 
-		static constexpr CIndexInteger mcp_FirstNothrowDefaultConstructible = NTraits::TCIsVoid<CType0>::mc_Value
+		static constexpr CIndexInteger mcp_FirstNothrowDefaultConstructible = NTraits::cIsVoid<CType0>
 			? mcp_Member0
 			: NPrivate::TCFirstNothrowDefaultConstructible<CIndexInteger, NTraits::CCompileTimeTrue, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::mc_Value
 		;
 
-		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::cHasNothrowCopyConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
-		static constexpr bool mcp_bAllHasNothrowMoveConstructor = ((NTraits::cHasNothrowMoveConstructor<tp_CTypes> || NTraits::TCIsVoid<tp_CTypes>::mc_Value) && ...);
+		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::cIsNothrowCopyConstructible<tp_CTypes> || NTraits::cIsVoid<tp_CTypes>) && ...);
+		static constexpr bool mcp_bAllHasNothrowMoveConstructor = ((NTraits::cIsNothrowMoveConstructible<tp_CTypes> || NTraits::cIsVoid<tp_CTypes>) && ...);
 
 		template <mint t_MaxSize, typename t_CDummy = void>
 		struct TCDetermineStorageType
@@ -517,13 +517,12 @@ namespace NMib::NStorage
 		struct TCEvalReturnType
 		{
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
-			using CType = typename TCChooseType
+			using CType = TCConditional
 				<
-					NTraits::TCIsRValueReference<CMemberType>::mc_Value
-					, typename NTraits::TCAddRValueReference<CMemberType>::CType
-					, typename NTraits::TCAddLValueReference<CMemberType>::CType
+					NTraits::cIsRValueReference<CMemberType>
+					, NTraits::TCAddRValueReference<CMemberType>
+					, NTraits::TCAddLValueReference<CMemberType>
 				>
-				::CType
 			;
 		};
 
@@ -531,13 +530,12 @@ namespace NMib::NStorage
 		struct TCEvalReturnTypeConst
 		{
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
-			using CType =  typename TCChooseType
+			using CType =  TCConditional
 				<
-					NTraits::TCIsRValueReference<CMemberType>::mc_Value
-					, typename NTraits::TCAddRValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveRValueReference<CMemberType>::CType>::CType>::CType
-					, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveLValueReference<CMemberType>::CType>::CType>::CType
+					NTraits::cIsRValueReference<CMemberType>
+					, NTraits::TCAddRValueReference<NTraits::TCAddConst<NTraits::TCRemoveRValueReference<CMemberType>>>
+					, NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveLValueReference<CMemberType>>>
 				>
-				::CType
 			;
 		};
 
@@ -545,14 +543,14 @@ namespace NMib::NStorage
 		struct TCEvalTryGetReturnType
 		{
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
-			using CType = typename NTraits::TCDecay<CMemberType>::CType *;
+			using CType = NTraits::TCDecay<CMemberType> *;
 		};
 
 		template <CIndexInteger t_iMember>
 		struct TCEvalTryGetReturnTypeConst
 		{
 			using CMemberType = TCTypeFromMemberInt<t_iMember>;
-			using CType = typename NTraits::TCAddConst<typename NTraits::TCDecay<CMemberType>::CType>::CType *;
+			using CType = NTraits::TCAddConst<NTraits::TCDecay<CMemberType>> *;
 		};
 
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
@@ -729,7 +727,7 @@ namespace NMib::NStorage
 			}
 		};
 
-		template <typename t_CType, bool t_bIsReference = NTraits::TCIsReference<t_CType>::mc_Value, bool t_bIsArray = NTraits::TCIsArray<t_CType>::mc_Value>
+		template <typename t_CType, bool t_bIsReference = NTraits::cIsReference<t_CType>, bool t_bIsArray = NTraits::cIsArray<t_CType>>
 		struct TCEvalReturn
 		{
 		public:
@@ -759,20 +757,21 @@ namespace NMib::NStorage
 		public:
 
 			template <typename tf_CType0, typename tf_CType1>
-			mark_nodebug inline_small static typename TCEnableIf<NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
+			mark_nodebug inline_small static TCEnableIf<NTraits::cIsLValueReference<tf_CType0>, tf_CType0> fs_Value(tf_CType1 &&_pToRet)
 			{
 				return *(*_pToRet);
 			}
 
 			template <typename tf_CType0, typename tf_CType1>
-			mark_nodebug inline_small static typename TCEnableIf<!NTraits::TCIsLValueReference<tf_CType0>::mc_Value, tf_CType0>::CType fs_Value(tf_CType1 &&_pToRet)
+			mark_nodebug inline_small static TCEnableIf<!NTraits::cIsLValueReference<tf_CType0>, tf_CType0> fs_Value(tf_CType1 &&_pToRet)
 			{
 				return NMib::fg_Move(*(*_pToRet));
 			}
 		};
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs()
+		mark_nodebug inline_small auto fp_GetAs()
+			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
@@ -782,12 +781,14 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAs() const
+		mark_nodebug inline_small auto fp_GetAs() const
+			-> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
 		{
 		}
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename TCEvalReturnTypeConst<t_iMember>::CType>::CType fp_GetAs() const
+		mark_nodebug inline_small auto fp_GetAs() const
+			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>, typename TCEvalReturnTypeConst<t_iMember>::CType>
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
@@ -799,7 +800,8 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType fp_GetAsStorage()
+		mark_nodebug inline_small auto fp_GetAsStorage()
+			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>>
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
@@ -808,12 +810,18 @@ namespace NMib::NStorage
 		}
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value, typename TCEvalReturnType<t_iMember>::CType>::CType fp_GetAsStorage() const
+		mark_nodebug inline_small auto fp_GetAsStorage() const
+			-> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
 		{
 		}
 
 		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small typename TCEnableIf<!NTraits::TCIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>::mc_Value, typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename TCEvalConstructType<t_iMember>::CType>::CType>::CType>::CType fp_GetAsStorage() const
+		mark_nodebug inline_small auto fp_GetAsStorage() const
+			-> TCEnableIf
+			<
+				!NTraits::cIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>
+				, NTraits::TCAddLValueReference<NTraits::TCAddConst<typename TCEvalConstructType<t_iMember>::CType>>
+			>
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
@@ -1178,8 +1186,8 @@ namespace NMib::NStorage
 		template <typename t_CInType>
 		struct TCEvalOneParamConstruction
 		{
-			using CInTypeNoRef = typename NTraits::TCRemoveReferenceStorable<t_CInType>::CType;
-			using CInTypeNoRefNoQualifier = typename NTraits::TCRemoveQualifiers<CInTypeNoRef>::CType;
+			using CInTypeNoRef = NTraits::TCRemoveReferenceStorable<t_CInType>;
+			using CInTypeNoRefNoQualifier = NTraits::TCRemoveQualifiers<CInTypeNoRef>;
 
 			static constexpr CIndexInteger mc_Value = TCChooseInt
 				<
@@ -1191,7 +1199,16 @@ namespace NMib::NStorage
 						CIndexInteger
 						, (TCMemberFromTypeInt<CInTypeNoRefNoQualifier>::mc_Value >= 0)
 						, TCMemberFromTypeInt<CInTypeNoRefNoQualifier>::mc_Value
-						, CIndexInteger(NPrivate::TCFirstConstructibleWith<CIndexInteger, void (t_CInType), NTraits::CCompileTimeTrue, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::mc_Value)
+						, CIndexInteger
+						(
+							NPrivate::TCFirstConstructibleWith
+							<
+								CIndexInteger
+								, void (t_CInType)
+								, NTraits::CCompileTimeTrue
+								, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...
+							>::mc_Value
+						)
 					>
 					::mc_Value
 				>
@@ -1201,21 +1218,21 @@ namespace NMib::NStorage
 
 	private:
 		template <typename t_CParam>
-		struct TCIsNoThrowConstructibleWith
+		struct TCIsNothrowConstructibleWith
 		{
 			static constexpr CIndexInteger mc_ToConstruct = TCEvalOneParamConstruction<t_CParam>::mc_Value;
 
 			using CTypeToConstruct = TCTypeFromMemberInt<mc_ToConstruct>;
 			static constexpr bool mc_Value
-				= mc_ToConstruct >= 0 && NTraits::cHasNothrowCopyConstructor<CTypeToConstruct>
+				= mc_ToConstruct >= 0 && NTraits::cIsNothrowCopyConstructible<CTypeToConstruct>
 				&&
 				(
-					NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<t_CParam>::CType>::mc_Value
+					NTraits::cIsSame<NTraits::TCRemoveQualifiers<CTypeToConstruct>, NTraits::TCRemoveQualifiers<t_CParam>>
 					||
 					(
-						!NTraits::TCIsReference<CTypeToConstruct>::mc_Value
-						&& NTraits::TCIsReference<t_CParam>::mc_Value
-						&& NTraits::TCIsSame<typename NTraits::TCRemoveQualifiers<CTypeToConstruct>::CType, typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CParam>::CType>::CType>::mc_Value
+						!NTraits::cIsReference<CTypeToConstruct>
+						&& NTraits::cIsReference<t_CParam>
+						&& NTraits::cIsSame<NTraits::TCRemoveQualifiers<CTypeToConstruct>, NTraits::TCRemoveReferenceAndQualifiers<t_CParam>>
 					)
 				)
 			;
@@ -1241,7 +1258,7 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		typename TCEvalReturnType<t_iMember>::CType fp_Set()
 		{
-			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>)
 				fp_SetTypeID(t_iMember);
 			else
 			{
@@ -1257,13 +1274,13 @@ namespace NMib::NStorage
 
 		template <CIndexInteger t_iMember, typename t_CParam0>
 		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0)
-			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&)>::mc_Value)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&>)
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
 			CConstructType *pRet;
-			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
+			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<t_iMember>>)
 				pRet = new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
 				pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
@@ -1275,7 +1292,7 @@ namespace NMib::NStorage
 
 		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
 		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&, tp_CParams &&...>)
 		{
 			using CType = TCTypeFromMemberInt<t_iMember>;
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
@@ -1289,7 +1306,7 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		void fp_SetNoRet()
 		{
-			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<t_iMember>::CType>::mc_Value)
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>)
 				fp_SetTypeID(t_iMember);
 			else
 			{
@@ -1301,11 +1318,11 @@ namespace NMib::NStorage
 
 		template <CIndexInteger t_iMember, typename t_CParam0>
 		void fp_SetNoRet(t_CParam0 &&_Param0)
-			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&)>::mc_Value)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&>)
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType ;
 
-			if constexpr (NTraits::TCIsReference<TCTypeFromMemberInt<t_iMember>>::mc_Value)
+			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<t_iMember>>)
 				new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
 				new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
@@ -1315,7 +1332,7 @@ namespace NMib::NStorage
 
 		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
 		void fp_SetNoRet(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-			requires (NTraits::TCIsConstructorCallableWith<TCTypeFromMemberInt<t_iMember>, void (t_CParam0 &&, tp_CParams && ...)>::mc_Value)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&, tp_CParams && ...>)
 		{
 			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
 
@@ -1391,7 +1408,7 @@ namespace NMib::NStorage
 			template <typename t_CParam0>
 			void operator () (t_CParam0 &&_Param0)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<typename NTraits::TCAddRValueReference<t_CParam0>::CType>::mc_Value;
+				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<NTraits::TCAddRValueReference<t_CParam0>>::mc_Value;
 
 				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (move constructor)");
 				m_This.fp_SetNoRet<s_ToConstruct>(fg_Move(_Param0));
@@ -1522,7 +1539,7 @@ namespace NMib::NStorage
 		template
 		<
 			typename tf_CParam0
-			, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr
+			, TCEnableIf<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr
 		>
 		TCVariantCommon(tf_CParam0 &&_Param0)
 			requires requires()
@@ -1540,7 +1557,7 @@ namespace NMib::NStorage
 		<
 			typename tf_CParam0
 			, typename ...tfp_CParams
-			, TCEnableIfType<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value >= 0> * = nullptr
+			, TCEnableIf<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value >= 0> * = nullptr
 		>
 		TCVariantCommon(tf_CParam0 &&_Param0, tfp_CParams && ...p_RestOfParams)
 			requires requires()
@@ -1703,18 +1720,18 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <typename tf_CParam0, TCEnableIfType<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
+		template <typename tf_CParam0, TCEnableIf<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
 		TCVariantCommon &operator = (tf_CParam0 &&_Param)
 			requires 
 			(
-				(TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value || (mcp_FirstNothrowDefaultConstructible != -1))
+				(TCIsNothrowConstructibleWith<tf_CParam0 &&>::mc_Value || (mcp_FirstNothrowDefaultConstructible != -1))
 				&& requires()
 				{
 					this->fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
 				}
 			)
 		{
-			if constexpr (TCIsNoThrowConstructibleWith<tf_CParam0 &&>::mc_Value)
+			if constexpr (TCIsNothrowConstructibleWith<tf_CParam0 &&>::mc_Value)
 			{
 				fp_DestroyCurrent(); // Cannot throw
 				fp_SetNoRet<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value>(fg_Forward<tf_CParam0>(_Param)); // Cannot throw
@@ -1868,8 +1885,8 @@ namespace NMib::NStorage
 			requires
 			(
 				(
-					NTraits::TCIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>::mc_Value
-					|| NTraits::TCHasNothrowDefaultConstructor<TCTypeFromMemberInt<t_iMember>>::mc_Value
+					NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>
+					|| NTraits::cIsNothrowDefaultConstructible<TCTypeFromMemberInt<t_iMember>>
 					|| mcp_FirstNothrowDefaultConstructible != -1
 				)
 				&& requires()
@@ -1880,7 +1897,7 @@ namespace NMib::NStorage
 		{
 			fp_DestroyCurrent();
 
-			if constexpr (NTraits::TCIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>::mc_Value)
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>)
 				return fp_Set<CIndexInteger(t_iMember)>();
 			else
 			{
@@ -1951,7 +1968,7 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-		template <typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>>
+		template <typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::gc_TypeList_Len<t_CTypes>>>
 		struct TCGetNonStreamableVariant
 		{
 		};
@@ -1970,7 +1987,7 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-		template <typename t_CIndex, typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::TCTypeList_Len<t_CTypes>::mc_Value>>
+		template <typename t_CIndex, typename t_CTypes, typename t_CIndices = NMeta::TCConsecutiveIndices<NMeta::gc_TypeList_Len<t_CTypes>>>
 		struct TCGetStreamableVariant
 		{
 		};

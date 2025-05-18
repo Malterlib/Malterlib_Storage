@@ -112,7 +112,7 @@ namespace
 			_Indirection.m_Undefined();
 			_Indirection.m_Defined();
 
-			//DMibStaticCheck(decltype(Test0));
+			//static_assert(decltype(Test0));
 
 			[[maybe_unused]] auto Test2 = fg_Const(_Indirection.m_Undefined)();
 			[[maybe_unused]] auto Test3 = fg_Const(_Indirection.m_Defined)();

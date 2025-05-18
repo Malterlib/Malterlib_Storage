@@ -78,7 +78,7 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
 	mark_artificial mark_nodebug inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
-		requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
@@ -86,8 +86,8 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
 	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
-		-> typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType
-		requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
@@ -95,8 +95,8 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
 	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
-		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, typename NTraits::TCAddConst<t_CType>::CType *>
-		requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, NTraits::TCAddConst<t_CType> *>
+		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
@@ -104,8 +104,8 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
 	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
-		-> typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-		requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		-> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
@@ -125,7 +125,7 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	template <typename... tfp_CParams>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tfp_CParams && ... p_Params)
-		requires NTraits::cConstructibleWith<t_CType, tfp_CParams &&...>
+		requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams &&...>
 	{
 		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tfp_CParams>(p_Params)...);
 	}

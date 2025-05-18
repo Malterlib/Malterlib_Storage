@@ -16,9 +16,7 @@ namespace NMib::NStorage::NIndirection
 namespace NMib::NStorage
 {
 	template <typename t_CType>
-	struct TCIsIndirection : public NTraits::TCCompileTimeConstant<bool, NPrivate::TCIsIndirectionHelper<t_CType>::mc_Value>
-	{
-	};
+	concept cIsIndirection = NPrivate::TCIsIndirectionHelper<t_CType>::mc_Value;
 }
 
 #include "Private/Malterlib_Storage_Indirection_Helpers.h"
@@ -68,23 +66,23 @@ namespace NMib::NStorage::NIndirection
 
 		template <typename t_CMemberPtr>
 		NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> operator ->* (t_CMemberPtr const &_MemberPtr)
-			requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+			requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 		;
 
 		template <typename t_CMemberPtr>
-		typename NTraits::TCAddLValueReference<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType operator ->* (t_CMemberPtr const &_MemberPtr)
-			requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+		NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>> operator ->* (t_CMemberPtr const &_MemberPtr)
+			requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 		;
 
 		template <typename t_CMemberPtr>
-		NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, typename NTraits::TCAddConst<t_CType>::CType *> operator ->* (t_CMemberPtr const &_MemberPtr) const
-			requires (NTraits::TCIsMemberFunctionPointer<t_CMemberPtr>::mc_Value)
+		NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, NTraits::TCAddConst<t_CType> *> operator ->* (t_CMemberPtr const &_MemberPtr) const
+			requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 		;
 
 		template <typename t_CMemberPtr>
 		auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> typename NTraits::TCAddLValueReference<typename NTraits::TCAddConst<typename NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>::CType>::CType>::CType
-			requires (NTraits::TCIsMemberObjectPointer<t_CMemberPtr>::mc_Value)
+			-> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+			requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 		;
 
 	public:
@@ -95,7 +93,7 @@ namespace NMib::NStorage::NIndirection
 
 		template <typename... tfp_CParams>
 		TCIndirection(tfp_CParams && ... p_Params)
-			requires NTraits::cConstructibleWith<t_CType, tfp_CParams &&...>
+			requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams &&...>
 		;
 
 		TCIndirection(TCIndirection const &_Other);
@@ -153,9 +151,9 @@ namespace NMib::NStorage
 namespace NMib
 {
 	template <typename t_CType>
-	NStorage::TCIndirection<typename NTraits::TCDecay<t_CType>::CType> fg_Indirect(t_CType &&_Type)
+	NStorage::TCIndirection<NTraits::TCDecay<t_CType>> fg_Indirect(t_CType &&_Type)
 	{
-		return NStorage::TCIndirection<typename NTraits::TCDecay<t_CType>::CType>(fg_Forward<t_CType>(_Type));
+		return NStorage::TCIndirection<NTraits::TCDecay<t_CType>>(fg_Forward<t_CType>(_Type));
 	}
 }
 

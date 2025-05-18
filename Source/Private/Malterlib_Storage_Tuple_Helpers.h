@@ -5,10 +5,10 @@
 
 namespace NMib::NPrivate
 {
-	template <typename t_CDestination, typename t_CSource, bool t_bDestinationIsReference = NMib::NTraits::TCIsLValueReference<t_CDestination>::mc_Value>
+	template <typename t_CDestination, typename t_CSource, bool t_bDestinationIsReference = NMib::NTraits::cIsLValueReference<t_CDestination>>
 	struct TCConvertMoveHelper
 	{
-		typedef typename NMib::NTraits::TCRemoveReference<t_CSource>::CType &&CType;
+		typedef NMib::NTraits::TCRemoveReference<t_CSource> &&CType;
 	};
 
 	template <typename t_CDestination, typename t_CSource>
@@ -31,7 +31,7 @@ namespace NMib::NStorage
 {
 	namespace NPrivate
 	{
-		template <typename t_CType, typename t_CTypeCleaned = typename NTraits::TCRemoveReferenceAndQualifiers<t_CType>::CType>
+		template <typename t_CType, typename t_CTypeCleaned = NTraits::TCRemoveReferenceAndQualifiers<t_CType>>
 		struct TCIsTuple
 		{
 			static constexpr bool mc_Value = false;
@@ -50,11 +50,11 @@ namespace NMib::NStorage
 namespace NMib
 {
 	template <mint tf_Index, typename tf_CType>
-	typename NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+	NTraits::TCCopyQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 	fg_Get(tf_CType &&_Tuple) noexcept;
 
 	template <mint tf_Index, typename tf_CType>
-	typename NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>::CType
+	NTraits::TCPromoteQualifiersAndReference<tf_CType &&, typename NStorage::TCTuple_Get<tf_Index, typename NStorage::NPrivate::TCIsTuple<tf_CType &&>::CType>::CType>
 	fg_GetForward(tf_CType &&_Tuple) noexcept;
 }
 
@@ -77,14 +77,14 @@ namespace NMib::NStorage::NPrivate
 	{
 		typedef typename TCTupleConvertToTypeListHelper
 			<
-				typename NTraits::TCRemoveQualifiers<typename NTraits::TCRemoveReference<t_CSourceList>::CType>::CType
+				typename NTraits::TCRemoveQualifiers<NTraits::TCRemoveReference<t_CSourceList>>::CType
 			>::CType CTypeUnreferenced;
 		;
 
-		typedef typename NTraits::TCCopyQualifiersAndReference<t_CSourceList, CTypeUnreferenced>::CType CType;
+		typedef NTraits::TCCopyQualifiersAndReference<t_CSourceList, CTypeUnreferenced> CType;
 	};
 
-	template <typename t_CSourceList, mint t_End = TCTuple_Len<typename NTraits::TCRemoveReference<t_CSourceList>::CType>::mc_Value, mint t_Start = 0>
+	template <typename t_CSourceList, mint t_End = TCTuple_Len<NTraits::TCRemoveReference<t_CSourceList>>::mc_Value, mint t_Start = 0>
 	struct TCTuple_MakePromotedLValueRefList
 		: public NMeta::TCTypeList_MakePromotedLValueRef<typename TCTupleConvertToTypeList<t_CSourceList>::CType, t_End, t_Start>
 	{
@@ -124,7 +124,7 @@ namespace NMib::NStorage::NPrivate
 	<
 		typename t_CFrom
 		, typename t_CTo
-		, bool t_bFromCompatible = TCTuple_CompatibleType<typename NTraits::TCRemoveReference<t_CFrom>::CType>::mc_Value
+		, bool t_bFromCompatible = TCTuple_CompatibleType<NTraits::TCRemoveReference<t_CFrom>>::mc_Value
 		, bool t_bToCompatible = TCTuple_CompatibleType<t_CTo>::mc_Value
 	>
 	struct TCTuple_IsConstructible
@@ -146,7 +146,7 @@ namespace NMib::NStorage::NPrivate
 	<
 		typename t_CFrom
 		, typename t_CTo
-		, bool t_bFromCompatible = TCTuple_CompatibleType<typename NTraits::TCRemoveReference<t_CFrom>::CType>::mc_Value
+		, bool t_bFromCompatible = TCTuple_CompatibleType<NTraits::TCRemoveReference<t_CFrom>>::mc_Value
 		, bool t_bToCompatible = TCTuple_CompatibleType<t_CTo>::mc_Value
 	>
 	struct TCTuple_IsAssignable
@@ -168,14 +168,14 @@ namespace NMib::NStorage::NPrivate
 	<
 		mint t_Index
 		, typename t_CType
-		, bool t_bNoStorage = NTraits::TCIsEmpty<t_CType>::mc_Value
+		, bool t_bNoStorage = NTraits::cIsEmpty<t_CType>
 //#if __has_feature(is_final)
 //				&& !__is_final(t_CType)
 //#endif
 	>
 	class TCTupleLeaf;
 
-	template <typename t_CType, typename t_CTypeCleaned = typename NTraits::TCRemoveReferenceAndQualifiers<t_CType>::CType>
+	template <typename t_CType, typename t_CTypeCleaned = NTraits::TCRemoveReferenceAndQualifiers<t_CType>>
 	struct TCTupleLeafTraits
 	{
 		static constexpr bool mc_IsTupleLeaf = false;
@@ -186,7 +186,7 @@ namespace NMib::NStorage::NPrivate
 	struct TCTupleLeafTraits<t_CType, TCTupleLeaf<t_Index, t_CLeafType, t_bNoStorage>>
 	{
 		static constexpr bool mc_IsTupleLeaf = true;
-		typedef typename NTraits::TCPromoteQualifiersAndReference<t_CType, t_CLeafType>::CType CType;
+		typedef NTraits::TCPromoteQualifiersAndReference<t_CType, t_CLeafType> CType;
 	};
 
 	template <mint t_Index, typename t_CType, bool t_bNoStorage>
@@ -198,15 +198,15 @@ namespace NMib::NStorage::NPrivate
 
 		inline_always constexpr
 		TCTupleLeaf()
-			noexcept(NTraits::TCHasNothrowDefaultConstructor<t_CType>::mc_Value)
+			noexcept(NTraits::cIsNothrowDefaultConstructible<t_CType>)
 			: mp_Value()
 		{
-			static_assert(!NTraits::TCIsReference<t_CType>::mc_Value, "Attempted to default construct a reference element in a tuple");
+			static_assert(!NTraits::cIsReference<t_CType>, "Attempted to default construct a reference element in a tuple");
 		}
 
 		inline_always constexpr
 		TCTupleLeaf(NMib::NInternal::CDefault &&)
-			noexcept(NTraits::TCHasNothrowDefaultConstructor<t_CType>::mc_Value)
+			noexcept(NTraits::cIsNothrowDefaultConstructible<t_CType>)
 			: mp_Value()
 		{
 		}
@@ -214,30 +214,30 @@ namespace NMib::NStorage::NPrivate
 		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (tf_CParam &&)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, tf_CParam &&>)
 			requires
 			(
 				!TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::cConstructibleWith<t_CType, tf_CParam &&>
+				&& NTraits::cIsPlacementNewConstructibleWith<t_CType, tf_CParam &&>
 			)
 			: mp_Value(fg_Forward<tf_CParam>(_Param))
 		{
 			static_assert
 				(
-					!NTraits::TCIsReference<t_CType>::mc_Value
+					!NTraits::cIsReference<t_CType>
 					||
 					(
-						NTraits::TCIsLValueReference<t_CType>::mc_Value
+						NTraits::cIsLValueReference<t_CType>
 						&&
 						(
-							NTraits::TCIsLValueReference<tf_CParam>::mc_Value
-							|| NStorage::TCIsReference<tf_CParam>::mc_Value
+							NTraits::cIsLValueReference<tf_CParam>
+							|| NStorage::cIsReference<tf_CParam>
 						)
 					)
 					||
 					(
-						NTraits::TCIsRValueReference<t_CType>::mc_Value
-						&& !NTraits::TCIsRValueReference<tf_CParam>::mc_Value
+						NTraits::cIsRValueReference<t_CType>
+						&& !NTraits::cIsRValueReference<tf_CParam>
 					)
 					, "Attempted to construct a reference element in a tuple with an rvalue"
 				)
@@ -247,14 +247,14 @@ namespace NMib::NStorage::NPrivate
 		// Other leaf
 		inline_always explicit
 		TCTupleLeaf(TCTupleLeaf const &_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (t_CType const &)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, t_CType const &>)
 			: mp_Value(_Param.f_Get())
 		{
 		}
 
 		inline_always explicit
 		TCTupleLeaf(TCTupleLeaf &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (t_CType &&)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, t_CType &&>)
 			: mp_Value(fg_ConvertMove<t_CType>(_Param.f_Get()))
 		{
 		}
@@ -262,11 +262,11 @@ namespace NMib::NStorage::NPrivate
 		template <typename tf_CParam>
 		inline_always
 		TCTupleLeaf(tf_CParam &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>)
 			requires
 			(
 				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::cConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
+				&& NTraits::cIsPlacementNewConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
 			)
 			: mp_Value(fg_Forward<typename TCTupleLeafTraits<tf_CParam>::CType>(_Param.f_Get()))
 		{
@@ -326,13 +326,13 @@ namespace NMib::NStorage::NPrivate
 
 		inline_always constexpr
 		TCTupleLeaf()
-			noexcept(NTraits::TCHasNothrowDefaultConstructor<t_CType>::mc_Value)
+			noexcept(NTraits::cIsNothrowDefaultConstructible<t_CType>)
 		{
 		}
 
 		inline_always constexpr
 		TCTupleLeaf(NMib::NInternal::CDefault &&)
-			noexcept(NTraits::TCHasNothrowDefaultConstructor<t_CType>::mc_Value)
+			noexcept(NTraits::cIsNothrowDefaultConstructible<t_CType>)
 		{
 		}
 
@@ -340,11 +340,11 @@ namespace NMib::NStorage::NPrivate
 		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (tf_CParam &&)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, tf_CParam &&>)
 			requires
 			(
 				!TCTupleLeafTraits<tf_CParam &&>::mc_IsTupleLeaf
-				&& NTraits::cConstructibleWith<t_CType, tf_CParam &&>
+				&& NTraits::cIsPlacementNewConstructibleWith<t_CType, tf_CParam &&>
 			)
 		{
 			new((void *)&f_Get()) t_CType(fg_Forward<tf_CParam>(_Param));
@@ -353,13 +353,13 @@ namespace NMib::NStorage::NPrivate
 		// Other leaf
 		inline_always explicit
 		TCTupleLeaf(TCTupleLeaf const &_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (t_CType const &)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, t_CType const &>)
 		{
 			new((void *)&f_Get()) t_CType(_Param.f_Get());
 		}
 		inline_always explicit
 		TCTupleLeaf(TCTupleLeaf &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (t_CType &&)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, t_CType &&>)
 		{
 			new((void *)&f_Get()) t_CType(fg_ConvertMove<t_CType>(_Param.f_Get()));
 		}
@@ -367,11 +367,11 @@ namespace NMib::NStorage::NPrivate
 		template <typename tf_CParam>
 		inline_always explicit
 		TCTupleLeaf(tf_CParam &&_Param)
-			noexcept(NTraits::TCIsConstructorNothrowCallableWith<t_CType, void (typename TCTupleLeafTraits<tf_CParam>::CType)>::mc_Value)
+			noexcept(NTraits::cIsNothrowConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>)
 			requires
 			(
 				TCTupleLeafTraits<tf_CParam>::mc_IsTupleLeaf
-				&& NTraits::cConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
+				&& NTraits::cIsPlacementNewConstructibleWith<t_CType, typename TCTupleLeafTraits<tf_CParam>::CType>
 			)
 		{
 			new((void *)&f_Get()) t_CType(fg_Forward<typename TCTupleLeafTraits<tf_CParam>::CType>(_Param.f_Get()));
@@ -511,7 +511,7 @@ namespace NMib::NStorage::NPrivate
 		: public TCTupleLeaf<t_PIndices, t_PCTypes>...
 	{
 		constexpr TCTupleImp()
-			noexcept(NMeta::TCAllIsTrue<NTraits::TCHasNothrowDefaultConstructor<t_PCTypes>::mc_Value...>::mc_Value)
+			noexcept(NMeta::TCAllIsTrue<NTraits::cIsNothrowDefaultConstructible<t_PCTypes>...>::mc_Value)
 		{
 		}
 
@@ -535,8 +535,8 @@ namespace NMib::NStorage::NPrivate
 			)
 			noexcept
 			(
-				NMeta::TCAllIsTrue<NTraits::TCIsConstructorNothrowCallableWith<TCTupleLeaf<tf_PIndices, tf_PCTypes>, void (tf_PCConstructArguments &&)>::mc_Value...>::mc_Value
-				&& NMeta::TCAllIsTrue<NTraits::TCHasNothrowDefaultConstructor<tf_PCDefaultConstructTypes>::mc_Value...>::mc_Value
+				NMeta::TCAllIsTrue<NTraits::cIsNothrowConstructibleWith<TCTupleLeaf<tf_PIndices, tf_PCTypes>, tf_PCConstructArguments &&>...>::mc_Value
+				&& NMeta::TCAllIsTrue<NTraits::cIsNothrowDefaultConstructible<tf_PCDefaultConstructTypes>...>::mc_Value
 			)
 			: TCTupleLeaf<tf_PIndices, tf_PCTypes>(fg_Forward<tf_PCConstructArguments>(_Arguments))...
 			, TCTupleLeaf<tf_PDefaultConstructIndices, tf_PCDefaultConstructTypes>()...
@@ -559,11 +559,11 @@ namespace NMib::NStorage::NPrivate
 			(
 				NMeta::TCAllIsTrue
 				<
-					NTraits::TCIsConstructorNothrowCallableWith
+					NTraits::cIsNothrowConstructibleWith
 					<
 						TCTupleLeaf<t_PIndices, t_PCTypes>
-						, void (typename TCTuple_Get<t_PIndices, typename TCTuple_MakePromotedLValueRefList<tf_CTuple>::CType>::CType)
-					>::mc_Value...
+						, typename TCTuple_Get<t_PIndices, typename TCTuple_MakePromotedLValueRefList<tf_CTuple>::CType>::CType
+					>...
 				>::mc_Value
 			)
 			: TCTupleLeaf<t_PIndices, t_PCTypes>
