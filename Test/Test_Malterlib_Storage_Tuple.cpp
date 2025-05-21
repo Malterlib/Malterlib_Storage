@@ -264,20 +264,8 @@ namespace
 				static_assert(sizeof(Tuple) == 1);
 			}
 			{
-#ifdef DMibContainer_TupleInternal
-				TCTuple<CEmpty, CEmpty, CEmpty> Tuple;
-				static_assert(sizeof(Tuple) == 1);
-#endif
-			}
-			{
 				TCTuple<CEmpty0, CEmpty1, CEmpty2> Tuple;
 #if !defined(DCompiler_MSVC) && !defined(DCompiler_clang_cl) || defined(DCompiler_clang_cl) && defined(DMalterlibUseLibCxx)
-				static_assert(sizeof(Tuple) == 1);
-#endif
-			}
-			{
-#ifdef DMibContainer_TupleInternal
-				TCTuple<TCTuple<CEmpty, CEmpty>, TCTuple<CEmpty, CEmpty>> Tuple;
 				static_assert(sizeof(Tuple) == 1);
 #endif
 			}
@@ -305,10 +293,6 @@ namespace
 
 				TCTuple<int> Tuple_1;
 				
-#ifdef DMibContainer_TupleInternal
-				static_assert(NMib::NStorage::NPrivate::TCTuple_IsAssignable<TCTuple<int> const &, TCTuple<int>>::mc_Value);
-				static_assert(NMib::NStorage::NPrivate::TCTuple_IsAssignable<TCTuple<int> &&, TCTuple<int>>::mc_Value);
-#endif
 				Tuple_1 = Tuple;
 				DMibTest(DMibExpr(Tuple_1) == DMibExpr(Tuple))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple_1)) == DMibExpr(2));
@@ -389,11 +373,7 @@ namespace
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CNonCopyableEmpty>, TCTuple<int, CNonCopyableEmpty> const &>);
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CNonCopyableEmpty>, TCTuple<int, CNonCopyableEmpty> const &>);
 				
-#if defined(DMibContainer_TupleInternal)
-				TCTuple<int, CMovableOnly> TupleMovable(2, fg_Default());
-#else
 				TCTuple<int, CMovableOnly> TupleMovable;
-#endif
 				TCTuple<int, CMovableOnly> TupleMovable2(fg_Move(TupleMovable));
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovable).m_Moved) == DMibExpr(0))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovable).m_MovedFrom) == DMibExpr(1))(ETestFlag_NoValues);
@@ -428,13 +408,7 @@ namespace
 				
 				static_assert(NTraits::cIsNothrowAssignableWith<int &, int>);
 				static_assert(NTraits::cIsNothrowAssignableWith<CMovableAssignOnly &, CMovableAssignOnly &&>);
-#ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::cIsAssignableWith<TCTuple<int, CMovableAssignOnly> &, TCTuple<int, CMovableAssignOnly> const &>);
-#endif
 				static_assert(NTraits::cIsNothrowAssignableWith<TCTuple<int, CMovableAssignOnly> &, TCTuple<int, CMovableAssignOnly> &&>);
-#ifdef DMibContainer_TupleInternal
-				static_assert(!NTraits::cIsAssignableWith<TCTuple<int, CMovableAssignOnlyEmpty> &, TCTuple<int, CMovableAssignOnlyEmpty> const &>);
-#endif
 				static_assert(NTraits::cIsNothrowAssignableWith<TCTuple<int, CMovableAssignOnlyEmpty> &, TCTuple<int, CMovableAssignOnlyEmpty> &&>);
 
 				static_assert(NTraits::cIsAssignableWith<TCTuple<int, CMovableAssignOnlyExcept> &, TCTuple<int, CMovableAssignOnlyExcept> &&>);
@@ -560,9 +534,6 @@ namespace
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
 #endif
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
-#ifdef DMibContainer_TupleInternal
-						DMibTest(DMibExpr(fg_Get<1>(Right).m_nCompares) == DMibExpr(0));
-#endif
 					}
 				}
 				{
@@ -731,11 +702,6 @@ namespace
 			{NMib::NStorage::TCTuple<FFunc0Ref> Variant(fsg_FFunc0);}
 			{NMib::NStorage::TCTuple<FFunc1Ref> Variant(fsg_FFunc1);}
 			{NMib::NStorage::TCTuple<FFunc2Ref> Variant(fsg_FFunc2);}
-#ifdef DMibContainer_TupleInternal
-			{NMib::NStorage::TCTuple<FFunc0RRef> Variant(NMib::fg_Move(fsg_FFunc0));}
-			{NMib::NStorage::TCTuple<FFunc1RRef> Variant(NMib::fg_Move(fsg_FFunc1));}
-			{NMib::NStorage::TCTuple<FFunc2RRef> Variant(NMib::fg_Move(fsg_FFunc2));}
-#endif
 			{NMib::NStorage::TCTuple<FFunc0Ptr> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc1Ptr> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc2Ptr> Tuple;}
@@ -760,11 +726,6 @@ namespace
 			{NMib::NStorage::TCTuple<FFunc0ElRef> Variant(fsg_FFunc0El);}
 			{NMib::NStorage::TCTuple<FFunc1ElRef> Variant(fsg_FFunc1El);}
 			{NMib::NStorage::TCTuple<FFunc2ElRef> Variant(fsg_FFunc2El);}
-#ifdef DMibContainer_TupleInternal
-			{NMib::NStorage::TCTuple<FFunc0ElRRef> Variant(NMib::fg_Move(fsg_FFunc0El));}
-			{NMib::NStorage::TCTuple<FFunc1ElRRef> Variant(NMib::fg_Move(fsg_FFunc1El));}
-			{NMib::NStorage::TCTuple<FFunc2ElRRef> Variant(NMib::fg_Move(fsg_FFunc2El));}
-#endif
 			{NMib::NStorage::TCTuple<FFunc0ElPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc1ElPtr> Tuple;}
 			{NMib::NStorage::TCTuple<FFunc2ElPtr> Tuple;}
@@ -793,16 +754,8 @@ namespace
 #endif
 //			{NMib::NStorage::TCTuple<CTestArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTestArrayC> Tuple;}
-#ifdef DMibContainer_TupleInternal
-			{NMib::NStorage::TCTuple<CTest2DArray2> Tuple;}
-			{NMib::NStorage::TCTuple<CTest2DArray2C> Tuple;}
-#endif
 //			{NMib::NStorage::TCTuple<CTest2DArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest2DArrayC> Tuple;}
-#ifdef DMibContainer_TupleInternal
-			{NMib::NStorage::TCTuple<CTest3DArray2> Tuple;}
-			{NMib::NStorage::TCTuple<CTest3DArray2C> Tuple;}
-#endif
 //			{NMib::NStorage::TCTuple<CTest3DArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest3DArrayC> Tuple;}
 			{NMib::NStorage::TCTuple<void *> Tuple;}
