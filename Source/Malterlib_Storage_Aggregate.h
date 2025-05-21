@@ -12,7 +12,7 @@ namespace NMib
 		template <typename t_CEvent, bool t_bAllowRecursive>
 		class TCMutualAggregate;
 		
-		typedef TCMutualAggregate<CEventAutoResetAggregate, true> CMutualAggregate;
+		using CMutualAggregate = TCMutualAggregate<CEventAutoResetAggregate, true>;
 	}
 }
 
@@ -21,8 +21,9 @@ namespace NMib::NStorage
 	template <typename t_CData = aint>
 	class TCAggregateSimple
 	{
-		typedef t_CData CData;
-		public:
+		using CData = t_CData;
+
+	public:
 
 		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 
@@ -72,7 +73,7 @@ namespace NMib::NStorage
 	template <typename t_CData, aint t_Priority = 128, typename t_CLock = NThread::CLowLevelLockAggregate>
 	class TCAggregate;
 
-	typedef TCAggregate<aint, 128, NThread::CNoLock> CAggregate;
+	using CAggregate = TCAggregate<aint, 128, NThread::CNoLock>;
 
 	enum EAggregateLifeTimeFlag
 	{
@@ -85,7 +86,7 @@ namespace NMib::NStorage
 	template <typename t_CData, aint t_Priority, typename t_CLock>
 	class TCAggregate
 	{
-		typedef t_CData CData;
+		using CData = t_CData;
 
 	public:
 		TCAggregate() = delete;
@@ -99,7 +100,8 @@ namespace NMib::NStorage
 		{
 		}
 
-		typedef void (FAggregateDestruct)(CAggregate *_pThis);
+		using FAggregateDestruct = void (CAggregate *_pThis);
+
 		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
 		DMibListLinkDA_Link(TCAggregate, m_Link);
 		aint m_Priority;

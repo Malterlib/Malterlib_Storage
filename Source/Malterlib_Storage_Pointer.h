@@ -700,22 +700,21 @@ namespace NMib::NStorage
 		class TCChooseSharedPointerTypeImp<t_CType, t_Options, true>
 		{
 		public:
-
-			typedef t_CType CType;
+			using CType = t_CType;
 		};
 
 		template <CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount>
 		class TCChooseSharedPointerTypeImp<void, t_Options, t_bHasRefCount>
 		{
 		public:
-			typedef void CType;
+			using CType = void;
 		};
 
 		template <CSharedPointerOptionUnderlying t_Options>
 		class TCChooseSharedPointerTypeImp<void, t_Options, false>
 		{
 		public:
-			typedef void CType;
+			using CType = void;
 		};
 
 		template <typename tf_CType>
@@ -749,24 +748,27 @@ namespace NMib::NStorage
 		template <>
 		struct TCParseSharedPointerOptions<>
 		{
-			typedef NMeta::TCTypeList<> CFunctions;
-			typedef NMemory::CDefaultAllocator CAllocator;
+			using CFunctions = NMeta::TCTypeList<>;
+			using CAllocator = NMemory::CDefaultAllocator;
+
 			static constexpr bool mc_bSupportWeak = false;
 		};
 
 		template <typename t_CFirst, typename... tp_CParams>
 		struct TCParseSharedPointerOptions<t_CFirst, tp_CParams...>
 		{
-			typedef TCParseSharedPointerOptions<tp_CParams...> CParent;
-			typedef t_CFirst CAllocator;
+			using CParent = TCParseSharedPointerOptions<tp_CParams...>;
+			using CAllocator = t_CFirst;
+
 			static constexpr bool mc_bSupportWeak = CParent::mc_bSupportWeak;
 		};
 
 		template <typename... tp_CParams>
 		struct TCParseSharedPointerOptions<CSupportWeakTag, tp_CParams...>
 		{
-			typedef TCParseSharedPointerOptions<tp_CParams...> CParent;
-			typedef typename CParent::CAllocator CAllocator;
+			using CParent = TCParseSharedPointerOptions<tp_CParams...>;
+			using CAllocator = typename CParent::CAllocator;
+
 			static constexpr bool mc_bSupportWeak = true;
 		};
 
@@ -788,7 +790,8 @@ namespace NMib::NStorage
 
 			};
 
-			typedef typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType CInternalData;
+			using CInternalData = typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType;
+
 			CInternalData *m_pPointTo;
 			DIfRefCountDebugging(mutable NStorage::CRefCountDebugReference m_DebugRef);
 
@@ -879,14 +882,13 @@ namespace NMib::NStorage
 		template <typename t_CType2, typename... tp_COptions2>
 		friend class TCWeakPointer;
 
-		typedef NPrivate::TCParseSharedPointerOptions<tp_COptions...> COptions;
-		typedef typename COptions::CAllocator CAllocator;
+		using COptions = NPrivate::TCParseSharedPointerOptions<tp_COptions...>;
+		using CAllocator = typename COptions::CAllocator;
 
 		static constexpr bool mc_bSupportWeak = COptions::mc_bSupportWeak;
 
-		typedef NPrivate::TCSharedPointerData<t_CType, CAllocator, mc_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None > CData;
-
-		typedef typename CData::CInternalData CInternalData;
+		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, mc_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None >;
+		using CInternalData = typename CData::CInternalData;
 
 		CData m_Data;
 
@@ -1486,10 +1488,9 @@ namespace NMib::NStorage
 		template <typename t_CType2, typename... tp_COptions2>
 		friend class TCWeakPointer;
 
-		typedef typename NPrivate::TCParseSharedPointerOptions<tp_COptions...>::CAllocator CAllocator;
-
-		typedef NPrivate::TCSharedPointerData<t_CType, CAllocator, ESharedPointerOption_SupportWeakPointer> CData;
-		typedef typename CData::CInternalData CInternalData;
+		using CAllocator = typename NPrivate::TCParseSharedPointerOptions<tp_COptions...>::CAllocator;
+		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, ESharedPointerOption_SupportWeakPointer>;
+		using CInternalData = typename CData::CInternalData;
 
 		CData m_Data;
 

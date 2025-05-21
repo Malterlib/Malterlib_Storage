@@ -46,7 +46,7 @@ namespace NMib::NStorage
 		template <typename... tfp_CData>
 		void fp_Construct(tfp_CData && ... p_Params);
 
-		typedef t_CData CData;
+		using CData = t_CData;
 
 		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)] = {};
 		t_CLock m_Lock;

@@ -15,8 +15,8 @@ namespace
 	struct CThree {};
 	struct CFour {};
 
-	typedef NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>> CVarA;
-	typedef NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>> CVarB;
+	using CVarA = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>>;
+	using CVarB = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>>;
 
 	int operator * (CVarA _A, int _B)
 	{
@@ -111,7 +111,7 @@ namespace
 
 				NMib::NContainer::TCVector<int32> Test2 = Test;
 
-				typedef NMib::NStorage::TCStreamableVariant
+				using CManyVariant3 = NMib::NStorage::TCStreamableVariant
 					<
 						int32
 						, NMib::NStorage::TCMember<void, int32(0)>
@@ -121,11 +121,11 @@ namespace
 						, NMib::NStorage::TCMember<int32, int32(4)>
 						, NMib::NStorage::TCMember<int64, int32(5)>
 					>
-					CManyVariant3
 				;
 
-				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64> CManyVariant;
-				typedef NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, const ch8 *> CManyVariant2;
+				using CManyVariant = NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64>;
+				using CManyVariant2 = NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, const ch8 *>;
+
 				CManyVariant ManyVariant;
 				CManyVariant ManyVariantVoid;
 				ManyVariant = fp128(fp64(0.0));
@@ -193,7 +193,7 @@ namespace
 				NMib::NContainer::TCMap<NMib::NStr::CStr, NMib::NContainer::TCMap<NMib::NStr::CStr, NMib::NStr::CStr>> TestMapMap;
 				TestMapMap["Heeuhu"] = TestMap;
 
-				typedef NMib::NStorage::TCStreamableFixedVariant<EStreamID, void, NMib::NContainer::TCVector<int32>, fp32, fp64, int32, int64> CManyVariantStreamable;
+				using CManyVariantStreamable = NMib::NStorage::TCStreamableFixedVariant<EStreamID, void, NMib::NContainer::TCVector<int32>, fp32, fp64, int32, int64>;
 
 				CManyVariantStreamable ManyVariantStream = Test2;
 

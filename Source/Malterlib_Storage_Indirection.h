@@ -86,7 +86,7 @@ namespace NMib::NStorage::NIndirection
 		;
 
 	public:
-		typedef t_CType CType;
+		using CType = t_CType;
 
 		TCIndirection();
 		~TCIndirection();

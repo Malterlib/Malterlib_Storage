@@ -39,7 +39,7 @@ namespace NMib::NStorage
 		template <typename t_CType, typename t_CAllocator>
 		struct TCUniquePointerTag
 		{
-			typedef decltype(fg_Tag_UniquePointer(fg_GetReference<t_CType>(), fg_GetReference<t_CAllocator>())) CType;
+			using CType = decltype(fg_Tag_UniquePointer(fg_GetReference<t_CType>(), fg_GetReference<t_CAllocator>()));
 		};
 
 		template <typename t_CEnableIf, typename... tp_CParams>

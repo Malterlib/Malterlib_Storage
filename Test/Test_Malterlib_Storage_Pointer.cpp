@@ -493,7 +493,8 @@ namespace
 			TCUniquePointer<CTestStructVirtual> TestDerived10(fg_Construct<CTestStruct2>(0,1,2,3,4,5,6,7,8,9));
 			DMibTest(DMibExpr(*TestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0,1,2,3,4,5,6,7,8,9))) (ETestFlag_NoValues);
 
-			typedef CSmartPtr_Tests::CCopyMove CCopyMove;
+			using CCopyMove = CSmartPtr_Tests::CCopyMove;
+
 			// Moves
 			TCUniquePointer<CTestCopyMove> TestMove0(fg_Construct());
 			DMibTest(DMibExpr(TestMove0->f_GetNumMoves()) == DMibExpr(0));
@@ -712,7 +713,8 @@ namespace
 			TCSharedPointer<CTestStructVirtual> TestDerived10(fg_Construct<CTestStruct2>(0,1,2,3,4,5,6,7,8,9));
 			DMibTest(DMibExpr(*TestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0,1,2,3,4,5,6,7,8,9))) (ETestFlag_NoValues);
 
-			typedef CSmartPtr_Tests::CCopyMove CCopyMove;
+			using CCopyMove = CSmartPtr_Tests::CCopyMove;
+
 			// Moves
 			TCSharedPointer<CTestCopyMove> TestMove0(fg_Construct());
 			DMibTest(DMibExpr(TestMove0->f_GetNumMoves()) == DMibExpr(0));

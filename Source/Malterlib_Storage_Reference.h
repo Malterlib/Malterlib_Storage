@@ -66,7 +66,7 @@ namespace NMib::NStorage::NReference
 		TCReference &operator = (TCReference const volatile &_Other);
 		TCReference &operator = (TCReference &&_Other);
 	public:
-		typedef t_CType CType;
+		using CType = t_CType;
 
 		explicit TCReference(t_CType &_Param0);
 		TCReference(TCReference const &_Other);
