@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -278,7 +278,8 @@ namespace NMib::NStorage
 			return ((t_CType *)m_Data.m_pPointTo)->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug NTraits::TCAddLValueReference<t_CType> operator *() const
+			requires(!NTraits::cIsVoid<t_CType>)
 		{
 			return *m_Data.m_pPointTo;
 		}
