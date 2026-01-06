@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -10,7 +10,7 @@ namespace NMib::NStorage::NPrivate
 	{
 		constexpr static bool mc_Value = false;
 	};
-	
+
 	template <typename t_CType0, typename t_CType, typename t_CAllocator>
 	struct TCIsIndirectionHelper<t_CType0, NStorage::NIndirection::TCIndirection<t_CType, t_CAllocator>>
 	{

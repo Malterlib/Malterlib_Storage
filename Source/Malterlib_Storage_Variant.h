@@ -1251,7 +1251,7 @@ namespace NMib::NStorage
 				::mc_Value
 			;
 		};
-		
+
 
 		////////////////////////////////////////
 		//
@@ -1450,7 +1450,7 @@ namespace NMib::NStorage
 		\***************************************************************************************************/
 
 		TCVariantCommon() noexcept
-			requires 
+			requires
 			(
 				mcp_FirstNothrowDefaultConstructible != -1
 				&& requires()
@@ -1722,7 +1722,7 @@ namespace NMib::NStorage
 
 		template <typename tf_CParam0, TCEnableIf<TCEvalOneParamConstruction<tf_CParam0 &&>::mc_Value >= 0> * = nullptr>
 		TCVariantCommon &operator = (tf_CParam0 &&_Param)
-			requires 
+			requires
 			(
 				(TCIsNothrowConstructibleWith<tf_CParam0 &&>::mc_Value || (mcp_FirstNothrowDefaultConstructible != -1))
 				&& requires()
@@ -1915,7 +1915,7 @@ namespace NMib::NStorage
 
 		template <t_CIndex t_iMember, typename ...tp_CParams>
 		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Set(tp_CParams && ...p_Params)
-			requires 
+			requires
 			(
 				mcp_FirstNothrowDefaultConstructible != -1
 				&& requires()

@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Storage/Tuple>
@@ -7,7 +7,7 @@
 
 namespace
 {
-	
+
 	int32 g_MovedEmpty = 0;
 	class CTuple_Tests : public NMib::NTest::CTest
 	{
@@ -20,7 +20,7 @@ namespace
 			{
 			}
 		};
-		
+
 		class CEmpty
 		{
 		public:
@@ -62,7 +62,7 @@ namespace
 				return -4;
 			}
 		};
-		
+
 		class CNonCopyableEmpty
 		{
 		public:
@@ -70,7 +70,7 @@ namespace
 			CNonCopyableEmpty &operator =(CNonCopyableEmpty const &) = delete;
 			CNonCopyableEmpty() = default;
 		};
-		
+
 		class CNonCopyable
 		{
 			uint8 m_Test;
@@ -79,7 +79,7 @@ namespace
 			CNonCopyable &operator =(CNonCopyable const &) = delete;
 			CNonCopyable() = default;
 		};
-		
+
 
 		class CEmpty0
 		{
@@ -90,7 +90,7 @@ namespace
 		class CEmpty2
 		{
 		};
-		
+
 		class CEmptyAll : CEmpty0, CEmpty1, CEmpty2
 		{
 		};
@@ -126,7 +126,7 @@ namespace
 				++_Other.m_MovedFrom;
 			}
 		};
-		
+
 		struct CMovableAssignOnly
 		{
 			CMovableAssignOnly(CMovableAssignOnly const &);
@@ -144,7 +144,7 @@ namespace
 				return *this;
 			}
 		};
-		
+
 		struct CMovableAssignOnlyExcept
 		{
 			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &) = delete;
@@ -162,7 +162,7 @@ namespace
 				return *this;
 			}
 		};
-		
+
 		struct CMovableOnlyEmpty
 		{
 			CMovableOnlyEmpty(CMovableOnlyEmpty const &) = delete;
@@ -189,7 +189,7 @@ namespace
 				++g_MovedEmpty;
 			}
 		};
-		
+
 		struct CMovableAssignOnlyEmpty
 		{
 			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &) = delete;
@@ -204,7 +204,7 @@ namespace
 				return *this;
 			}
 		};
-		
+
 		struct CMovableAssignOnlyEmptyExcept
 		{
 			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &) = delete;
@@ -218,17 +218,17 @@ namespace
 				return *this;
 			}
 		};
-		
+
 		struct CCompare
 		{
 			int m_Value;
 			mutable zint32 m_nCompares;
-			
+
 			CCompare(int _Value)
 				: m_Value(_Value)
 			{
 			}
-			
+
 			auto operator <=> (CCompare const &_Right) const
 			{
 				++m_nCompares;
@@ -248,12 +248,12 @@ namespace
 		{
 			return NMib::NStorage::NPrivate::TCTupleImp<NMib::NMeta::TCIndices<0>, tp_CTypes &...>(_Params...);
 		}
-*/		
+*/
 		void f_DoTests()
 		{
 			using namespace NMib::NStorage;
 			using namespace NMib;
-			
+
 			// Check sizes
 			{
 				TCTuple<> Tuple;
@@ -285,14 +285,14 @@ namespace
 				TCTuple<TCTuple<TCTuple<CNonEmpty, CNonEmpty>, TCTuple<CNonEmpty, CNonEmpty>>, TCTuple<TCTuple<CNonEmpty, CNonEmpty>, TCTuple<CNonEmpty, CNonEmpty>>> Tuple;
 				static_assert(sizeof(Tuple) == 8);
 			}
-			
+
 			DMibTestSuite("General")
 			{
 				TCTuple<int> Tuple(2);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple)) == DMibExpr(2));
 
 				TCTuple<int> Tuple_1;
-				
+
 				Tuple_1 = Tuple;
 				DMibTest(DMibExpr(Tuple_1) == DMibExpr(Tuple))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple_1)) == DMibExpr(2));
@@ -300,7 +300,7 @@ namespace
 				TCTuple<int> Tuple_2(Tuple);
 				DMibTest(DMibExpr(Tuple_2) == DMibExpr(Tuple))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple_2)) == DMibExpr(2));
-				
+
 				TCTuple<int, int> Tuple1(2, 5);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple1)) == DMibExpr(2));
 				DMibTest(DMibExpr(fg_Get<1>(Tuple1)) == DMibExpr(5));
@@ -315,14 +315,14 @@ namespace
 				DMibTest(DMibExpr(Tuple1_2) == DMibExpr(Tuple1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple1_2)) == DMibExpr(2));
 				DMibTest(DMibExpr(fg_Get<1>(Tuple1_2)) == DMibExpr(5));
-				
+
 				TCTuple<int, CEmpty> Tuple2(2, fg_Default());
 				DMibTest(DMibExpr(fg_Get<0>(Tuple2)) == DMibExpr(2));
 				DMibTest(DMibExpr(fg_Get<1>(Tuple2)) == DMibExpr(-1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_Const(Tuple2))) == DMibExpr(-2))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple2))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple2))) == DMibExpr(-4))(ETestFlag_NoValues);
-				
+
 				TCTuple<int, CEmpty> Tuple2_1;
 				Tuple2_1 = Tuple2;
 				DMibTest(DMibExpr(Tuple2_1) == DMibExpr(Tuple2))(ETestFlag_NoValues);
@@ -331,7 +331,7 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(fg_Const(Tuple2_1))) == DMibExpr(-2))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple2_1))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple2_1))) == DMibExpr(-4))(ETestFlag_NoValues);
-				
+
 				TCTuple<int, CEmpty> Tuple2_2(Tuple2);
 				DMibTest(DMibExpr(Tuple2_2) == DMibExpr(Tuple2))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<0>(Tuple2_2)) == DMibExpr(2));
@@ -339,7 +339,7 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(fg_Const(Tuple2_2))) == DMibExpr(-2))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple2_2))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple2_2))) == DMibExpr(-4))(ETestFlag_NoValues);
-				
+
 				TCTuple<int, CNonEmpty> Tuple3(2, fg_Default());
 				DMibTest(DMibExpr(fg_Get<0>(Tuple3)) == DMibExpr(2));
 				DMibTest(DMibExpr(fg_Get<1>(Tuple3)) == DMibExpr(-1))(ETestFlag_NoValues);
@@ -363,7 +363,7 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(fg_Const(Tuple3_2))) == DMibExpr(-2))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_Volatile(Tuple3_2))) == DMibExpr(-3))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(fg_ConstVolatile(Tuple3_2))) == DMibExpr(-4))(ETestFlag_NoValues);
-				
+
 				TCTuple<int, CNonCopyableEmpty> TupleNonCopyEmpty;
 				fg_Get<0>(TupleNonCopyEmpty) = 2;
 				TCTuple<int, CNonCopyable> TupleNonCopy;
@@ -372,7 +372,7 @@ namespace
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CNonCopyable>, TCTuple<int, CNonCopyable> const &>);
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CNonCopyableEmpty>, TCTuple<int, CNonCopyableEmpty> const &>);
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CNonCopyableEmpty>, TCTuple<int, CNonCopyableEmpty> const &>);
-				
+
 				TCTuple<int, CMovableOnly> TupleMovable;
 				TCTuple<int, CMovableOnly> TupleMovable2(fg_Move(TupleMovable));
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovable).m_Moved) == DMibExpr(0))(ETestFlag_NoValues);
@@ -390,14 +390,14 @@ namespace
 				static_assert(NTraits::cIsNothrowConstructibleWith<TCTuple<int, CMovableOnly>, TCTuple<int, CMovableOnly> &&>);
 				static_assert(!NTraits::cIsConstructibleWith<TCTuple<int, CMovableOnlyEmpty>, TCTuple<int, CMovableOnlyEmpty> const &>);
 				static_assert(NTraits::cIsNothrowConstructibleWith<TCTuple<int, CMovableOnlyEmpty>, TCTuple<int, CMovableOnlyEmpty> &&>);
-				
+
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty;
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(0));
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableOnlyEmpty> TupleMovableEmpty2(fg_Move(TupleMovableEmpty));
 				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1));
-				
+
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign;
 				TCTuple<int, CMovableAssignOnly> TupleMovableAssign2;
 				TupleMovableAssign2 = fg_Move(TupleMovableAssign);
@@ -405,7 +405,7 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign).m_MovedFrom) == DMibExpr(1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_Moved) == DMibExpr(1))(ETestFlag_NoValues);
 				DMibTest(DMibExpr(fg_Get<1>(TupleMovableAssign2).m_MovedFrom) == DMibExpr(0))(ETestFlag_NoValues);
-				
+
 				static_assert(NTraits::cIsNothrowAssignableWith<int &, int>);
 				static_assert(NTraits::cIsNothrowAssignableWith<CMovableAssignOnly &, CMovableAssignOnly &&>);
 				static_assert(NTraits::cIsNothrowAssignableWith<TCTuple<int, CMovableAssignOnly> &, TCTuple<int, CMovableAssignOnly> &&>);
@@ -419,10 +419,10 @@ namespace
 
 				static_assert(NTraits::cIsConstructibleWith<TCTuple<int, CMovableOnlyExcept>, TCTuple<int, CMovableOnlyExcept> &&>);
 				static_assert(!NTraits::cIsNothrowConstructibleWith<TCTuple<int, CMovableOnlyExcept>, TCTuple<int, CMovableOnlyExcept> &&>);
-				
+
 				static_assert(NTraits::cIsConstructibleWith<TCTuple<int, CMovableOnlyEmptyExcept>, TCTuple<int, CMovableOnlyEmptyExcept> &&>);
 				static_assert(!NTraits::cIsNothrowConstructibleWith<TCTuple<int, CMovableOnlyEmptyExcept>, TCTuple<int, CMovableOnlyEmptyExcept> &&>);
-				
+
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty;
 				fg_Get<0>(TupleMovableAssignEmpty) = 2;
@@ -431,21 +431,21 @@ namespace
 				g_MovedEmpty = 0;
 				TCTuple<int, CMovableAssignOnlyEmpty> TupleMovableAssignEmpty2;
 				TupleMovableAssignEmpty2 = fg_Move(TupleMovableAssignEmpty);
-				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1) && DMibExpr("Assign"));			
+				DMibTest(DMibExpr(g_MovedEmpty) == DMibExpr(1) && DMibExpr("Assign"));
 
 				// LValue reference
 				static_assert(cIsLValueReference<decltype(fg_Get<1>(Tuple2))>);
 				static_assert(!cIsConst<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>>);
 				static_assert(!cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(Tuple2))>>);
-				
+
 				static_assert(cIsLValueReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>);
 				static_assert(cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>>);
 				static_assert(!cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Const(Tuple2)))>>);
-				
+
 				static_assert(cIsLValueReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>);
 				static_assert(!cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>>);
 				static_assert(cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Volatile(Tuple2)))>>);
-				
+
 				static_assert(cIsLValueReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>);
 				static_assert(cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>>);
 				static_assert(cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_ConstVolatile(Tuple2)))>>);
@@ -454,15 +454,15 @@ namespace
 				static_assert(cIsRValueReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>);
 				static_assert(!cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>>);
 				static_assert(!cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(Tuple2)))>>);
-				
+
 				static_assert(cIsRValueReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>);
 				static_assert(cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>>);
 				static_assert(!cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple2))))>>);
-				
+
 				static_assert(cIsRValueReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>);
 				static_assert(!cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>>);
 				static_assert(cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_Move(fg_Volatile(Tuple2))))>>);
-				
+
 				static_assert(cIsRValueReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>);
 				static_assert(cIsConst<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>>);
 				static_assert(cIsVolatile<TCRemoveReference<decltype(fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple2))))>>);
@@ -482,27 +482,27 @@ namespace
 				fg_Get<1>(fg_Const(Tuple3));
 				fg_Get<1>(fg_Volatile(Tuple3));
 				fg_Get<1>(fg_ConstVolatile(Tuple3));
-				
+
 				fg_Get<1>(fg_Move(Tuple3));
 				fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple3)));
 				fg_Get<1>(fg_Move(fg_Volatile(Tuple3)));
 				fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple3)));
-				
-				
+
+
 			};
-			
+
 			DMibTestSuite("Compare")
 			{
-				
+
 				{
 					DMibTestPath("Less than");
 					{
 						DMibTestPath("Differ first");
 						TCTuple<CCompare, CCompare> Left(0, 1);
 						TCTuple<CCompare, CCompare> Right(1, 0);
-						
+
 						DMibTest(DMibExpr(Left) < DMibExpr(Right))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(0));
@@ -514,7 +514,7 @@ namespace
 						TCTuple<CCompare, CCompare> Right(0, 1);
 
 						DMibTest(DMibExpr(Left) < DMibExpr(Right))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 #if !(defined(DCompiler_clang) && _LIBCPP_VERSION < 14000)
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
@@ -526,9 +526,9 @@ namespace
 						DMibTestPath("Equals");
 						TCTuple<CCompare, CCompare> Left(0, 0);
 						TCTuple<CCompare, CCompare> Right(0, 0);
-						
+
 						DMibTest(!(DMibExpr(Left) < DMibExpr(Right)))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 #if !(defined(DCompiler_clang) && _LIBCPP_VERSION < 14000)
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
@@ -542,9 +542,9 @@ namespace
 						DMibTestPath("Differ first");
 						TCTuple<CCompare, CCompare> Left(0, 1);
 						TCTuple<CCompare, CCompare> Right(1, 0);
-						
+
 						DMibTest(DMibExpr(Left) != DMibExpr(Right))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(0));
@@ -554,9 +554,9 @@ namespace
 						DMibTestPath("Differ second");
 						TCTuple<CCompare, CCompare> Left(0, 0);
 						TCTuple<CCompare, CCompare> Right(0, 1);
-						
+
 						DMibTest(DMibExpr(Left) != DMibExpr(Right))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
@@ -566,9 +566,9 @@ namespace
 						DMibTestPath("Equals");
 						TCTuple<CCompare, CCompare> Left(0, 0);
 						TCTuple<CCompare, CCompare> Right(0, 0);
-						
+
 						DMibTest(DMibExpr(Left) == DMibExpr(Right))(ETestFlag_NoValues);
-						
+
 						DMibTest(DMibExpr(fg_Get<0>(Left).m_nCompares) == DMibExpr(1));
 						DMibTest(DMibExpr(fg_Get<0>(Right).m_nCompares) == DMibExpr(0));
 						DMibTest(DMibExpr(fg_Get<1>(Left).m_nCompares) == DMibExpr(1));
@@ -576,16 +576,16 @@ namespace
 					}
 				}
 			};
-			
+
 			DMibTestSuite("Create")
 			{
-				
+
 				int x = 5;
-				
+
 				TCTuple<int &&> TupleRValueRef(fg_Move(x));
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(TupleRValueRef)) == DMibExpr(6));
-				
+
 				TCTuple<int &&> TupleRValueRef2(fg_Move(TupleRValueRef));
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(TupleRValueRef2)) == DMibExpr(7));
@@ -593,38 +593,38 @@ namespace
 				TCTuple<int &> TupleLValueRef(x);
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(TupleLValueRef)) == DMibExpr(8));
-				
+
 				TCTuple<int &> TupleLValueRef2(TupleLValueRef);
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(TupleLValueRef2)) == DMibExpr(9));
-				
+
 				auto MadeTuple = fg_Tuple(x);
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(MadeTuple)) == DMibExpr(9));
-				
+
 				auto MadeTuple2 = fg_TupleReferences(x);
 				++x;
 				DMibTest(DMibExpr(fg_Get<0>(MadeTuple2)) == DMibExpr(11));
-				
+
 				auto MadeTuple3 = fg_TuplePerfectForward(fg_Move(x));
 				static_assert(NMib::NTraits::cIsSame<decltype(MadeTuple3), TCTuple<int &&>>);
 				++x;
 				int &&MadeTuple3Value = fg_GetForward<0>(fg_Move(MadeTuple3));
 				DMibTest(DMibExpr(MadeTuple3Value) == DMibExpr(12));
-				
+
 			};
-			
-			
+
+
 			DMibTestSuite("Concatenate")
 			{
 
 				int x = 5;
 				int x2 = 6;
-				
+
 				TCTuple<int &&> TupleRValueRef(fg_Move(x));
 				TCTuple<int &> TupleLValueRef(x2);
 				TCTuple<int> Tuple(7);
-				
+
 				auto Concatenated0 = fg_TupleConcatenate(Tuple);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated0)) == DMibExpr(7));
 				static_assert(NMib::NTraits::cIsSame<decltype(Concatenated0), TCTuple<int>>);
@@ -638,12 +638,12 @@ namespace
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated2)) == DMibExpr(6));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated2)) == DMibExpr(6));
 				static_assert(NMib::NTraits::cIsSame<decltype(Concatenated2), TCTuple<int &, int &>>);
-				
+
 				auto Concatenated3 = fg_TupleConcatenate(Tuple, TupleLValueRef);
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated3)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated3)) == DMibExpr(6));
 				static_assert(NMib::NTraits::cIsSame<decltype(Concatenated3), TCTuple<int, int &>>);
-				
+
 				auto Concatenated4 = fg_TupleConcatenate(Tuple, fg_Move(TupleLValueRef));
 				DMibTest(DMibExpr(fg_Get<0>(Concatenated4)) == DMibExpr(7));
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated4)) == DMibExpr(6));
@@ -664,9 +664,9 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated7)) == DMibExpr(6));
 				DMibTest(DMibExpr(fg_Get<2>(Concatenated7)) == DMibExpr(5));
 				static_assert(NMib::NTraits::cIsSame<decltype(Concatenated7), TCTuple<int, int &, int &&>>);
-				
+
 			};
-			
+
 			{NMib::NStorage::TCTuple<CTestUnion> Tuple;}
 			{NMib::NStorage::TCTuple<CTestClass0> Tuple;}
 			{NMib::NStorage::TCTuple<CTestClass1> Tuple;}

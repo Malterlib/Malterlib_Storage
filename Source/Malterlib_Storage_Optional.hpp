@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -38,7 +38,7 @@ namespace NMib::NStorage
 		: CVariant(fg_Move(_Value))
 	{
 	}
-	
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	TCOptional<t_CType>::TCOptional(TCOptional<tf_CType> const &_Value)
@@ -62,7 +62,7 @@ namespace NMib::NStorage
 		if (_Value)
 			static_cast<CVariant &>(*this) = fg_Move(*_Value);
 	}
-	
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (TCOptional<tf_CType> const &_Value) -> TCOptional &
@@ -126,7 +126,7 @@ namespace NMib::NStorage
 		*((CVariant *)this) = fg_Move(_Value);
 		return *this;
 	}
-	
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator = (tf_CType &&_Value) -> TCOptional &
@@ -156,19 +156,19 @@ namespace NMib::NStorage
 	{
 		this->template f_Set<0>();
 	}
-	
+
 	template <typename t_CType>
 	TCOptional<t_CType>::operator bool() const
 	{
 		return this->f_GetTypeID() == 1;
 	}
-	
+
 	template <typename t_CType>
 	t_CType const &TCOptional<t_CType>::f_Get() const
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return this->CVariant::template f_Get<1>(); 
+		return this->CVariant::template f_Get<1>();
 	}
 
 	template <typename t_CType>
@@ -178,13 +178,13 @@ namespace NMib::NStorage
 			return this->CVariant::template f_Get<1>();
 		return _Default;
 	}
-	
+
 	template <typename t_CType>
 	t_CType const *TCOptional<t_CType>::operator -> () const
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return &this->CVariant::template f_Get<1>(); 
+		return &this->CVariant::template f_Get<1>();
 	}
 
 	template <typename t_CType>
@@ -192,15 +192,15 @@ namespace NMib::NStorage
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return this->CVariant::template f_Get<1>(); 
+		return this->CVariant::template f_Get<1>();
 	}
-	
+
 	template <typename t_CType>
 	t_CType *TCOptional<t_CType>::operator -> ()
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return &this->CVariant::template f_Get<1>(); 
+		return &this->CVariant::template f_Get<1>();
 	}
 
 	template <typename t_CType>
@@ -208,9 +208,9 @@ namespace NMib::NStorage
 	{
 		if (this->f_GetTypeID() != 1)
 			fp_ThrowEmpty();
-		return this->CVariant::template f_Get<1>(); 
+		return this->CVariant::template f_Get<1>();
 	}
-	
+
 	template <typename t_CType>
 	template <typename tf_CStream>
 	void TCOptional<t_CType>::f_Feed(tf_CStream &_Stream) const
@@ -234,13 +234,13 @@ namespace NMib::NStorage
 		else
 			_String += "not set";
 	}
-	
+
 	template <typename t_CType>
 	inline_never void TCOptional<t_CType>::fp_ThrowEmpty() const
 	{
 		DMibError("Empty optional access");
 	}
-			
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	bool TCOptional<t_CType>::operator == (TCOptional<tf_CType> const &_Right) const
@@ -256,7 +256,7 @@ namespace NMib::NStorage
 
 		return **this == *_Right;
 	}
-	
+
 	template <typename t_CType>
 	template <typename tf_CType>
 	auto TCOptional<t_CType>::operator <=> (TCOptional<tf_CType> const &_Right) const

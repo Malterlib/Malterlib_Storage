@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #pragma once
@@ -426,7 +426,7 @@ namespace NMib::NStorage
 	};
 
 #else
-#define DMibDebugPointerDeclare 
+#define DMibDebugPointerDeclare
 	template <typename t_CType>
 	class TCDebugPointer
 	{
@@ -1404,7 +1404,7 @@ namespace NMib::NStorage
 			DMibFastCheck(!f_IsEmpty());
 			return (*f_Get())(fg_Forward<tf_CParams>(p_Params)...);
 		}
-		
+
 		template <typename tf_CType>
 		bool operator == (tf_CType *_pOther) const
 		{

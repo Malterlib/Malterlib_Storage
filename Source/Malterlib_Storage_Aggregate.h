@@ -1,4 +1,4 @@
-// Copyright © 2015 Hansoft AB 
+// Copyright © 2015 Hansoft AB
 // Distributed under the MIT license, see license text in LICENSE.Malterlib
 
 #include <Mib/Core/Core>
@@ -11,7 +11,7 @@ namespace NMib
 	{
 		template <typename t_CEvent, bool t_bAllowRecursive>
 		class TCMutualAggregate;
-		
+
 		using CMutualAggregate = TCMutualAggregate<CEventAutoResetAggregate, true>;
 	}
 }
