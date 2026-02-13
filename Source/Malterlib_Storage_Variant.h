@@ -1937,6 +1937,13 @@ namespace NMib::NStorage
 			}
 		}
 
+		template <typename t_CType, typename ...tp_CParams>
+		auto f_SetAsType(tp_CParams && ...p_Params) -> decltype(f_Set<t_CIndex(TCMemberFromTypeInt<t_CType>::mc_Value)>(fg_Forward<tp_CParams>(p_Params)...))
+			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		{
+			return f_Set<t_CIndex(TCMemberFromTypeInt<t_CType>::mc_Value)>(fg_Forward<tp_CParams>(p_Params)...);
+		}
+
 		// Formatting
 
 		template <typename tf_CStr>
