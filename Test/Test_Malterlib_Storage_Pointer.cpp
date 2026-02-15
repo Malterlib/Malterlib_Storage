@@ -887,7 +887,7 @@ namespace
 			{
 				virtual ~CBase()
 				{
-					//DMibTraceSafe2("~CBase\n");
+					//DMibTraceSafe("~CBase\n");
 				}
 
 				virtual mint f_GetValue()
@@ -903,7 +903,7 @@ namespace
 			{
 				~CDerived()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -919,7 +919,7 @@ namespace
 			{
 				~CDerivedVirtual()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -935,7 +935,7 @@ namespace
 			{
 				~CDerived2Virtual()
 				{
-					//DMibTraceSafe2("~CDerived2\n");
+					//DMibTraceSafe("~CDerived2\n");
 				}
 
 				mint f_GetValue() override
@@ -951,7 +951,7 @@ namespace
 			{
 				~CAligned32DiamondDerivedVirtual()
 				{
-					//DMibTraceSafe2("~CDerived3\n");
+					//DMibTraceSafe("~CDerived3\n");
 				}
 
 				mint f_GetValue() override
@@ -968,7 +968,7 @@ namespace
 			{
 				virtual ~CBaseIntrusive()
 				{
-					//DMibTraceSafe2("~CBase\n");
+					//DMibTraceSafe("~CBase\n");
 				}
 
 				virtual mint f_GetValue()
@@ -985,7 +985,7 @@ namespace
 			{
 				virtual ~CBaseIntrusiveSupportWeak()
 				{
-					//DMibTraceSafe2("~CBase\n");
+					//DMibTraceSafe("~CBase\n");
 				}
 
 				virtual mint f_GetValue()
@@ -1002,7 +1002,7 @@ namespace
 			{
 				~CDerivedIntrusive()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -1018,7 +1018,7 @@ namespace
 			{
 				~CDerivedIntrusiveSupportWeak()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -1034,7 +1034,7 @@ namespace
 			{
 				~CDerivedVirtualIntrusive()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -1050,7 +1050,7 @@ namespace
 			{
 				~CDerived2VirtualIntrusive()
 				{
-					//DMibTraceSafe2("~CDerived2\n");
+					//DMibTraceSafe("~CDerived2\n");
 				}
 
 				mint f_GetValue() override
@@ -1066,7 +1066,7 @@ namespace
 			{
 				~CAligned32DiamondDerivedVirtualIntrusive()
 				{
-					//DMibTraceSafe2("~CDerived3\n");
+					//DMibTraceSafe("~CDerived3\n");
 				}
 
 				mint f_GetValue() override
@@ -1082,7 +1082,7 @@ namespace
 			{
 				~CDerivedVirtualIntrusiveSupportWeak()
 				{
-					//DMibTraceSafe2("~CDerived\n");
+					//DMibTraceSafe("~CDerived\n");
 				}
 
 				mint f_GetValue() override
@@ -1098,7 +1098,7 @@ namespace
 			{
 				~CDerived2VirtualIntrusiveSupportWeak()
 				{
-					//DMibTraceSafe2("~CDerived2\n");
+					//DMibTraceSafe("~CDerived2\n");
 				}
 
 				mint f_GetValue() override
@@ -1114,7 +1114,7 @@ namespace
 			{
 				~CAligned32DiamondDerivedVirtualIntrusiveSupportWeak()
 				{
-					//DMibTraceSafe2("~CDerived3\n");
+					//DMibTraceSafe("~CDerived3\n");
 				}
 
 				mint f_GetValue() override
@@ -1140,7 +1140,7 @@ namespace
 				~CReportScope()
 				{
 					if constexpr (s_bReportMemory)
-						DMibTraceSafe2("{}   Total {sj3}   ({sj2} + Allocs {})\n", m_Description, m_Size + m_Allocated, m_Size, m_Allocations);
+						DMibTraceSafe("{}   Total {sj3}   ({sj2} + Allocs {})\n", m_Description, m_Size + m_Allocated, m_Size, m_Allocations);
 				}
 
 				virtual void f_Alloc
@@ -1264,7 +1264,7 @@ namespace
 				}
 			}
 			if constexpr (s_bReportMemory)
-				DMibTraceSafe2("\n");
+				DMibTraceSafe("\n");
 
 			{
 				DMibTestPath("Base");
@@ -1321,7 +1321,7 @@ namespace
 				}
 			}
 			if constexpr (s_bReportMemory)
-				DMibTraceSafe2("\n");
+				DMibTraceSafe("\n");
 
 			{
 				DMibTestPath("Derived");
@@ -1379,7 +1379,7 @@ namespace
 			}
 
 			if constexpr (s_bReportMemory)
-				DMibTraceSafe2("\n");
+				DMibTraceSafe("\n");
 
 			{
 				DMibTestPath("DerivedVirtual");
@@ -1424,7 +1424,7 @@ namespace
 				}
 			}
 			if constexpr (s_bReportMemory)
-				DMibTraceSafe2("\n");
+				DMibTraceSafe("\n");
 
 			{
 				DMibTestPath("Derived2Virtual");
@@ -1469,7 +1469,7 @@ namespace
 				}
 			}
 			if constexpr (s_bReportMemory)
-				DMibTraceSafe2("\n");
+				DMibTraceSafe("\n");
 
 			{
 				DMibTestPath("Derived3Virtual");
