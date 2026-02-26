@@ -133,12 +133,12 @@ namespace NMib::NStorage
 
 		bool f_IsConstructed()
 		{
-			return m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed;
+			return m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed;
 		}
 
 		bool f_WasDestructed()
 		{
-			return (m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)) != EAggregateLifeTimeFlag_None;
+			return (m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)) != EAggregateLifeTimeFlag_None;
 		}
 
 		template <typename tf_CFunctor>
@@ -150,7 +150,7 @@ namespace NMib::NStorage
 		template <typename tf_CFunctor>
 		mark_nodebug inline_small t_CData * f_CreateFunctor(tf_CFunctor const &_fFunctor)
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 			{
 				f_ConstructFunctor(_fFunctor);
 			}
@@ -160,7 +160,7 @@ namespace NMib::NStorage
 
 		mark_nodebug inline_small operator t_CData *()
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
 			return ((t_CData *)m_ObjectSpace);
@@ -174,7 +174,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0>
 		mark_nodebug inline_small t_CData * operator() (tf_CData0 &_Data0)
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0);
 
 			return ((t_CData *)m_ObjectSpace);
@@ -183,7 +183,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1>
 		mark_nodebug inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1)
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1);
 
 			return ((t_CData *)m_ObjectSpace);
@@ -192,7 +192,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2>
 		mark_nodebug inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2)
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1, _Data2);
 
 			return ((t_CData *)m_ObjectSpace);
@@ -201,7 +201,7 @@ namespace NMib::NStorage
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2, typename tf_CData3>
 		mark_nodebug inline_small t_CData * operator() (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2, tf_CData3 &_Data3)
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct(_Data0, _Data1, _Data2, _Data3);
 
 			return ((t_CData *)m_ObjectSpace);
@@ -209,7 +209,7 @@ namespace NMib::NStorage
 
 		mark_nodebug inline_small t_CData * operator ->()
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
 			return ((t_CData *)m_ObjectSpace);
@@ -217,7 +217,7 @@ namespace NMib::NStorage
 
 		mark_nodebug inline_small t_CData & operator *()
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
 				f_Construct();
 
 			return *((t_CData *)m_ObjectSpace);
@@ -225,7 +225,7 @@ namespace NMib::NStorage
 
 /*			inline_small t_CData & operator &()
 		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::EMemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
+			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_Construct();
 
 			return *((t_CData *)m_ObjectSpace);
