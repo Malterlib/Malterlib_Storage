@@ -406,11 +406,11 @@ namespace NMib::NStorage
 
 		static constexpr mint mcp_NeededBits = gc_ConstantMax
 			<
-				mint
-				, gc_HighestBitSet<CIndexInteger, mcp_MaxIndex>
-				, gc_HighestBitSet<CIndexInteger, mcp_MinIndex>
+				smint
+				, gc_HighestBitSet<mcp_MaxIndex>
+				, gc_HighestBitSet<mcp_MinIndex>
 			>
-			+ 1
+			+ 2
 		;
 
 		using CTypeIDStorageType = NTraits::TCIntFromSizeLarger<(mcp_NeededBits + 7) / 8>;
