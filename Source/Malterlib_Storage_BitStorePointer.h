@@ -131,13 +131,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (tf_CType const &_Other) const
+		bool operator == (tf_CType const &_Other) const noexcept
 		{
 			return operator t_CType *() == static_cast<t_CType *>(_Other);
 		}
 
 		template <typename tf_CType>
-		bool operator == (TCBitStorePointer<tf_CType> const &_Other) const
+		bool operator == (TCBitStorePointer<tf_CType> const &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator tf_CType *();
 		}

@@ -66,7 +66,7 @@ namespace
 			}
 
 
-			bool operator == (CTestStruct const &_Other) const
+			bool operator == (CTestStruct const &_Other) const noexcept
 			{
 				return m_0 == _Other.m_0
 					&& m_1 == _Other.m_1
@@ -135,7 +135,7 @@ namespace
 			}
 
 
-			bool operator == (CTestStructVirtual const &_Other) const
+			bool operator == (CTestStructVirtual const &_Other) const noexcept
 			{
 				return m_0 == _Other.m_0
 					&& m_1 == _Other.m_1

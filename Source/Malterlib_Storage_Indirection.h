@@ -117,25 +117,25 @@ namespace NMib::NStorage::NIndirection
 		void f_Format(tf_CStr &o_String) const;
 
 		template <typename tf_CRight>
-		auto operator <=> (tf_CRight const &_Right) const
+		auto operator <=> (tf_CRight const &_Right) const noexcept(noexcept(this->f_Get() <=> _Right))
 		{
 			return this->f_Get() <=> _Right;
 		}
 
 		template <typename tf_CType, typename tf_CAllocator>
-		auto operator <=> (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const
+		auto operator <=> (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const noexcept(noexcept(this->f_Get() <=> _Right.f_Get()))
 		{
 			return this->f_Get() <=> _Right.f_Get();
 		}
 
 		template <typename tf_CRight>
-		auto operator == (tf_CRight const &_Right) const
+		auto operator == (tf_CRight const &_Right) const noexcept(noexcept(this->f_Get() == _Right))
 		{
 			return this->f_Get() == _Right;
 		}
 
 		template <typename tf_CType, typename tf_CAllocator>
-		auto operator == (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const
+		auto operator == (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const noexcept(noexcept(this->f_Get() == _Right.f_Get()))
 		{
 			return this->f_Get() == _Right.f_Get();
 		}

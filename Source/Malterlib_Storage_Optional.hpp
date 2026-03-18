@@ -243,7 +243,7 @@ namespace NMib::NStorage
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	bool TCOptional<t_CType>::operator == (TCOptional<tf_CType> const &_Right) const
+	bool TCOptional<t_CType>::operator == (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() == fg_GetType<tf_CType const &>()))
 	{
 		if (!*this)
 		{
@@ -259,7 +259,7 @@ namespace NMib::NStorage
 
 	template <typename t_CType>
 	template <typename tf_CType>
-	auto TCOptional<t_CType>::operator <=> (TCOptional<tf_CType> const &_Right) const
+	auto TCOptional<t_CType>::operator <=> (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() <=> fg_GetType<tf_CType const &>()))
 	{
 		using COrdering = decltype(**this <=> *_Right);
 

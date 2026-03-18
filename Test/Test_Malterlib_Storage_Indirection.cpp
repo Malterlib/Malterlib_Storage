@@ -34,11 +34,11 @@ namespace
 					return 0;
 				}
 
-				auto operator <=> (float _Value) const
+				auto operator <=> (float _Value) const noexcept
 				{
 					return m_Data <=> _Value;
 				}
-				COrdering_Weak operator <=> (CTestUndefined const &_Other) const;
+				COrdering_Weak operator <=> (CTestUndefined const &_Other) const noexcept;
 			};
 			CTestClass();
 			~CTestClass();
@@ -78,25 +78,25 @@ namespace
 			{
 				return 0;
 			}
-			auto operator <=> (float _Value) const
+			auto operator <=> (float _Value) const noexcept
 			{
 				return m_Data <=> _Value;
 			}
-			auto operator <=> (CTestDefined const &_Other)
+			auto operator <=> (CTestDefined const &_Other) noexcept
 			{
 				return m_Data <=> _Other.m_Data;
 			}
 		};
 
-		COrdering_Weak CTestClass::CTestDefined::operator <=> (CTestUndefined const &_Other) const
+		COrdering_Weak CTestClass::CTestDefined::operator <=> (CTestUndefined const &_Other) const noexcept
 		{
 			return m_Data <=> _Other.m_Data;
 		}
-		auto operator <=> (float const &_Left, CTestClass::CTestDefined const &_Right)
+		auto operator <=> (float const &_Left, CTestClass::CTestDefined const &_Right) noexcept
 		{
 			return _Left <=> _Right.m_Data;
 		}
-		auto operator <=> (float const &_Left, CTestClass::CTestUndefined const &_Right)
+		auto operator <=> (float const &_Left, CTestClass::CTestUndefined const &_Right) noexcept
 		{
 			return _Left <=> _Right.m_Data;
 		}

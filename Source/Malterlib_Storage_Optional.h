@@ -101,9 +101,9 @@ namespace NMib::NStorage
 		TCOptional &operator = (TCOptional &&) = default;
 
 		template <typename tf_CType>
-		bool operator == (TCOptional<tf_CType> const &_Right) const;
+		bool operator == (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() == fg_GetType<tf_CType const &>()));
 		template <typename tf_CType>
-		auto operator <=> (TCOptional<tf_CType> const &_Right) const;
+		auto operator <=> (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() <=> fg_GetType<tf_CType const &>()));
 
 		explicit operator bool() const;
 

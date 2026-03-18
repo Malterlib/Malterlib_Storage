@@ -229,12 +229,12 @@ namespace
 			{
 			}
 
-			auto operator <=> (CCompare const &_Right) const
+			auto operator <=> (CCompare const &_Right) const noexcept
 			{
 				++m_nCompares;
 				return m_Value <=> _Right.m_Value;
 			}
-			bool operator == (CCompare const &_Right) const
+			bool operator == (CCompare const &_Right) const noexcept
 			{
 				++m_nCompares;
 				return m_Value == _Right.m_Value;

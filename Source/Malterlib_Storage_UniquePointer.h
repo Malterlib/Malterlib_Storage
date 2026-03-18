@@ -341,35 +341,35 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (tf_CType *_Other) const
+		bool operator == (tf_CType *_Other) const noexcept
 		{
 			return f_Get() == _Other;
 		}
 
-		bool operator == (CNullPtr _Other) const
+		bool operator == (CNullPtr _Other) const noexcept
 		{
 			return f_Get() == _Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		bool operator == (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() == _Other.f_Get();
 		}
 
 		template <typename tf_CType>
-		auto operator <=> (tf_CType *_Other) const
+		auto operator <=> (tf_CType *_Other) const noexcept
 		{
 			return f_Get() <=> _Other;
 		}
 
-		auto operator <=> (CNullPtr _Other) const
+		auto operator <=> (CNullPtr _Other) const noexcept
 		{
 			return f_Get() <=> _Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		auto operator <=> (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCUniquePointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() <=> _Other.f_Get();
 		}

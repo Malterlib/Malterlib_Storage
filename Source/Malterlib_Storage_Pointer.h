@@ -192,13 +192,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const
+		bool operator == (const t_CType2 &_Other) const noexcept
 		{
 			return operator t_CType *() == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCAutoClearPtr<t_CType2> &_Other) const
+		bool operator == (const TCAutoClearPtr<t_CType2> &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
@@ -298,13 +298,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const
+		bool operator == (const t_CType2 &_Other) const noexcept
 		{
 			return operator t_CType *() == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCAutoClearPtrDebug<t_CType2> &_Other) const
+		bool operator == (const TCAutoClearPtrDebug<t_CType2> &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
@@ -413,13 +413,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const
+		bool operator == (const t_CType2 &_Other) const noexcept
 		{
 			return operator t_CType *() == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCDebugPointer<t_CType2> &_Other) const
+		bool operator == (const TCDebugPointer<t_CType2> &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
@@ -502,13 +502,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const
+		bool operator == (const t_CType2 &_Other) const noexcept
 		{
 			return operator t_CType *() == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCDebugPointer<t_CType2> &_Other) const
+		bool operator == (const TCDebugPointer<t_CType2> &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
@@ -619,13 +619,13 @@ namespace NMib::NStorage
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const
+		bool operator == (const t_CType2 &_Other) const noexcept
 		{
 			return operator t_CType *() == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCPointer<t_CType2> &_Other) const
+		bool operator == (const TCPointer<t_CType2> &_Other) const noexcept
 		{
 			return operator t_CType *() == _Other.operator t_CType2 *();
 		}
@@ -1406,47 +1406,47 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (tf_CType *_pOther) const
+		bool operator == (tf_CType *_pOther) const noexcept
 		{
 			return f_Get() == _pOther;
 		}
 
-		bool operator == (CNullPtr _pOther) const
+		bool operator == (CNullPtr _pOther) const noexcept
 		{
 			return f_Get() == _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() == static_cast<t_CType *>(_Other.f_Get());
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() == static_cast<t_CType *>(_Other.fp_GetContained());
 		}
 
 		template <typename tf_CType>
-		auto operator <=> (tf_CType *_pOther) const
+		auto operator <=> (tf_CType *_pOther) const noexcept
 		{
 			return f_Get() <=> _pOther;
 		}
 
-		auto operator <=> (CNullPtr _pOther) const
+		auto operator <=> (CNullPtr _pOther) const noexcept
 		{
 			return f_Get() <=> _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() <=> static_cast<t_CType *>(_Other.f_Get());
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return f_Get() <=> static_cast<t_CType *>(_Other.fp_GetContained());
 		}
@@ -1826,47 +1826,47 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (tf_CType *_pOther) const
+		bool operator == (tf_CType *_pOther) const noexcept
 		{
 			return fp_GetContained() == _pOther;
 		}
 
-		bool operator == (CNullPtr _pOther) const
+		bool operator == (CNullPtr _pOther) const noexcept
 		{
 			return fp_GetContained() == _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return fp_GetContained() == _Other.fp_GetContained();
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return fp_GetContained() == _Other.f_Get();
 		}
 
 		template <typename tf_CType>
-		auto operator <=> (tf_CType *_pOther) const
+		auto operator <=> (tf_CType *_pOther) const noexcept
 		{
 			return fp_GetContained() <=> _pOther;
 		}
 
-		auto operator <=> (CNullPtr _pOther) const
+		auto operator <=> (CNullPtr _pOther) const noexcept
 		{
 			return fp_GetContained() <=> _pOther;
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return fp_GetContained() <=> _Other.fp_GetContained();
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const
+		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
 		{
 			return fp_GetContained() <=> _Other.f_Get();
 		}
