@@ -43,75 +43,75 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType>
-	inline constexpr mint gc_Tuple_Len = NPrivate::TCTuple_Len<t_CType>::mc_Value;
+	inline constexpr umint gc_Tuple_Len = NPrivate::TCTuple_Len<t_CType>::mc_Value;
 
 	namespace NPrivate
 	{
-		template <mint t_Index, typename t_CType>
+		template <umint t_Index, typename t_CType>
 		struct TCTuple_Get;
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, const TCTuple<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, volatile TCTuple<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, const volatile TCTuple<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <mint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename... tp_CTypes>
 		struct TCTuple_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
 		};
 	}
 
-	template <mint t_Index, typename t_CType>
+	template <umint t_Index, typename t_CType>
 	using TCTuple_Get = NPrivate::TCTuple_Get<t_Index, t_CType>::CType;
 }
 
 namespace NMib
 {
-	template <mint tf_Index, typename tf_CType>
+	template <umint tf_Index, typename tf_CType>
 	mark_artificial mark_nodebug inline_always auto fg_Get(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>
 	{
 		return fg_Forward<NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>>(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))));
 	}
 
-	template <mint tf_Index, typename tf_CType>
+	template <umint tf_Index, typename tf_CType>
 	mark_artificial mark_nodebug inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>
 	{
 		return fg_Forward<NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>>(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)));
@@ -164,7 +164,7 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-		template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, mint ...tfp_Indices>
+		template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, umint ...tfp_Indices>
 		mark_artificial inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
 		{
 			return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);

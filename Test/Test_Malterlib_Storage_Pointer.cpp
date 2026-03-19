@@ -880,7 +880,7 @@ namespace
 
 			struct CBaseNonVirtual
 			{
-				mint m_Value0 = 0;
+				umint m_Value0 = 0;
 			};
 
 			struct CBase
@@ -890,12 +890,12 @@ namespace
 					//DMibTraceSafe("~CBase\n");
 				}
 
-				virtual mint f_GetValue()
+				virtual umint f_GetValue()
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 0;
+				umint m_Value0 = 0;
 				//NStr::CStr m_StrValue = "Base";
 			};
 
@@ -906,12 +906,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -922,12 +922,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -938,12 +938,12 @@ namespace
 					//DMibTraceSafe("~CDerived2\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 2;
+				umint m_Value0 = 2;
 				//NStr::CStr m_StrValue = "Derived2";
 			};
 
@@ -954,12 +954,12 @@ namespace
 					//DMibTraceSafe("~CDerived3\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 3;
+				umint m_Value0 = 3;
 				//NStr::CStr m_StrValue = "Derived3";
 			};
 
@@ -971,13 +971,13 @@ namespace
 					//DMibTraceSafe("~CBase\n");
 				}
 
-				virtual mint f_GetValue()
+				virtual umint f_GetValue()
 				{
 					return m_Value0;
 				}
 
 				NStorage::CIntrusiveRefCount m_RefCount;
-				mint m_Value0 = 0;
+				umint m_Value0 = 0;
 				//NStr::CStr m_StrValue = "Base";
 			};
 
@@ -988,13 +988,13 @@ namespace
 					//DMibTraceSafe("~CBase\n");
 				}
 
-				virtual mint f_GetValue()
+				virtual umint f_GetValue()
 				{
 					return m_Value0;
 				}
 
 				CIntrusiveRefCountWithWeak m_RefCount;
-				mint m_Value0 = 0;
+				umint m_Value0 = 0;
 				//NStr::CStr m_StrValue = "Base";
 			};
 
@@ -1005,12 +1005,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -1021,12 +1021,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -1037,12 +1037,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -1053,12 +1053,12 @@ namespace
 					//DMibTraceSafe("~CDerived2\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 2;
+				umint m_Value0 = 2;
 				//NStr::CStr m_StrValue = "Derived2";
 			};
 
@@ -1069,12 +1069,12 @@ namespace
 					//DMibTraceSafe("~CDerived3\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 3;
+				umint m_Value0 = 3;
 				//NStr::CStr m_StrValue = "Derived3";
 			};
 
@@ -1085,12 +1085,12 @@ namespace
 					//DMibTraceSafe("~CDerived\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 1;
+				umint m_Value0 = 1;
 				//NStr::CStr m_StrValue = "Derived";
 			};
 
@@ -1101,12 +1101,12 @@ namespace
 					//DMibTraceSafe("~CDerived2\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 2;
+				umint m_Value0 = 2;
 				//NStr::CStr m_StrValue = "Derived2";
 			};
 
@@ -1117,18 +1117,18 @@ namespace
 					//DMibTraceSafe("~CDerived3\n");
 				}
 
-				mint f_GetValue() override
+				umint f_GetValue() override
 				{
 					return m_Value0;
 				}
 
-				mint m_Value0 = 3;
+				umint m_Value0 = 3;
 				//NStr::CStr m_StrValue = "Derived3";
 			};
 
 			struct CReportScope : public CReportMemory
 			{
-				CReportScope(CFStr256 const &_Description, mint _Size)
+				CReportScope(CFStr256 const &_Description, umint _Size)
 					: m_Description(_Description)
 					, m_Size(_Size)
 				{
@@ -1145,13 +1145,13 @@ namespace
 
 				virtual void f_Alloc
 					(
-						mint _MemoryAllocator
-						, mint _AllocatorDepth
+						umint _MemoryAllocator
+						, umint _AllocatorDepth
 						, ch8 const *_pAllocatorName
-						, mint _Address
-						, mint _RequestedAlignment
-						, mint _RequestedSize
-						, mint _ReturnedSize
+						, umint _Address
+						, umint _RequestedAlignment
+						, umint _RequestedSize
+						, umint _ReturnedSize
 						, fp32 _nBytesOverhead
 						, void *_pAllocationInfo
 					) override
@@ -1169,16 +1169,16 @@ namespace
 
 				virtual void f_Resize
 					(
-						mint _MemoryAllocator
-						, mint _AllocatorDepth
+						umint _MemoryAllocator
+						, umint _AllocatorDepth
 						, ch8 const *_pAllocatorName
-						, mint _OldAddress
-						, mint _OldSize
+						, umint _OldAddress
+						, umint _OldSize
 						, void const *_pOldAllocationInfo
-						, mint _Address
-						, mint _RequestedAlignment
-						, mint _RequestedSize
-						, mint _ReturnedSize
+						, umint _Address
+						, umint _RequestedAlignment
+						, umint _RequestedSize
+						, umint _ReturnedSize
 						, fp32 _nBytesOverhead
 						, void *_pAllocationInfo
 					) override
@@ -1187,50 +1187,50 @@ namespace
 
 				virtual void f_Realloc
 					(
-						mint _MemoryAllocator
-						, mint _AllocatorDepth
+						umint _MemoryAllocator
+						, umint _AllocatorDepth
 						, ch8 const *_pAllocatorName
-						, mint _OldAddress
-						, mint _OldSize
+						, umint _OldAddress
+						, umint _OldSize
 						, void const *_pOldAllocationInfo
-						, mint _Address
-						, mint _RequestedAlignment
-						, mint _RequestedSize
-						, mint _ReturnedSize
+						, umint _Address
+						, umint _RequestedAlignment
+						, umint _RequestedSize
+						, umint _ReturnedSize
 						, fp32 _nBytesOverhead
 						, void *_pAllocationInfo
 					) override
 				{
 				}
 
-				virtual void f_Free(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, void const *_pAllocationInfo) override
+				virtual void f_Free(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth, umint _Address, umint _Size, void const *_pAllocationInfo) override
 				{
 				}
 
-				virtual void f_GetSize(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, void const *_pAllocationInfo) override
+				virtual void f_GetSize(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth, umint _Address, umint _Size, void const *_pAllocationInfo) override
 				{
 				}
 
-				virtual void f_Protect(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size, uaint _Protect) override
+				virtual void f_Protect(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth, umint _Address, umint _Size, uaint _Protect) override
 				{
 				}
 
-				virtual void f_Commit(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size) override
+				virtual void f_Commit(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth, umint _Address, umint _Size) override
 				{
 				}
 
-				virtual void f_Decommit(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth, mint _Address, mint _Size) override
+				virtual void f_Decommit(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth, umint _Address, umint _Size) override
 				{
 				}
 
-				virtual void f_AllocatorDelete(mint _MemoryAllocator, ch8 const *_pAllocatorName, mint _AllocatorDepth) override
+				virtual void f_AllocatorDelete(umint _MemoryAllocator, ch8 const *_pAllocatorName, umint _AllocatorDepth) override
 				{
 				}
 
 				CFStr256 m_Description;
 				CFStr256 m_Allocations;
-				mint m_Size = 0;
-				mint m_Allocated = 0;
+				umint m_Size = 0;
+				umint m_Allocated = 0;
 #if DMibConfig_Memory_Shims_Enable
 				TCUniquePointer<CMemoryReportScope> m_pScope;
 #endif

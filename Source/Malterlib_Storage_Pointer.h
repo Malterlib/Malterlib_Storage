@@ -829,7 +829,7 @@ namespace NMib::NStorage
 			static_assert(!NTraits::cHasOperatorDelete<tf_CObjectType>);
 			if constexpr (NMib::NPrivate::cHas_m_VirtualAllocSize<tf_CObjectType>)
 			{
-				mint DeleteSize = _pObject->m_VirtualAllocSize;
+				umint DeleteSize = _pObject->m_VirtualAllocSize;
 				_pObject->~tf_CObjectType();
 
 				return {_pObject, DeleteSize};
@@ -1461,7 +1461,7 @@ namespace NMib::NStorage
 			return !f_IsEmpty();
 		}
 
-		mint f_GetRefCount() const
+		umint f_GetRefCount() const
 		{
 			return m_Data.m_pPointTo->m_RefCount.f_Get();
 		}

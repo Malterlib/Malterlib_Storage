@@ -4,7 +4,7 @@
 #pragma once
 namespace NMib::NStorage
 {
-	template <typename t_CType, mint t_nBits = 2> // Safe for 32 bit systems
+	template <typename t_CType, umint t_nBits = 2> // Safe for 32 bit systems
 	struct TCBitStorePointer
 	{
 		TCBitStorePointer()
@@ -12,20 +12,20 @@ namespace NMib::NStorage
 		}
 
 		// Assign
-		TCBitStorePointer(t_CType *_pPtr, mint _Bits = 0)
+		TCBitStorePointer(t_CType *_pPtr, umint _Bits = 0)
 			: mp_PointTo(fsp_ToInt(_pPtr))
 			, mp_Bits(_Bits)
 		{
 		}
 
 		template <typename tf_CType>
-		TCBitStorePointer(TCExplicit<tf_CType> &&_Other, mint _Bits = 0)
+		TCBitStorePointer(TCExplicit<tf_CType> &&_Other, umint _Bits = 0)
 			: mp_PointTo(fsp_ToInt(static_cast<t_CType *>(*_Other)))
 			, mp_Bits(_Bits)
 		{
 		}
 
-		TCBitStorePointer(TCBitStorePointer const &_Other, mint _Bits = 0)
+		TCBitStorePointer(TCBitStorePointer const &_Other, umint _Bits = 0)
 			: mp_PointTo(_Other.mp_PointTo)
 			, mp_Bits(_Bits)
 		{
@@ -38,7 +38,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		void f_SetBoth(t_CType *_pPtr, mint _Bits)
+		void f_SetBoth(t_CType *_pPtr, umint _Bits)
 		{
 			mp_PointTo = fsp_ToInt(_pPtr);
 			mp_Bits = _Bits;
@@ -63,22 +63,22 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCBitStorePointer &f_SetBits(mint _Bits)
+		TCBitStorePointer &f_SetBits(umint _Bits)
 		{
-			DMibFastCheck((_Bits & ((mint(1u) << t_nBits) - 1)) == _Bits); // More bits that fits
+			DMibFastCheck((_Bits & ((umint(1u) << t_nBits) - 1)) == _Bits); // More bits that fits
 			mp_Bits = _Bits;
 			return *this;
 		}
 
-		TCBitStorePointer &f_ChangeBits(mint _Remove, mint _Add)
+		TCBitStorePointer &f_ChangeBits(umint _Remove, umint _Add)
 		{
-			DMibFastCheck((_Remove & ((mint(1u) << t_nBits) - 1)) == _Remove); // More bits that fits
-			DMibFastCheck((_Add & ((mint(1u) << t_nBits) - 1)) == _Add); // More bits that fits
+			DMibFastCheck((_Remove & ((umint(1u) << t_nBits) - 1)) == _Remove); // More bits that fits
+			DMibFastCheck((_Add & ((umint(1u) << t_nBits) - 1)) == _Add); // More bits that fits
 			mp_Bits = (mp_Bits & ~_Remove) | _Add;
 			return *this;
 		}
 
-		mint f_GetBits() const
+		umint f_GetBits() const
 		{
 			return mp_Bits;
 		}
@@ -143,19 +143,19 @@ namespace NMib::NStorage
 		}
 
 	private:
-		static inline_always mint fsp_ToInt(t_CType *_pPtr)
+		static inline_always umint fsp_ToInt(t_CType *_pPtr)
 		{
-			DMibFastCheck(!(reinterpret_cast<mint>(_pPtr) & ((mint(1u) << t_nBits) - 1))); // Unaligned pointer not supported
-			return reinterpret_cast<mint>(_pPtr) >> t_nBits;
+			DMibFastCheck(!(reinterpret_cast<umint>(_pPtr) & ((umint(1u) << t_nBits) - 1))); // Unaligned pointer not supported
+			return reinterpret_cast<umint>(_pPtr) >> t_nBits;
 		}
 
-		static inline_always constexpr t_CType *fsp_FromInt(mint _Pointer)
+		static inline_always constexpr t_CType *fsp_FromInt(umint _Pointer)
 		{
 			return reinterpret_cast<t_CType *>(_Pointer << t_nBits);
 		}
 
-		mint mp_PointTo:sizeof(mint)*8 - t_nBits;
-		mint mp_Bits:t_nBits;
+		umint mp_PointTo:sizeof(umint)*8 - t_nBits;
+		umint mp_Bits:t_nBits;
 	};
 }
 

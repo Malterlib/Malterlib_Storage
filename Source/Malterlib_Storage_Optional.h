@@ -25,7 +25,7 @@ namespace NMib::NStorage
 			>
 		;
 
-		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+		template <typename tf_CType, typename... tfp_CParams, umint... tfp_Indidies>
 		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &);
 
 		template <typename tf_CType, typename... tfp_CParams>

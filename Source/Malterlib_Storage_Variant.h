@@ -522,25 +522,25 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCSizeOf
 		{
-			static constexpr mint mc_Value = sizeof(t_CType);
+			static constexpr umint mc_Value = sizeof(t_CType);
 		};
 
 		template <>
 		struct TCSizeOf<void>
 		{
-			static constexpr mint mc_Value = 0;
+			static constexpr umint mc_Value = 0;
 		};
 
 		template <typename t_CType>
 		struct TCAlignOf
 		{
-			static constexpr mint mc_Value = alignof(t_CType);
+			static constexpr umint mc_Value = alignof(t_CType);
 		};
 
 		template <>
 		struct TCAlignOf<void>
 		{
-			static constexpr mint mc_Value = 0;
+			static constexpr umint mc_Value = 0;
 		};
 	}
 
@@ -560,7 +560,7 @@ namespace NMib::NStorage
 		using CIndexType = t_CIndex;
 		using CIndexInteger = NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>;
 		using CIndexUnsignedInteger = NTraits::TCUnsigned<CIndexInteger>;
-		static constexpr mint mc_Length = sizeof...(tp_CTypes);
+		static constexpr umint mc_Length = sizeof...(tp_CTypes);
 
 	private:
 
@@ -576,7 +576,7 @@ namespace NMib::NStorage
 
 		using CType0 = NMeta::TCTypeList_Get<0, NMeta::TCTypeList<tp_CTypes...>>;
 
-		static constexpr mint mcp_NeededBits = gc_ConstantMax
+		static constexpr umint mcp_NeededBits = gc_ConstantMax
 			<
 				smint
 				, gc_HighestBitSet<mcp_MaxIndex>
@@ -621,7 +621,7 @@ namespace NMib::NStorage
 			;
 		};
 
-		static constexpr mint mcp_MaxSize = fg_MaxConstexpr
+		static constexpr umint mcp_MaxSize = fg_MaxConstexpr
 			(
 				NPrivate::TCSizeOf
 				<
@@ -635,7 +635,7 @@ namespace NMib::NStorage
 			)
 		;
 
-		static constexpr mint mcp_MaxAlignment = fg_MaxConstexpr
+		static constexpr umint mcp_MaxAlignment = fg_MaxConstexpr
 			(
 				NPrivate::TCAlignOf
 				<
@@ -662,7 +662,7 @@ namespace NMib::NStorage
 		static constexpr bool mcp_bAllHasNothrowCopyConstructor = ((NTraits::cIsNothrowCopyConstructible<tp_CTypes> || NTraits::cIsVoid<tp_CTypes>) && ...);
 		static constexpr bool mcp_bAllHasNothrowMoveConstructor = ((NTraits::cIsNothrowMoveConstructible<tp_CTypes> || NTraits::cIsVoid<tp_CTypes>) && ...);
 
-		template <mint t_MaxSize, typename t_CDummy = void>
+		template <umint t_MaxSize, typename t_CDummy = void>
 		struct TCDetermineStorageType
 		{
 			using CType = uint8[mcp_MaxSize];
@@ -1589,7 +1589,7 @@ namespace NMib::NStorage
 			fp_SetTypeID(t_iMember);
 		}
 
-		template <typename tf_CType, typename... tfp_CParams, mint... tfp_Indidies>
+		template <typename tf_CType, typename... tfp_CParams, umint... tfp_Indidies>
 		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
 			requires
 			(
@@ -2229,7 +2229,7 @@ namespace NMib::NStorage
 		{
 		};
 
-		template <typename ...tp_CTypes, mint ...tp_Indices>
+		template <typename ...tp_CTypes, umint ...tp_Indices>
 		struct TCGetNonStreamableVariant<NMeta::TCTypeList<tp_CTypes...>, NMeta::TCIndices<tp_Indices...>>
 		{
 			using CType = TCVariantCommon
@@ -2248,7 +2248,7 @@ namespace NMib::NStorage
 		{
 		};
 
-		template <typename t_CIndex, typename ...tp_CTypes, mint ...tp_Indices>
+		template <typename t_CIndex, typename ...tp_CTypes, umint ...tp_Indices>
 		struct TCGetStreamableVariant<t_CIndex, NMeta::TCTypeList<tp_CTypes...>, NMeta::TCIndices<tp_Indices...>>
 		{
 			using CType = TCVariantCommon

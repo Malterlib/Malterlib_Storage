@@ -27,7 +27,7 @@ namespace
 		struct CTestWeakIntrusive
 		{
 			NStorage::CIntrusiveRefCountWithWeak m_RefCount;
-			mint m_Dummy = 0; // Will be overwritten after destructor is called
+			umint m_Dummy = 0; // Will be overwritten after destructor is called
 			uint32 m_Value;
 			bool m_bDestroyed = false;
 			CTestWeakIntrusive *m_pThis;
