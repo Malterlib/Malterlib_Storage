@@ -1,3 +1,6 @@
+// Copyright © Unbroken AB
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+
 namespace NMib::NStorage
 {
 	template <typename t_CData, typename t_CLock>
