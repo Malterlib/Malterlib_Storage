@@ -121,43 +121,43 @@ namespace NMib
 namespace NMib::NStorage
 {
 	template <typename... tp_CTypes>
-	inline_always TCTuple<tp_CTypes &...> fg_TupleReferences(tp_CTypes &...p_Params) noexcept
+	constexpr inline_always TCTuple<tp_CTypes &...> fg_TupleReferences(tp_CTypes &...p_Params) noexcept
 	{
 		return TCTuple<tp_CTypes &...>(p_Params...);
 	}
 
 	template <typename... tfp_CParams>
-	auto fg_TupleReferences(tfp_CParams &&... p_Params) -> decltype(std::tie(fg_Forward<tfp_CParams>(p_Params)...))
+	constexpr auto fg_TupleReferences(tfp_CParams &&... p_Params) -> decltype(std::tie(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::tie(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
-	static inline_always TCTuple<> fg_TupleReferences() noexcept
+	static constexpr inline_always TCTuple<> fg_TupleReferences() noexcept
 	{
 		return TCTuple<>();
 	}
 
 	template <typename... tfp_CParams>
-	auto fg_Tuple(tfp_CParams &&... p_Params) -> decltype(std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...))
+	constexpr auto fg_Tuple(tfp_CParams &&... p_Params) -> decltype(std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename... tfp_CParams>
-	auto fg_TuplePerfectForward(tfp_CParams &&... p_Params) -> decltype(std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...))
+	constexpr auto fg_TuplePerfectForward(tfp_CParams &&... p_Params) -> decltype(std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 
 	template <typename... tfp_CParams>
-	auto fg_TupleConcatenate(tfp_CParams &&... p_Params) -> decltype(std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...))
+	constexpr auto fg_TupleConcatenate(tfp_CParams &&... p_Params) -> decltype(std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename tf_FFunctor, typename tf_CTuple>
-	auto fg_TupleApply(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
+	constexpr auto fg_TupleApply(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
 	{
 		return std::apply(fg_Forward<tf_FFunctor>(_fFunctor), fg_Forward<tf_CTuple>(_Tuple));
 	}
@@ -165,14 +165,14 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 		template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, umint ...tfp_Indices>
-		mark_artificial inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
+		mark_artificial constexpr inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
 		{
 			return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);
 		}
 	}
 
 	template <typename tf_CTypeList, typename tf_FFunctor, typename tf_CTuple>
-	mark_artificial inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
+	mark_artificial constexpr inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple)
 	{
 		return NPrivate::fg_TupleApplyAs
 			(
