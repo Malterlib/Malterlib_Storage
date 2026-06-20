@@ -544,18 +544,8 @@ namespace NMib::NStorage
 		};
 	}
 
-#ifdef DMibDebuggerHelpers
-	template <smint t_Member, typename t_CType>
-	struct TCVariantCommonDebugHelperMember
-	{
-	};
-#endif
-
 	template <typename t_CIndex, typename ...tp_CTypes, t_CIndex ...tp_Member>
 	struct TCVariantCommon<t_CIndex, TCVariantMember<t_CIndex, tp_CTypes, tp_Member>...>
-#ifdef DMibDebuggerHelpers
-		: public TCVariantCommonDebugHelperMember<smint(tp_Member), tp_CTypes>...
-#endif
 	{
 		using CIndexType = t_CIndex;
 		using CIndexInteger = NTraits::TCIntFromSizeLarger<sizeof(t_CIndex)>;
