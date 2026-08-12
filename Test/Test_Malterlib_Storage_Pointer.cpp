@@ -872,6 +872,58 @@ namespace
 			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1,2,3,4,5,6,7,8,9,10)) && DMibExpr(2)) (ETestFlag_NoValues);
 		}
 
+		void f_TestSharedPointerConstness()
+		{
+			struct CValue
+			{
+				int32 m_Value = 0;
+			};
+
+			DMibTestPath("Const pointee does not convert to mutable");
+
+			static_assert(!NTraits::cIsConvertible<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue>, TCSharedPointer<CValue const> &&>);
+			static_assert(!NTraits::cIsAssignableWith<TCSharedPointer<CValue> &, TCSharedPointer<CValue const>>);
+
+			static_assert(!NTraits::cIsConvertible<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>);
+			static_assert(!NTraits::cIsAssignableWith<TCSharedPointer<CValue const> &, TCSharedPointer<CValue>>);
+
+			// A unique-pointer move consumes the mutable handle, so adding const can remain implicit.
+			static_assert(NTraits::cIsConstructibleWith<TCUniquePointer<CValue const>, TCUniquePointer<CValue> &&>);
+			static_assert(!NTraits::cIsConstructibleWith<TCUniquePointer<CValue>, TCUniquePointer<CValue const> &&>);
+
+			TCSharedPointer<CValue> pMutable = fg_Construct();
+			pMutable->m_Value = 7;
+
+			TCSharedPointer<CValue const> pConst = pMutable.f_ShareAsConst();
+			DMibExpect(pConst->m_Value, ==, 7);
+			DMibExpect(pConst.f_Get(), ==, pMutable.f_Get());
+
+			constexpr bool c_bConstStrips = NTraits::cIsConvertible<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>;
+			DMibExpectFalse(c_bConstStrips);
+
+			constexpr bool c_bConstAddsImplicitly = NTraits::cIsConvertible<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>;
+			DMibExpectFalse(c_bConstAddsImplicitly);
+
+			using CWeak = TCWeakPointer<CValue, CAllocator_Heap>;
+			using CWeakConst = TCWeakPointer<CValue const, CAllocator_Heap>;
+
+			static_assert(!NTraits::cIsConvertible<CWeak, CWeakConst>);
+			static_assert(!NTraits::cIsConvertible<CWeakConst, CWeak>);
+
+			TCSharedPointer<CValue, CSupportWeakTag> pWeakable = fg_Construct();
+			pWeakable->m_Value = 11;
+
+			TCWeakPointer<CValue, CAllocator_Heap> WeakMutable = pWeakable;
+			auto WeakFrozen = WeakMutable.f_ShareAsConst();
+
+			auto pLocked = WeakFrozen.f_Lock();
+			DMibExpectTrue(bool(pLocked));
+			DMibExpect(pLocked->m_Value, ==, 11);
+		}
+
 		void f_TestSharedPointerInheritance()
 		{
 			static constexpr bool s_bReportMemory = false;
@@ -1528,6 +1580,10 @@ namespace
 			DMibTestSuite("Shared Pointer Inheritance")
 			{
 				f_TestSharedPointerInheritance();
+			};
+			DMibTestSuite("Shared Pointer Constness")
+			{
+				f_TestSharedPointerConstness();
 			};
 		}
 	};

@@ -12,10 +12,7 @@ namespace NMib::NStorage
 		template <typename t_CType0, typename t_CType1, typename t_CAllocator0, typename t_CAllocator1>
 		struct TCIsValidConversion
 		{
-			enum
-			{
-				mc_Value
-				=
+			constexpr static bool mc_Value =
 				(
 					(
 						NTraits::cHasVirtualDestructor<t_CType0>
@@ -26,7 +23,7 @@ namespace NMib::NStorage
 					|| NTraits::cIsSame<t_CType1, NTraits::TCRemoveQualifiers<t_CType0>>
 				)
 				&& NTraits::cIsSame<t_CAllocator0, t_CAllocator1>
-			};
+			;
 		};
 	}
 
@@ -205,9 +202,9 @@ namespace NMib::NStorage
 		(
 			TCUniquePointer<tf_CType, tfp_COptions...> &&_Other
 		)
+			requires (NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value)
 			: m_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			static_assert(NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value, "Not a valid conversion");
 			m_Data.m_pPointTo = _Other.f_Detach();
 		}
 
@@ -318,8 +315,8 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename ...tfp_COptions>
 		TCUniquePointer & operator = (TCUniquePointer<tf_CType, tfp_COptions...> &&_Other)
+			requires (NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value)
 		{
-			static_assert(NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value, "Not a valid conversion");
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			m_Data.m_pPointTo = _Other.f_Detach();
