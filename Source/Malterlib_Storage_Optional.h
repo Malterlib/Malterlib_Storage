@@ -8,7 +8,13 @@
 
 namespace NMib::NStorage
 {
-	template <typename t_CType>
+	enum class EOptionalMoveSemantics
+	{
+		mc_KeepEngaged
+		, mc_Clear
+	};
+
+	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics = EOptionalMoveSemantics::mc_KeepEngaged>
 	struct TCOptional : public NStorage::TCStreamableVariant
 		<
 			int8
@@ -54,29 +60,29 @@ namespace NMib::NStorage
 			}
 		;
 
-		template <typename tf_CType>
-		TCOptional(TCOptional<tf_CType> const &_Value);
-		template <typename tf_CType>
-		TCOptional(TCOptional<tf_CType> &_Value);
-		template <typename tf_CType>
-		TCOptional(TCOptional<tf_CType> &&_Value);
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> const &_Value);
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &_Value);
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &&_Value);
 
-		template <typename tf_CType>
-		TCOptional &operator = (TCOptional<tf_CType> const &_Value)
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional &operator = (TCOptional<tf_CType, tf_MoveSemantics> const &_Value)
 			requires requires ()
 			{
 				static_cast<CVariant &>(*this) = *_Value;
 			}
 		;
-		template <typename tf_CType>
-		TCOptional &operator = (TCOptional<tf_CType> &_Value)
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional &operator = (TCOptional<tf_CType, tf_MoveSemantics> &_Value)
 			requires requires ()
 			{
 				static_cast<CVariant &>(*this) = *_Value;
 			}
 		;
-		template <typename tf_CType>
-		TCOptional &operator = (TCOptional<tf_CType> &&_Value)
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional &operator = (TCOptional<tf_CType, tf_MoveSemantics> &&_Value)
 			requires requires ()
 			{
 				static_cast<CVariant &>(*this) = fg_Move(*_Value);
@@ -95,15 +101,15 @@ namespace NMib::NStorage
 		TCOptional(CNullPtr) noexcept;
 		TCOptional(TCOptional const &) = default;
 		TCOptional(TCOptional &) = default;
-		TCOptional(TCOptional &&) = default;
+		TCOptional(TCOptional &&_Other);
 		TCOptional &operator = (TCOptional const &) = default;
 		TCOptional &operator = (TCOptional &) = default;
-		TCOptional &operator = (TCOptional &&) = default;
+		TCOptional &operator = (TCOptional &&_Other);
 
-		template <typename tf_CType>
-		bool operator == (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() == fg_GetType<tf_CType const &>()));
-		template <typename tf_CType>
-		auto operator <=> (TCOptional<tf_CType> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() <=> fg_GetType<tf_CType const &>()));
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		bool operator == (TCOptional<tf_CType, tf_MoveSemantics> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() == fg_GetType<tf_CType const &>()));
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		auto operator <=> (TCOptional<tf_CType, tf_MoveSemantics> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() <=> fg_GetType<tf_CType const &>()));
 
 		explicit operator bool() const;
 
@@ -114,6 +120,9 @@ namespace NMib::NStorage
 		t_CType const &operator * () const;
 		t_CType *operator -> ();
 		t_CType &operator * ();
+
+		t_CType &f_GetOrCreate();
+		t_CType &f_CreateNew();
 
 		template <typename tf_CStream>
 		void f_Feed(tf_CStream &_Stream) const;
@@ -127,6 +136,9 @@ namespace NMib::NStorage
 		inline_never void fp_ThrowEmpty() const;
 	};
 
+	template <typename t_CType>
+	using TCOptionalClearOnMove = TCOptional<t_CType, EOptionalMoveSemantics::mc_Clear>;
+
 	namespace NPrivate
 	{
 		template <typename t_CType>
@@ -136,8 +148,8 @@ namespace NMib::NStorage
 			using CType = t_CType;
 		};
 
-		template <typename t_CType>
-		struct TCIsOptional<TCOptional<t_CType>>
+		template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
+		struct TCIsOptional<TCOptional<t_CType, t_MoveSemantics>>
 		{
 			constexpr static bool mc_bValue = true;
 			using CType = t_CType;
