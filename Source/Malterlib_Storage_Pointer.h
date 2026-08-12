@@ -874,6 +874,30 @@ namespace NMib::NStorage
 		}
 	}
 
+	namespace NPrivate
+	{
+		// Selects the constructor f_ShareAsConst uses, so sharing as const is a single
+		// construction rather than a default construct followed by an assignment
+		struct CShareAsConstTag
+		{
+		};
+
+		// Adding const is a conversion the type system would happily make implicitly, but the
+		// mutable handle survives it: a consumer handed a frozen view has no way to see that the
+		// producer can still change the bytes underneath it. Shared pointers therefore reject any
+		// conversion that adds constness and require f_ShareAsConst at the sharing site. An
+		// upcast that also adds const is rejected for the same reason, while a conversion between
+		// two already const pointees stays implicit
+		template <typename t_CTo, typename t_CFrom>
+		struct TCIsConstAddingConversion
+		{
+			constexpr static bool mc_Value =
+				NTraits::cIsConst<t_CTo>
+				&& !NTraits::cIsConst<t_CFrom>
+			;
+		};
+	}
+
 	template <typename t_CType, typename... tp_COptions>
 	class TCSharedPointer
 	{
@@ -908,6 +932,12 @@ namespace NMib::NStorage
 			if (_pPtr)
 				_pPtr->m_RefCount.f_Increase(DIfRefCountDebugging(m_Data.m_DebugRef));
 			m_Data.m_pPointTo = _pPtr;
+		}
+
+		TCSharedPointer(NPrivate::CShareAsConstTag, CAllocator const &_Allocator, CInternalData *_pPointTo)
+			: m_Data(_Allocator)
+		{
+			fp_SetInit(_pPointTo);
 		}
 
 		void fp_SetAttach(CInternalData *_pPtr)
@@ -1014,6 +1044,22 @@ namespace NMib::NStorage
 		}
 
 	public:
+		// Shares the object as const. This is deliberately a named operation rather than an
+		// implicit conversion: the mutable handle outlives it, so freezing has to be visible at
+		// the site that hands the frozen view out
+		TCSharedPointer<t_CType const, tp_COptions...> f_ShareAsConst() const
+		{
+			using CConst = TCSharedPointer<t_CType const, tp_COptions...>;
+
+			return CConst
+				(
+					NPrivate::CShareAsConstTag()
+					, fp_GetAllocator()
+					, NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr)
+				)
+			;
+		}
+
 		using CWeakPointer = TCWeakPointer<t_CType, CAllocator>;
 
 		TCSharedPointer()
@@ -1079,31 +1125,29 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCSharedPointer(TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
+			requires
+			(
+				NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+			)
 			: m_Data(_Other.fp_GetAllocator())
 		{
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
-				)
-			;
-			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCSharedPointer(TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
+			requires
+			(
+				NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+			)
 			: m_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
-				)
-			;
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
-			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+			// The counter type follows the pointee type, so a converting move has to convert
+			m_Data.m_pPointTo = NPrivate::fg_ConvertSharedPointer(_Other.m_Data.m_pPointTo, (CInternalData *)nullptr);
 			_Other.m_Data.m_pPointTo = nullptr;
 			DIfRefCountDebugging
 				(
@@ -1303,18 +1347,18 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCSharedPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
+			requires
+			(
+				NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+			)
 		{
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
-				)
-			;
-			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
-			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+			// The counter type follows the pointee type, so a converting move has to convert
+			// the counter exactly like the converting copy does instead of assigning it across
+			m_Data.m_pPointTo = NPrivate::fg_ConvertSharedPointer(_Other.m_Data.m_pPointTo, (CInternalData *)nullptr);
 			_Other.m_Data.m_pPointTo = nullptr;
 			DIfRefCountDebugging
 				(
@@ -1327,16 +1371,14 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCSharedPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
+			requires
+			(
+				NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+			)
 		{
 			fp_Delete();
 			fp_GetAllocator() = _Other.fp_GetAllocator();
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
-				)
-			;
-			static_assert((NTraits::cIsSame<typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator, CAllocator>));
 			static_assert(mc_bSupportWeak == TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak);
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			return *this;
@@ -1513,6 +1555,12 @@ namespace NMib::NStorage
 			m_Data.m_pPointTo = _pPtr;
 		}
 
+		TCWeakPointer(NPrivate::CShareAsConstTag, CAllocator const &_Allocator, CInternalData *_pPointTo)
+			: m_Data(_Allocator)
+		{
+			fp_SetInit(_pPointTo);
+		}
+
 		void fp_SetInit(CInternalData *_pPtr)
 		{
 			if (_pPtr)
@@ -1566,6 +1614,21 @@ namespace NMib::NStorage
 			fp_Delete();
 		}
 
+		// Shares the observed object as const, for the same reason TCSharedPointer does: locking a
+		// const weak pointer must not be a way to reach a frozen view without saying so
+		TCWeakPointer<t_CType const, tp_COptions...> f_ShareAsConst() const
+		{
+			using CConst = TCWeakPointer<t_CType const, tp_COptions...>;
+
+			return CConst
+				(
+					NPrivate::CShareAsConstTag()
+					, fp_GetAllocator()
+					, NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr)
+				)
+			;
+		}
+
 		TCWeakPointer(TCWeakPointer const &_Other)
 			: m_Data(_Other.fp_GetAllocator())
 		{
@@ -1587,27 +1650,25 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer(TCWeakPointer<tf_CType, tfp_COptions...> const &_Other)
-			: m_Data(_Other.fp_GetAllocator())
-		{
-			static_assert
+			requires
 				(
 					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCWeakPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
 				)
-			;
+			: m_Data(_Other.fp_GetAllocator())
+		{
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer(TCWeakPointer<tf_CType, tfp_COptions...> &&_Other)
-			: m_Data(fg_Move(_Other.fp_GetAllocator()))
-		{
-			static_assert
+			requires
 				(
 					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCWeakPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
 				)
-			;
+			: m_Data(fg_Move(_Other.fp_GetAllocator()))
+		{
 			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
 			_Other.m_Data.m_pPointTo = nullptr;
 			DIfRefCountDebugging
@@ -1680,6 +1741,11 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer(TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
+			requires
+				(
+					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+				)
 			: m_Data(_Other.fp_GetAllocator())
 		{
 			static_assert
@@ -1688,29 +1754,22 @@ namespace NMib::NStorage
 					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
 				)
 			;
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
-				)
-			;
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer(TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
+			requires
+				(
+					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+				)
 			: m_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
 			static_assert
 				(
 					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
 					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
 				)
 			;
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
@@ -1768,17 +1827,16 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
+			requires
+				(
+					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+				)
 		{
 			static_assert
 				(
 					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
 					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
 				)
 			;
 			fp_Delete();
@@ -1789,17 +1847,16 @@ namespace NMib::NStorage
 
 		template <typename tf_CType, typename... tfp_COptions>
 		TCWeakPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
+			requires
+				(
+					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
+					&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
+				)
 		{
 			static_assert
 				(
 					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
 					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
-			static_assert
-				(
-					NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCSharedPointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value
-					, "Not a valid conversion"
 				)
 			;
 			fp_Delete();
