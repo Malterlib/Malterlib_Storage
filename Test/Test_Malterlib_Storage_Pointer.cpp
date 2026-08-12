@@ -872,6 +872,67 @@ namespace
 			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1,2,3,4,5,6,7,8,9,10)) && DMibExpr(2)) (ETestFlag_NoValues);
 		}
 
+		// A shared pointer to const must not launder itself back into a mutable one: types that
+		// hand out shared views of frozen buffers (segmented binary storage, shared byte
+		// vectors) rely on the const pointee to enforce that the content stays frozen
+		void f_TestSharedPointerConstness()
+		{
+			struct CValue
+			{
+				int32 m_Value = 0;
+			};
+
+			DMibTestPath("Const pointee does not convert to mutable");
+
+			// Neither direction is implicit: stripping const would break the frozen contract, and
+			// adding it silently would hide that the mutable handle is still able to write
+			static_assert(!NTraits::cIsConvertible<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue>, TCSharedPointer<CValue const> &&>);
+			static_assert(!NTraits::cIsAssignableWith<TCSharedPointer<CValue> &, TCSharedPointer<CValue const>>);
+
+			static_assert(!NTraits::cIsConvertible<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>);
+			static_assert(!NTraits::cIsConstructibleWith<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>);
+			static_assert(!NTraits::cIsAssignableWith<TCSharedPointer<CValue const> &, TCSharedPointer<CValue>>);
+
+			// A unique pointer consumes its source, so no mutable handle survives the move and
+			// adding const stays implicit there
+			static_assert(NTraits::cIsConstructibleWith<TCUniquePointer<CValue const>, TCUniquePointer<CValue> &&>);
+			static_assert(!NTraits::cIsConstructibleWith<TCUniquePointer<CValue>, TCUniquePointer<CValue const> &&>);
+
+			TCSharedPointer<CValue> pMutable = fg_Construct();
+			pMutable->m_Value = 7;
+
+			// Freezing is explicit, and shares the control block rather than copying the object
+			TCSharedPointer<CValue const> pConst = pMutable.f_ShareAsConst();
+			DMibExpect(pConst->m_Value, ==, 7);
+			DMibExpect(pConst.f_Get(), ==, pMutable.f_Get());
+
+			constexpr bool c_bConstStrips = NTraits::cIsConvertible<TCSharedPointer<CValue const>, TCSharedPointer<CValue>>;
+			DMibExpectFalse(c_bConstStrips);
+
+			constexpr bool c_bConstAddsImplicitly = NTraits::cIsConvertible<TCSharedPointer<CValue>, TCSharedPointer<CValue const>>;
+			DMibExpectFalse(c_bConstAddsImplicitly);
+
+			// The same rule and the same named escape hatch apply to weak pointers, or locking one
+			// would be a way to reach a frozen view without saying so
+			using CWeak = TCWeakPointer<CValue, CAllocator_Heap>;
+			using CWeakConst = TCWeakPointer<CValue const, CAllocator_Heap>;
+
+			static_assert(!NTraits::cIsConvertible<CWeak, CWeakConst>);
+			static_assert(!NTraits::cIsConvertible<CWeakConst, CWeak>);
+
+			TCSharedPointer<CValue, CSupportWeakTag> pWeakable = fg_Construct();
+			pWeakable->m_Value = 11;
+
+			TCWeakPointer<CValue, CAllocator_Heap> WeakMutable = pWeakable;
+			auto WeakFrozen = WeakMutable.f_ShareAsConst();
+
+			auto pLocked = WeakFrozen.f_Lock();
+			DMibExpectTrue(bool(pLocked));
+			DMibExpect(pLocked->m_Value, ==, 11);
+		}
+
 		void f_TestSharedPointerInheritance()
 		{
 			static constexpr bool s_bReportMemory = false;
@@ -1528,6 +1589,10 @@ namespace
 			DMibTestSuite("Shared Pointer Inheritance")
 			{
 				f_TestSharedPointerInheritance();
+			};
+			DMibTestSuite("Shared Pointer Constness")
+			{
+				f_TestSharedPointerConstness();
 			};
 		}
 	};
