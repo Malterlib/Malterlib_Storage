@@ -679,7 +679,7 @@ namespace NMib::NStorage
 	template <> \
 	struct NMib::NTraits::TCHasVirtualDestructorOverride<d_Type> \
 	{ \
-		constexpr static bool mc_Value = d_HasRefCount; \
+		constexpr static bool mc_Value = d_VirtualDestructor; \
 	};
 
 	struct CSupportWeakTag
@@ -827,6 +827,17 @@ namespace NMib::NStorage
 		if constexpr (NTraits::cHasVirtualDestructor<tf_CObjectType> && !NTraits::cIsFinal<tf_CObjectType>)
 		{
 			static_assert(!NTraits::cHasOperatorDelete<tf_CObjectType>);
+#ifdef DMibPSizedDestructors
+			// TCHasVirtualDestructorOverride speaks for a type that is incomplete where it is used; here the type is complete
+			static_assert(NTraits::cHasSizedDestructor<tf_CObjectType>, "TCHasVirtualDestructorOverride claims a virtual destructor the type does not have");
+
+			// The deleting destructor of the dynamic type destroys the object and
+			// returns the memory it occupies, which the last weak reference frees.
+			void *pMemory;
+			umint Size = __builtin_malterlib_destroy(_pObject, &pMemory);
+
+			return {pMemory, Size};
+#else
 			if constexpr (NMib::NPrivate::cHas_m_VirtualAllocSize<tf_CObjectType>)
 			{
 				umint DeleteSize = _pObject->m_VirtualAllocSize;
@@ -836,18 +847,19 @@ namespace NMib::NStorage
 			}
 			else
 			{
-#if defined(DMibPOverrideOperatorNew)
+#	if defined(DMibPOverrideOperatorNew)
 				NMemory::CCaptureDefaultDelete Captured;
 				delete _pObject;
 
 				DMibFastCheck(Captured.m_Captured.m_pMemory);
 
 				return Captured.m_Captured;
-#else
+#	else
 				static_assert(!NTraits::cHasVirtualDestructor<tf_CObjectType>); // Operator new has to be overridden for this to work
 				return {_pObject, 0};
-#endif
+#	endif
 			}
+#endif
 		}
 		else
 		{
