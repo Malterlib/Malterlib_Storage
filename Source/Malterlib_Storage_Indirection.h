@@ -45,18 +45,16 @@ namespace NMib::NStorage::NIndirection
 		void fp_Create();
 
 	public:
-
 		mark_artificial mark_nodebug inline_always t_CType const &f_Get() const &;
 		mark_artificial mark_nodebug inline_always t_CType &f_Get() &;
 		mark_artificial mark_nodebug inline_always t_CType &&f_Get() &&;
 
 	public:
+		template <typename ...tfp_CParams>
+		mark_artificial inline_always auto operator () (tfp_CParams && ...p_Params);
 
-		template <typename... tfp_CParams>
-		mark_artificial inline_always auto operator () (tfp_CParams &&... p_Params);
-
-		template <typename... tfp_CParams>
-		mark_artificial inline_always auto operator () (tfp_CParams &&...p_Params) const;
+		template <typename ...tfp_CParams>
+		mark_artificial inline_always auto operator () (tfp_CParams && ...p_Params) const;
 
 		/***************************************************************************************************\
 		|¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯¯|
@@ -80,8 +78,7 @@ namespace NMib::NStorage::NIndirection
 		;
 
 		template <typename t_CMemberPtr>
-		auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		auto operator ->* (t_CMemberPtr const &_MemberPtr) const -> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 			requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 		;
 
@@ -91,19 +88,19 @@ namespace NMib::NStorage::NIndirection
 		TCIndirection();
 		~TCIndirection();
 
-		template <typename... tfp_CParams>
-		TCIndirection(tfp_CParams && ... p_Params)
-			requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams &&...>
+		template <typename ...tfp_CParams>
+		TCIndirection(tfp_CParams && ...p_Params)
+			requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams && ...>
 		;
 
 		TCIndirection(TCIndirection const &_Other);
 		TCIndirection(TCIndirection &_Other);
 		TCIndirection(TCIndirection &&_Other);
 		template <typename t_CParam0>
-		TCIndirection &operator =(t_CParam0 &&_Param0);
-		TCIndirection &operator =(TCIndirection const &_Other);
-		TCIndirection &operator =(TCIndirection &_Other);
-		TCIndirection &operator =(TCIndirection &&_Other);
+		TCIndirection &operator = (t_CParam0 &&_Param0);
+		TCIndirection &operator = (TCIndirection const &_Other);
+		TCIndirection &operator = (TCIndirection &_Other);
+		TCIndirection &operator = (TCIndirection &&_Other);
 		mark_artificial mark_nodebug inline_always operator t_CType const & () const;
 		mark_artificial mark_nodebug inline_always operator t_CType & ();
 
@@ -160,5 +157,5 @@ namespace NMib
 #include "Malterlib_Storage_Indirection.hpp"
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif

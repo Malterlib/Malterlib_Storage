@@ -57,7 +57,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		TCBitStorePointer &operator =(TCExplicit<tf_CType> &&_Other)
+		TCBitStorePointer &operator = (TCExplicit<tf_CType> &&_Other)
 		{
 			mp_PointTo = fsp_ToInt(static_cast<t_CType *>(*_Other));
 			return *this;
@@ -89,43 +89,31 @@ namespace NMib::NStorage
 			return fsp_FromInt(mp_PointTo);
 		}
 
-		mark_nodebug operator t_CType *() const
+		mark_nodebug operator t_CType * () const
 		{
 			return fsp_FromInt(mp_PointTo);
 		}
 
-		mark_nodebug t_CType *operator ->() const
+		mark_nodebug t_CType *operator -> () const
 		{
 			return fsp_FromInt(mp_PointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, fsp_FromInt(mp_PointTo));
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return fsp_FromInt(mp_PointTo)->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *fsp_FromInt(mp_PointTo);
 		}
@@ -133,13 +121,13 @@ namespace NMib::NStorage
 		template <typename tf_CType>
 		bool operator == (tf_CType const &_Other) const noexcept
 		{
-			return operator t_CType *() == static_cast<t_CType *>(_Other);
+			return operator t_CType * () == static_cast<t_CType *>(_Other);
 		}
 
 		template <typename tf_CType>
 		bool operator == (TCBitStorePointer<tf_CType> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator tf_CType *();
+			return operator t_CType * () == _Other.operator tf_CType * ();
 		}
 
 	private:
@@ -154,11 +142,11 @@ namespace NMib::NStorage
 			return reinterpret_cast<t_CType *>(_Pointer << t_nBits);
 		}
 
-		umint mp_PointTo:sizeof(umint)*8 - t_nBits;
+		umint mp_PointTo:sizeof(umint) * 8 - t_nBits;
 		umint mp_Bits:t_nBits;
 	};
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif

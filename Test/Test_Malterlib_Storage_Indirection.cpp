@@ -21,14 +21,17 @@ namespace
 				void operator () ()
 				{
 				}
+
 				uint16 operator () () const
 				{
 					return 0;
 				}
+
 				uint32 operator () () volatile
 				{
 					return 0;
 				}
+
 				uint64 operator () () const volatile
 				{
 					return 0;
@@ -38,8 +41,10 @@ namespace
 				{
 					return m_Data <=> _Value;
 				}
+
 				COrdering_Weak operator <=> (CTestUndefined const &_Other) const noexcept;
 			};
+
 			CTestClass();
 			~CTestClass();
 			TCIndirection<CTestUndefined> m_Undefined;
@@ -49,14 +54,12 @@ namespace
 		class CIndirection_Tests : public NTest::CTest
 		{
 		public:
-
 			void f_DoDefinedTests(CTestClass &_Indirection);
 			void f_DoTests()
 			{
 				CTestClass Indirection;
 				f_DoDefinedTests(Indirection);
 			}
-
 		};
 
 		class CTestClass::CTestUndefined
@@ -66,22 +69,27 @@ namespace
 			void operator () ()
 			{
 			}
+
 			uint16 operator () () const
 			{
 				return 0;
 			}
+
 			uint32 operator () () volatile
 			{
 				return 0;
 			}
+
 			uint64 operator () () const volatile
 			{
 				return 0;
 			}
+
 			auto operator <=> (float _Value) const noexcept
 			{
 				return m_Data <=> _Value;
 			}
+
 			auto operator <=> (CTestDefined const &_Other) noexcept
 			{
 				return m_Data <=> _Other.m_Data;
@@ -92,17 +100,21 @@ namespace
 		{
 			return m_Data <=> _Other.m_Data;
 		}
+
 		auto operator <=> (float const &_Left, CTestClass::CTestDefined const &_Right) noexcept
 		{
 			return _Left <=> _Right.m_Data;
 		}
+
 		auto operator <=> (float const &_Left, CTestClass::CTestUndefined const &_Right) noexcept
 		{
 			return _Left <=> _Right.m_Data;
 		}
+
 		CTestClass::CTestClass()
 		{
 		}
+
 		CTestClass::~CTestClass()
 		{
 		}
@@ -120,11 +132,11 @@ namespace
 			[[maybe_unused]] auto Test8 = _Indirection.m_Undefined < 5.0f;
 			[[maybe_unused]] auto Test9 = _Indirection.m_Defined < 5.0f;
 			[[maybe_unused]] auto Test10 = 5.0f < _Indirection.m_Undefined;
-			[[maybe_unused]] auto Test11 = 5.0f < _Indirection.m_Defined ;
+			[[maybe_unused]] auto Test11 = 5.0f < _Indirection.m_Defined;
 			[[maybe_unused]] auto Test12 = _Indirection.m_Undefined < 5;
 			[[maybe_unused]] auto Test13 = _Indirection.m_Defined < 5;
 			[[maybe_unused]] auto Test14 = 5 < _Indirection.m_Undefined;
-			[[maybe_unused]] auto Test15 = 5 < _Indirection.m_Defined ;
+			[[maybe_unused]] auto Test15 = 5 < _Indirection.m_Defined;
 			[[maybe_unused]] auto Test16 = _Indirection.m_Defined < _Indirection.m_Undefined;
 			[[maybe_unused]] auto Test17 = _Indirection.m_Undefined < _Indirection.m_Defined;
 
@@ -134,6 +146,7 @@ namespace
 			{
 				uint32 TestInt:24;
 			};
+
 			CCCCC TestInt;
 			TestInt.TestInt = 50;
 			NStream::CBinaryStreamMemory<> Stream;
@@ -144,13 +157,9 @@ namespace
 			TCIndirection<uint32> StreamTest2;
 			Stream.f_SetPosition(0);
 			Stream >> StreamTest2;
-
-
-
 		}
 	}
 
 	DMibTestRegister(CIndirection_Tests, Malterlib::Storage);
 }
-
 

@@ -17,17 +17,14 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
-	template <typename tf_CType, typename... tfp_CParams, umint... tfp_Indidies>
+	template <typename tf_CType, typename ...tfp_CParams, umint ...tfp_Indidies>
 	TCOptional<t_CType, t_MoveSemantics>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
-		: CVariant
-		(
-			fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...
-		)
+		: CVariant(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...)
 	{
 	}
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
-	template <typename tf_CType, typename... tfp_CParams>
+	template <typename tf_CType, typename ...tfp_CParams>
 	TCOptional<t_CType, t_MoveSemantics>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		: TCOptional(fg_Move(_CreateParams), NMeta::TCConsecutiveIndices<TCConstruct<tf_CType, tfp_CParams...>::mc_nParams>())
 	{
@@ -175,7 +172,7 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
-	template <typename tf_CType, typename... tfp_CParams>
+	template <typename tf_CType, typename ...tfp_CParams>
 	auto TCOptional<t_CType, t_MoveSemantics>::operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams) -> TCOptional &
 		requires requires ()
 		{
@@ -193,7 +190,7 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
-	TCOptional<t_CType, t_MoveSemantics>::operator bool() const
+	TCOptional<t_CType, t_MoveSemantics>::operator bool () const
 	{
 		return this->f_GetTypeID() == 1;
 	}

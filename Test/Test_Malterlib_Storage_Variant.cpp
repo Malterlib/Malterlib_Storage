@@ -7,13 +7,23 @@
 
 #include "../../Type/Test/Test_TypeTraits_TestTypes.h"
 
-
 namespace
 {
-	struct COne {};
-	struct CTwo {};
-	struct CThree {};
-	struct CFour {};
+	struct COne
+	{
+	};
+
+	struct CTwo
+	{
+	};
+
+	struct CThree
+	{
+	};
+
+	struct CFour
+	{
+	};
 
 	using CVarA = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>>;
 	using CVarB = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>>;
@@ -36,7 +46,6 @@ namespace
 	class CVariant_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		class CTestWithManyInit
 		{
 		public:
@@ -44,43 +53,55 @@ namespace
 			{
 			}
 		};
+
 		enum EStreamID
 		{
-			EStreamID_void,
-			EStreamID_Vector,
-			EStreamID_fp32,
-			EStreamID_fp64,
-			EStreamID_int32,
-			EStreamID_int64,
+			EStreamID_void
+			, EStreamID_Vector
+			, EStreamID_fp32
+			, EStreamID_fp64
+			, EStreamID_int32
+			, EStreamID_int64
 		};
 
-		struct CTest0 { };
-		struct CTest1 { };
-		struct CTest2 { };
-		struct CTest3 { };
-		struct CTest4 { };
-		struct CTest5 { };
-		struct CTest6 { };
-		struct CTest7 { };
+		struct CTest0
+		{
+		};
+
+		struct CTest1
+		{
+		};
+
+		struct CTest2
+		{
+		};
+
+		struct CTest3
+		{
+		};
+
+		struct CTest4
+		{
+		};
+
+		struct CTest5
+		{
+		};
+
+		struct CTest6
+		{
+		};
+
+		struct CTest7
+		{
+		};
 
 		void f_DoTests()
 		{
 			DMibTestSuite("General")
 			{
 				{
-					NMib::NStorage::TCVariant
-						<
-							CTest0
-							, CTest1
-							, CTest2
-							, CTest3
-							, CTest4
-							, CTest5
-							, CTest6
-							, CTest7
-						>
-						TestMany
-					;
+					NMib::NStorage::TCVariant<CTest0, CTest1, CTest2, CTest3, CTest4, CTest5, CTest6, CTest7> TestMany;
 
 					TestMany = CTest0();
 					TestMany = CTest1();
@@ -124,7 +145,7 @@ namespace
 				;
 
 				using CManyVariant = NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64>;
-				using CManyVariant2 = NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, const ch8 *>;
+				using CManyVariant2 = NMib::NStorage::TCVariant<void, NMib::NContainer::TCVector<int>, fp32, fp64, int32, int64, ch8 const *>;
 
 				CManyVariant ManyVariant;
 				CManyVariant ManyVariantVoid;
@@ -151,18 +172,18 @@ namespace
 
 				CManyVariant2 ManyVariant5 = NMib::fg_Move(ManyVariant3);
 
-				NMib::NStorage::TCVariant<const int> TestVarConst = 3;
+				NMib::NStorage::TCVariant<int const> TestVarConst = 3;
 
 				auto &Test32 = TestVarConst.f_Get<0>();
-				auto &Test33 = TestVarConst.f_GetAsType<const int>();
+				auto &Test33 = TestVarConst.f_GetAsType<int const>();
 
 				int notehuenothu = 0;
 
-				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit(0,0,0);
-				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit2(2.5,fp64(3.5),fp32(3.5f));
+				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit(0, 0, 0);
+				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit2(2.5, fp64(3.5), fp32(3.5f));
 
-				VarManyInit = NMib::fg_Construct(0,0,0);
-				VarManyInit2 = NMib::fg_Construct(2.5,fp64(3.5),fp32(3.5f));
+				VarManyInit = NMib::fg_Construct(0, 0, 0);
+				VarManyInit2 = NMib::fg_Construct(2.5, fp64(3.5), fp32(3.5f));
 
 				NMib::NContainer::TCMap<NMib::NStr::CStr, NMib::NStr::CStr> TestMap;
 
@@ -204,10 +225,15 @@ namespace
 				CManyVariantStreamable ManyVariantRead;
 				Stream >> ManyVariantRead;
 
-				NMib::NMisc::fg_ForEach(ManyVariantRead.f_Get<EStreamID_Vector>(), [&] (int32 _Value)
-				{
-					//DMibDTrace("{}\r\n", _Value);
-				});
+				NMib::NMisc::fg_ForEach
+					(
+						ManyVariantRead.f_Get<EStreamID_Vector>()
+						, [&](int32 _Value)
+						{
+							//DMibDTrace("{}\r\n", _Value);
+						}
+					)
+				;
 
 				NMib::NStorage::TCVariant<void, uint8> EmptyVariant;
 
@@ -220,131 +246,316 @@ namespace
 
 				DMibExpect(RecursiveVariant.f_Get<1>().f_Get<1>(), ==, 5);
 
-	#if 1
-				{NMib::NStorage::TCVariant<CTestUnion> Variant;}
-				{NMib::NStorage::TCVariant<CTestClass0> Variant;}
-				{NMib::NStorage::TCVariant<CTestClass1> Variant;}
-				{NMib::NStorage::TCVariant<CTestStruct0> Variant;}
-				{NMib::NStorage::TCVariant<CTestStruct1> Variant;}
-				{NMib::NStorage::TCVariant<const CTestClass0> Variant;}
-				{NMib::NStorage::TCVariant<const CTestClass1> Variant;}
-				{NMib::NStorage::TCVariant<const CTestStruct0> Variant;}
-				{NMib::NStorage::TCVariant<const CTestStruct1> Variant;}
-				{NMib::NStorage::TCVariant<volatile CTestClass0> Variant;}
-				{NMib::NStorage::TCVariant<volatile CTestClass1> Variant;}
-				{NMib::NStorage::TCVariant<volatile CTestStruct0> Variant;}
-				{NMib::NStorage::TCVariant<volatile CTestStruct1> Variant;}
-				{NMib::NStorage::TCVariant<const volatile CTestClass0> Variant;}
-				{NMib::NStorage::TCVariant<const volatile CTestClass1> Variant;}
-				{NMib::NStorage::TCVariant<const volatile CTestStruct0> Variant;}
-				{NMib::NStorage::TCVariant<const volatile CTestStruct1> Variant;}
-				{NMib::NStorage::TCVariant<ETestEnum> Variant;}
-				{NMib::NStorage::TCVariant<int> Variant;}
-				{NMib::NStorage::TCVariant<CTestClass> Variant;}
-				{NMib::NStorage::TCVariant<CTestC> Variant;}
-				{NMib::NStorage::TCVariant<CTestPtr> Variant;}
-				{NMib::NStorage::TCVariant<CTestCPtr> Variant;}
-				{NMib::NStorage::TCVariant<CTestPtrC> Variant;}
-				{NMib::NStorage::TCVariant<CTestCPtrC> Variant;}
-				{CTestBase Test; NMib::NStorage::TCVariant<CTestRef> Variant(Test);}
-				{CTestBase Test; NMib::NStorage::TCVariant<CTestCRef> Variant(NMib::fg_Const(Test));}
-				{CTestBase Test; NMib::NStorage::TCVariant<CTestRRef> Variant(NMib::fg_Move(Test));}
-				{CTestBase Test; NMib::NStorage::TCVariant<CTestCRRef> Variant((CTestCRRef) NMib::fg_Move(Test));}
-	//			{NMib::NStorage::TCVariant<PFFunc0> Variant;}
-	//			{NMib::NStorage::TCVariant<PFFunc1> Variant;}
-	//			{NMib::NStorage::TCVariant<PFFunc2> Variant;}
-				{NMib::NStorage::TCVariant<FFunc0Ref> Variant(fsg_FFunc0);}
-				{NMib::NStorage::TCVariant<FFunc1Ref> Variant(fsg_FFunc1);}
-				{NMib::NStorage::TCVariant<FFunc2Ref> Variant(fsg_FFunc2);}
-				{NMib::NStorage::TCVariant<FFunc0RRef> Variant(NMib::fg_Move(fsg_FFunc0));}
-				{NMib::NStorage::TCVariant<FFunc1RRef> Variant(NMib::fg_Move(fsg_FFunc1));}
-				{NMib::NStorage::TCVariant<FFunc2RRef> Variant(NMib::fg_Move(fsg_FFunc2));}
-				{NMib::NStorage::TCVariant<FFunc0Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc1Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc2Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc0PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FFunc1PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FFunc2PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2Ptr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2PtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0CPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1CPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2CPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0CPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1CPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2CPtrC> Variant;}
-	//			{NMib::NStorage::TCVariant<PFFunc0El> Variant;}
-	//			{NMib::NStorage::TCVariant<PFFunc1El> Variant;}
-	//			{NMib::NStorage::TCVariant<PFFunc2El> Variant;}
-				{NMib::NStorage::TCVariant<FFunc0ElRef> Variant(fsg_FFunc0El);}
-				{NMib::NStorage::TCVariant<FFunc1ElRef> Variant(fsg_FFunc1El);}
-				{NMib::NStorage::TCVariant<FFunc2ElRef> Variant(fsg_FFunc2El);}
-				{NMib::NStorage::TCVariant<FFunc0ElRRef> Variant(NMib::fg_Move(fsg_FFunc0El));}
-				{NMib::NStorage::TCVariant<FFunc1ElRRef> Variant(NMib::fg_Move(fsg_FFunc1El));}
-				{NMib::NStorage::TCVariant<FFunc2ElRRef> Variant(NMib::fg_Move(fsg_FFunc2El));}
-				{NMib::NStorage::TCVariant<FFunc0ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc1ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc2ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FFunc0ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FFunc1ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FFunc2ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2ElPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2ElPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0ElCPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1ElCPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2ElCPtr> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc0ElCPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc1ElCPtrC> Variant;}
-				{NMib::NStorage::TCVariant<FMFunc2ElCPtrC> Variant;}
-				{NMib::NStorage::TCVariant<CMPtr> Variant;}
-				{NMib::NStorage::TCVariant<CMCPtr> Variant;}
-				{NMib::NStorage::TCVariant<CMPtrC> Variant;}
-				{NMib::NStorage::TCVariant<CMCPtrC> Variant;}
-				{NMib::NStorage::TCVariant<CTestArray2> Variant;}
-				{NMib::NStorage::TCVariant<CTestArray2C> Variant;}
-	//			{NMib::NStorage::TCVariant<CTestArray> Variant;}
-	//			{NMib::NStorage::TCVariant<CTestArrayC> Variant;}
-				{NMib::NStorage::TCVariant<CTest2DArray2> Variant;}
-				{NMib::NStorage::TCVariant<CTest2DArray2C> Variant;}
-	//			{NMib::NStorage::TCVariant<CTest2DArray> Variant;}
-	//			{NMib::NStorage::TCVariant<CTest2DArrayC> Variant;}
-				{NMib::NStorage::TCVariant<CTest3DArray2> Variant;}
-				{NMib::NStorage::TCVariant<CTest3DArray2C> Variant;}
-	//			{NMib::NStorage::TCVariant<CTest3DArray> Variant;}
-	//			{NMib::NStorage::TCVariant<CTest3DArrayC> Variant;}
-				{NMib::NStorage::TCVariant<void *> Variant;}
-				{NMib::NStorage::TCVariant<void> Variant;}
-	#endif
+#if 1
+				{
+					NMib::NStorage::TCVariant<CTestUnion> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass0> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass1> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct0> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct1> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass0 const> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass1 const> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct0 const> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct1 const> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass0 volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass1 volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct0 volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct1 volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass0 const volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass1 const volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct0 const volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestStruct1 const volatile> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<ETestEnum> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<int> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestClass> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestCPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestCPtrC> Variant;
+				}
+				{
+					CTestBase Test;
+					NMib::NStorage::TCVariant<CTestRef> Variant(Test);
+				}
+				{
+					CTestBase Test;
+					NMib::NStorage::TCVariant<CTestCRef> Variant(NMib::fg_Const(Test));
+				}
+				{
+					CTestBase Test;
+					NMib::NStorage::TCVariant<CTestRRef> Variant(NMib::fg_Move(Test));
+				}
+				{
+					CTestBase Test;
+					NMib::NStorage::TCVariant<CTestCRRef> Variant((CTestCRRef)NMib::fg_Move(Test));
+				}
+				// {NMib::NStorage::TCVariant<PFFunc0> Variant;}
+				// {NMib::NStorage::TCVariant<PFFunc1> Variant;}
+				// {NMib::NStorage::TCVariant<PFFunc2> Variant;}
+				{
+					NMib::NStorage::TCVariant<FFunc0Ref> Variant(fsg_FFunc0);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1Ref> Variant(fsg_FFunc1);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2Ref> Variant(fsg_FFunc2);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0RRef> Variant(NMib::fg_Move(fsg_FFunc0));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1RRef> Variant(NMib::fg_Move(fsg_FFunc1));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2RRef> Variant(NMib::fg_Move(fsg_FFunc2));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2Ptr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2PtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0CPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1CPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2CPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0CPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1CPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2CPtrC> Variant;
+				}
+				// {NMib::NStorage::TCVariant<PFFunc0El> Variant;}
+				// {NMib::NStorage::TCVariant<PFFunc1El> Variant;}
+				// {NMib::NStorage::TCVariant<PFFunc2El> Variant;}
+				{
+					NMib::NStorage::TCVariant<FFunc0ElRef> Variant(fsg_FFunc0El);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1ElRef> Variant(fsg_FFunc1El);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2ElRef> Variant(fsg_FFunc2El);
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0ElRRef> Variant(NMib::fg_Move(fsg_FFunc0El));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1ElRRef> Variant(NMib::fg_Move(fsg_FFunc1El));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2ElRRef> Variant(NMib::fg_Move(fsg_FFunc2El));
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc0ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc1ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FFunc2ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2ElPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2ElPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0ElCPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1ElCPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2ElCPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc0ElCPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc1ElCPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<FMFunc2ElCPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CMPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CMCPtr> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CMPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CMCPtrC> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestArray2> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTestArray2C> Variant;
+				}
+				// {NMib::NStorage::TCVariant<CTestArray> Variant;}
+				// {NMib::NStorage::TCVariant<CTestArrayC> Variant;}
+				{
+					NMib::NStorage::TCVariant<CTest2DArray2> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTest2DArray2C> Variant;
+				}
+				// {NMib::NStorage::TCVariant<CTest2DArray> Variant;}
+				// {NMib::NStorage::TCVariant<CTest2DArrayC> Variant;}
+				{
+					NMib::NStorage::TCVariant<CTest3DArray2> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<CTest3DArray2C> Variant;
+				}
+				// {NMib::NStorage::TCVariant<CTest3DArray> Variant;}
+				// {NMib::NStorage::TCVariant<CTest3DArrayC> Variant;}
+				{
+					NMib::NStorage::TCVariant<void *> Variant;
+				}
+				{
+					NMib::NStorage::TCVariant<void> Variant;
+				}
+#endif
 
 				if (0)
 				{
 					// This does not work... it's initialized as a char
 					int Val = 5;
-					NMib::NStorage::TCVariant<char, int const&> Var((int const&)Val);
+					NMib::NStorage::TCVariant<char, int const &> Var((int const &)Val);
 
-					NMib::NStorage::TCVariant<char, int const&> const& VarRef = Var;
+					NMib::NStorage::TCVariant<char, int const &> const &VarRef = Var;
 
 					struct CUtil
 					{
-						static void Do(char _V) {}
-						static void Do(int const& _V) {}
+						static void Do(char _V)
+						{
+						}
+
+						static void Do(int const &_V)
+						{
+						}
 					};
 
-
-					int const& Ref = VarRef.f_Get<1>();
+					int const &Ref = VarRef.f_Get<1>();
 					CUtil::Do(VarRef.f_Get<1>());
 				}
 			};
 		}
-
 	};
 
 	DMibTestRegister(CVariant_Tests, Malterlib::Storage);

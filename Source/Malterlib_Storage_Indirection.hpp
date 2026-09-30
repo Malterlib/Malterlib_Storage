@@ -62,22 +62,23 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename... tfp_CParams>
-	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams &&... p_Params)
+	template <typename ...tfp_CParams>
+	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams && ...p_Params)
 	{
 		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename... tfp_CParams>
-	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams &&...p_Params) const
+	template <typename ...tfp_CParams>
+	mark_artificial inline_always auto TCIndirection<t_CType, t_CAllocator>::operator () (tfp_CParams && ...p_Params) const
 	{
 		return this->f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
+		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>
 		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
@@ -123,9 +124,9 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename... tfp_CParams>
-	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tfp_CParams && ... p_Params)
-		requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams &&...>
+	template <typename ...tfp_CParams>
+	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tfp_CParams && ...p_Params)
+		requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams && ...>
 	{
 		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tfp_CParams>(p_Params)...);
 	}
@@ -151,28 +152,28 @@ namespace NMib::NStorage::NIndirection
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename t_CParam0>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(t_CParam0 &&_Param0)
+	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (t_CParam0 &&_Param0)
 	{
 		this->f_Get() = fg_Forward<t_CParam0>(_Param0);
 		return *this;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection const &_Other)
+	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (TCIndirection const &_Other)
 	{
 		this->f_Get() = _Other.f_Get();
 		return *this;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection &_Other)
+	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (TCIndirection &_Other)
 	{
 		this->f_Get() = _Other.f_Get();
 		return *this;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator =(TCIndirection &&_Other)
+	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (TCIndirection &&_Other)
 	{
 		this->fp_Delete();
 		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;

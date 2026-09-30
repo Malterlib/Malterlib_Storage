@@ -4,11 +4,11 @@
 #pragma once
 
 #ifndef DMibConfig_RefCountDebugging
-#define DMibConfig_RefCountDebugging 0
+#	define DMibConfig_RefCountDebugging 0
 #endif
 
 #ifndef DMibConfig_RefCountLeakDebugging
-#define DMibConfig_RefCountLeakDebugging 0
+#	define DMibConfig_RefCountLeakDebugging 0
 #endif
 
 #if DMibConfig_RefCountDebugging
@@ -40,17 +40,18 @@ namespace NMib::NStorage
 		void *m_pPointTo;
 	};
 
-
 	class CAutoClearPtrMember
 	{
 	private:
-		CAutoClearPtrMember(const CAutoClearPtrMember&_Other)
+		CAutoClearPtrMember(CAutoClearPtrMember const &_Other)
 		{
 		}
-		CAutoClearPtrMember &operator = (const CAutoClearPtrMember&_Other)
+
+		CAutoClearPtrMember &operator = (CAutoClearPtrMember const &_Other)
 		{
 			return *this;
 		}
+
 	public:
 		CAutoClearPtrMember();
 		~CAutoClearPtrMember();
@@ -63,20 +64,21 @@ namespace NMib::NStorage
 	class CAutoClearPtrMemberDebug : public CAutoClearPtrMember
 	{
 	private:
-		CAutoClearPtrMemberDebug(const CAutoClearPtrMemberDebug&_Other)
+		CAutoClearPtrMemberDebug(CAutoClearPtrMemberDebug const &_Other)
 		{
 		}
-		CAutoClearPtrMemberDebug &operator = (const CAutoClearPtrMemberDebug&_Other)
+
+		CAutoClearPtrMemberDebug &operator = (CAutoClearPtrMemberDebug const &_Other)
 		{
 			return *this;
 		}
+
 	public:
 		CAutoClearPtrMemberDebug();
 		~CAutoClearPtrMemberDebug();
 
 		void f_Clear();
 	};
-
 
 	template <typename t_CType>
 	class TCAutoClearPtrMemberDebug
@@ -87,6 +89,7 @@ namespace NMib::NStorage
 		{
 			f_Clear();
 		}
+
 		void f_Clear()
 		{
 			CAutoClearPtr *pPtr = m_Linked.f_Pop();
@@ -107,6 +110,7 @@ namespace NMib::NStorage
 			if (m_pPointTo)
 				m_pPointTo->m_AutoClearPtrMember.m_Linked.f_Remove(this);
 		}
+
 	public:
 		TCAutoClearPtr()
 			: m_pPointTo(nullptr)
@@ -116,20 +120,19 @@ namespace NMib::NStorage
 		// Assign
 		TCAutoClearPtr(t_CType *_pPtr)
 		{
-
 			if (_pPtr)
 				_pPtr->m_AutoClearPtrMember.m_Linked.f_Insert(this);
 			m_pPointTo = _pPtr;
 		}
-		TCAutoClearPtr(const TCAutoClearPtr &_Other)
-		{
 
+		TCAutoClearPtr(TCAutoClearPtr const &_Other)
+		{
 			if (_Other)
 				_Other->m_AutoClearPtrMember.m_Linked.f_Insert(this);
 			m_pPointTo = _Other.m_pPointTo;
 		}
 
-		TCAutoClearPtr & operator = (t_CType *_pPtr)
+		TCAutoClearPtr &operator = (t_CType *_pPtr)
 		{
 			fp_RemoveOld();
 			if (_pPtr)
@@ -139,7 +142,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCAutoClearPtr & operator = (const TCAutoClearPtr &_Other)
+		TCAutoClearPtr &operator = (TCAutoClearPtr const &_Other)
 		{
 			fp_RemoveOld();
 			if (_Other)
@@ -150,57 +153,45 @@ namespace NMib::NStorage
 		}
 
 		// Access
-		operator t_CType *() const
+		operator t_CType * () const
 		{
 			return m_pPointTo;
 		}
 
-		t_CType *operator ->() const
+		t_CType *operator -> () const
 		{
 			return m_pPointTo;
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *m_pPointTo;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const noexcept
+		bool operator == (t_CType2 const &_Other) const noexcept
 		{
-			return operator t_CType *() == (t_CType *)_Other;
+			return operator t_CType * () == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCAutoClearPtr<t_CType2> &_Other) const noexcept
+		bool operator == (TCAutoClearPtr<t_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator t_CType2 *();
+			return operator t_CType * () == _Other.operator t_CType2 * ();
 		}
 	};
 
@@ -213,6 +204,7 @@ namespace NMib::NStorage
 			if (m_pPointTo)
 				m_pPointTo->m_AutoClearPtrMemberDebug.m_Linked.f_Remove(this);
 		}
+
 	public:
 		TCAutoClearPtrDebug()
 			: m_pPointTo(nullptr)
@@ -226,15 +218,15 @@ namespace NMib::NStorage
 				_pPtr->m_AutoClearPtrMemberDebug.m_Linked.f_Insert(this);
 			m_pPointTo = _pPtr;
 		}
-		TCAutoClearPtrDebug(const TCAutoClearPtrDebug &_Other)
-		{
 
+		TCAutoClearPtrDebug(TCAutoClearPtrDebug const &_Other)
+		{
 			if (_Other)
 				_Other->m_AutoClearPtrMemberDebug.m_Linked.f_Insert(this);
 			m_pPointTo = _Other.m_pPointTo;
 		}
 
-		TCAutoClearPtrDebug & operator = (t_CType *_pPtr)
+		TCAutoClearPtrDebug &operator = (t_CType *_pPtr)
 		{
 			fp_RemoveOld();
 
@@ -244,7 +236,8 @@ namespace NMib::NStorage
 			m_pPointTo = _pPtr;
 			return *this;
 		}
-		TCAutoClearPtrDebug & operator = (const TCAutoClearPtrDebug &_Other)
+
+		TCAutoClearPtrDebug &operator = (TCAutoClearPtrDebug const &_Other)
 		{
 			fp_RemoveOld();
 
@@ -256,69 +249,56 @@ namespace NMib::NStorage
 		}
 
 		// Access
-		operator t_CType *() const
+		operator t_CType * () const
 		{
 			return m_pPointTo;
 		}
 
-		t_CType *operator ->() const
+		t_CType *operator -> () const
 		{
 			return m_pPointTo;
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *m_pPointTo;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const noexcept
+		bool operator == (t_CType2 const &_Other) const noexcept
 		{
-			return operator t_CType *() == (t_CType *)_Other;
+			return operator t_CType * () == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCAutoClearPtrDebug<t_CType2> &_Other) const noexcept
+		bool operator == (TCAutoClearPtrDebug<t_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator t_CType2 *();
+			return operator t_CType * () == _Other.operator t_CType2 * ();
 		}
 	};
 
 #define DMibAutoClearPtrDeclare mutable NMib::NStorage::CAutoClearPtrMember m_AutoClearPtrMember
 #define DMibAutoClearPtrDeclareDebug(_Type) mutable NMib::NStorage::TCAutoClearPtrMemberDebug<_Type> m_AutoClearPtrMemberDebug
 #ifndef DMibPNoShortCuts
-#define DAutoClearPtrDeclare DMibAutoClearPtrDeclare
+#	define DAutoClearPtrDeclare DMibAutoClearPtrDeclare
 #endif
 
-
 #if defined DMibContractsConfigure_CheckEnabled
-	#define DMibDebugPointerDeclare mutable NMib::NStorage::CAutoClearPtrMemberDebug m_DebugPointerMember
+#	define DMibDebugPointerDeclare mutable NMib::NStorage::CAutoClearPtrMemberDebug m_DebugPointerMember
 	template <typename t_CType>
 	class TCDebugPointer : public CAutoClearPtr
 	{
@@ -329,6 +309,7 @@ namespace NMib::NStorage
 			if (m_pPointTo)
 				m_pPointTo->m_DebugPointerMember.m_Linked.f_Remove(this);
 		}
+
 	public:
 		TCDebugPointer()
 			: m_pPointTo(nullptr)
@@ -342,15 +323,15 @@ namespace NMib::NStorage
 				_pPtr->m_DebugPointerMember.m_Linked.f_Insert(this);
 			m_pPointTo = _pPtr;
 		}
-		TCDebugPointer(const TCDebugPointer &_Other)
-		{
 
+		TCDebugPointer(TCDebugPointer const &_Other)
+		{
 			if (_Other)
 				_Other->m_DebugPointerMember.m_Linked.f_Insert(this);
 			m_pPointTo = _Other.m_pPointTo;
 		}
 
-		TCDebugPointer & operator = (t_CType *_pPtr)
+		TCDebugPointer &operator = (t_CType *_pPtr)
 		{
 			fp_RemoveOld();
 			if (_pPtr)
@@ -360,7 +341,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCDebugPointer & operator = (const TCDebugPointer &_Other)
+		TCDebugPointer &operator = (TCDebugPointer const &_Other)
 		{
 			fp_RemoveOld();
 			if (_Other)
@@ -371,66 +352,55 @@ namespace NMib::NStorage
 		}
 
 		// Access
-		operator t_CType *() const
+		operator t_CType * () const
 		{
 			return m_pPointTo;
 		}
 
-		t_CType *operator ->() const
+		t_CType *operator -> () const
 		{
 			return m_pPointTo;
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *m_pPointTo;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const noexcept
+		bool operator == (t_CType2 const &_Other) const noexcept
 		{
-			return operator t_CType *() == (t_CType *)_Other;
+			return operator t_CType * () == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCDebugPointer<t_CType2> &_Other) const noexcept
+		bool operator == (TCDebugPointer<t_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator t_CType2 *();
+			return operator t_CType * () == _Other.operator t_CType2 * ();
 		}
 	};
 
 #else
-#define DMibDebugPointerDeclare
+#	define DMibDebugPointerDeclare
 	template <typename t_CType>
 	class TCDebugPointer
 	{
 		t_CType *m_pPointTo;
+
 	public:
 		TCDebugPointer()
 			: m_pPointTo(nullptr)
@@ -442,87 +412,77 @@ namespace NMib::NStorage
 		{
 			m_pPointTo = _pPtr;
 		}
-		TCDebugPointer(const TCDebugPointer &_Other)
+
+		TCDebugPointer(TCDebugPointer const &_Other)
 		{
 			m_pPointTo = _Other.m_pPointTo;
 		}
 
-		TCDebugPointer & operator = (t_CType *_pPtr)
+		TCDebugPointer &operator = (t_CType *_pPtr)
 		{
 			m_pPointTo = _pPtr;
 			return *this;
 		}
 
-		TCDebugPointer & operator = (const TCDebugPointer &_Other)
+		TCDebugPointer &operator = (TCDebugPointer const &_Other)
 		{
 			m_pPointTo = _Other.m_pPointTo;
 			return *this;
 		}
 
 		// Access
-		operator t_CType *() const
+		operator t_CType * () const
 		{
 			return m_pPointTo;
 		}
 
-		t_CType *operator ->() const
+		t_CType *operator -> () const
 		{
 			return m_pPointTo;
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *m_pPointTo;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const noexcept
+		bool operator == (t_CType2 const &_Other) const noexcept
 		{
-			return operator t_CType *() == (t_CType *)_Other;
+			return operator t_CType * () == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCDebugPointer<t_CType2> &_Other) const noexcept
+		bool operator == (TCDebugPointer<t_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator t_CType2 *();
+			return operator t_CType * () == _Other.operator t_CType2 * ();
 		}
 	};
 #endif
 
 #ifndef DMibPNoShortCuts
-#define DDebugPointerDeclare DMibDebugPointerDeclare
+#	define DDebugPointerDeclare DMibDebugPointerDeclare
 #endif
 
 	template <typename t_CType>
 	class TCPointer
 	{
 		t_CType *m_pPointTo;
+
 	public:
 		TCPointer()
 			: m_pPointTo(nullptr)
@@ -541,25 +501,25 @@ namespace NMib::NStorage
 			m_pPointTo = *_Other;
 		}
 
-		TCPointer(const TCPointer &_Other)
+		TCPointer(TCPointer const &_Other)
 		{
 			m_pPointTo = _Other.m_pPointTo;
 		}
 
-		TCPointer & operator = (t_CType *_pPtr)
+		TCPointer &operator = (t_CType *_pPtr)
 		{
 			m_pPointTo = _pPtr;
 			return *this;
 		}
 
-		TCPointer & operator = (const TCPointer &_Other)
+		TCPointer &operator = (TCPointer const &_Other)
 		{
 			m_pPointTo = _Other.m_pPointTo;
 			return *this;
 		}
 
 		template <typename tf_CType>
-		TCPointer &operator =(TCExplicit<tf_CType> &&_Other)
+		TCPointer &operator = (TCExplicit<tf_CType> &&_Other)
 		{
 			m_pPointTo = *_Other;
 			return *this;
@@ -570,64 +530,51 @@ namespace NMib::NStorage
 			m_pPointTo = nullptr;
 		}
 
-
 		// Access
 		t_CType *f_Get() const
 		{
 			return m_pPointTo;
 		}
 
-		operator t_CType *() const
+		operator t_CType * () const
 		{
 			return m_pPointTo;
 		}
 
-		t_CType *operator ->() const
+		t_CType *operator -> () const
 		{
 			return m_pPointTo;
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
 
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *m_pPointTo;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const t_CType2 &_Other) const noexcept
+		bool operator == (t_CType2 const &_Other) const noexcept
 		{
-			return operator t_CType *() == (t_CType *)_Other;
+			return operator t_CType * () == (t_CType *)_Other;
 		}
 
 		template <typename t_CType2>
-		bool operator == (const TCPointer<t_CType2> &_Other) const noexcept
+		bool operator == (TCPointer<t_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType *() == _Other.operator t_CType2 *();
+			return operator t_CType * () == _Other.operator t_CType2 * ();
 		}
 	};
 
@@ -641,10 +588,10 @@ namespace NMib::NStorage
 		~CRefCountDebugReference();
 
 		CRefCountDebugReference(CRefCountDebugReference const &_Other) = delete;
-		CRefCountDebugReference &operator =(CRefCountDebugReference const &_Other) = delete;
+		CRefCountDebugReference &operator = (CRefCountDebugReference const &_Other) = delete;
 
 		CRefCountDebugReference(CRefCountDebugReference &&_Other);
-		CRefCountDebugReference &operator =(CRefCountDebugReference &&_Other);
+		CRefCountDebugReference &operator = (CRefCountDebugReference &&_Other);
 
 		NException::CCallstack *m_pCallstack = nullptr;
 	};
@@ -653,18 +600,17 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 		template <typename t_CType>
-		concept cHasIntrusiveRefCountHelper = requires (t_CType const* _pValue)
+		concept cHasIntrusiveRefCountHelper = requires (t_CType const *_pValue)
 			{
 				_pValue->m_RefCount.f_Get();
 			}
 		;
-
 	}
 
 	template <typename t_CType>
 	struct TCHasIntrusiveRefCountOverride
 	{
-		constexpr static bool mc_bValue = NPrivate::cHasIntrusiveRefCountHelper<t_CType>;
+		static constexpr bool mc_bValue = NPrivate::cHasIntrusiveRefCountHelper<t_CType>;
 	};
 
 	template <typename t_CType>
@@ -688,12 +634,10 @@ namespace NMib::NStorage
 
 	namespace NPrivate
 	{
-
 		template <typename t_CType, CSharedPointerOptionUnderlying t_Options, bool t_bHasRefCount = cHasIntrusiveRefCount<NTraits::TCRemoveQualifiers<t_CType>>>
 		class TCChooseSharedPointerTypeImp
 		{
 		public:
-
 		};
 
 		template <typename t_CType, CSharedPointerOptionUnderlying t_Options>
@@ -735,14 +679,26 @@ namespace NMib::NStorage
 		template <typename t_CType, CSharedPointerOptionUnderlying t_Options>
 		struct TCSharedPointerCounter<t_CType, true, t_Options>;
 
-
 		template <typename tf_CType, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlying tf_Options>
 		tf_CType *fg_GetSharedPointerPointer(TCSharedPointerCounter<tf_CType, tf_bVirtualDestructor, tf_Options> *_pIn);
 
-		template <typename tf_CToType, typename tf_CType, bool tf_bToVirtualDestructor, bool tf_bVirtualDestructor, CSharedPointerOptionUnderlying tf_ToOptions, CSharedPointerOptionUnderlying tf_Options>
-		TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *fg_ConvertSharedPointer(TCSharedPointerCounter<tf_CType, tf_bVirtualDestructor, tf_Options> *_pIn, TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *_pDummy);
+		template
+		<
+			typename tf_CToType
+			, typename tf_CType
+			, bool tf_bToVirtualDestructor
+			, bool tf_bVirtualDestructor
+			, CSharedPointerOptionUnderlying tf_ToOptions
+			, CSharedPointerOptionUnderlying tf_Options
+		>
+		TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *fg_ConvertSharedPointer
+			(
+				TCSharedPointerCounter<tf_CType, tf_bVirtualDestructor, tf_Options> *_pIn
+				, TCSharedPointerCounter<tf_CToType, tf_bToVirtualDestructor, tf_ToOptions> *_pDummy
+			)
+		;
 
-		template <typename... tp_CParams>
+		template <typename ...tp_CParams>
 		struct TCParseSharedPointerOptions;
 
 		template <>
@@ -754,7 +710,7 @@ namespace NMib::NStorage
 			static constexpr bool mc_bSupportWeak = false;
 		};
 
-		template <typename t_CFirst, typename... tp_CParams>
+		template <typename t_CFirst, typename ...tp_CParams>
 		struct TCParseSharedPointerOptions<t_CFirst, tp_CParams...>
 		{
 			using CParent = TCParseSharedPointerOptions<tp_CParams...>;
@@ -763,7 +719,7 @@ namespace NMib::NStorage
 			static constexpr bool mc_bSupportWeak = CParent::mc_bSupportWeak;
 		};
 
-		template <typename... tp_CParams>
+		template <typename ...tp_CParams>
 		struct TCParseSharedPointerOptions<CSupportWeakTag, tp_CParams...>
 		{
 			using CParent = TCParseSharedPointerOptions<tp_CParams...>;
@@ -779,15 +735,16 @@ namespace NMib::NStorage
 			TCSharedPointerData(TCSharedPointerData const &_Other)
 			{
 			}
+
 			TCSharedPointerData(TCSharedPointerData &&_Other)
 			{
 			}
+
 		public:
 			template <typename t_CType2>
 			class TCChooseSharedPointerType : public TCChooseSharedPointerTypeImp<t_CType2, t_Options>
 			{
 			public:
-
 			};
 
 			using CInternalData = typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType;
@@ -803,6 +760,7 @@ namespace NMib::NStorage
 				: t_CAllocator(_Other)
 			{
 			}
+
 			TCSharedPointerData(t_CAllocator &&_Other)
 				: t_CAllocator(fg_Move(_Other))
 			{
@@ -896,19 +854,16 @@ namespace NMib::NStorage
 		template <typename t_CTo, typename t_CFrom>
 		struct TCIsConstAddingConversion
 		{
-			constexpr static bool mc_Value =
-				NTraits::cIsConst<t_CTo>
-				&& !NTraits::cIsConst<t_CFrom>
-			;
+			static constexpr bool mc_Value = NTraits::cIsConst<t_CTo> && !NTraits::cIsConst<t_CFrom>;
 		};
 	}
 
-	template <typename t_CType, typename... tp_COptions>
+	template <typename t_CType, typename ...tp_COptions>
 	class TCSharedPointer
 	{
-		template <typename t_CType2, typename... tp_COptions2>
+		template <typename t_CType2, typename ...tp_COptions2>
 		friend class TCSharedPointer;
-		template <typename t_CType2, typename... tp_COptions2>
+		template <typename t_CType2, typename ...tp_COptions2>
 		friend class TCWeakPointer;
 
 		using COptions = NPrivate::TCParseSharedPointerOptions<tp_COptions...>;
@@ -916,7 +871,7 @@ namespace NMib::NStorage
 
 		static constexpr bool mc_bSupportWeak = COptions::mc_bSupportWeak;
 
-		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, mc_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None >;
+		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, mc_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None>;
 		using CInternalData = typename CData::CInternalData;
 
 		CData m_Data;
@@ -998,7 +953,8 @@ namespace NMib::NStorage
 								(
 #if DMibConfig_RefCountDebugging
 #	if DMibEnableSafeCheck > 0
-									m_Data.m_DebugRef, true
+									m_Data.m_DebugRef
+									, true
 #	else
 									m_Data.m_DebugRef
 #	endif
@@ -1054,13 +1010,7 @@ namespace NMib::NStorage
 		{
 			using CConst = TCSharedPointer<t_CType const, tp_COptions...>;
 
-			return CConst
-				(
-					NPrivate::CShareAsConstTag()
-					, fp_GetAllocator()
-					, NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr)
-				)
-			;
+			return CConst(NPrivate::CShareAsConstTag(), fp_GetAllocator(), NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr));
 		}
 
 		using CWeakPointer = TCWeakPointer<t_CType, CAllocator>;
@@ -1106,7 +1056,6 @@ namespace NMib::NStorage
 				fp_SetConstruct(fg_ConstructObject<CInternalData>(fp_GetAllocator(), *((*_Other).m_Data.m_pPointTo)));
 		}
 
-
 		TCSharedPointer(TCSharedPointer const &_Other)
 			: m_Data(_Other.fp_GetAllocator())
 		{
@@ -1126,7 +1075,7 @@ namespace NMib::NStorage
 			;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCSharedPointer(TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
 			requires
 			(
@@ -1139,7 +1088,7 @@ namespace NMib::NStorage
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCSharedPointer(TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
 			requires
 			(
@@ -1159,7 +1108,7 @@ namespace NMib::NStorage
 			;
 		}
 
-		template <typename tf_CType, typename... tfp_CParams>
+		template <typename tf_CType, typename ...tfp_CParams>
 		TCSharedPointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
 			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
@@ -1175,14 +1124,13 @@ namespace NMib::NStorage
 			;
 		}
 
-		template <typename tf_CType, typename... tfp_CParams, typename tf_CAllocator>
+		template <typename tf_CType, typename ...tfp_CParams, typename tf_CAllocator>
 		TCSharedPointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, tf_CAllocator &&_Allocator)
 			: m_Data(fg_Forward<tf_CAllocator>(_Allocator))
 		{
 			static_assert
 				(
-					NTraits::cIsVoid<tf_CType>
-					|| NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, NTraits::TCRemoveReference<tf_CAllocator>>::mc_Value
+					NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, NTraits::TCRemoveReference<tf_CAllocator>>::mc_Value
 					, "Not a valid conversion"
 				)
 			;
@@ -1267,44 +1215,32 @@ namespace NMib::NStorage
 		{
 			return NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo);
 		}
-		t_CType *operator ->() const
+
+		t_CType *operator -> () const
 		{
 			return NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo);
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberFunctionPointer<t_CMemberPtr>
-				, NFunction::TCMemberFunctionBoundFunctor
-				<
-					t_CMemberPtr
-					, t_CType *
-				>
-			>
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo));
 		}
 
 		template <typename t_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf
-			<
-				NTraits::cIsMemberObjectPointer<t_CMemberPtr>
-				, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			>
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
 		{
 			return (NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo))->*_MemberPtr;
 		}
 
-
-		mark_nodebug t_CType &operator *() const
+		mark_nodebug t_CType &operator * () const
 		{
 			return *NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo);
 		}
 
-		TCSharedPointer & operator = (CNullPtr)
+		TCSharedPointer &operator = (CNullPtr)
 		{
 			fp_Delete();
 			return *this;
@@ -1339,7 +1275,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCSharedPointer &operator = (const TCSharedPointer &_Other)
+		TCSharedPointer &operator = (TCSharedPointer const &_Other)
 		{
 			fp_Delete();
 			fp_GetAllocator() = _Other.fp_GetAllocator();
@@ -1347,7 +1283,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCSharedPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
 			requires
 			(
@@ -1369,7 +1305,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCSharedPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
 			requires
 			(
@@ -1388,11 +1324,8 @@ namespace NMib::NStorage
 		{
 			CInternalData *pNewObject = nullptr;
 			if (*_Other)
-			{
 				pNewObject = fg_ConstructObject<CInternalData>((*_Other).fp_GetAllocator(), *((*_Other).m_Data.m_pPointTo));
-			}
-			auto Cleanup
-				= g_OnScopeExit / [&]
+			auto Cleanup = g_OnScopeExit / [&]
 				{
 					fg_DeleteObject((*_Other).fp_GetAllocator(), pNewObject);
 				}
@@ -1406,7 +1339,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		template <typename tf_CType, typename... tfp_CParams>
+		template <typename tf_CType, typename ...tfp_CParams>
 		TCSharedPointer &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
 			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
@@ -1417,8 +1350,7 @@ namespace NMib::NStorage
 					, (CInternalData *)nullptr
 				)
 			;
-			auto Cleanup
-				= g_OnScopeExit / [&]
+			auto Cleanup = g_OnScopeExit / [&]
 				{
 					fg_DeleteObject(fp_GetAllocator(), pNewObject);
 				}
@@ -1437,7 +1369,7 @@ namespace NMib::NStorage
 		}
 
 		template <typename ...tf_CParams>
-		mark_artificial constexpr inline_always_debug auto operator ()(tf_CParams && ...p_Params) const
+		mark_artificial constexpr inline_always_debug auto operator () (tf_CParams && ...p_Params) const
 			requires requires
 			{
 				(*(this->f_Get()))(fg_Forward<tf_CParams>(p_Params)...);
@@ -1458,14 +1390,14 @@ namespace NMib::NStorage
 			return f_Get() == _pOther;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		bool operator == (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return f_Get() == static_cast<t_CType *>(_Other.f_Get());
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		bool operator == (TCWeakPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return f_Get() == static_cast<t_CType *>(_Other.fp_GetContained());
 		}
@@ -1481,14 +1413,14 @@ namespace NMib::NStorage
 			return f_Get() <=> _pOther;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		auto operator <=> (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return f_Get() <=> static_cast<t_CType *>(_Other.f_Get());
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		auto operator <=> (TCWeakPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return f_Get() <=> static_cast<t_CType *>(_Other.fp_GetContained());
 		}
@@ -1498,7 +1430,7 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo == nullptr;
 		}
 
-		inline_small explicit operator bool() const
+		inline_small explicit operator bool () const
 		{
 			return !f_IsEmpty();
 		}
@@ -1511,7 +1443,7 @@ namespace NMib::NStorage
 
 	template <typename tf_CType>
 	auto fg_ToSharedPointer(tf_CType &&_Value)
-		requires requires()
+		requires requires ()
 		{
 			NTraits::TCDecay<tf_CType>(fg_Forward<tf_CType>(_Value));
 		}
@@ -1519,15 +1451,15 @@ namespace NMib::NStorage
 		return TCSharedPointer<NTraits::TCDecay<tf_CType>>{fg_Construct(fg_Forward<tf_CType>(_Value))};
 	}
 
-	template <typename t_CType, typename... tp_COptions>
+	template <typename t_CType, typename ...tp_COptions>
 	using TCSharedPointerSupportWeak = TCSharedPointer<t_CType, CSupportWeakTag, tp_COptions...>;
 
-	template <typename t_CType, typename... tp_COptions>
+	template <typename t_CType, typename ...tp_COptions>
 	class TCWeakPointer
 	{
-		template <typename t_CType2, typename... tp_COptions2>
+		template <typename t_CType2, typename ...tp_COptions2>
 		friend class TCSharedPointer;
-		template <typename t_CType2, typename... tp_COptions2>
+		template <typename t_CType2, typename ...tp_COptions2>
 		friend class TCWeakPointer;
 
 		using CAllocator = typename NPrivate::TCParseSharedPointerOptions<tp_COptions...>::CAllocator;
@@ -1545,7 +1477,6 @@ namespace NMib::NStorage
 		{
 			return m_Data;
 		}
-
 
 		void fp_Set(CInternalData *_pPtr)
 		{
@@ -1609,6 +1540,7 @@ namespace NMib::NStorage
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
+
 		~TCWeakPointer()
 		{
 			fp_Delete();
@@ -1619,13 +1551,7 @@ namespace NMib::NStorage
 		{
 			using CConst = TCWeakPointer<t_CType const, tp_COptions...>;
 
-			return CConst
-				(
-					NPrivate::CShareAsConstTag()
-					, fp_GetAllocator()
-					, NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr)
-				)
-			;
+			return CConst(NPrivate::CShareAsConstTag(), fp_GetAllocator(), NPrivate::fg_ConvertSharedPointer(fp_Get(), (typename CConst::CInternalData *)nullptr));
 		}
 
 		TCWeakPointer(TCWeakPointer const &_Other)
@@ -1647,7 +1573,7 @@ namespace NMib::NStorage
 			;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer(TCWeakPointer<tf_CType, tfp_COptions...> const &_Other)
 			requires
 			(
@@ -1659,7 +1585,7 @@ namespace NMib::NStorage
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer(TCWeakPointer<tf_CType, tfp_COptions...> &&_Other)
 			requires
 				(
@@ -1687,11 +1613,7 @@ namespace NMib::NStorage
 		explicit TCWeakPointer(TCAttach<tf_CType> &&_Other)
 		{
 			m_Data.m_pPointTo = *_Other;
-			DIfRefCountDebugging
-				(
-					m_Data.m_pPointTo->m_RefCount.f_WeakInitial(m_Data.m_DebugRef);
-				)
-			;
+			DIfRefCountDebugging(m_Data.m_pPointTo->m_RefCount.f_WeakInitial(m_Data.m_DebugRef););
 		}
 
 		template <typename t_CParam0>
@@ -1737,8 +1659,7 @@ namespace NMib::NStorage
 			fp_SetInit(*_Other);
 		}
 
-
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer(TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
 			requires
 			(
@@ -1747,16 +1668,11 @@ namespace NMib::NStorage
 			)
 			: m_Data(_Other.fp_GetAllocator())
 		{
-			static_assert
-				(
-					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
-					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
+			static_assert(TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag");
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer(TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
 			requires
 			(
@@ -1765,29 +1681,22 @@ namespace NMib::NStorage
 			)
 			: m_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			static_assert
-				(
-					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
-					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
+			static_assert(TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag");
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			_Other.f_Clear();
 		}
-
 
 		TCWeakPointer(CNullPtr)
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
 
-
 		bool f_Clear()
 		{
 			return fp_Delete();
 		}
 
-		TCWeakPointer & operator = (CNullPtr)
+		TCWeakPointer &operator = (CNullPtr)
 		{
 			fp_Delete();
 			return *this;
@@ -1815,7 +1724,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCWeakPointer &operator = (const TCWeakPointer &_Other)
+		TCWeakPointer &operator = (TCWeakPointer const &_Other)
 		{
 			fp_Delete();
 			fp_GetAllocator() = _Other.fp_GetAllocator();
@@ -1823,7 +1732,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other)
 			requires
 			(
@@ -1831,19 +1740,14 @@ namespace NMib::NStorage
 				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
 			)
 		{
-			static_assert
-				(
-					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
-					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
+			static_assert(TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag");
 			fp_Delete();
 			fp_GetAllocator() = _Other.fp_GetAllocator();
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
 			return *this;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
+		template <typename tf_CType, typename ...tfp_COptions>
 		TCWeakPointer &operator = (TCSharedPointer<tf_CType, tfp_COptions...> &&_Other)
 			requires
 			(
@@ -1851,12 +1755,7 @@ namespace NMib::NStorage
 				&& !NPrivate::TCIsConstAddingConversion<t_CType, tf_CType>::mc_Value
 			)
 		{
-			static_assert
-				(
-					TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak
-					, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag"
-				)
-			;
+			static_assert(TCSharedPointer<tf_CType, tfp_COptions...>::mc_bSupportWeak, "The source TCSharedPointer does not support TCWeakPointer, please add CSupportWeakTag");
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
 			fp_SetInit(NPrivate::fg_ConvertSharedPointer(_Other.fp_Get(), (CInternalData *)nullptr));
@@ -1891,14 +1790,14 @@ namespace NMib::NStorage
 			return fp_GetContained() == _pOther;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		bool operator == (TCWeakPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return fp_GetContained() == _Other.fp_GetContained();
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		bool operator == (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		bool operator == (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return fp_GetContained() == _Other.f_Get();
 		}
@@ -1914,14 +1813,14 @@ namespace NMib::NStorage
 			return fp_GetContained() <=> _pOther;
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCWeakPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		auto operator <=> (TCWeakPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return fp_GetContained() <=> _Other.fp_GetContained();
 		}
 
-		template <typename tf_CType, typename... tfp_COptions>
-		auto operator <=> (const TCSharedPointer<tf_CType, tfp_COptions...> &_Other) const noexcept
+		template <typename tf_CType, typename ...tfp_COptions>
+		auto operator <=> (TCSharedPointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
 		{
 			return fp_GetContained() <=> _Other.f_Get();
 		}
@@ -1931,7 +1830,7 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo == nullptr;
 		}
 
-		inline_small explicit operator bool() const
+		inline_small explicit operator bool () const
 		{
 			return !f_IsEmpty();
 		}
@@ -1939,5 +1838,5 @@ namespace NMib::NStorage
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif
