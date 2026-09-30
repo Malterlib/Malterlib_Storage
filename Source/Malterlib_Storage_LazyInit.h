@@ -33,20 +33,20 @@ namespace NMib::NStorage
 		~TCLazyInit();
 
 		template <typename ...tfp_CParam>
-		inline_small t_CData &operator() (tfp_CParam && ...p_Param);
-		inline_small t_CData *operator ->();
-		inline_small t_CData &operator *();
+		inline_small t_CData &operator () (tfp_CParam && ...p_Param);
+		inline_small t_CData *operator -> ();
+		inline_small t_CData &operator * ();
 
 	private:
 		enum ELifetimeFlag
 		{
-			ELifetimeFlag_None = 0
+			ELifetimeFlag_None          = 0
 			, ELifetimeFlag_Constructed = DMibBit(0)
-			, ELifetimeFlag_Destructed = DMibBit(1)
+			, ELifetimeFlag_Destructed  = DMibBit(1)
 		};
 
-		template <typename... tfp_CData>
-		void fp_Construct(tfp_CData && ... p_Params);
+		template <typename ...tfp_CData>
+		void fp_Construct(tfp_CData && ...p_Params);
 
 		using CData = t_CData;
 
@@ -57,5 +57,5 @@ namespace NMib::NStorage
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif

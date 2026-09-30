@@ -8,12 +8,12 @@ namespace NMib::NStorage::NReference::NPrivate
 	template <typename t_CType, typename t_CTypeStripped = NTraits::TCRemoveReferenceAndQualifiers<t_CType>>
 	struct TCIsReferenceHelper
 	{
-		constexpr static bool mc_Value = false;
+		static constexpr bool mc_Value = false;
 	};
 
 	template <typename t_CType0, typename t_CType>
 	struct TCIsReferenceHelper<t_CType0, TCReference<t_CType>>
 	{
-		constexpr static bool mc_Value = true;
+		static constexpr bool mc_Value = true;
 	};
 }

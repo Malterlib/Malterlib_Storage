@@ -12,17 +12,17 @@ namespace NMib::NStorage::NReference
 	}
 
 	template <typename t_CType>
-	template <typename... tfp_CParams>
-	mark_artificial inline_always auto TCReference<t_CType>::operator () (tfp_CParams &&...p_Params) const volatile
-		-> NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams &&...)>
-		requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams &&...)>)
+	template <typename ...tfp_CParams>
+	mark_artificial inline_always auto TCReference<t_CType>::operator () (tfp_CParams && ...p_Params) const volatile -> NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...)>
+		requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...)>)
 	{
 		return f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType>
 	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> TCReference<t_CType>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
+	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
+		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>
 		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &f_Get());
@@ -31,7 +31,7 @@ namespace NMib::NStorage::NReference
 	template <typename t_CType>
 	template <typename t_CMemberPtr>
 	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-		 -> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
+		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
 		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
 	{
 		return f_Get().*_MemberPtr;

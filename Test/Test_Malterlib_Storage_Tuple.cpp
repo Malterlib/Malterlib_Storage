@@ -7,12 +7,10 @@
 
 namespace
 {
-
 	int32 g_MovedEmpty = 0;
 	class CTuple_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		class CTestWithManyInit
 		{
 		public:
@@ -28,35 +26,43 @@ namespace
 			{
 				return -1;
 			}
+
 			operator int () const
 			{
 				return -2;
 			}
+
 			operator int () volatile
 			{
 				return -3;
 			}
+
 			operator int () const volatile
 			{
 				return -4;
 			}
 		};
+
 		class CNonEmpty
 		{
 			uint8 m_Member;
+
 		public:
 			operator int ()
 			{
 				return -1;
 			}
+
 			operator int () const
 			{
 				return -2;
 			}
+
 			operator int () volatile
 			{
 				return -3;
 			}
+
 			operator int () const volatile
 			{
 				return -4;
@@ -67,26 +73,28 @@ namespace
 		{
 		public:
 			CNonCopyableEmpty(CNonCopyableEmpty const &) = delete;
-			CNonCopyableEmpty &operator =(CNonCopyableEmpty const &) = delete;
+			CNonCopyableEmpty &operator = (CNonCopyableEmpty const &) = delete;
 			CNonCopyableEmpty() = default;
 		};
 
 		class CNonCopyable
 		{
 			uint8 m_Test;
+
 		public:
 			CNonCopyable(CNonCopyable const &) = delete;
-			CNonCopyable &operator =(CNonCopyable const &) = delete;
+			CNonCopyable &operator = (CNonCopyable const &) = delete;
 			CNonCopyable() = default;
 		};
-
 
 		class CEmpty0
 		{
 		};
+
 		class CEmpty1
 		{
 		};
+
 		class CEmpty2
 		{
 		};
@@ -98,12 +106,13 @@ namespace
 		struct CMovableOnly
 		{
 			CMovableOnly(CMovableOnly const &) = delete;
-			CMovableOnly &operator =(CMovableOnly const &) = delete;
+			CMovableOnly &operator = (CMovableOnly const &) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnly()
 			{
 			}
+
 			CMovableOnly(CMovableOnly &&_Other) noexcept
 			{
 				++m_Moved;
@@ -114,12 +123,13 @@ namespace
 		struct CMovableOnlyExcept
 		{
 			CMovableOnlyExcept(CMovableOnlyExcept const &) = delete;
-			CMovableOnlyExcept &operator =(CMovableOnlyExcept const &) = delete;
+			CMovableOnlyExcept &operator = (CMovableOnlyExcept const &) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnlyExcept()
 			{
 			}
+
 			CMovableOnlyExcept(CMovableOnlyExcept &&_Other)
 			{
 				++m_Moved;
@@ -130,14 +140,16 @@ namespace
 		struct CMovableAssignOnly
 		{
 			CMovableAssignOnly(CMovableAssignOnly const &);
-			CMovableAssignOnly &operator =(CMovableAssignOnly const &);
+			CMovableAssignOnly &operator = (CMovableAssignOnly const &);
+
 		public:
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableAssignOnly()
 			{
 			}
-			CMovableAssignOnly &operator =(CMovableAssignOnly &&_Other) noexcept
+
+			CMovableAssignOnly &operator = (CMovableAssignOnly &&_Other) noexcept
 			{
 				++m_Moved;
 				++_Other.m_MovedFrom;
@@ -148,14 +160,15 @@ namespace
 		struct CMovableAssignOnlyExcept
 		{
 			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &) = delete;
-			CMovableAssignOnlyExcept &operator =(CMovableAssignOnlyExcept const &) = delete;
+			CMovableAssignOnlyExcept &operator = (CMovableAssignOnlyExcept const &) = delete;
 
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableAssignOnlyExcept()
 			{
 			}
-			CMovableAssignOnlyExcept &operator =(CMovableAssignOnlyExcept &&_Other)
+
+			CMovableAssignOnlyExcept &operator = (CMovableAssignOnlyExcept &&_Other)
 			{
 				++m_Moved;
 				++_Other.m_MovedFrom;
@@ -166,10 +179,11 @@ namespace
 		struct CMovableOnlyEmpty
 		{
 			CMovableOnlyEmpty(CMovableOnlyEmpty const &) = delete;
-			CMovableOnlyEmpty &operator =(CMovableOnlyEmpty const &) = delete;
+			CMovableOnlyEmpty &operator = (CMovableOnlyEmpty const &) = delete;
 			CMovableOnlyEmpty()
 			{
 			}
+
 			CMovableOnlyEmpty(CMovableOnlyEmpty &&_Other) noexcept
 			{
 				++g_MovedEmpty;
@@ -179,11 +193,12 @@ namespace
 		struct CMovableOnlyEmptyExcept
 		{
 			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept const &) = delete;
-			CMovableOnlyEmptyExcept &operator =(CMovableOnlyEmptyExcept const &) = delete;
+			CMovableOnlyEmptyExcept &operator = (CMovableOnlyEmptyExcept const &) = delete;
 
 			CMovableOnlyEmptyExcept()
 			{
 			}
+
 			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept &&_Other)
 			{
 				++g_MovedEmpty;
@@ -193,12 +208,13 @@ namespace
 		struct CMovableAssignOnlyEmpty
 		{
 			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &) = delete;
-			CMovableAssignOnlyEmpty &operator =(CMovableAssignOnlyEmpty const &) = delete;
+			CMovableAssignOnlyEmpty &operator = (CMovableAssignOnlyEmpty const &) = delete;
 
 			CMovableAssignOnlyEmpty()
 			{
 			}
-			CMovableAssignOnlyEmpty &operator =(CMovableAssignOnlyEmpty &&_Other) noexcept
+
+			CMovableAssignOnlyEmpty &operator = (CMovableAssignOnlyEmpty &&_Other) noexcept
 			{
 				++g_MovedEmpty;
 				return *this;
@@ -208,11 +224,12 @@ namespace
 		struct CMovableAssignOnlyEmptyExcept
 		{
 			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &) = delete;
-			CMovableAssignOnlyEmptyExcept &operator =(CMovableAssignOnlyEmptyExcept const &) = delete;
+			CMovableAssignOnlyEmptyExcept &operator = (CMovableAssignOnlyEmptyExcept const &) = delete;
 			CMovableAssignOnlyEmptyExcept()
 			{
 			}
-			CMovableAssignOnlyEmptyExcept &operator =(CMovableAssignOnlyEmptyExcept &&_Other)
+
+			CMovableAssignOnlyEmptyExcept &operator = (CMovableAssignOnlyEmptyExcept &&_Other)
 			{
 				++g_MovedEmpty;
 				return *this;
@@ -234,12 +251,14 @@ namespace
 				++m_nCompares;
 				return m_Value <=> _Right.m_Value;
 			}
+
 			bool operator == (CCompare const &_Right) const noexcept
 			{
 				++m_nCompares;
 				return m_Value == _Right.m_Value;
 			}
 		};
+
 /*
 		template <typename... tp_CTypes>
 		inline_always
@@ -487,13 +506,10 @@ namespace
 				fg_Get<1>(fg_MoveAllowConst(fg_Const(Tuple3)));
 				fg_Get<1>(fg_Move(fg_Volatile(Tuple3)));
 				fg_Get<1>(fg_MoveAllowConst(fg_ConstVolatile(Tuple3)));
-
-
 			};
 
 			DMibTestSuite("Compare")
 			{
-
 				{
 					DMibTestPath("Less than");
 					{
@@ -579,7 +595,6 @@ namespace
 
 			DMibTestSuite("Create")
 			{
-
 				int x = 5;
 
 				TCTuple<int &&> TupleRValueRef(fg_Move(x));
@@ -611,13 +626,10 @@ namespace
 				++x;
 				int &&MadeTuple3Value = fg_GetForward<0>(fg_Move(MadeTuple3));
 				DMibTest(DMibExpr(MadeTuple3Value) == DMibExpr(12));
-
 			};
-
 
 			DMibTestSuite("Concatenate")
 			{
-
 				int x = 5;
 				int x2 = 6;
 
@@ -664,93 +676,250 @@ namespace
 				DMibTest(DMibExpr(fg_Get<1>(Concatenated7)) == DMibExpr(6));
 				DMibTest(DMibExpr(fg_Get<2>(Concatenated7)) == DMibExpr(5));
 				static_assert(NMib::NTraits::cIsSame<decltype(Concatenated7), TCTuple<int, int &, int &&>>);
-
 			};
 
-			{NMib::NStorage::TCTuple<CTestUnion> Tuple;}
-			{NMib::NStorage::TCTuple<CTestClass0> Tuple;}
-			{NMib::NStorage::TCTuple<CTestClass1> Tuple;}
-			{NMib::NStorage::TCTuple<CTestStruct0> Tuple;}
-			{NMib::NStorage::TCTuple<CTestStruct1> Tuple;}
-			{NMib::NStorage::TCTuple<const CTestClass0> Tuple;}
-			{NMib::NStorage::TCTuple<const CTestClass1> Tuple;}
-			{NMib::NStorage::TCTuple<const CTestStruct0> Tuple;}
-			{NMib::NStorage::TCTuple<const CTestStruct1> Tuple;}
-			{NMib::NStorage::TCTuple<volatile CTestClass0> Tuple;}
-			{NMib::NStorage::TCTuple<volatile CTestClass1> Tuple;}
-			{NMib::NStorage::TCTuple<volatile CTestStruct0> Tuple;}
-			{NMib::NStorage::TCTuple<volatile CTestStruct1> Tuple;}
-			{NMib::NStorage::TCTuple<const volatile CTestClass0> Tuple;}
-			{NMib::NStorage::TCTuple<const volatile CTestClass1> Tuple;}
-			{NMib::NStorage::TCTuple<const volatile CTestStruct0> Tuple;}
-			{NMib::NStorage::TCTuple<const volatile CTestStruct1> Tuple;}
-			{NMib::NStorage::TCTuple<ETestEnum> Tuple;}
-			{NMib::NStorage::TCTuple<int> Tuple;}
-			{NMib::NStorage::TCTuple<CTestClass> Tuple;}
-			{NMib::NStorage::TCTuple<CTestC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CTestPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CTestCPtrC> Tuple;}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestRef> Variant(Test);}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestCRef> Variant(Test);}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestRRef> Variant(NMib::fg_Move(Test));}
-			{CTestBase Test; NMib::NStorage::TCTuple<CTestCRRef> Variant(NMib::fg_Move(Test));}
+			{
+				NMib::NStorage::TCTuple<CTestUnion> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass0> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass1> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct0> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct1> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass0 const> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass1 const> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct0 const> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct1 const> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass0 volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass1 volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct0 volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct1 volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass0 const volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass1 const volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct0 const volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestStruct1 const volatile> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<ETestEnum> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<int> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestClass> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestCPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestCPtrC> Tuple;
+			}
+			{
+				CTestBase Test;
+				NMib::NStorage::TCTuple<CTestRef> Variant(Test);
+			}
+			{
+				CTestBase Test;
+				NMib::NStorage::TCTuple<CTestCRef> Variant(Test);
+			}
+			{
+				CTestBase Test;
+				NMib::NStorage::TCTuple<CTestRRef> Variant(NMib::fg_Move(Test));
+			}
+			{
+				CTestBase Test;
+				NMib::NStorage::TCTuple<CTestCRRef> Variant(NMib::fg_Move(Test));
+			}
 //			{NMib::NStorage::TCTuple<PFFunc0> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc1> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc2> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0Ref> Variant(fsg_FFunc0);}
-			{NMib::NStorage::TCTuple<FFunc1Ref> Variant(fsg_FFunc1);}
-			{NMib::NStorage::TCTuple<FFunc2Ref> Variant(fsg_FFunc2);}
-			{NMib::NStorage::TCTuple<FFunc0Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2Ptr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2PtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0CPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1CPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2CPtrC> Tuple;}
+			{
+				NMib::NStorage::TCTuple<FFunc0Ref> Variant(fsg_FFunc0);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1Ref> Variant(fsg_FFunc1);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2Ref> Variant(fsg_FFunc2);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc0Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc0PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2Ptr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2PtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0CPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1CPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2CPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0CPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1CPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2CPtrC> Tuple;
+			}
 //			{NMib::NStorage::TCTuple<PFFunc0El> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc1El> Tuple;}
 //			{NMib::NStorage::TCTuple<PFFunc2El> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0ElRef> Variant(fsg_FFunc0El);}
-			{NMib::NStorage::TCTuple<FFunc1ElRef> Variant(fsg_FFunc1El);}
-			{NMib::NStorage::TCTuple<FFunc2ElRef> Variant(fsg_FFunc2El);}
-			{NMib::NStorage::TCTuple<FFunc0ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc0ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc1ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FFunc2ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc0ElCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc1ElCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<FMFunc2ElCPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CMPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CMCPtr> Tuple;}
-			{NMib::NStorage::TCTuple<CMPtrC> Tuple;}
-			{NMib::NStorage::TCTuple<CMCPtrC> Tuple;}
+			{
+				NMib::NStorage::TCTuple<FFunc0ElRef> Variant(fsg_FFunc0El);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1ElRef> Variant(fsg_FFunc1El);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2ElRef> Variant(fsg_FFunc2El);
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc0ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc0ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc1ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FFunc2ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2ElPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2ElPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0ElCPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1ElCPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2ElCPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc0ElCPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc1ElCPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<FMFunc2ElCPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CMPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CMCPtr> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CMPtrC> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CMCPtrC> Tuple;
+			}
 #ifndef DCompiler_MSVC_Workaround
-			{NMib::NStorage::TCTuple<CTestArray2> Tuple;}
-			{NMib::NStorage::TCTuple<CTestArray2C> Tuple;}
+			{
+				NMib::NStorage::TCTuple<CTestArray2> Tuple;
+			}
+			{
+				NMib::NStorage::TCTuple<CTestArray2C> Tuple;
+			}
 #endif
 //			{NMib::NStorage::TCTuple<CTestArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTestArrayC> Tuple;}
@@ -758,7 +927,9 @@ namespace
 //			{NMib::NStorage::TCTuple<CTest2DArrayC> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest3DArray> Tuple;}
 //			{NMib::NStorage::TCTuple<CTest3DArrayC> Tuple;}
-			{NMib::NStorage::TCTuple<void *> Tuple;}
+			{
+				NMib::NStorage::TCTuple<void *> Tuple;
+			}
 //			{NMib::NStorage::TCTuple<void> Tuple;}
 		}
 	};

@@ -8,7 +8,7 @@
 
 namespace NMib::NStorage
 {
-	template <typename... tp_CTypes>
+	template <typename ...tp_CTypes>
 	using TCTuple = std::tuple<tp_CTypes...>;
 
 	namespace NPrivate
@@ -35,7 +35,7 @@ namespace NMib::NStorage
 		{
 		};
 
-		template <typename... tp_CTypes>
+		template <typename ...tp_CTypes>
 		struct TCTuple_Len<TCTuple<tp_CTypes...>>
 			: public NMeta::NPrivate::TCTypeList_Len<NMeta::TCTypeList<tp_CTypes...>>
 		{
@@ -50,52 +50,52 @@ namespace NMib::NStorage
 		template <umint t_Index, typename t_CType>
 		struct TCTuple_Get;
 
-		template <umint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename ...tp_CTypes>
 		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, const TCTuple<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...> const>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, volatile TCTuple<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...> volatile>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> volatile>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, const volatile TCTuple<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, TCTuple<tp_CTypes...> const volatile>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const volatile>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
+		template <umint t_Index, typename ...tp_CTypes>
 		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>
 		{
 			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...>>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, const NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> volatile>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, volatile NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> volatile>;
 		};
 
-		template <umint t_Index, typename... tp_CTypes>
-		struct TCTuple_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>
+		template <umint t_Index, typename ...tp_CTypes>
+		struct TCTuple_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const volatile>
 		{
-			using CType = NMeta::TCTypeList_Get<t_Index, const volatile NMeta::TCTypeList<tp_CTypes...>>;
+			using CType = NMeta::TCTypeList_Get<t_Index, NMeta::TCTypeList<tp_CTypes...> const volatile>;
 		};
 	}
 
@@ -106,13 +106,19 @@ namespace NMib::NStorage
 namespace NMib
 {
 	template <umint tf_Index, typename tf_CType>
-	mark_artificial mark_nodebug inline_always auto fg_Get(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>
+	mark_artificial mark_nodebug inline_always auto fg_Get(tf_CType &&_Tuple) noexcept
+		-> NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>
 	{
-		return fg_Forward<NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>>(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))));
+		return fg_Forward<NTraits::TCPromoteQualifiers<tf_CType, decltype(std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple))))>>
+			(
+				std::get<tf_Index>(fg_RemoveQualifiers(fg_Forward<tf_CType>(_Tuple)))
+			)
+		;
 	}
 
 	template <umint tf_Index, typename tf_CType>
-	mark_artificial mark_nodebug inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept -> NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>
+	mark_artificial mark_nodebug inline_always auto fg_GetForward(tf_CType &&_Tuple) noexcept
+		-> NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>
 	{
 		return fg_Forward<NTraits::TCPromoteQualifiersAndReference<tf_CType, decltype(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)))>>(std::get<tf_Index>(fg_Forward<tf_CType>(_Tuple)));
 	}
@@ -120,14 +126,14 @@ namespace NMib
 
 namespace NMib::NStorage
 {
-	template <typename... tp_CTypes>
-	constexpr inline_always TCTuple<tp_CTypes &...> fg_TupleReferences(tp_CTypes &...p_Params) noexcept
+	template <typename ...tp_CTypes>
+	constexpr inline_always TCTuple<tp_CTypes & ...> fg_TupleReferences(tp_CTypes & ...p_Params) noexcept
 	{
-		return TCTuple<tp_CTypes &...>(p_Params...);
+		return TCTuple<tp_CTypes & ...>(p_Params...);
 	}
 
-	template <typename... tfp_CParams>
-	constexpr auto fg_TupleReferences(tfp_CParams &&... p_Params) -> decltype(std::tie(fg_Forward<tfp_CParams>(p_Params)...))
+	template <typename ...tfp_CParams>
+	constexpr auto fg_TupleReferences(tfp_CParams && ...p_Params) -> decltype(std::tie(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::tie(fg_Forward<tfp_CParams>(p_Params)...);
 	}
@@ -137,21 +143,20 @@ namespace NMib::NStorage
 		return TCTuple<>();
 	}
 
-	template <typename... tfp_CParams>
-	constexpr auto fg_Tuple(tfp_CParams &&... p_Params) -> decltype(std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...))
+	template <typename ...tfp_CParams>
+	constexpr auto fg_Tuple(tfp_CParams && ...p_Params) -> decltype(std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::make_tuple(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
-	template <typename... tfp_CParams>
-	constexpr auto fg_TuplePerfectForward(tfp_CParams &&... p_Params) -> decltype(std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...))
+	template <typename ...tfp_CParams>
+	constexpr auto fg_TuplePerfectForward(tfp_CParams && ...p_Params) -> decltype(std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::forward_as_tuple(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
-
-	template <typename... tfp_CParams>
-	constexpr auto fg_TupleConcatenate(tfp_CParams &&... p_Params) -> decltype(std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...))
+	template <typename ...tfp_CParams>
+	constexpr auto fg_TupleConcatenate(tfp_CParams && ...p_Params) -> decltype(std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...))
 	{
 		return std::tuple_cat(fg_Forward<tfp_CParams>(p_Params)...);
 	}
@@ -165,7 +170,13 @@ namespace NMib::NStorage
 	namespace NPrivate
 	{
 		template <typename tf_FFunctor, typename tf_CTuple, typename ...tfp_CTypes, umint ...tfp_Indices>
-		mark_artificial constexpr inline_always auto fg_TupleApplyAs(tf_FFunctor &&_fFunctor, tf_CTuple &&_Tuple, NMeta::TCTypeList<tfp_CTypes...> const &, NMeta::TCIndices<tfp_Indices...> const &)
+		mark_artificial constexpr inline_always auto fg_TupleApplyAs
+			(
+				tf_FFunctor &&_fFunctor
+				, tf_CTuple &&_Tuple
+				, NMeta::TCTypeList<tfp_CTypes...> const &
+				, NMeta::TCIndices<tfp_Indices...> const &
+			)
 		{
 			return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);
 		}
@@ -186,5 +197,5 @@ namespace NMib::NStorage
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif
