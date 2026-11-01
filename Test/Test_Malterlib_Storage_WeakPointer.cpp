@@ -14,7 +14,6 @@ namespace NMib
 {
 	namespace NStorage
 	{
-
 	}
 }
 
@@ -23,7 +22,6 @@ namespace
 	class CWeakPointer_Tests : public NMib::NTest::CTest
 	{
 	public:
-
 		struct CTestWeakIntrusive
 		{
 			NStorage::CIntrusiveRefCountWithWeak m_RefCount;
@@ -36,6 +34,7 @@ namespace
 				, m_pThis(this)
 			{
 			}
+
 			~CTestWeakIntrusive()
 			{
 				m_bDestroyed = true;
@@ -54,6 +53,7 @@ namespace
 				, m_pThis(this)
 			{
 			}
+
 			~CTestIntrusive()
 			{
 				m_bDestroyed = true;
@@ -153,15 +153,13 @@ namespace
 				pPointer.f_Clear();
 			}
 
-				std::shared_ptr<int> pSharedPointer = std::make_shared<int>(5);
-				std::weak_ptr<int> pWeakPointer = pSharedPointer;
-				std::shared_ptr<int> pSharedPointer2 = pWeakPointer.lock();
+			std::shared_ptr<int> pSharedPointer = std::make_shared<int>(5);
+			std::weak_ptr<int> pWeakPointer = pSharedPointer;
+			std::shared_ptr<int> pSharedPointer2 = pWeakPointer.lock();
 
-				pSharedPointer = nullptr;
-				pSharedPointer2 = nullptr;
-				pWeakPointer = std::weak_ptr<int>();
-
-
+			pSharedPointer = nullptr;
+			pSharedPointer2 = nullptr;
+			pWeakPointer = std::weak_ptr<int>();
 		}
 
 		void f_TestLock()
@@ -235,7 +233,6 @@ namespace
 			{
 				f_TestNonIntrusive();
 			};
-
 		}
 	};
 

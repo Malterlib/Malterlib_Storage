@@ -4,8 +4,8 @@
 namespace NMib::NStorage
 {
 	template <typename t_CData, typename t_CLock>
-	template <typename... tfp_CData>
-	void TCLazyInit<t_CData, t_CLock>::fp_Construct(tfp_CData && ... p_Params)
+	template <typename ...tfp_CData>
+	void TCLazyInit<t_CData, t_CLock>::fp_Construct(tfp_CData && ...p_Params)
 	{
 		DMibLockTyped(t_CLock, m_Lock);
 		uint32 OldFlags = m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire);
@@ -39,7 +39,7 @@ namespace NMib::NStorage
 
 	template <typename t_CData, typename t_CLock>
 	template <typename ...tfp_CParam>
-	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator() (tfp_CParam && ...p_Param)
+	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator () (tfp_CParam && ...p_Param)
 	{
 		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct(fg_Forward<tfp_CParam>(p_Param)...);
@@ -48,7 +48,7 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CData, typename t_CLock>
-	inline_small t_CData *TCLazyInit<t_CData, t_CLock>::operator ->()
+	inline_small t_CData *TCLazyInit<t_CData, t_CLock>::operator -> ()
 	{
 		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct();
@@ -57,7 +57,7 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CData, typename t_CLock>
-	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator *()
+	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator * ()
 	{
 		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct();

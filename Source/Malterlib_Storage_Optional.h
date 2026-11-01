@@ -15,26 +15,15 @@ namespace NMib::NStorage
 	};
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics = EOptionalMoveSemantics::mc_KeepEngaged>
-	struct TCOptional : public NStorage::TCStreamableVariant
-		<
-			int8
-			, NStorage::TCMember<void, int8(0)>
-			, NStorage::TCMember<t_CType, int8(1)>
-		>
+	struct TCOptional : public NStorage::TCStreamableVariant<int8, NStorage::TCMember<void, int8(0)>, NStorage::TCMember<t_CType, int8(1)>>
 	{
 		using CType = t_CType;
-		using CVariant = NStorage::TCStreamableVariant
-			<
-				int8
-				, NStorage::TCMember<void, int8(0)>
-				, NStorage::TCMember<t_CType, int8(1)>
-			>
-		;
+		using CVariant = NStorage::TCStreamableVariant<int8, NStorage::TCMember<void, int8(0)>, NStorage::TCMember<t_CType, int8(1)>>;
 
-		template <typename tf_CType, typename... tfp_CParams, umint... tfp_Indidies>
+		template <typename tf_CType, typename ...tfp_CParams, umint ...tfp_Indidies>
 		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &);
 
-		template <typename tf_CType, typename... tfp_CParams>
+		template <typename tf_CType, typename ...tfp_CParams>
 		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams);
 
 		TCOptional(t_CType const &_Value);
@@ -89,7 +78,7 @@ namespace NMib::NStorage
 			}
 		;
 
-		template <typename tf_CType, typename... tfp_CParams>
+		template <typename tf_CType, typename ...tfp_CParams>
 		TCOptional &operator = (TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 			requires requires ()
 			{
@@ -111,7 +100,7 @@ namespace NMib::NStorage
 		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
 		auto operator <=> (TCOptional<tf_CType, tf_MoveSemantics> const &_Right) const noexcept(noexcept(fg_GetType<t_CType const &>() <=> fg_GetType<tf_CType const &>()));
 
-		explicit operator bool() const;
+		explicit operator bool () const;
 
 		void f_Clear();
 		t_CType const &f_Get() const;
@@ -144,14 +133,14 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCIsOptional
 		{
-			constexpr static bool mc_bValue = false;
+			static constexpr bool mc_bValue = false;
 			using CType = t_CType;
 		};
 
 		template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
 		struct TCIsOptional<TCOptional<t_CType, t_MoveSemantics>>
 		{
-			constexpr static bool mc_bValue = true;
+			static constexpr bool mc_bValue = true;
 			using CType = t_CType;
 		};
 	}
@@ -164,7 +153,7 @@ namespace NMib::NStorage
 }
 
 #ifndef DMibPNoShortCuts
-	using namespace NMib::NStorage;
+using namespace NMib::NStorage;
 #endif
 
 #include "Malterlib_Storage_Optional.hpp"
