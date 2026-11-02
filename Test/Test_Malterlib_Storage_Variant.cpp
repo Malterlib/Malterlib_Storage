@@ -28,12 +28,12 @@ namespace
 	using CVarA = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>>;
 	using CVarB = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>>;
 
-	int operator * (CVarA _A, int _B)
+	int operator * (CVarA const &_A, int _B)
 	{
 		return _B;
 	}
 
-	int operator * (CVarB _A, int _B)
+	int operator * (CVarB const &_A, int _B)
 	{
 		return _B;
 	}
