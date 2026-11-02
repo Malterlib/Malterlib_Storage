@@ -292,7 +292,7 @@ namespace NMib::NStorage
 	};
 
 #define DMibAutoClearPtrDeclare mutable NMib::NStorage::CAutoClearPtrMember m_AutoClearPtrMember
-#define DMibAutoClearPtrDeclareDebug(_Type) mutable NMib::NStorage::TCAutoClearPtrMemberDebug<_Type> m_AutoClearPtrMemberDebug
+#define DMibAutoClearPtrDeclareDebug(d_Type) mutable NMib::NStorage::TCAutoClearPtrMemberDebug<d_Type> m_AutoClearPtrMemberDebug
 #ifndef DMibPNoShortCuts
 #	define DAutoClearPtrDeclare DMibAutoClearPtrDeclare
 #endif
