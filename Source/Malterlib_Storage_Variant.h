@@ -443,25 +443,25 @@ namespace NMib::NStorage
 			static constexpr t_CIndex mc_Value = t_CIndex(-1);
 		};
 
-		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_CConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-				, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
-				, NTraits::TCCompileTimeTrue<!NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
+				, t_CReturn (tp_CConstructorParams ...p_ConstructorParams)
+				, NTraits::TCCompileTimeTrue<!NTraits::cIsConstructibleWith<t_CType0, tp_CConstructorParams...>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
-			: public TCFirstConstructibleWith<t_CIndex, t_CReturn (tp_FConstructorParams ...p_ConstructorParams), NTraits::CCompileTimeTrue, tp_CMembers...>
+			: public TCFirstConstructibleWith<t_CIndex, t_CReturn (tp_CConstructorParams ...p_ConstructorParams), NTraits::CCompileTimeTrue, tp_CMembers...>
 		{
 		};
 
-		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_CConstructorParams, typename t_CType0, t_CIndex t_Member0, typename ...tp_CMembers>
 		struct TCFirstConstructibleWith
 		<
 			t_CIndex
-			, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
-			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
+			, t_CReturn (tp_CConstructorParams ...p_ConstructorParams)
+			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_CConstructorParams...>>
 			, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			, tp_CMembers...
 		>
@@ -469,12 +469,12 @@ namespace NMib::NStorage
 			static constexpr t_CIndex mc_Value = t_Member0;
 		};
 
-		template <typename t_CIndex, typename t_CReturn, typename ...tp_FConstructorParams, typename t_CType0, t_CIndex t_Member0>
+		template <typename t_CIndex, typename t_CReturn, typename ...tp_CConstructorParams, typename t_CType0, t_CIndex t_Member0>
 		struct TCFirstConstructibleWith
 		<
 			t_CIndex
-			, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
-			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
+			, t_CReturn (tp_CConstructorParams ...p_ConstructorParams)
+			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_CConstructorParams...>>
 			, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 		>
 		{

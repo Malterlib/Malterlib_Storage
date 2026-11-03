@@ -25,8 +25,8 @@ namespace NMib::NStorage
 		{
 		}
 
-		TCBitStorePointer(TCBitStorePointer const &_Other, umint _Bits = 0)
-			: mp_PointTo(_Other.mp_PointTo)
+		TCBitStorePointer(TCBitStorePointer const &_pOther, umint _Bits = 0)
+			: mp_PointTo(_pOther.mp_PointTo)
 			, mp_Bits(_Bits)
 		{
 			// Let bits be the same
@@ -44,15 +44,15 @@ namespace NMib::NStorage
 			mp_Bits = _Bits;
 		}
 
-		void f_SetBoth(TCBitStorePointer const &_Other)
+		void f_SetBoth(TCBitStorePointer const &_pOther)
 		{
-			mp_PointTo = _Other.mp_PointTo;
-			mp_Bits = _Other.mp_Bits;
+			mp_PointTo = _pOther.mp_PointTo;
+			mp_Bits = _pOther.mp_Bits;
 		}
 
-		TCBitStorePointer &operator = (TCBitStorePointer const &_Other)
+		TCBitStorePointer &operator = (TCBitStorePointer const &_pOther)
 		{
-			mp_PointTo = _Other.mp_PointTo;
+			mp_PointTo = _pOther.mp_PointTo;
 			return *this;
 		}
 
@@ -125,9 +125,9 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (TCBitStorePointer<tf_CType> const &_Other) const noexcept
+		bool operator == (TCBitStorePointer<tf_CType> const &_pOther) const noexcept
 		{
-			return operator t_CType * () == _Other.operator tf_CType * ();
+			return operator t_CType * () == _pOther.operator tf_CType * ();
 		}
 
 	private:

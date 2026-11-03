@@ -138,8 +138,8 @@ namespace NMib::NStorage
 	private:
 		// Disable copy construction
 
-		TCUniquePointer(TCUniquePointer const &_Other) = delete;
-		TCUniquePointer &operator = (TCUniquePointer const &_Other) = delete;
+		TCUniquePointer(TCUniquePointer const &_pOther) = delete;
+		TCUniquePointer &operator = (TCUniquePointer const &_pOther) = delete;
 
 	public:
 		TCUniquePointer()
@@ -192,18 +192,18 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		TCUniquePointer(TCUniquePointer<tf_CType, tfp_COptions...> &&_Other)
+		TCUniquePointer(TCUniquePointer<tf_CType, tfp_COptions...> &&_pOther)
 			requires (NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value)
-			: mp_Data(fg_Move(_Other.fp_GetAllocator()))
+			: mp_Data(fg_Move(_pOther.fp_GetAllocator()))
 		{
-			mp_Data.m_pPointTo = _Other.f_Detach();
+			mp_Data.m_pPointTo = _pOther.f_Detach();
 		}
 
-		TCUniquePointer(TCUniquePointer &&_Other)
-			: mp_Data(fg_Move(_Other.fp_GetAllocator()))
+		TCUniquePointer(TCUniquePointer &&_pOther)
+			: mp_Data(fg_Move(_pOther.fp_GetAllocator()))
 		{
-			mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
-			_Other.mp_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = _pOther.mp_Data.m_pPointTo;
+			_pOther.mp_Data.m_pPointTo = nullptr;
 		}
 
 		explicit TCUniquePointer(t_CType *_pPtr)
@@ -276,12 +276,12 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCUniquePointer &operator = (TCUniquePointer &&_Other)
+		TCUniquePointer &operator = (TCUniquePointer &&_pOther)
 		{
 			fp_Delete();
-			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
-			mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
-			_Other.mp_Data.m_pPointTo = nullptr;
+			fp_GetAllocator() = fg_Move(_pOther.fp_GetAllocator());
+			mp_Data.m_pPointTo = _pOther.mp_Data.m_pPointTo;
+			_pOther.mp_Data.m_pPointTo = nullptr;
 			return *this;
 		}
 
@@ -293,12 +293,12 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		TCUniquePointer &operator = (TCUniquePointer<tf_CType, tfp_COptions...> &&_Other)
+		TCUniquePointer &operator = (TCUniquePointer<tf_CType, tfp_COptions...> &&_pOther)
 			requires (NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value)
 		{
 			fp_Delete();
-			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
-			mp_Data.m_pPointTo = _Other.f_Detach();
+			fp_GetAllocator() = fg_Move(_pOther.fp_GetAllocator());
+			mp_Data.m_pPointTo = _pOther.f_Detach();
 			return *this;
 		}
 
@@ -317,37 +317,37 @@ namespace NMib::NStorage
 		}
 
 		template <typename tf_CType>
-		bool operator == (tf_CType *_Other) const noexcept
+		bool operator == (tf_CType *_pOther) const noexcept
 		{
-			return f_Get() == _Other;
+			return f_Get() == _pOther;
 		}
 
-		bool operator == (CNullPtr _Other) const noexcept
+		bool operator == (CNullPtr _pOther) const noexcept
 		{
-			return f_Get() == _Other;
+			return f_Get() == _pOther;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		bool operator == (TCUniquePointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
+		bool operator == (TCUniquePointer<tf_CType, tfp_COptions...> const &_pOther) const noexcept
 		{
-			return f_Get() == _Other.f_Get();
+			return f_Get() == _pOther.f_Get();
 		}
 
 		template <typename tf_CType>
-		auto operator <=> (tf_CType *_Other) const noexcept
+		auto operator <=> (tf_CType *_pOther) const noexcept
 		{
-			return f_Get() <=> _Other;
+			return f_Get() <=> _pOther;
 		}
 
-		auto operator <=> (CNullPtr _Other) const noexcept
+		auto operator <=> (CNullPtr _pOther) const noexcept
 		{
-			return f_Get() <=> _Other;
+			return f_Get() <=> _pOther;
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
-		auto operator <=> (TCUniquePointer<tf_CType, tfp_COptions...> const &_Other) const noexcept
+		auto operator <=> (TCUniquePointer<tf_CType, tfp_COptions...> const &_pOther) const noexcept
 		{
-			return f_Get() <=> _Other.f_Get();
+			return f_Get() <=> _pOther.f_Get();
 		}
 
 		bool f_IsEmpty() const

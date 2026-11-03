@@ -125,16 +125,16 @@ namespace
 			[[maybe_unused]] auto Test2 = fg_Const(_Indirection.m_Undefined)();
 			[[maybe_unused]] auto Test3 = fg_Const(_Indirection.m_Defined)();
 
-			[[maybe_unused]] auto Test8 = _Indirection.m_Undefined < 5.0f;
-			[[maybe_unused]] auto Test9 = _Indirection.m_Defined < 5.0f;
-			[[maybe_unused]] auto Test10 = 5.0f < _Indirection.m_Undefined;
-			[[maybe_unused]] auto Test11 = 5.0f < _Indirection.m_Defined;
-			[[maybe_unused]] auto Test12 = _Indirection.m_Undefined < 5;
-			[[maybe_unused]] auto Test13 = _Indirection.m_Defined < 5;
-			[[maybe_unused]] auto Test14 = 5 < _Indirection.m_Undefined;
-			[[maybe_unused]] auto Test15 = 5 < _Indirection.m_Defined;
-			[[maybe_unused]] auto Test16 = _Indirection.m_Defined < _Indirection.m_Undefined;
-			[[maybe_unused]] auto Test17 = _Indirection.m_Undefined < _Indirection.m_Defined;
+			[[maybe_unused]] auto bTest8 = _Indirection.m_Undefined < 5.0f;
+			[[maybe_unused]] auto bTest9 = _Indirection.m_Defined < 5.0f;
+			[[maybe_unused]] auto bTest10 = 5.0f < _Indirection.m_Undefined;
+			[[maybe_unused]] auto bTest11 = 5.0f < _Indirection.m_Defined;
+			[[maybe_unused]] auto bTest12 = _Indirection.m_Undefined < 5;
+			[[maybe_unused]] auto bTest13 = _Indirection.m_Defined < 5;
+			[[maybe_unused]] auto bTest14 = 5 < _Indirection.m_Undefined;
+			[[maybe_unused]] auto bTest15 = 5 < _Indirection.m_Defined;
+			[[maybe_unused]] auto bTest16 = _Indirection.m_Defined < _Indirection.m_Undefined;
+			[[maybe_unused]] auto bTest17 = _Indirection.m_Undefined < _Indirection.m_Defined;
 
 			TCIndirection<uint32> StreamTest = 50;
 

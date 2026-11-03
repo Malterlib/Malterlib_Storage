@@ -17,8 +17,8 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CData, aint t_Priority, typename t_CLock>
-	template <typename tf_CFunctor>
-	void TCAggregate<t_CData, t_Priority, t_CLock>::f_ConstructFunctor(tf_CFunctor const &_fFunctor)
+	template <typename tf_FFunctor>
+	void TCAggregate<t_CData, t_Priority, t_CLock>::f_ConstructFunctor(tf_FFunctor const &_fFunctor)
 	{
 		DMibLockTyped(t_CLock, m_Lock);
 		uint32 LifeTimeFlags = m_LifeTimeFlags.f_Load();

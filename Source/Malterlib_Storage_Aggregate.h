@@ -142,14 +142,14 @@ namespace NMib::NStorage
 			return (m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)) != EAggregateLifeTimeFlag_None;
 		}
 
-		template <typename tf_CFunctor>
-		void f_ConstructFunctor(tf_CFunctor const &_fFunctor);
+		template <typename tf_FFunctor>
+		void f_ConstructFunctor(tf_FFunctor const &_fFunctor);
 
 		template <typename ...tfp_CData>
 		void f_Construct(tfp_CData && ...p_Params);
 
-		template <typename tf_CFunctor>
-		mark_nodebug inline_small t_CData *f_CreateFunctor(tf_CFunctor const &_fFunctor)
+		template <typename tf_FFunctor>
+		mark_nodebug inline_small t_CData *f_CreateFunctor(tf_FFunctor const &_fFunctor)
 		{
 			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
 				f_ConstructFunctor(_fFunctor);

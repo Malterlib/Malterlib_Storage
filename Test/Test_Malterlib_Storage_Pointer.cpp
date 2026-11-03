@@ -810,482 +810,482 @@ namespace
 
 		void f_TestUniquePointer()
 		{
-			TCUniquePointer<int> TestInt(fg_Construct());
-			TCUniquePointer<int> TestInt2(fg_Construct(3));
-			DMibTest(DMibExpr(*TestInt2) == DMibExpr(3))(ETestFlag_NoValues);
+			TCUniquePointer<int> pTestInt(fg_Construct());
+			TCUniquePointer<int> pTestInt2(fg_Construct(3));
+			DMibTest(DMibExpr(*pTestInt2) == DMibExpr(3))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test0(fg_Construct());
-			DMibTest(DMibExpr(*Test0) == DMibExpr(CSmartPtr_Tests::CTestStruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest0(fg_Construct());
+			DMibTest(DMibExpr(*pTest0) == DMibExpr(CSmartPtr_Tests::CTestStruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test1(fg_Construct(1));
-			DMibTest(DMibExpr(*Test1) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest1(fg_Construct(1));
+			DMibTest(DMibExpr(*pTest1) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test2(fg_Construct(1, 2));
-			DMibTest(DMibExpr(*Test2) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest2(fg_Construct(1, 2));
+			DMibTest(DMibExpr(*pTest2) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test3(fg_Construct(1, 2, 3));
-			DMibTest(DMibExpr(*Test3) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest3(fg_Construct(1, 2, 3));
+			DMibTest(DMibExpr(*pTest3) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test4(fg_Construct(1, 2, 3, 4));
-			DMibTest(DMibExpr(*Test4) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest4(fg_Construct(1, 2, 3, 4));
+			DMibTest(DMibExpr(*pTest4) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test5(fg_Construct(1, 2, 3, 4, 5));
-			DMibTest(DMibExpr(*Test5) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest5(fg_Construct(1, 2, 3, 4, 5));
+			DMibTest(DMibExpr(*pTest5) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test6(fg_Construct(1, 2, 3, 4, 5, 6));
-			DMibTest(DMibExpr(*Test6) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest6(fg_Construct(1, 2, 3, 4, 5, 6));
+			DMibTest(DMibExpr(*pTest6) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test7(fg_Construct(1, 2, 3, 4, 5, 6, 7));
-			DMibTest(DMibExpr(*Test7) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 0, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest7(fg_Construct(1, 2, 3, 4, 5, 6, 7));
+			DMibTest(DMibExpr(*pTest7) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test8(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8));
-			DMibTest(DMibExpr(*Test8) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 0, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest8(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8));
+			DMibTest(DMibExpr(*pTest8) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 0, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test9(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9));
-			DMibTest(DMibExpr(*Test9) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest9(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9));
+			DMibTest(DMibExpr(*pTest9) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)))(ETestFlag_NoValues);
 
-			TCUniquePointer<CTestStruct> Test10(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTest10(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+			DMibTest(DMibExpr(*pTest10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
 
 			// Construct derived type
-			TCUniquePointer<CTestStructVirtual> TestDerived0(fg_Construct<CTestStruct2>());
-			DMibTest(DMibExpr(*TestDerived0) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual()))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived1(fg_Construct<CTestStruct2>(0));
-			DMibTest(DMibExpr(*TestDerived1) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived2(fg_Construct<CTestStruct2>(0, 1));
-			DMibTest(DMibExpr(*TestDerived2) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived3(fg_Construct<CTestStruct2>(0, 1, 2));
-			DMibTest(DMibExpr(*TestDerived3) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived4(fg_Construct<CTestStruct2>(0, 1, 2, 3));
-			DMibTest(DMibExpr(*TestDerived4) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived5(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4));
-			DMibTest(DMibExpr(*TestDerived5) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived6(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5));
-			DMibTest(DMibExpr(*TestDerived6) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived7(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6));
-			DMibTest(DMibExpr(*TestDerived7) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived8(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7));
-			DMibTest(DMibExpr(*TestDerived8) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived9(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8));
-			DMibTest(DMibExpr(*TestDerived9) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8)))(ETestFlag_NoValues);
-			TCUniquePointer<CTestStructVirtual> TestDerived10(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-			DMibTest(DMibExpr(*TestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived0(fg_Construct<CTestStruct2>());
+			DMibTest(DMibExpr(*pTestDerived0) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual()))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived1(fg_Construct<CTestStruct2>(0));
+			DMibTest(DMibExpr(*pTestDerived1) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived2(fg_Construct<CTestStruct2>(0, 1));
+			DMibTest(DMibExpr(*pTestDerived2) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived3(fg_Construct<CTestStruct2>(0, 1, 2));
+			DMibTest(DMibExpr(*pTestDerived3) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived4(fg_Construct<CTestStruct2>(0, 1, 2, 3));
+			DMibTest(DMibExpr(*pTestDerived4) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived5(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4));
+			DMibTest(DMibExpr(*pTestDerived5) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived6(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5));
+			DMibTest(DMibExpr(*pTestDerived6) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived7(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6));
+			DMibTest(DMibExpr(*pTestDerived7) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived8(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7));
+			DMibTest(DMibExpr(*pTestDerived8) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived9(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8));
+			DMibTest(DMibExpr(*pTestDerived9) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStructVirtual> pTestDerived10(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+			DMibTest(DMibExpr(*pTestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)))(ETestFlag_NoValues);
 
 			using CCopyMove = CSmartPtr_Tests::CCopyMove;
 
 			// Moves
-			TCUniquePointer<CTestCopyMove> TestMove0(fg_Construct());
-			DMibTest(DMibExpr(TestMove0->f_GetNumMoves()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestMove0->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove1(fg_Construct(CCopyMove()));
-			DMibTest(DMibExpr(TestMove1->f_GetNumMoves()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestMove1->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove2(fg_Construct(CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove2->f_GetNumMoves()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestMove2->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove3(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove3->f_GetNumMoves()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestMove3->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove4(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove4->f_GetNumMoves()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestMove4->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove5(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove5->f_GetNumMoves()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestMove5->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove6(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove6->f_GetNumMoves()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestMove6->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove7(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove7->f_GetNumMoves()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestMove7->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove8(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove8->f_GetNumMoves()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestMove8->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove9(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove9->f_GetNumMoves()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestMove9->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMove10
+			TCUniquePointer<CTestCopyMove> pTestMove0(fg_Construct());
+			DMibTest(DMibExpr(pTestMove0->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMove0->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove1(fg_Construct(CCopyMove()));
+			DMibTest(DMibExpr(pTestMove1->f_GetNumMoves()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestMove1->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove2(fg_Construct(CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove2->f_GetNumMoves()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestMove2->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove3(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove3->f_GetNumMoves()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestMove3->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove4(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove4->f_GetNumMoves()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestMove4->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove5(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove5->f_GetNumMoves()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestMove5->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove6(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove6->f_GetNumMoves()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestMove6->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove7(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove7->f_GetNumMoves()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestMove7->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove8(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove8->f_GetNumMoves()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestMove8->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove9(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove9->f_GetNumMoves()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestMove9->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMove10
 				(
 					fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMove10->f_GetNumMoves()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestMove10->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMove10->f_GetNumMoves()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestMove10->f_GetNumCopies()) == DMibExpr(0));
 
 			// Moves explicit
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit0(fg_Construct<CTestCopyMove>());
-			DMibTest(DMibExpr(TestMoveExplicit0->f_GetNumMoves()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestMoveExplicit0->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit1(fg_Construct<CTestCopyMove>(CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit1->f_GetNumMoves()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestMoveExplicit1->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit2(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit2->f_GetNumMoves()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestMoveExplicit2->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit3(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit3->f_GetNumMoves()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestMoveExplicit3->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit4(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit4->f_GetNumMoves()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestMoveExplicit4->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit5(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit5->f_GetNumMoves()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestMoveExplicit5->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit6(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit6->f_GetNumMoves()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestMoveExplicit6->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit7(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit7->f_GetNumMoves()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestMoveExplicit7->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit8
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit0(fg_Construct<CTestCopyMove>());
+			DMibTest(DMibExpr(pTestMoveExplicit0->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMoveExplicit0->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit1(fg_Construct<CTestCopyMove>(CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit1->f_GetNumMoves()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestMoveExplicit1->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit2(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit2->f_GetNumMoves()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestMoveExplicit2->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit3(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit3->f_GetNumMoves()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestMoveExplicit3->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit4(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit4->f_GetNumMoves()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestMoveExplicit4->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit5(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit5->f_GetNumMoves()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestMoveExplicit5->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit6(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit6->f_GetNumMoves()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestMoveExplicit6->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit7(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit7->f_GetNumMoves()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestMoveExplicit7->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit8
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit8->f_GetNumMoves()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestMoveExplicit8->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit9
+			DMibTest(DMibExpr(pTestMoveExplicit8->f_GetNumMoves()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestMoveExplicit8->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit9
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit9->f_GetNumMoves()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestMoveExplicit9->f_GetNumCopies()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestMoveExplicit10
+			DMibTest(DMibExpr(pTestMoveExplicit9->f_GetNumMoves()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestMoveExplicit9->f_GetNumCopies()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestMoveExplicit10
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit10->f_GetNumMoves()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestMoveExplicit10->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMoveExplicit10->f_GetNumMoves()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestMoveExplicit10->f_GetNumCopies()) == DMibExpr(0));
 
 			// Copies
 			CCopyMove CopyFrom;
-			TCUniquePointer<CTestCopyMove> TestCopy0(fg_Construct());
-			DMibTest(DMibExpr(TestCopy0->f_GetNumCopies()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestCopy0->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy1(fg_Construct(CopyFrom));
-			DMibTest(DMibExpr(TestCopy1->f_GetNumCopies()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestCopy1->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy2(fg_Construct(CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy2->f_GetNumCopies()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestCopy2->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy3(fg_Construct(CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy3->f_GetNumCopies()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestCopy3->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy4(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy4->f_GetNumCopies()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestCopy4->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy5(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy5->f_GetNumCopies()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestCopy5->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy6(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy6->f_GetNumCopies()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestCopy6->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy7(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy7->f_GetNumCopies()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestCopy7->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy8(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy8->f_GetNumCopies()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestCopy8->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy9(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy9->f_GetNumCopies()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestCopy9->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopy10(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy10->f_GetNumCopies()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestCopy10->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy0(fg_Construct());
+			DMibTest(DMibExpr(pTestCopy0->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopy0->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy1(fg_Construct(CopyFrom));
+			DMibTest(DMibExpr(pTestCopy1->f_GetNumCopies()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestCopy1->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy2(fg_Construct(CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy2->f_GetNumCopies()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestCopy2->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy3(fg_Construct(CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy3->f_GetNumCopies()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestCopy3->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy4(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy4->f_GetNumCopies()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestCopy4->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy5(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy5->f_GetNumCopies()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestCopy5->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy6(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy6->f_GetNumCopies()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestCopy6->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy7(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy7->f_GetNumCopies()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestCopy7->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy8(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy8->f_GetNumCopies()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestCopy8->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy9(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy9->f_GetNumCopies()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestCopy9->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopy10(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy10->f_GetNumCopies()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestCopy10->f_GetNumMoves()) == DMibExpr(0));
 
 			// Copies explicit
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit0(fg_Construct<CTestCopyMove>());
-			DMibTest(DMibExpr(TestCopyExplicit0->f_GetNumCopies()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestCopyExplicit0->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit1(fg_Construct<CTestCopyMove>(CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit1->f_GetNumCopies()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestCopyExplicit1->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit2(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit2->f_GetNumCopies()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestCopyExplicit2->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit3(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit3->f_GetNumCopies()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestCopyExplicit3->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit4(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit4->f_GetNumCopies()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestCopyExplicit4->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit5(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit5->f_GetNumCopies()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestCopyExplicit5->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit6(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit6->f_GetNumCopies()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestCopyExplicit6->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit7(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit7->f_GetNumCopies()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestCopyExplicit7->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit8(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit8->f_GetNumCopies()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestCopyExplicit8->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit9(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit9->f_GetNumCopies()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestCopyExplicit9->f_GetNumMoves()) == DMibExpr(0));
-			TCUniquePointer<CTestCopyMove> TestCopyExplicit10
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit0(fg_Construct<CTestCopyMove>());
+			DMibTest(DMibExpr(pTestCopyExplicit0->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopyExplicit0->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit1(fg_Construct<CTestCopyMove>(CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit1->f_GetNumCopies()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestCopyExplicit1->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit2(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit2->f_GetNumCopies()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestCopyExplicit2->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit3(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit3->f_GetNumCopies()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestCopyExplicit3->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit4(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit4->f_GetNumCopies()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestCopyExplicit4->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit5(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit5->f_GetNumCopies()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestCopyExplicit5->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit6(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit6->f_GetNumCopies()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestCopyExplicit6->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit7(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit7->f_GetNumCopies()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestCopyExplicit7->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit8(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit8->f_GetNumCopies()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestCopyExplicit8->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit9(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit9->f_GetNumCopies()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestCopyExplicit9->f_GetNumMoves()) == DMibExpr(0));
+			TCUniquePointer<CTestCopyMove> pTestCopyExplicit10
 				(
 					fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom)
 				)
 			;
-			DMibTest(DMibExpr(TestCopyExplicit10->f_GetNumCopies()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestCopyExplicit10->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopyExplicit10->f_GetNumCopies()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestCopyExplicit10->f_GetNumMoves()) == DMibExpr(0));
 
 			// Deep copy
-			TCUniquePointer<CTestStruct> TestDeepCopy(fg_Copy(Test10));
-			DMibTest(DMibExpr(*TestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
+			TCUniquePointer<CTestStruct> pTestDeepCopy(fg_Copy(pTest10));
+			DMibTest(DMibExpr(*pTestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
 
 			// Deep copy assign
-			TestDeepCopy = fg_Copy(Test10);
-			DMibTest(DMibExpr(*TestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
+			pTestDeepCopy = fg_Copy(pTest10);
+			DMibTest(DMibExpr(*pTestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
 
 			// Construct assign
-			Test10 = fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
+			pTest10 = fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+			DMibTest(DMibExpr(*pTest10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
 		}
 
 		void f_TestSharedPointer()
 		{
-			TCSharedPointer<int> TestInt(fg_Construct());
-			TCSharedPointer<int> TestInt2(fg_Construct(3));
-			DMibTest(DMibExpr(*TestInt2) == DMibExpr(3))(ETestFlag_NoValues);
+			TCSharedPointer<int> pTestInt(fg_Construct());
+			TCSharedPointer<int> pTestInt2(fg_Construct(3));
+			DMibTest(DMibExpr(*pTestInt2) == DMibExpr(3))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test0(fg_Construct());
-			DMibTest(DMibExpr(*Test0) == DMibExpr(CSmartPtr_Tests::CTestStruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest0(fg_Construct());
+			DMibTest(DMibExpr(*pTest0) == DMibExpr(CSmartPtr_Tests::CTestStruct(0, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test1(fg_Construct(1));
-			DMibTest(DMibExpr(*Test1) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest1(fg_Construct(1));
+			DMibTest(DMibExpr(*pTest1) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 0, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test2(fg_Construct(1, 2));
-			DMibTest(DMibExpr(*Test2) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest2(fg_Construct(1, 2));
+			DMibTest(DMibExpr(*pTest2) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 0, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test3(fg_Construct(1, 2, 3));
-			DMibTest(DMibExpr(*Test3) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest3(fg_Construct(1, 2, 3));
+			DMibTest(DMibExpr(*pTest3) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 0, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test4(fg_Construct(1, 2, 3, 4));
-			DMibTest(DMibExpr(*Test4) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest4(fg_Construct(1, 2, 3, 4));
+			DMibTest(DMibExpr(*pTest4) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 0, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test5(fg_Construct(1, 2, 3, 4, 5));
-			DMibTest(DMibExpr(*Test5) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest5(fg_Construct(1, 2, 3, 4, 5));
+			DMibTest(DMibExpr(*pTest5) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 0, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test6(fg_Construct(1, 2, 3, 4, 5, 6));
-			DMibTest(DMibExpr(*Test6) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 0, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest6(fg_Construct(1, 2, 3, 4, 5, 6));
+			DMibTest(DMibExpr(*pTest6) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 0, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test7(fg_Construct(1, 2, 3, 4, 5, 6, 7));
-			DMibTest(DMibExpr(*Test7) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 0, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest7(fg_Construct(1, 2, 3, 4, 5, 6, 7));
+			DMibTest(DMibExpr(*pTest7) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 0, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test8(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8));
-			DMibTest(DMibExpr(*Test8) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 0, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest8(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8));
+			DMibTest(DMibExpr(*pTest8) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 0, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test9(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9));
-			DMibTest(DMibExpr(*Test9) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest9(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9));
+			DMibTest(DMibExpr(*pTest9) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 0)))(ETestFlag_NoValues);
 
-			TCSharedPointer<CTestStruct> Test10(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
-			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStruct> pTest10(fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10));
+			DMibTest(DMibExpr(*pTest10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
 
 			// Construct derived type
-			TCSharedPointer<CTestStructVirtual> TestDerived0(fg_Construct<CTestStruct2>());
-			DMibTest(DMibExpr(*TestDerived0) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual()))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived1(fg_Construct<CTestStruct2>(0));
-			DMibTest(DMibExpr(*TestDerived1) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived2(fg_Construct<CTestStruct2>(0, 1));
-			DMibTest(DMibExpr(*TestDerived2) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived3(fg_Construct<CTestStruct2>(0, 1, 2));
-			DMibTest(DMibExpr(*TestDerived3) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived4(fg_Construct<CTestStruct2>(0, 1, 2, 3));
-			DMibTest(DMibExpr(*TestDerived4) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived5(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4));
-			DMibTest(DMibExpr(*TestDerived5) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived6(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5));
-			DMibTest(DMibExpr(*TestDerived6) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived7(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6));
-			DMibTest(DMibExpr(*TestDerived7) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived8(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7));
-			DMibTest(DMibExpr(*TestDerived8) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived9(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8));
-			DMibTest(DMibExpr(*TestDerived9) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8)))(ETestFlag_NoValues);
-			TCSharedPointer<CTestStructVirtual> TestDerived10(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
-			DMibTest(DMibExpr(*TestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived0(fg_Construct<CTestStruct2>());
+			DMibTest(DMibExpr(*pTestDerived0) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual()))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived1(fg_Construct<CTestStruct2>(0));
+			DMibTest(DMibExpr(*pTestDerived1) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived2(fg_Construct<CTestStruct2>(0, 1));
+			DMibTest(DMibExpr(*pTestDerived2) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived3(fg_Construct<CTestStruct2>(0, 1, 2));
+			DMibTest(DMibExpr(*pTestDerived3) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived4(fg_Construct<CTestStruct2>(0, 1, 2, 3));
+			DMibTest(DMibExpr(*pTestDerived4) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived5(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4));
+			DMibTest(DMibExpr(*pTestDerived5) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived6(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5));
+			DMibTest(DMibExpr(*pTestDerived6) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived7(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6));
+			DMibTest(DMibExpr(*pTestDerived7) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived8(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7));
+			DMibTest(DMibExpr(*pTestDerived8) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived9(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8));
+			DMibTest(DMibExpr(*pTestDerived9) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8)))(ETestFlag_NoValues);
+			TCSharedPointer<CTestStructVirtual> pTestDerived10(fg_Construct<CTestStruct2>(0, 1, 2, 3, 4, 5, 6, 7, 8, 9));
+			DMibTest(DMibExpr(*pTestDerived10) == DMibExpr(CSmartPtr_Tests::CTestStructVirtual(0, 1, 2, 3, 4, 5, 6, 7, 8, 9)))(ETestFlag_NoValues);
 
 			using CCopyMove = CSmartPtr_Tests::CCopyMove;
 
 			// Moves
-			TCSharedPointer<CTestCopyMove> TestMove0(fg_Construct());
-			DMibTest(DMibExpr(TestMove0->f_GetNumMoves()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestMove0->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove1(fg_Construct(CCopyMove()));
-			DMibTest(DMibExpr(TestMove1->f_GetNumMoves()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestMove1->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove2(fg_Construct(CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove2->f_GetNumMoves()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestMove2->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove3(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove3->f_GetNumMoves()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestMove3->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove4(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove4->f_GetNumMoves()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestMove4->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove5(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove5->f_GetNumMoves()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestMove5->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove6(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove6->f_GetNumMoves()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestMove6->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove7(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove7->f_GetNumMoves()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestMove7->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove8(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove8->f_GetNumMoves()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestMove8->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove9(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMove9->f_GetNumMoves()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestMove9->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMove10
+			TCSharedPointer<CTestCopyMove> pTestMove0(fg_Construct());
+			DMibTest(DMibExpr(pTestMove0->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMove0->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove1(fg_Construct(CCopyMove()));
+			DMibTest(DMibExpr(pTestMove1->f_GetNumMoves()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestMove1->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove2(fg_Construct(CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove2->f_GetNumMoves()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestMove2->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove3(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove3->f_GetNumMoves()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestMove3->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove4(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove4->f_GetNumMoves()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestMove4->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove5(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove5->f_GetNumMoves()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestMove5->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove6(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove6->f_GetNumMoves()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestMove6->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove7(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove7->f_GetNumMoves()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestMove7->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove8(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove8->f_GetNumMoves()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestMove8->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove9(fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMove9->f_GetNumMoves()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestMove9->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMove10
 				(
 					fg_Construct(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMove10->f_GetNumMoves()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestMove10->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMove10->f_GetNumMoves()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestMove10->f_GetNumCopies()) == DMibExpr(0));
 
 			// Moves explicit
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit0(fg_Construct<CTestCopyMove>());
-			DMibTest(DMibExpr(TestMoveExplicit0->f_GetNumMoves()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestMoveExplicit0->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit1(fg_Construct<CTestCopyMove>(CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit1->f_GetNumMoves()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestMoveExplicit1->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit2(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit2->f_GetNumMoves()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestMoveExplicit2->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit3(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit3->f_GetNumMoves()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestMoveExplicit3->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit4(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit4->f_GetNumMoves()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestMoveExplicit4->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit5(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit5->f_GetNumMoves()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestMoveExplicit5->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit6(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit6->f_GetNumMoves()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestMoveExplicit6->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit7(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
-			DMibTest(DMibExpr(TestMoveExplicit7->f_GetNumMoves()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestMoveExplicit7->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit8
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit0(fg_Construct<CTestCopyMove>());
+			DMibTest(DMibExpr(pTestMoveExplicit0->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMoveExplicit0->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit1(fg_Construct<CTestCopyMove>(CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit1->f_GetNumMoves()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestMoveExplicit1->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit2(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit2->f_GetNumMoves()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestMoveExplicit2->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit3(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit3->f_GetNumMoves()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestMoveExplicit3->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit4(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit4->f_GetNumMoves()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestMoveExplicit4->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit5(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit5->f_GetNumMoves()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestMoveExplicit5->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit6(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit6->f_GetNumMoves()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestMoveExplicit6->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit7(fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove()));
+			DMibTest(DMibExpr(pTestMoveExplicit7->f_GetNumMoves()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestMoveExplicit7->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit8
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit8->f_GetNumMoves()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestMoveExplicit8->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit9
+			DMibTest(DMibExpr(pTestMoveExplicit8->f_GetNumMoves()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestMoveExplicit8->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit9
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit9->f_GetNumMoves()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestMoveExplicit9->f_GetNumCopies()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestMoveExplicit10
+			DMibTest(DMibExpr(pTestMoveExplicit9->f_GetNumMoves()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestMoveExplicit9->f_GetNumCopies()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestMoveExplicit10
 				(
 					fg_Construct<CTestCopyMove>(CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove(), CCopyMove())
 				)
 			;
-			DMibTest(DMibExpr(TestMoveExplicit10->f_GetNumMoves()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestMoveExplicit10->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestMoveExplicit10->f_GetNumMoves()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestMoveExplicit10->f_GetNumCopies()) == DMibExpr(0));
 
 			// Copies
 			CCopyMove CopyFrom;
-			TCSharedPointer<CTestCopyMove> TestCopy0(fg_Construct());
-			DMibTest(DMibExpr(TestCopy0->f_GetNumCopies()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestCopy0->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy1(fg_Construct(CopyFrom));
-			DMibTest(DMibExpr(TestCopy1->f_GetNumCopies()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestCopy1->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy2(fg_Construct(CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy2->f_GetNumCopies()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestCopy2->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy3(fg_Construct(CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy3->f_GetNumCopies()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestCopy3->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy4(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy4->f_GetNumCopies()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestCopy4->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy5(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy5->f_GetNumCopies()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestCopy5->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy6(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy6->f_GetNumCopies()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestCopy6->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy7(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy7->f_GetNumCopies()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestCopy7->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy8(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy8->f_GetNumCopies()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestCopy8->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy9(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy9->f_GetNumCopies()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestCopy9->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopy10(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopy10->f_GetNumCopies()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestCopy10->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy0(fg_Construct());
+			DMibTest(DMibExpr(pTestCopy0->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopy0->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy1(fg_Construct(CopyFrom));
+			DMibTest(DMibExpr(pTestCopy1->f_GetNumCopies()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestCopy1->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy2(fg_Construct(CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy2->f_GetNumCopies()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestCopy2->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy3(fg_Construct(CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy3->f_GetNumCopies()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestCopy3->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy4(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy4->f_GetNumCopies()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestCopy4->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy5(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy5->f_GetNumCopies()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestCopy5->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy6(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy6->f_GetNumCopies()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestCopy6->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy7(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy7->f_GetNumCopies()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestCopy7->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy8(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy8->f_GetNumCopies()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestCopy8->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy9(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy9->f_GetNumCopies()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestCopy9->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopy10(fg_Construct(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopy10->f_GetNumCopies()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestCopy10->f_GetNumMoves()) == DMibExpr(0));
 
 			// Copies explicit
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit0(fg_Construct<CTestCopyMove>());
-			DMibTest(DMibExpr(TestCopyExplicit0->f_GetNumCopies()) == DMibExpr(0));
-			DMibTest(DMibExpr(TestCopyExplicit0->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit1(fg_Construct<CTestCopyMove>(CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit1->f_GetNumCopies()) == DMibExpr(1));
-			DMibTest(DMibExpr(TestCopyExplicit1->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit2(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit2->f_GetNumCopies()) == DMibExpr(2));
-			DMibTest(DMibExpr(TestCopyExplicit2->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit3(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit3->f_GetNumCopies()) == DMibExpr(3));
-			DMibTest(DMibExpr(TestCopyExplicit3->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit4(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit4->f_GetNumCopies()) == DMibExpr(4));
-			DMibTest(DMibExpr(TestCopyExplicit4->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit5(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit5->f_GetNumCopies()) == DMibExpr(5));
-			DMibTest(DMibExpr(TestCopyExplicit5->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit6(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit6->f_GetNumCopies()) == DMibExpr(6));
-			DMibTest(DMibExpr(TestCopyExplicit6->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit7(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit7->f_GetNumCopies()) == DMibExpr(7));
-			DMibTest(DMibExpr(TestCopyExplicit7->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit8(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit8->f_GetNumCopies()) == DMibExpr(8));
-			DMibTest(DMibExpr(TestCopyExplicit8->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit9(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
-			DMibTest(DMibExpr(TestCopyExplicit9->f_GetNumCopies()) == DMibExpr(9));
-			DMibTest(DMibExpr(TestCopyExplicit9->f_GetNumMoves()) == DMibExpr(0));
-			TCSharedPointer<CTestCopyMove> TestCopyExplicit10
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit0(fg_Construct<CTestCopyMove>());
+			DMibTest(DMibExpr(pTestCopyExplicit0->f_GetNumCopies()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopyExplicit0->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit1(fg_Construct<CTestCopyMove>(CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit1->f_GetNumCopies()) == DMibExpr(1));
+			DMibTest(DMibExpr(pTestCopyExplicit1->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit2(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit2->f_GetNumCopies()) == DMibExpr(2));
+			DMibTest(DMibExpr(pTestCopyExplicit2->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit3(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit3->f_GetNumCopies()) == DMibExpr(3));
+			DMibTest(DMibExpr(pTestCopyExplicit3->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit4(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit4->f_GetNumCopies()) == DMibExpr(4));
+			DMibTest(DMibExpr(pTestCopyExplicit4->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit5(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit5->f_GetNumCopies()) == DMibExpr(5));
+			DMibTest(DMibExpr(pTestCopyExplicit5->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit6(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit6->f_GetNumCopies()) == DMibExpr(6));
+			DMibTest(DMibExpr(pTestCopyExplicit6->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit7(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit7->f_GetNumCopies()) == DMibExpr(7));
+			DMibTest(DMibExpr(pTestCopyExplicit7->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit8(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit8->f_GetNumCopies()) == DMibExpr(8));
+			DMibTest(DMibExpr(pTestCopyExplicit8->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit9(fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom));
+			DMibTest(DMibExpr(pTestCopyExplicit9->f_GetNumCopies()) == DMibExpr(9));
+			DMibTest(DMibExpr(pTestCopyExplicit9->f_GetNumMoves()) == DMibExpr(0));
+			TCSharedPointer<CTestCopyMove> pTestCopyExplicit10
 				(
 					fg_Construct<CTestCopyMove>(CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom, CopyFrom)
 				)
 			;
-			DMibTest(DMibExpr(TestCopyExplicit10->f_GetNumCopies()) == DMibExpr(10));
-			DMibTest(DMibExpr(TestCopyExplicit10->f_GetNumMoves()) == DMibExpr(0));
+			DMibTest(DMibExpr(pTestCopyExplicit10->f_GetNumCopies()) == DMibExpr(10));
+			DMibTest(DMibExpr(pTestCopyExplicit10->f_GetNumMoves()) == DMibExpr(0));
 
 			// Deep copy
 			{
-				TCSharedPointer<CTestStruct> TestDeepCopy(fg_Copy(Test10));
-				DMibTest(DMibExpr(*TestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
+				TCSharedPointer<CTestStruct> pTestDeepCopy(fg_Copy(pTest10));
+				DMibTest(DMibExpr(*pTestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)))(ETestFlag_NoValues);
 
 				// Deep copy assign
-				TestDeepCopy = fg_Copy(Test10);
-				DMibTest(DMibExpr(*TestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
+				pTestDeepCopy = fg_Copy(pTest10);
+				DMibTest(DMibExpr(*pTestDeepCopy) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
 			}
 
 			// Construct assign
-			Test10 = fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-			DMibTest(DMibExpr(*Test10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
+			pTest10 = fg_Construct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+			DMibTest(DMibExpr(*pTest10) == DMibExpr(CSmartPtr_Tests::CTestStruct(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) && DMibExpr(2))(ETestFlag_NoValues);
 		}
 
 		void f_TestSharedPointerConstness()
@@ -1332,10 +1332,10 @@ namespace
 			TCSharedPointer<CValue, CSupportWeakTag> pWeakable = fg_Construct();
 			pWeakable->m_Value = 11;
 
-			TCWeakPointer<CValue, CAllocator_Heap> WeakMutable = pWeakable;
-			auto WeakFrozen = WeakMutable.f_ShareAsConst();
+			TCWeakPointer<CValue, CAllocator_Heap> pWeakMutable = pWeakable;
+			auto pWeakFrozen = pWeakMutable.f_ShareAsConst();
 
-			auto pLocked = WeakFrozen.f_Lock();
+			auto pLocked = pWeakFrozen.f_Lock();
 			DMibExpectTrue(bool(pLocked));
 			DMibExpect(pLocked->m_Value, ==, 11);
 		}
