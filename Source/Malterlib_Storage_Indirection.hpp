@@ -194,9 +194,53 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CStream>
+	void TCIndirection<t_CType, t_CAllocator>::f_Stream(tf_CStream &_Stream)
+	{
+		_Stream % this->f_Get();
+	}
+
+	template <typename t_CType, typename t_CAllocator>
 	template <typename tf_CStr>
 	void TCIndirection<t_CType, t_CAllocator>::f_Format(tf_CStr &o_String) const
 	{
 		o_String += typename tf_CStr::CFormat("{}") << f_Get();
+	}
+
+	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CRight>
+	auto TCIndirection<t_CType, t_CAllocator>::operator <=> (tf_CRight const &_Right) const noexcept(noexcept(this->f_Get() <=> _Right))
+	{
+		return this->f_Get() <=> _Right;
+	}
+
+	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CType, typename tf_CAllocator>
+	auto TCIndirection<t_CType, t_CAllocator>::operator <=> (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const noexcept(noexcept(this->f_Get() <=> _Right.f_Get()))
+	{
+		return this->f_Get() <=> _Right.f_Get();
+	}
+
+	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CRight>
+	auto TCIndirection<t_CType, t_CAllocator>::operator == (tf_CRight const &_Right) const noexcept(noexcept(this->f_Get() == _Right))
+	{
+		return this->f_Get() == _Right;
+	}
+
+	template <typename t_CType, typename t_CAllocator>
+	template <typename tf_CType, typename tf_CAllocator>
+	auto TCIndirection<t_CType, t_CAllocator>::operator == (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const noexcept(noexcept(this->f_Get() == _Right.f_Get()))
+	{
+		return this->f_Get() == _Right.f_Get();
+	}
+}
+
+namespace NMib
+{
+	template <typename tf_CType>
+	NStorage::TCIndirection<NTraits::TCDecay<tf_CType>> fg_Indirect(tf_CType &&_Type)
+	{
+		return NStorage::TCIndirection<NTraits::TCDecay<tf_CType>>(fg_Forward<tf_CType>(_Type));
 	}
 }

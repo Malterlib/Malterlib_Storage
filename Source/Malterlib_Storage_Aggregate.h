@@ -22,47 +22,24 @@ namespace NMib::NStorage
 	struct TCAggregateSimple
 	{
 	private:
+		// Declared before the public section, which uses it.
 		using CData = t_CData;
 
 	public:
 		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 
 		inline_always TCAggregateSimple() = default;
-		constexpr TCAggregateSimple(EAggregateInitialization _Init)
-			: m_ObjectSpace{}
-		{
-		}
+		constexpr TCAggregateSimple(EAggregateInitialization _Init);
 
-		inline_always void f_Destruct()
-		{
-			((t_CData *)m_ObjectSpace)->t_CData::~t_CData();
-		}
+		inline_always void f_Destruct();
 
 		template <typename ...tfp_CParam>
-		inline_always void f_Construct(tfp_CParam && ...p_Params)
-		{
-			new(m_ObjectSpace) t_CData(fg_Forward<tfp_CParam>(p_Params)...);
-		}
+		inline_always void f_Construct(tfp_CParam && ...p_Params);
 
-		inline_small operator t_CData * ()
-		{
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		inline_small operator t_CData const * () const
-		{
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		inline_small t_CData *operator -> ()
-		{
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		inline_small t_CData const *operator -> () const
-		{
-			return ((t_CData const *)m_ObjectSpace);
-		}
+		inline_small operator t_CData * ();
+		inline_small operator t_CData const * () const;
+		inline_small t_CData *operator -> ();
+		inline_small t_CData const *operator -> () const;
 
 		/*
 			inline_small t_CData & operator &()
@@ -88,19 +65,12 @@ namespace NMib::NStorage
 	struct TCAggregate
 	{
 	private:
+		// Declared before the public section, which uses it.
 		using CData = t_CData;
 
 	public:
 		TCAggregate() = delete;
-		constexpr TCAggregate(EAggregateInitialization _Init)
-			: m_LifeTimeFlags{0}
-			, m_Link{_Init}
-			, m_Priority{0}
-			, m_fDestruct{nullptr}
-			, m_ObjectSpace{}
-			, m_Lock{}
-		{
-		}
+		constexpr TCAggregate(EAggregateInitialization _Init);
 
 		using FAggregateDestruct = void (CAggregate *_pThis);
 
@@ -114,33 +84,16 @@ namespace NMib::NStorage
 
 		t_CLock m_Lock;
 
-		static void fs_Destruct(CAggregate *_pThis)
-		{
-			((TCAggregate<t_CData, t_Priority, t_CLock> *)_pThis)->f_Destruct();
-		}
+		static void fs_Destruct(CAggregate *_pThis);
 
 		void f_Destruct();
 		void f_Clear();
 
-		void f_Lock()
-		{
-			return m_Lock.f_Lock();
-		}
+		void f_Lock();
+		void f_Unlock();
 
-		void f_Unlock()
-		{
-			return m_Lock.f_Unlock();
-		}
-
-		bool f_IsConstructed()
-		{
-			return m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed;
-		}
-
-		bool f_WasDestructed()
-		{
-			return (m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & (EAggregateLifeTimeFlag_Destructed | EAggregateLifeTimeFlag_Destructing)) != EAggregateLifeTimeFlag_None;
-		}
+		bool f_IsConstructed();
+		bool f_WasDestructed();
 
 		template <typename tf_FFunctor>
 		void f_ConstructFunctor(tf_FFunctor const &_fFunctor);
@@ -149,78 +102,22 @@ namespace NMib::NStorage
 		void f_Construct(tfp_CData && ...p_Params);
 
 		template <typename tf_FFunctor>
-		mark_nodebug inline_small t_CData *f_CreateFunctor(tf_FFunctor const &_fFunctor)
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed))
-				f_ConstructFunctor(_fFunctor);
+		mark_nodebug inline_small t_CData *f_CreateFunctor(tf_FFunctor const &_fFunctor);
 
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		mark_nodebug inline_small operator t_CData * ()
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct();
-
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		mark_nodebug inline_small t_CData &f_GetUnsafe()
-		{
-			return *((t_CData *)m_ObjectSpace);
-		}
+		mark_nodebug inline_small operator t_CData * ();
+		mark_nodebug inline_small t_CData &f_GetUnsafe();
 
 		template <typename tf_CData0>
-		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0)
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct(_Data0);
-
-			return ((t_CData *)m_ObjectSpace);
-		}
-
+		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0);
 		template <typename tf_CData0, typename tf_CData1>
-		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1)
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct(_Data0, _Data1);
-
-			return ((t_CData *)m_ObjectSpace);
-		}
-
+		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1);
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2>
-		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2)
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct(_Data0, _Data1, _Data2);
-
-			return ((t_CData *)m_ObjectSpace);
-		}
-
+		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2);
 		template <typename tf_CData0, typename tf_CData1, typename tf_CData2, typename tf_CData3>
-		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2, tf_CData3 &_Data3)
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct(_Data0, _Data1, _Data2, _Data3);
+		mark_nodebug inline_small t_CData *operator () (tf_CData0 &_Data0, tf_CData1 &_Data1, tf_CData2 &_Data2, tf_CData3 &_Data3);
 
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		mark_nodebug inline_small t_CData *operator -> ()
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct();
-
-			return ((t_CData *)m_ObjectSpace);
-		}
-
-		mark_nodebug inline_small t_CData &operator * ()
-		{
-			if (!(m_LifeTimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & EAggregateLifeTimeFlag_Constructed)) [[unlikely]]
-				f_Construct();
-
-			return *((t_CData *)m_ObjectSpace);
-		}
+		mark_nodebug inline_small t_CData *operator -> ();
+		mark_nodebug inline_small t_CData &operator * ();
 
 		/*
 			inline_small t_CData & operator &()

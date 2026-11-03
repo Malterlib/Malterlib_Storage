@@ -7,145 +7,57 @@ namespace NMib::NStorage
 	template <typename t_CType, umint t_nBits = 2> // Safe for 32 bit systems
 	struct TCBitStorePointer
 	{
-		TCBitStorePointer()
-		{
-		}
+		TCBitStorePointer();
 
 		// Assign
-		TCBitStorePointer(t_CType *_pPtr, umint _Bits = 0)
-			: mp_PointTo(fsp_ToInt(_pPtr))
-			, mp_Bits(_Bits)
-		{
-		}
-
+		TCBitStorePointer(t_CType *_pPtr, umint _Bits = 0);
 		template <typename tf_CType>
-		TCBitStorePointer(TCExplicit<tf_CType> &&_Other, umint _Bits = 0)
-			: mp_PointTo(fsp_ToInt(static_cast<t_CType *>(*_Other)))
-			, mp_Bits(_Bits)
-		{
-		}
+		TCBitStorePointer(TCExplicit<tf_CType> &&_Other, umint _Bits = 0);
+		TCBitStorePointer(TCBitStorePointer const &_pOther, umint _Bits = 0);
 
-		TCBitStorePointer(TCBitStorePointer const &_pOther, umint _Bits = 0)
-			: mp_PointTo(_pOther.mp_PointTo)
-			, mp_Bits(_Bits)
-		{
-			// Let bits be the same
-		}
-
-		TCBitStorePointer &operator = (t_CType *_pPtr)
-		{
-			mp_PointTo = fsp_ToInt(_pPtr);
-			return *this;
-		}
-
-		void f_SetBoth(t_CType *_pPtr, umint _Bits)
-		{
-			mp_PointTo = fsp_ToInt(_pPtr);
-			mp_Bits = _Bits;
-		}
-
-		void f_SetBoth(TCBitStorePointer const &_pOther)
-		{
-			mp_PointTo = _pOther.mp_PointTo;
-			mp_Bits = _pOther.mp_Bits;
-		}
-
-		TCBitStorePointer &operator = (TCBitStorePointer const &_pOther)
-		{
-			mp_PointTo = _pOther.mp_PointTo;
-			return *this;
-		}
-
+		TCBitStorePointer &operator = (t_CType *_pPtr);
+		void f_SetBoth(t_CType *_pPtr, umint _Bits);
+		void f_SetBoth(TCBitStorePointer const &_pOther);
+		TCBitStorePointer &operator = (TCBitStorePointer const &_pOther);
 		template <typename tf_CType>
-		TCBitStorePointer &operator = (TCExplicit<tf_CType> &&_Other)
-		{
-			mp_PointTo = fsp_ToInt(static_cast<t_CType *>(*_Other));
-			return *this;
-		}
+		TCBitStorePointer &operator = (TCExplicit<tf_CType> &&_Other);
 
-		TCBitStorePointer &f_SetBits(umint _Bits)
-		{
-			DMibFastCheck((_Bits & ((umint(1u) << t_nBits) - 1)) == _Bits); // More bits that fits
-			mp_Bits = _Bits;
-			return *this;
-		}
-
-		TCBitStorePointer &f_ChangeBits(umint _Remove, umint _Add)
-		{
-			DMibFastCheck((_Remove & ((umint(1u) << t_nBits) - 1)) == _Remove); // More bits that fits
-			DMibFastCheck((_Add & ((umint(1u) << t_nBits) - 1)) == _Add); // More bits that fits
-			mp_Bits = (mp_Bits & ~_Remove) | _Add;
-			return *this;
-		}
-
-		umint f_GetBits() const
-		{
-			return mp_Bits;
-		}
+		TCBitStorePointer &f_SetBits(umint _Bits);
+		TCBitStorePointer &f_ChangeBits(umint _Remove, umint _Add);
+		umint f_GetBits() const;
 
 		// Access
-		mark_nodebug t_CType *f_Get() const
-		{
-			return fsp_FromInt(mp_PointTo);
-		}
-
-		mark_nodebug operator t_CType * () const
-		{
-			return fsp_FromInt(mp_PointTo);
-		}
-
-		mark_nodebug t_CType *operator -> () const
-		{
-			return fsp_FromInt(mp_PointTo);
-		}
+		mark_nodebug t_CType *f_Get() const;
+		mark_nodebug operator t_CType * () const;
+		mark_nodebug t_CType *operator -> () const;
 
 		template <typename tf_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
 			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
-		{
-			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, fsp_FromInt(mp_PointTo));
-		}
+		;
 
 		template <typename tf_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
 			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
-		{
-			return fsp_FromInt(mp_PointTo)->*_MemberPtr;
-		}
+		;
 
-		mark_nodebug t_CType &operator * () const
-		{
-			return *fsp_FromInt(mp_PointTo);
-		}
+		mark_nodebug t_CType &operator * () const;
 
 		template <typename tf_CType>
-		bool operator == (tf_CType const &_Other) const noexcept
-		{
-			return operator t_CType * () == static_cast<t_CType *>(_Other);
-		}
-
+		bool operator == (tf_CType const &_Other) const noexcept;
 		template <typename tf_CType>
-		bool operator == (TCBitStorePointer<tf_CType> const &_pOther) const noexcept
-		{
-			return operator t_CType * () == _pOther.operator tf_CType * ();
-		}
+		bool operator == (TCBitStorePointer<tf_CType> const &_pOther) const noexcept;
 
 	private:
-		static inline_always umint fsp_ToInt(t_CType *_pPtr)
-		{
-			DMibFastCheck(!(reinterpret_cast<umint>(_pPtr) & ((umint(1u) << t_nBits) - 1))); // Unaligned pointer not supported
-			return reinterpret_cast<umint>(_pPtr) >> t_nBits;
-		}
-
-		static inline_always constexpr t_CType *fsp_FromInt(umint _Pointer)
-		{
-			return reinterpret_cast<t_CType *>(_Pointer << t_nBits);
-		}
+		static inline_always umint fsp_ToInt(t_CType *_pPtr);
+		static inline_always constexpr t_CType *fsp_FromInt(umint _Pointer);
 
 		umint mp_PointTo:sizeof(umint) * 8 - t_nBits;
 		umint mp_Bits:t_nBits;
 	};
 }
+
+#include "Malterlib_Storage_BitStorePointer.hpp"
 
 #ifndef DMibPNoShortCuts
 using namespace NMib::NStorage;

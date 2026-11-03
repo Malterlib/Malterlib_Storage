@@ -23,6 +23,15 @@ namespace NMib::NStorage
 		}
 	}
 
+	CAutoClearPtrMember::CAutoClearPtrMember(CAutoClearPtrMember const &_Other)
+	{
+	}
+
+	auto CAutoClearPtrMember::operator = (CAutoClearPtrMember const &_Other) -> CAutoClearPtrMember &
+	{
+		return *this;
+	}
+
 	CAutoClearPtrMemberDebug::CAutoClearPtrMemberDebug() = default;
 
 	CAutoClearPtrMemberDebug::~CAutoClearPtrMemberDebug()
@@ -38,5 +47,14 @@ namespace NMib::NStorage
 			((CAutoClearPtrDefaultDummy *)pPtr)->m_pPointTo = nullptr;
 			pPtr = m_Linked.f_Pop();
 		}
+	}
+
+	CAutoClearPtrMemberDebug::CAutoClearPtrMemberDebug(CAutoClearPtrMemberDebug const &_Other)
+	{
+	}
+
+	auto CAutoClearPtrMemberDebug::operator = (CAutoClearPtrMemberDebug const &_Other) -> CAutoClearPtrMemberDebug &
+	{
+		return *this;
 	}
 }
