@@ -27,69 +27,69 @@ namespace
 			int m_8;
 			int m_9;
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
-				, m_8(_8)
-				, m_9(_9)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8, int _Value9)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
+				, m_8(_Value8)
+				, m_9(_Value9)
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
-				, m_8(_8)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
+				, m_8(_Value8)
 				, m_9(0)
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
 				, m_8(0)
 				, m_9(0)
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5, int _6)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
 				, m_7(0)
 				, m_8(0)
 				, m_9(0)
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4, int _5)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
 				, m_6(0)
 				, m_7(0)
 				, m_8(0)
@@ -97,12 +97,12 @@ namespace
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3, int _4)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
 				, m_5(0)
 				, m_6(0)
 				, m_7(0)
@@ -111,11 +111,11 @@ namespace
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2, int _3)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
+			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
 				, m_4(0)
 				, m_5(0)
 				, m_6(0)
@@ -125,10 +125,10 @@ namespace
 			{
 			}
 
-			CTestStruct(int _0, int _1, int _2)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
+			CTestStruct(int _Value0, int _Value1, int _Value2)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
 				, m_3(0)
 				, m_4(0)
 				, m_5(0)
@@ -139,9 +139,9 @@ namespace
 			{
 			}
 
-			CTestStruct(int _0, int _1)
-				: m_0(_0)
-				, m_1(_1)
+			CTestStruct(int _Value0, int _Value1)
+				: m_0(_Value0)
+				, m_1(_Value1)
 				, m_2(0)
 				, m_3(0)
 				, m_4(0)
@@ -153,8 +153,8 @@ namespace
 			{
 			}
 
-			CTestStruct(int _0)
-				: m_0(_0)
+			CTestStruct(int _Value0)
+				: m_0(_Value0)
 				, m_1(0)
 				, m_2(0)
 				, m_3(0)
@@ -210,69 +210,69 @@ namespace
 			int m_8;
 			int m_9;
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
-				, m_8(_8)
-				, m_9(_9)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8, int _Value9)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
+				, m_8(_Value8)
+				, m_9(_Value9)
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
-				, m_8(_8)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
+				, m_8(_Value8)
 				, m_9(0)
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
-				, m_7(_7)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
+				, m_7(_Value7)
 				, m_8(0)
 				, m_9(0)
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5, int _6)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
-				, m_6(_6)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
+				, m_6(_Value6)
 				, m_7(0)
 				, m_8(0)
 				, m_9(0)
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4, int _5)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
-				, m_5(_5)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
+				, m_5(_Value5)
 				, m_6(0)
 				, m_7(0)
 				, m_8(0)
@@ -280,12 +280,12 @@ namespace
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3, int _4)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
-				, m_4(_4)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
+				, m_4(_Value4)
 				, m_5(0)
 				, m_6(0)
 				, m_7(0)
@@ -294,11 +294,11 @@ namespace
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2, int _3)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
-				, m_3(_3)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
+				, m_3(_Value3)
 				, m_4(0)
 				, m_5(0)
 				, m_6(0)
@@ -308,10 +308,10 @@ namespace
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1, int _2)
-				: m_0(_0)
-				, m_1(_1)
-				, m_2(_2)
+			CTestStructVirtual(int _Value0, int _Value1, int _Value2)
+				: m_0(_Value0)
+				, m_1(_Value1)
+				, m_2(_Value2)
 				, m_3(0)
 				, m_4(0)
 				, m_5(0)
@@ -322,9 +322,9 @@ namespace
 			{
 			}
 
-			CTestStructVirtual(int _0, int _1)
-				: m_0(_0)
-				, m_1(_1)
+			CTestStructVirtual(int _Value0, int _Value1)
+				: m_0(_Value0)
+				, m_1(_Value1)
 				, m_2(0)
 				, m_3(0)
 				, m_4(0)
@@ -336,8 +336,8 @@ namespace
 			{
 			}
 
-			CTestStructVirtual(int _0)
-				: m_0(_0)
+			CTestStructVirtual(int _Value0)
+				: m_0(_Value0)
 				, m_1(0)
 				, m_2(0)
 				, m_3(0)
@@ -391,53 +391,53 @@ namespace
 			{
 			}
 
-			CTestStruct2(int _0)
-				: CTestStructVirtual(_0)
+			CTestStruct2(int _Value0)
+				: CTestStructVirtual(_Value0)
 			{
 			}
 
-			CTestStruct2(int _0, int _1)
-				: CTestStructVirtual(_0, _1)
+			CTestStruct2(int _Value0, int _Value1)
+				: CTestStructVirtual(_Value0, _Value1)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2)
-				: CTestStructVirtual(_0, _1, _2)
+			CTestStruct2(int _Value0, int _Value1, int _Value2)
+				: CTestStructVirtual(_Value0, _Value1, _Value2)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3)
-				: CTestStructVirtual(_0, _1, _2, _3)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4)
-				: CTestStructVirtual(_0, _1, _2, _3, _4)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4, int _5)
-				: CTestStructVirtual(_0, _1, _2, _3, _4, _5)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4, _Value5)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4, int _5, int _6)
-				: CTestStructVirtual(_0, _1, _2, _3, _4, _5, _6)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4, _Value5, _Value6)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7)
-				: CTestStructVirtual(_0, _1, _2, _3, _4, _5, _6, _7)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4, _Value5, _Value6, _Value7)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8)
-				: CTestStructVirtual(_0, _1, _2, _3, _4, _5, _6, _7, _8)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4, _Value5, _Value6, _Value7, _Value8)
 			{
 			}
 
-			CTestStruct2(int _0, int _1, int _2, int _3, int _4, int _5, int _6, int _7, int _8, int _9)
-				: CTestStructVirtual(_0, _1, _2, _3, _4, _5, _6, _7, _8, _9)
+			CTestStruct2(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8, int _Value9)
+				: CTestStructVirtual(_Value0, _Value1, _Value2, _Value3, _Value4, _Value5, _Value6, _Value7, _Value8, _Value9)
 			{
 			}
 		};
@@ -525,226 +525,285 @@ namespace
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0)
-				: m_CopyMove0(NMib::fg_Move(_0))
+			CTestCopyMove(CCopyMove &&_CopyMove0)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
+			CTestCopyMove(CCopyMove &&_CopyMove0, CCopyMove &&_CopyMove1)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
+			CTestCopyMove(CCopyMove &&_CopyMove0, CCopyMove &&_CopyMove1, CCopyMove &&_CopyMove2)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
+			CTestCopyMove(CCopyMove &&_CopyMove0, CCopyMove &&_CopyMove1, CCopyMove &&_CopyMove2, CCopyMove &&_CopyMove3)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
+			CTestCopyMove(CCopyMove &&_CopyMove0, CCopyMove &&_CopyMove1, CCopyMove &&_CopyMove2, CCopyMove &&_CopyMove3, CCopyMove &&_CopyMove4)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
 			{
 			}
 
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4, CCopyMove &&_5)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
-				, m_CopyMove5(NMib::fg_Move(_5))
-			{
-			}
-
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4, CCopyMove &&_5, CCopyMove &&_6)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
-				, m_CopyMove5(NMib::fg_Move(_5))
-				, m_CopyMove6(NMib::fg_Move(_6))
-			{
-			}
-
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4, CCopyMove &&_5, CCopyMove &&_6, CCopyMove &&_7)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
-				, m_CopyMove5(NMib::fg_Move(_5))
-				, m_CopyMove6(NMib::fg_Move(_6))
-				, m_CopyMove7(NMib::fg_Move(_7))
-			{
-			}
-
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4, CCopyMove &&_5, CCopyMove &&_6, CCopyMove &&_7, CCopyMove &&_8)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
-				, m_CopyMove5(NMib::fg_Move(_5))
-				, m_CopyMove6(NMib::fg_Move(_6))
-				, m_CopyMove7(NMib::fg_Move(_7))
-				, m_CopyMove8(NMib::fg_Move(_8))
-			{
-			}
-
-			CTestCopyMove(CCopyMove &&_0, CCopyMove &&_1, CCopyMove &&_2, CCopyMove &&_3, CCopyMove &&_4, CCopyMove &&_5, CCopyMove &&_6, CCopyMove &&_7, CCopyMove &&_8, CCopyMove &&_9)
-				: m_CopyMove0(NMib::fg_Move(_0))
-				, m_CopyMove1(NMib::fg_Move(_1))
-				, m_CopyMove2(NMib::fg_Move(_2))
-				, m_CopyMove3(NMib::fg_Move(_3))
-				, m_CopyMove4(NMib::fg_Move(_4))
-				, m_CopyMove5(NMib::fg_Move(_5))
-				, m_CopyMove6(NMib::fg_Move(_6))
-				, m_CopyMove7(NMib::fg_Move(_7))
-				, m_CopyMove8(NMib::fg_Move(_8))
-				, m_CopyMove9(NMib::fg_Move(_9))
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0)
-				: m_CopyMove0(_0)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1, CCopyMove const &_2)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1, CCopyMove const &_2, CCopyMove const &_3)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1, CCopyMove const &_2, CCopyMove const &_3, CCopyMove const &_4)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1, CCopyMove const &_2, CCopyMove const &_3, CCopyMove const &_4, CCopyMove const &_5)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-				, m_CopyMove5(_5)
-			{
-			}
-
-			CTestCopyMove(CCopyMove const &_0, CCopyMove const &_1, CCopyMove const &_2, CCopyMove const &_3, CCopyMove const &_4, CCopyMove const &_5, CCopyMove const &_6)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-				, m_CopyMove5(_5)
-				, m_CopyMove6(_6)
+			CTestCopyMove(CCopyMove &&_CopyMove0, CCopyMove &&_CopyMove1, CCopyMove &&_CopyMove2, CCopyMove &&_CopyMove3, CCopyMove &&_CopyMove4, CCopyMove &&_CopyMove5)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
+				, m_CopyMove5(NMib::fg_Move(_CopyMove5))
 			{
 			}
 
 			CTestCopyMove
 				(
-					CCopyMove const &_0
-					, CCopyMove const &_1
-					, CCopyMove const &_2
-					, CCopyMove const &_3
-					, CCopyMove const &_4
-					, CCopyMove const &_5
-					, CCopyMove const &_6
-					, CCopyMove const &_7
+					CCopyMove &&_CopyMove0
+					, CCopyMove &&_CopyMove1
+					, CCopyMove &&_CopyMove2
+					, CCopyMove &&_CopyMove3
+					, CCopyMove &&_CopyMove4
+					, CCopyMove &&_CopyMove5
+					, CCopyMove &&_CopyMove6
 				)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-				, m_CopyMove5(_5)
-				, m_CopyMove6(_6)
-				, m_CopyMove7(_7)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
+				, m_CopyMove5(NMib::fg_Move(_CopyMove5))
+				, m_CopyMove6(NMib::fg_Move(_CopyMove6))
 			{
 			}
 
 			CTestCopyMove
 				(
-					CCopyMove const &_0
-					, CCopyMove const &_1
-					, CCopyMove const &_2
-					, CCopyMove const &_3
-					, CCopyMove const &_4
-					, CCopyMove const &_5
-					, CCopyMove const &_6
-					, CCopyMove const &_7
-					, CCopyMove const &_8
+					CCopyMove &&_CopyMove0
+					, CCopyMove &&_CopyMove1
+					, CCopyMove &&_CopyMove2
+					, CCopyMove &&_CopyMove3
+					, CCopyMove &&_CopyMove4
+					, CCopyMove &&_CopyMove5
+					, CCopyMove &&_CopyMove6
+					, CCopyMove &&_CopyMove7
 				)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-				, m_CopyMove5(_5)
-				, m_CopyMove6(_6)
-				, m_CopyMove7(_7)
-				, m_CopyMove8(_8)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
+				, m_CopyMove5(NMib::fg_Move(_CopyMove5))
+				, m_CopyMove6(NMib::fg_Move(_CopyMove6))
+				, m_CopyMove7(NMib::fg_Move(_CopyMove7))
 			{
 			}
 
 			CTestCopyMove
 				(
-					CCopyMove const &_0
-					, CCopyMove const &_1
-					, CCopyMove const &_2
-					, CCopyMove const &_3
-					, CCopyMove const &_4
-					, CCopyMove const &_5
-					, CCopyMove const &_6
-					, CCopyMove const &_7
-					, CCopyMove const &_8
-					, CCopyMove const &_9
+					CCopyMove &&_CopyMove0
+					, CCopyMove &&_CopyMove1
+					, CCopyMove &&_CopyMove2
+					, CCopyMove &&_CopyMove3
+					, CCopyMove &&_CopyMove4
+					, CCopyMove &&_CopyMove5
+					, CCopyMove &&_CopyMove6
+					, CCopyMove &&_CopyMove7
+					, CCopyMove &&_CopyMove8
 				)
-				: m_CopyMove0(_0)
-				, m_CopyMove1(_1)
-				, m_CopyMove2(_2)
-				, m_CopyMove3(_3)
-				, m_CopyMove4(_4)
-				, m_CopyMove5(_5)
-				, m_CopyMove6(_6)
-				, m_CopyMove7(_7)
-				, m_CopyMove8(_8)
-				, m_CopyMove9(_9)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
+				, m_CopyMove5(NMib::fg_Move(_CopyMove5))
+				, m_CopyMove6(NMib::fg_Move(_CopyMove6))
+				, m_CopyMove7(NMib::fg_Move(_CopyMove7))
+				, m_CopyMove8(NMib::fg_Move(_CopyMove8))
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove &&_CopyMove0
+					, CCopyMove &&_CopyMove1
+					, CCopyMove &&_CopyMove2
+					, CCopyMove &&_CopyMove3
+					, CCopyMove &&_CopyMove4
+					, CCopyMove &&_CopyMove5
+					, CCopyMove &&_CopyMove6
+					, CCopyMove &&_CopyMove7
+					, CCopyMove &&_CopyMove8
+					, CCopyMove &&_CopyMove9
+				)
+				: m_CopyMove0(NMib::fg_Move(_CopyMove0))
+				, m_CopyMove1(NMib::fg_Move(_CopyMove1))
+				, m_CopyMove2(NMib::fg_Move(_CopyMove2))
+				, m_CopyMove3(NMib::fg_Move(_CopyMove3))
+				, m_CopyMove4(NMib::fg_Move(_CopyMove4))
+				, m_CopyMove5(NMib::fg_Move(_CopyMove5))
+				, m_CopyMove6(NMib::fg_Move(_CopyMove6))
+				, m_CopyMove7(NMib::fg_Move(_CopyMove7))
+				, m_CopyMove8(NMib::fg_Move(_CopyMove8))
+				, m_CopyMove9(NMib::fg_Move(_CopyMove9))
+			{
+			}
+
+			CTestCopyMove(CCopyMove const &_CopyMove0)
+				: m_CopyMove0(_CopyMove0)
+			{
+			}
+
+			CTestCopyMove(CCopyMove const &_CopyMove0, CCopyMove const &_CopyMove1)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+			{
+			}
+
+			CTestCopyMove(CCopyMove const &_CopyMove0, CCopyMove const &_CopyMove1, CCopyMove const &_CopyMove2)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+			{
+			}
+
+			CTestCopyMove(CCopyMove const &_CopyMove0, CCopyMove const &_CopyMove1, CCopyMove const &_CopyMove2, CCopyMove const &_CopyMove3)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+			{
+			}
+
+			CTestCopyMove(CCopyMove const &_CopyMove0, CCopyMove const &_CopyMove1, CCopyMove const &_CopyMove2, CCopyMove const &_CopyMove3, CCopyMove const &_CopyMove4)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove const &_CopyMove0
+					, CCopyMove const &_CopyMove1
+					, CCopyMove const &_CopyMove2
+					, CCopyMove const &_CopyMove3
+					, CCopyMove const &_CopyMove4
+					, CCopyMove const &_CopyMove5
+				)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+				, m_CopyMove5(_CopyMove5)
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove const &_CopyMove0
+					, CCopyMove const &_CopyMove1
+					, CCopyMove const &_CopyMove2
+					, CCopyMove const &_CopyMove3
+					, CCopyMove const &_CopyMove4
+					, CCopyMove const &_CopyMove5
+					, CCopyMove const &_CopyMove6
+				)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+				, m_CopyMove5(_CopyMove5)
+				, m_CopyMove6(_CopyMove6)
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove const &_CopyMove0
+					, CCopyMove const &_CopyMove1
+					, CCopyMove const &_CopyMove2
+					, CCopyMove const &_CopyMove3
+					, CCopyMove const &_CopyMove4
+					, CCopyMove const &_CopyMove5
+					, CCopyMove const &_CopyMove6
+					, CCopyMove const &_CopyMove7
+				)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+				, m_CopyMove5(_CopyMove5)
+				, m_CopyMove6(_CopyMove6)
+				, m_CopyMove7(_CopyMove7)
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove const &_CopyMove0
+					, CCopyMove const &_CopyMove1
+					, CCopyMove const &_CopyMove2
+					, CCopyMove const &_CopyMove3
+					, CCopyMove const &_CopyMove4
+					, CCopyMove const &_CopyMove5
+					, CCopyMove const &_CopyMove6
+					, CCopyMove const &_CopyMove7
+					, CCopyMove const &_CopyMove8
+				)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+				, m_CopyMove5(_CopyMove5)
+				, m_CopyMove6(_CopyMove6)
+				, m_CopyMove7(_CopyMove7)
+				, m_CopyMove8(_CopyMove8)
+			{
+			}
+
+			CTestCopyMove
+				(
+					CCopyMove const &_CopyMove0
+					, CCopyMove const &_CopyMove1
+					, CCopyMove const &_CopyMove2
+					, CCopyMove const &_CopyMove3
+					, CCopyMove const &_CopyMove4
+					, CCopyMove const &_CopyMove5
+					, CCopyMove const &_CopyMove6
+					, CCopyMove const &_CopyMove7
+					, CCopyMove const &_CopyMove8
+					, CCopyMove const &_CopyMove9
+				)
+				: m_CopyMove0(_CopyMove0)
+				, m_CopyMove1(_CopyMove1)
+				, m_CopyMove2(_CopyMove2)
+				, m_CopyMove3(_CopyMove3)
+				, m_CopyMove4(_CopyMove4)
+				, m_CopyMove5(_CopyMove5)
+				, m_CopyMove6(_CopyMove6)
+				, m_CopyMove7(_CopyMove7)
+				, m_CopyMove8(_CopyMove8)
+				, m_CopyMove9(_CopyMove9)
 			{
 			}
 		};

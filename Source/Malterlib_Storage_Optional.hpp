@@ -6,7 +6,7 @@
 namespace NMib::NStorage
 {
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
-	TCOptional<t_CType, t_MoveSemantics>::TCOptional(CNullPtr) noexcept
+	TCOptional<t_CType, t_MoveSemantics>::TCOptional(CNullPtr _pNull) noexcept
 	{
 	}
 
@@ -18,7 +18,7 @@ namespace NMib::NStorage
 
 	template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
 	template <typename tf_CType, typename ...tfp_CParams, umint ...tfp_Indidies>
-	TCOptional<t_CType, t_MoveSemantics>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
+	TCOptional<t_CType, t_MoveSemantics>::TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &_Indices)
 		: CVariant(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...)
 	{
 	}

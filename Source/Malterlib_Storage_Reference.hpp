@@ -13,26 +13,27 @@ namespace NMib::NStorage::NReference
 
 	template <typename t_CType>
 	template <typename ...tfp_CParams>
-	mark_artificial inline_always auto TCReference<t_CType>::operator () (tfp_CParams && ...p_Params) const volatile -> NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...)>
-		requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...)>)
+	mark_artificial inline_always auto TCReference<t_CType>::operator () (tfp_CParams && ...p_Params) const volatile
+		-> NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...p_Params)>
+		requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...p_Params)>)
 	{
 		return f_Get()(fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>
-		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (tf_CMemberPtr const &_MemberPtr) const volatile
+		-> NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>
+		requires (NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &f_Get());
 	}
 
 	template <typename t_CType>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCReference<t_CType>::operator ->* (tf_CMemberPtr const &_MemberPtr) const volatile
+		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>
+		requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 	{
 		return f_Get().*_MemberPtr;
 	}

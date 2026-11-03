@@ -28,17 +28,17 @@ namespace
 	using CVarA = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<COne, 0>>;
 	using CVarB = NMib::NStorage::TCStreamableVariant<int, NMib::NStorage::TCMember<CTwo, 0>>;
 
-	int operator * (CVarA const &_A, int _B)
+	int operator * (CVarA const &_Left, int _Right)
 	{
-		return _B;
+		return _Right;
 	}
 
-	int operator * (CVarB const &_A, int _B)
+	int operator * (CVarB const &_Left, int _Right)
 	{
-		return _B;
+		return _Right;
 	}
 
-	int operator * (CThree _A, CFour _B)
+	int operator * (CThree _Left, CFour _Right)
 	{
 		return 0;
 	}
@@ -47,7 +47,7 @@ namespace
 	{
 		struct CTestWithManyInit
 		{
-			CTestWithManyInit(int, fp32, fp64)
+			CTestWithManyInit(int _Int, fp32 _Fp32, fp64 _Fp64)
 			{
 			}
 		};
@@ -540,11 +540,11 @@ namespace
 
 					struct CUtil
 					{
-						static void fs_Do(char _V)
+						static void fs_Do(char _Value)
 						{
 						}
 
-						static void fs_Do(int const &_V)
+						static void fs_Do(int const &_Value)
 						{
 						}
 					};

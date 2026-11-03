@@ -21,7 +21,7 @@ namespace NMib::NStorage
 		using CVariant = NStorage::TCStreamableVariant<int8, NStorage::TCMember<void, int8(0)>, NStorage::TCMember<t_CType, int8(1)>>;
 
 		template <typename tf_CType, typename ...tfp_CParams, umint ...tfp_Indidies>
-		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &);
+		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &_Indices);
 
 		template <typename tf_CType, typename ...tfp_CParams>
 		TCOptional(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams);
@@ -87,12 +87,12 @@ namespace NMib::NStorage
 		;
 
 		TCOptional() noexcept = default;
-		TCOptional(CNullPtr) noexcept;
-		TCOptional(TCOptional const &) = default;
-		TCOptional(TCOptional &) = default;
+		TCOptional(CNullPtr _pNull) noexcept;
+		TCOptional(TCOptional const &_Other) = default;
+		TCOptional(TCOptional &_Other) = default;
 		TCOptional(TCOptional &&_Other);
-		TCOptional &operator = (TCOptional const &) = default;
-		TCOptional &operator = (TCOptional &) = default;
+		TCOptional &operator = (TCOptional const &_Other) = default;
+		TCOptional &operator = (TCOptional &_Other) = default;
 		TCOptional &operator = (TCOptional &&_Other);
 
 		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>

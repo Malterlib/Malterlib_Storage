@@ -23,8 +23,8 @@ namespace NMib::NStorage
 		};
 	}
 
-	template <typename t_CType, typename t_CAllocator>
-	void fg_Tag_UniquePointer(t_CType const volatile &_Type, t_CAllocator const volatile &_Allocator);
+	template <typename tf_CType, typename tf_CAllocator>
+	void fg_Tag_UniquePointer(tf_CType const volatile &_Type, tf_CAllocator const volatile &_Allocator);
 
 	namespace NPrivate
 	{
@@ -92,9 +92,9 @@ namespace NMib::NStorage
 			{
 			}
 
-			template <typename t_CParam0>
-			CData(t_CParam0 &&_Other)
-				: CAllocator(fg_Forward<t_CParam0>(_Other))
+			template <typename tf_CParam0>
+			CData(tf_CParam0 &&_Other)
+				: CAllocator(fg_Forward<tf_CParam0>(_Other))
 			{
 			}
 
@@ -120,7 +120,7 @@ namespace NMib::NStorage
 			return m_Data;
 		}
 
-		template <typename t_CDummy>
+		template <typename tf_CDummy>
 		void fp_Delete()
 		{
 			if (m_Data.m_pPointTo)
@@ -211,14 +211,14 @@ namespace NMib::NStorage
 			m_Data.m_pPointTo = _pPtr;
 		}
 
-		template <typename t_CParam0>
-		explicit TCUniquePointer(t_CType *_pPtr, t_CParam0 &&_Param0)
-			: m_Data(fg_Forward<t_CParam0>(_Param0))
+		template <typename tf_CParam0>
+		explicit TCUniquePointer(t_CType *_pPtr, tf_CParam0 &&_Param0)
+			: m_Data(fg_Forward<tf_CParam0>(_Param0))
 		{
 			m_Data.m_pPointTo = _pPtr;
 		}
 
-		TCUniquePointer(CNullPtr)
+		TCUniquePointer(CNullPtr _pNull)
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
@@ -240,16 +240,16 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, (t_CType *)m_Data.m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return ((t_CType *)m_Data.m_pPointTo)->*_MemberPtr;
 		}
@@ -285,7 +285,7 @@ namespace NMib::NStorage
 			return *this;
 		}
 
-		TCUniquePointer &operator = (CNullPtr)
+		TCUniquePointer &operator = (CNullPtr _pNull)
 		{
 			fp_Delete();
 			m_Data.m_pPointTo = nullptr;

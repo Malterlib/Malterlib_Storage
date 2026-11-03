@@ -150,16 +150,16 @@ namespace NMib::NStorage
 			return m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -169,16 +169,16 @@ namespace NMib::NStorage
 			return *m_pPointTo;
 		}
 
-		template <typename t_CType2>
-		bool operator == (t_CType2 const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (tf_CType2 const &_Other) const noexcept
 		{
 			return operator t_CType * () == (t_CType *)_Other;
 		}
 
-		template <typename t_CType2>
-		bool operator == (TCAutoClearPtr<t_CType2> const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (TCAutoClearPtr<tf_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType * () == _Other.operator t_CType2 * ();
+			return operator t_CType * () == _Other.operator tf_CType2 * ();
 		}
 
 	private:
@@ -246,16 +246,16 @@ namespace NMib::NStorage
 			return m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -265,16 +265,16 @@ namespace NMib::NStorage
 			return *m_pPointTo;
 		}
 
-		template <typename t_CType2>
-		bool operator == (t_CType2 const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (tf_CType2 const &_Other) const noexcept
 		{
 			return operator t_CType * () == (t_CType *)_Other;
 		}
 
-		template <typename t_CType2>
-		bool operator == (TCAutoClearPtrDebug<t_CType2> const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (TCAutoClearPtrDebug<tf_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType * () == _Other.operator t_CType2 * ();
+			return operator t_CType * () == _Other.operator tf_CType2 * ();
 		}
 
 	private:
@@ -348,16 +348,16 @@ namespace NMib::NStorage
 			return m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -367,16 +367,16 @@ namespace NMib::NStorage
 			return *m_pPointTo;
 		}
 
-		template <typename t_CType2>
-		bool operator == (t_CType2 const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (tf_CType2 const &_Other) const noexcept
 		{
 			return operator t_CType * () == (t_CType *)_Other;
 		}
 
-		template <typename t_CType2>
-		bool operator == (TCDebugPointer<t_CType2> const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (TCDebugPointer<tf_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType * () == _Other.operator t_CType2 * ();
+			return operator t_CType * () == _Other.operator tf_CType2 * ();
 		}
 
 	private:
@@ -433,16 +433,16 @@ namespace NMib::NStorage
 			return m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -452,16 +452,16 @@ namespace NMib::NStorage
 			return *m_pPointTo;
 		}
 
-		template <typename t_CType2>
-		bool operator == (t_CType2 const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (tf_CType2 const &_Other) const noexcept
 		{
 			return operator t_CType * () == (t_CType *)_Other;
 		}
 
-		template <typename t_CType2>
-		bool operator == (TCDebugPointer<t_CType2> const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (TCDebugPointer<tf_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType * () == _Other.operator t_CType2 * ();
+			return operator t_CType * () == _Other.operator tf_CType2 * ();
 		}
 
 	private:
@@ -538,16 +538,16 @@ namespace NMib::NStorage
 			return m_pPointTo;
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return m_pPointTo->*_MemberPtr;
 		}
@@ -557,16 +557,16 @@ namespace NMib::NStorage
 			return *m_pPointTo;
 		}
 
-		template <typename t_CType2>
-		bool operator == (t_CType2 const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (tf_CType2 const &_Other) const noexcept
 		{
 			return operator t_CType * () == (t_CType *)_Other;
 		}
 
-		template <typename t_CType2>
-		bool operator == (TCPointer<t_CType2> const &_Other) const noexcept
+		template <typename tf_CType2>
+		bool operator == (TCPointer<tf_CType2> const &_Other) const noexcept
 		{
-			return operator t_CType * () == _Other.operator t_CType2 * ();
+			return operator t_CType * () == _Other.operator tf_CType2 * ();
 		}
 
 	private:
@@ -747,9 +747,9 @@ namespace NMib::NStorage
 			{
 			}
 
-			template <typename t_CParam0>
-			TCSharedPointerData(t_CParam0 &&_Other)
-				: t_CAllocator(fg_Forward<t_CParam0>(_Other))
+			template <typename tf_CParam0>
+			TCSharedPointerData(tf_CParam0 &&_Other)
+				: t_CAllocator(fg_Forward<tf_CParam0>(_Other))
 			{
 			}
 
@@ -885,7 +885,7 @@ namespace NMib::NStorage
 			m_Data.m_pPointTo = _pPtr;
 		}
 
-		TCSharedPointer(NPrivate::CShareAsConstTag, CAllocator const &_Allocator, CInternalData *_pPointTo)
+		TCSharedPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo)
 			: m_Data(_Allocator)
 		{
 			fp_SetInit(_pPointTo);
@@ -1142,9 +1142,9 @@ namespace NMib::NStorage
 			fp_SetInit(_pPtr);
 		}
 
-		template <typename t_CParam0>
-		explicit TCSharedPointer(t_CType *_pPtr, t_CParam0 &&_Param0)
-			: m_Data(fg_Forward<t_CParam0>(_Param0))
+		template <typename tf_CParam0>
+		explicit TCSharedPointer(t_CType *_pPtr, tf_CParam0 &&_Param0)
+			: m_Data(fg_Forward<tf_CParam0>(_Param0))
 		{
 			fp_SetInit(_pPtr);
 		}
@@ -1175,7 +1175,7 @@ namespace NMib::NStorage
 			fp_SetConstruct(*_Other);
 		}
 
-		TCSharedPointer(CNullPtr)
+		TCSharedPointer(CNullPtr _pNull)
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
@@ -1212,16 +1212,16 @@ namespace NMib::NStorage
 			return NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo);
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<t_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
 			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo));
 		}
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const
-			-> TCEnableIf<NTraits::cIsMemberObjectPointer<t_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
+			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
 			return (NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo))->*_MemberPtr;
 		}
@@ -1231,7 +1231,7 @@ namespace NMib::NStorage
 			return *NPrivate::fg_GetSharedPointerPointer((CInternalData *)m_Data.m_pPointTo);
 		}
 
-		TCSharedPointer &operator = (CNullPtr)
+		TCSharedPointer &operator = (CNullPtr _pNull)
 		{
 			fp_Delete();
 			return *this;
@@ -1359,15 +1359,15 @@ namespace NMib::NStorage
 			o_Str += typename tf_CStr::CFormat("0x{}") << f_Get();
 		}
 
-		template <typename ...tf_CParams>
-		mark_artificial constexpr inline_always_debug auto operator () (tf_CParams && ...p_Params) const
+		template <typename ...tfp_CParams>
+		mark_artificial constexpr inline_always_debug auto operator () (tfp_CParams && ...p_Params) const
 			requires requires
 			{
-				(*(this->f_Get()))(fg_Forward<tf_CParams>(p_Params)...);
+				(*(this->f_Get()))(fg_Forward<tfp_CParams>(p_Params)...);
 			}
 		{
 			DMibFastCheck(!f_IsEmpty());
-			return (*f_Get())(fg_Forward<tf_CParams>(p_Params)...);
+			return (*f_Get())(fg_Forward<tfp_CParams>(p_Params)...);
 		}
 
 		template <typename tf_CType>
@@ -1478,7 +1478,7 @@ namespace NMib::NStorage
 			m_Data.m_pPointTo = _pPtr;
 		}
 
-		TCWeakPointer(NPrivate::CShareAsConstTag, CAllocator const &_Allocator, CInternalData *_pPointTo)
+		TCWeakPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo)
 			: m_Data(_Allocator)
 		{
 			fp_SetInit(_pPointTo);
@@ -1496,7 +1496,7 @@ namespace NMib::NStorage
 			return m_Data.m_pPointTo;
 		}
 
-		template <typename t_CDummy>
+		template <typename tf_CDummy>
 		bool fp_Delete()
 		{
 			bool bRet = false;
@@ -1608,9 +1608,9 @@ namespace NMib::NStorage
 			DIfRefCountDebugging(m_Data.m_pPointTo->m_RefCount.f_WeakInitial(m_Data.m_DebugRef););
 		}
 
-		template <typename t_CParam0>
-		explicit TCWeakPointer(t_CType *_pPtr, t_CParam0 &&_Param0)
-			: m_Data(fg_Forward<t_CParam0>(_Param0))
+		template <typename tf_CParam0>
+		explicit TCWeakPointer(t_CType *_pPtr, tf_CParam0 &&_Param0)
+			: m_Data(fg_Forward<tf_CParam0>(_Param0))
 		{
 			fp_SetInit(_pPtr);
 		}
@@ -1678,7 +1678,7 @@ namespace NMib::NStorage
 			_Other.f_Clear();
 		}
 
-		TCWeakPointer(CNullPtr)
+		TCWeakPointer(CNullPtr _pNull)
 		{
 			m_Data.m_pPointTo = nullptr;
 		}
@@ -1688,7 +1688,7 @@ namespace NMib::NStorage
 			return fp_Delete();
 		}
 
-		TCWeakPointer &operator = (CNullPtr)
+		TCWeakPointer &operator = (CNullPtr _pNull)
 		{
 			fp_Delete();
 			return *this;

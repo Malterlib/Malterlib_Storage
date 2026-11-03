@@ -14,7 +14,7 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CDummy>
+	template <typename tf_CDummy>
 	void TCIndirection<t_CType, t_CAllocator>::fp_Delete()
 	{
 		if (m_Data.m_pPointTo)
@@ -31,7 +31,7 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CDummy>
+	template <typename tf_CDummy>
 	void TCIndirection<t_CType, t_CAllocator>::fp_Create()
 	{
 		m_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator());
@@ -76,37 +76,37 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
-		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *>
-		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (tf_CMemberPtr const &_MemberPtr)
+		-> NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>
+		requires (NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr)
-		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (tf_CMemberPtr const &_MemberPtr)
+		-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>
+		requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
-		-> NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, NTraits::TCAddConst<t_CType> *>
-		requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (tf_CMemberPtr const &_MemberPtr) const
+		-> NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, NTraits::TCAddConst<t_CType> *>
+		requires (NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>)
 	{
 		return NFunction::fg_MemberFunctionFunctor(_MemberPtr, &(this->f_Get()));
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CMemberPtr>
-	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (t_CMemberPtr const &_MemberPtr) const
-		-> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>>
-		requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
+	template <typename tf_CMemberPtr>
+	mark_artificial mark_nodebug inline_always auto TCIndirection<t_CType, t_CAllocator>::operator ->* (tf_CMemberPtr const &_MemberPtr) const
+		-> NTraits::TCAddLValueReference<NTraits::TCAddConst<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
+		requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 	{
 		return (this->f_Get()).*_MemberPtr;
 	}
@@ -151,10 +151,10 @@ namespace NMib::NStorage::NIndirection
 	}
 
 	template <typename t_CType, typename t_CAllocator>
-	template <typename t_CParam0>
-	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (t_CParam0 &&_Param0)
+	template <typename tf_CParam0>
+	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (tf_CParam0 &&_Param0)
 	{
-		this->f_Get() = fg_Forward<t_CParam0>(_Param0);
+		this->f_Get() = fg_Forward<tf_CParam0>(_Param0);
 		return *this;
 	}
 

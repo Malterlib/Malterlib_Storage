@@ -8,17 +8,18 @@
 
 namespace NMib
 {
-	template <typename t_CVisitor, typename t_CToVisit0>
-	void fg_Visit(t_CVisitor &&_Visitor, t_CToVisit0 &&_ToVisit0) noexcept(noexcept(fg_Forward<t_CToVisit0>(_ToVisit0).f_Visit(fg_Forward<t_CVisitor>(_Visitor))))
+	template <typename tf_CVisitor, typename tf_CToVisit0>
+	void fg_Visit(tf_CVisitor &&_Visitor, tf_CToVisit0 &&_ToVisit0) noexcept(noexcept(fg_Forward<tf_CToVisit0>(_ToVisit0).f_Visit(fg_Forward<tf_CVisitor>(_Visitor))))
 	{
-		fg_Forward<t_CToVisit0>(_ToVisit0).f_Visit(fg_Forward<t_CVisitor>(_Visitor));
+		fg_Forward<tf_CToVisit0>(_ToVisit0).f_Visit(fg_Forward<tf_CVisitor>(_Visitor));
 	}
 
-	template <typename t_CReturn, typename t_CVisitor, typename t_CToVisit0>
-	auto fg_VisitRet(t_CVisitor &&_Visitor, t_CToVisit0 &&_ToVisit0) noexcept(noexcept(fg_Forward<t_CToVisit0>(_ToVisit0).template f_VisitRet<t_CReturn>(fg_Forward<t_CVisitor>(_Visitor))))
-		-> t_CReturn
+	template <typename tf_CReturn, typename tf_CVisitor, typename tf_CToVisit0>
+	auto fg_VisitRet(tf_CVisitor &&_Visitor, tf_CToVisit0 &&_ToVisit0)
+		noexcept(noexcept(fg_Forward<tf_CToVisit0>(_ToVisit0).template f_VisitRet<tf_CReturn>(fg_Forward<tf_CVisitor>(_Visitor))))
+		-> tf_CReturn
 	{
-		return fg_Forward<t_CToVisit0>(_ToVisit0).template f_VisitRet<t_CReturn>(fg_Forward<t_CVisitor>(_Visitor));
+		return fg_Forward<tf_CToVisit0>(_ToVisit0).template f_VisitRet<tf_CReturn>(fg_Forward<tf_CVisitor>(_Visitor));
 	}
 
 	template <typename t_CRet, typename t_CVisitor, typename t_CToVisit>
@@ -39,20 +40,20 @@ namespace NMib
 			{
 			}
 
-			template <typename t_CType>
-			t_CRet operator () (t_CType &&_Type) noexcept(noexcept(m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<t_CType>(_Type))))
+			template <typename tf_CType>
+			t_CRet operator () (tf_CType &&_Type) noexcept(noexcept(m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<tf_CType>(_Type))))
 			{
-				return m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<t_CType>(_Type));
+				return m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<tf_CType>(_Type));
 			}
 
 			t_CInnerVisitor m_Visitor;
 			t_CValue m_Value;
 		};
 
-		template <typename t_CType>
-		t_CRet operator () (t_CType &&_Value) noexcept(noexcept(fg_VisitRet<t_CRet>(TCValueVisitor<t_CVisitor, t_CType>(m_Visitor, _Value), fg_Forward<t_CToVisit>(m_ToVisit))))
+		template <typename tf_CType>
+		t_CRet operator () (tf_CType &&_Value) noexcept(noexcept(fg_VisitRet<t_CRet>(TCValueVisitor<t_CVisitor, tf_CType>(m_Visitor, _Value), fg_Forward<t_CToVisit>(m_ToVisit))))
 		{
-			TCValueVisitor<t_CVisitor, t_CType> Visitor(m_Visitor, _Value);
+			TCValueVisitor<t_CVisitor, tf_CType> Visitor(m_Visitor, _Value);
 
 			return fg_VisitRet<t_CRet>(Visitor, fg_Forward<t_CToVisit>(m_ToVisit));
 		}
@@ -79,20 +80,20 @@ namespace NMib
 			{
 			}
 
-			template <typename t_CType>
-			void operator () (t_CType &&_Type) noexcept(noexcept(m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<t_CType>(_Type))))
+			template <typename tf_CType>
+			void operator () (tf_CType &&_Type) noexcept(noexcept(m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<tf_CType>(_Type))))
 			{
-				m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<t_CType>(_Type));
+				m_Visitor(fg_Forward<t_CValue>(m_Value), fg_Forward<tf_CType>(_Type));
 			}
 
 			t_CInnerVisitor m_Visitor;
 			t_CValue m_Value;
 		};
 
-		template <typename t_CType>
-		void operator () (t_CType &&_Value) noexcept(noexcept(fg_Visit(TCValueVisitor<t_CVisitor, t_CType>(m_Visitor, _Value), fg_Forward<t_CToVisit>(m_ToVisit))))
+		template <typename tf_CType>
+		void operator () (tf_CType &&_Value) noexcept(noexcept(fg_Visit(TCValueVisitor<t_CVisitor, tf_CType>(m_Visitor, _Value), fg_Forward<t_CToVisit>(m_ToVisit))))
 		{
-			TCValueVisitor<t_CVisitor, t_CType> Visitor(m_Visitor, _Value);
+			TCValueVisitor<t_CVisitor, tf_CType> Visitor(m_Visitor, _Value);
 
 			fg_Visit(Visitor, fg_Forward<t_CToVisit>(m_ToVisit));
 		}
@@ -101,21 +102,21 @@ namespace NMib
 		t_CToVisit m_ToVisit;
 	};
 
-	template <typename t_CVisitor, typename t_CToVisit0, typename t_CToVisit1>
-	void fg_Visit(t_CVisitor &&_Visitor, t_CToVisit0 &&_ToVisit0, t_CToVisit1 &&_ToVisit1)
-		noexcept(noexcept(fg_Visit(TCInnerVisitor<void, t_CVisitor, t_CToVisit1>(_Visitor, _ToVisit1), _ToVisit0)))
+	template <typename tf_CVisitor, typename tf_CToVisit0, typename tf_CToVisit1>
+	void fg_Visit(tf_CVisitor &&_Visitor, tf_CToVisit0 &&_ToVisit0, tf_CToVisit1 &&_ToVisit1)
+		noexcept(noexcept(fg_Visit(TCInnerVisitor<void, tf_CVisitor, tf_CToVisit1>(_Visitor, _ToVisit1), _ToVisit0)))
 	{
-		TCInnerVisitor<void, t_CVisitor, t_CToVisit1> Visitor(_Visitor, _ToVisit1);
+		TCInnerVisitor<void, tf_CVisitor, tf_CToVisit1> Visitor(_Visitor, _ToVisit1);
 		fg_Visit(Visitor, _ToVisit0);
 	}
 
-	template <typename t_CRet, typename t_CVisitor, typename t_CToVisit0, typename t_CToVisit1>
-	auto fg_VisitRet(t_CVisitor &&_Visitor, t_CToVisit0 &&_ToVisit0, t_CToVisit1 &&_ToVisit1)
-		noexcept(noexcept(fg_VisitRet<t_CRet>(TCInnerVisitor<t_CRet, t_CVisitor, t_CToVisit1>(_Visitor, _ToVisit1), _ToVisit0)))
-		-> t_CRet
+	template <typename tf_CRet, typename tf_CVisitor, typename tf_CToVisit0, typename tf_CToVisit1>
+	auto fg_VisitRet(tf_CVisitor &&_Visitor, tf_CToVisit0 &&_ToVisit0, tf_CToVisit1 &&_ToVisit1)
+		noexcept(noexcept(fg_VisitRet<tf_CRet>(TCInnerVisitor<tf_CRet, tf_CVisitor, tf_CToVisit1>(_Visitor, _ToVisit1), _ToVisit0)))
+		-> tf_CRet
 	{
-		TCInnerVisitor<t_CRet, t_CVisitor, t_CToVisit1> Visitor(_Visitor, _ToVisit1);
-		return fg_VisitRet<t_CRet>(Visitor, _ToVisit0);
+		TCInnerVisitor<tf_CRet, tf_CVisitor, tf_CToVisit1> Visitor(_Visitor, _ToVisit1);
+		return fg_VisitRet<tf_CRet>(Visitor, _ToVisit0);
 	}
 }
 
@@ -182,7 +183,7 @@ namespace NMib::NStorage
 
 		struct CVariantVisitor_Destruct
 		{
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 			}
 
@@ -199,14 +200,14 @@ namespace NMib::NStorage
 			~CDummy() = delete;
 		};
 
-		template <typename t_CReturn>
-		function_does_not_return inline_never TCEnableIf<!NTraits::cIsVoid<t_CReturn>, t_CReturn &> fg_InvalidVariant()
+		template <typename tf_CReturn>
+		function_does_not_return inline_never TCEnableIf<!NTraits::cIsVoid<tf_CReturn>, tf_CReturn &> fg_InvalidVariant()
 		{
 			DMibError("Corrupt variant");
 		}
 
-		template <typename t_CReturn>
-		function_does_not_return inline_never TCEnableIf<NTraits::cIsVoid<t_CReturn>, void> fg_InvalidVariant()
+		template <typename tf_CReturn>
+		function_does_not_return inline_never TCEnableIf<NTraits::cIsVoid<tf_CReturn>, void> fg_InvalidVariant()
 		{
 			DMibError("Corrupt variant");
 		}
@@ -446,12 +447,12 @@ namespace NMib::NStorage
 		struct TCFirstConstructibleWith
 			<
 				t_CIndex
-				, t_CReturn (tp_FConstructorParams...)
+				, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
 				, NTraits::TCCompileTimeTrue<!NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 				, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 				, tp_CMembers...
 			>
-			: public TCFirstConstructibleWith<t_CIndex, t_CReturn (tp_FConstructorParams...), NTraits::CCompileTimeTrue, tp_CMembers...>
+			: public TCFirstConstructibleWith<t_CIndex, t_CReturn (tp_FConstructorParams ...p_ConstructorParams), NTraits::CCompileTimeTrue, tp_CMembers...>
 		{
 		};
 
@@ -459,7 +460,7 @@ namespace NMib::NStorage
 		struct TCFirstConstructibleWith
 		<
 			t_CIndex
-			, t_CReturn (tp_FConstructorParams...)
+			, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
 			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 			, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 			, tp_CMembers...
@@ -472,7 +473,7 @@ namespace NMib::NStorage
 		struct TCFirstConstructibleWith
 		<
 			t_CIndex
-			, t_CReturn (tp_FConstructorParams...)
+			, t_CReturn (tp_FConstructorParams ...p_ConstructorParams)
 			, NTraits::TCCompileTimeTrue<NTraits::cIsConstructibleWith<t_CType0, tp_FConstructorParams...>>
 			, TCVariantMember<t_CIndex, t_CType0, t_Member0>
 		>
@@ -665,190 +666,191 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitor
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAs<t_iMember>());
 			}
 		};
 
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitor<t_iMember, void>
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept
 			{
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static tf_CRet fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
 			{
-				return NPrivate::fg_InvalidVariant<t_CRet>();
+				return NPrivate::fg_InvalidVariant<tf_CRet>();
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				(fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static tf_CRet fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				return (fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 		};
 
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitorStorage
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>());
 			}
 		};
 
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitorStorage<t_iMember, void>
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept
 			{
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static tf_CRet fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
 			{
-				return NPrivate::fg_InvalidVariant<t_CRet>();
+				return NPrivate::fg_InvalidVariant<tf_CRet>();
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				(fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static t_CRet fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static tf_CRet fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor) noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				return (fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 		};
 
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitorSet
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
 			{
-				(fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
+				(fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept((fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
+				-> tf_CRet
 			{
-				return (fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
+				return (fg_Forward<tf_CVisitor>(_Visitor))((fg_Forward<tf_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>());
 			}
 		};
 
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitorSet<t_iMember, void>
 		{
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept(fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_Call(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept(fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()))
 			{
-				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
+				fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static t_CRet fs_CallRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static tf_CRet fs_CallRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
 			{
-				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
-				return NPrivate::fg_InvalidVariant<t_CRet>();
+				fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
+				return NPrivate::fg_InvalidVariant<tf_CRet>();
 			}
 
-			template <typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static void fs_CallFirst(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept(fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()) && noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
+			template <typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static void fs_CallFirst(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept(fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()) && noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
 			{
-				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
-				(fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
+				(fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 
-			template <typename t_CRet, typename t_CThis, typename t_CVisitor>
-			mark_artificial inline_small static auto fs_CallFirstRet(t_CThis &&_pThis, t_CVisitor &&_Visitor)
-				noexcept(noexcept(fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()) && noexcept((fg_Forward<t_CVisitor>(_Visitor))(CVoidTag())))
-				-> t_CRet
+			template <typename tf_CRet, typename tf_CThis, typename tf_CVisitor>
+			mark_artificial inline_small static auto fs_CallFirstRet(tf_CThis &&_pThis, tf_CVisitor &&_Visitor)
+				noexcept(noexcept(fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()) && noexcept((fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag())))
+				-> tf_CRet
 			{
-				fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
-				return (fg_Forward<t_CVisitor>(_Visitor))(CVoidTag());
+				fg_Forward<tf_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>();
+				return (fg_Forward<tf_CVisitor>(_Visitor))(CVoidTag());
 			}
 		};
 
@@ -888,75 +890,75 @@ namespace NMib::NStorage
 			}
 		};
 
-		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small auto fp_GetAs() -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
+		template <CIndexInteger tf_iMember>
+		mark_nodebug inline_small auto fp_GetAs() -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>, typename TCEvalReturnType<tf_iMember>::CType>
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CType = TCTypeFromMemberInt<tf_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
-			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+			using CReturnType = typename TCEvalReturnType<tf_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
 
-		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small auto fp_GetAs() const -> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
+		template <CIndexInteger tf_iMember>
+		mark_nodebug inline_small auto fp_GetAs() const -> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>, typename TCEvalReturnType<tf_iMember>::CType>
 		{
 		}
 
-		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small auto fp_GetAs() const -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>, typename TCEvalReturnTypeConst<t_iMember>::CType>
+		template <CIndexInteger tf_iMember>
+		mark_nodebug inline_small auto fp_GetAs() const -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnTypeConst<tf_iMember>::CType>, typename TCEvalReturnTypeConst<tf_iMember>::CType>
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CType = TCTypeFromMemberInt<tf_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
 			CConstructType const *pRet = (CConstructType const *)mp_Storage.m_Storage;
 
-			using CReturnType = typename TCEvalReturnTypeConst<t_iMember>::CType;
+			using CReturnType = typename TCEvalReturnTypeConst<tf_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
 
-		template <CIndexInteger t_iMember>
+		template <CIndexInteger tf_iMember>
 		mark_nodebug inline_small auto fp_GetAsStorage()
-			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>>
+			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>, NTraits::TCAddLValueReference<typename TCEvalConstructType<tf_iMember>::CType>>
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
 			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
 			return *pRet;
 		}
 
-		template <CIndexInteger t_iMember>
-		mark_nodebug inline_small auto fp_GetAsStorage() const -> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
+		template <CIndexInteger tf_iMember>
+		mark_nodebug inline_small auto fp_GetAsStorage() const -> TCEnableIf<NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>, typename TCEvalReturnType<tf_iMember>::CType>
 		{
 		}
 
-		template <CIndexInteger t_iMember>
+		template <CIndexInteger tf_iMember>
 		mark_nodebug inline_small auto fp_GetAsStorage() const
 			-> TCEnableIf
 			<
-				!NTraits::cIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>
-				, NTraits::TCAddLValueReference<NTraits::TCAddConst<typename TCEvalConstructType<t_iMember>::CType>>
+				!NTraits::cIsVoid<typename TCEvalReturnTypeConst<tf_iMember>::CType>
+				, NTraits::TCAddLValueReference<NTraits::TCAddConst<typename TCEvalConstructType<tf_iMember>::CType>>
 			>
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 
 			CConstructType const *pRet = (CConstructType const *)mp_Storage.m_Storage;
 			return *pRet;
 		}
 
-		template <typename t_CVisitor>
-		inline_always void fp_VisitStorage(t_CVisitor &&_Visitor)
+		template <typename tf_CVisitor>
+		inline_always void fp_VisitStorage(tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitorStorage<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitorStorage<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
 		{
 			auto TypeID = f_GetTypeID();
 
 			if (TypeID == mcp_Member0Typed)
 			{
-				TCCallVisitorStorage<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				TCCallVisitorStorage<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 				return;
 			}
 
@@ -974,7 +976,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								TCCallVisitorStorage<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor));
 								return true;
 							}
 							return false;
@@ -987,19 +989,19 @@ namespace NMib::NStorage
 		}
 
 	public:
-		template <typename t_CVisitor>
-		inline_always void f_Visit(t_CVisitor &&_Visitor)
+		template <typename tf_CVisitor>
+		inline_always void f_Visit(tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
 		{
 			auto TypeID = f_GetTypeID();
 
 			if (TypeID == mcp_Member0Typed)
 			{
-				TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 				return;
 			}
 
@@ -1017,7 +1019,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor));
 								return true;
 							}
 							return false;
@@ -1029,19 +1031,19 @@ namespace NMib::NStorage
 			DMibFastCheck(bFound);
 		}
 
-		template <typename t_CVisitor>
-		inline_always void f_Visit(t_CVisitor &&_Visitor) const
+		template <typename tf_CVisitor>
+		inline_always void f_Visit(tf_CVisitor &&_Visitor) const
 			noexcept
 			(
-				noexcept(TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
 		{
 			auto TypeID = f_GetTypeID();
 
 			if (TypeID == mcp_Member0Typed)
 			{
-				TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				TCCallVisitor<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 				return;
 			}
 
@@ -1059,7 +1061,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<t_CVisitor>(_Visitor));
+								TCCallVisitor<CIndexInteger(tp_Member)>::fs_Call(this, fg_Forward<tf_CVisitor>(_Visitor));
 								return true;
 							}
 							return false;
@@ -1071,21 +1073,21 @@ namespace NMib::NStorage
 			DMibFastCheck(bFound);
 		}
 
-		template <typename t_CReturn, typename t_CVisitor>
-		inline_always auto f_VisitRet(t_CVisitor &&_Visitor)
+		template <typename tf_CReturn, typename tf_CVisitor>
+		inline_always auto f_VisitRet(tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
-			-> t_CReturn
+			-> tf_CReturn
 		{
 			auto TypeID = f_GetTypeID();
 
 			if (TypeID == mcp_Member0Typed)
-				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor));
 
-			TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<tf_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
@@ -1113,7 +1115,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)));
 								return true;
 							}
 							return false;
@@ -1127,21 +1129,21 @@ namespace NMib::NStorage
 			return fg_Move(*Ret);
 		}
 
-		template <typename t_CReturn, typename t_CVisitor>
-		inline_always auto f_VisitRet(t_CVisitor &&_Visitor) const
+		template <typename tf_CReturn, typename tf_CVisitor>
+		inline_always auto f_VisitRet(tf_CVisitor &&_Visitor) const
 			noexcept
 			(
-				noexcept(TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
-			-> t_CReturn
+			-> tf_CReturn
 		{
 			auto TypeID = f_GetTypeID();
 
 			if (TypeID == mcp_Member0Typed)
-				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+				return TCCallVisitor<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor));
 
-			TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<tf_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
@@ -1169,7 +1171,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								Ret.f_Construct(TCCallVisitor<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)));
 								return true;
 							}
 							return false;
@@ -1183,16 +1185,16 @@ namespace NMib::NStorage
 			return fg_Move(*Ret);
 		}
 
-		template <typename t_CVisitor>
-		inline_always void f_VisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		template <typename tf_CVisitor>
+		inline_always void f_VisitCreate(t_CIndex const &_Index, tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
 		{
 			if (_Index == mcp_Member0Typed)
-				return TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				return TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 
 			auto TypeID = _Index;
 
@@ -1210,7 +1212,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 								return true;
 							}
 							return false;
@@ -1222,18 +1224,18 @@ namespace NMib::NStorage
 			DMibFastCheck(bFound);
 		}
 
-		template <typename t_CVisitor>
-		inline_always auto f_TryVisitCreate(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		template <typename tf_CVisitor>
+		inline_always auto f_TryVisitCreate(t_CIndex const &_Index, tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
 			-> bool
 		{
 			if (_Index == mcp_Member0Typed)
 			{
-				TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+				TCCallVisitorSet<mcp_Member0>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 				return true;
 			}
 
@@ -1249,7 +1251,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<t_CVisitor>(_Visitor));
+								TCCallVisitorSet<CIndexInteger(tp_Member)>::fs_CallFirst(this, fg_Forward<tf_CVisitor>(_Visitor));
 								return true;
 							}
 							return false;
@@ -1261,20 +1263,20 @@ namespace NMib::NStorage
 			return bFound;
 		}
 
-		template <typename t_CReturn, typename t_CVisitor>
-		inline_always auto f_VisitCreateReturn(t_CIndex const &_Index, t_CVisitor &&_Visitor)
+		template <typename tf_CReturn, typename tf_CVisitor>
+		inline_always auto f_VisitCreateReturn(t_CIndex const &_Index, tf_CVisitor &&_Visitor)
 			noexcept
 			(
-				noexcept(TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)))
-				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor))))
+				noexcept(TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)))
+				&& (true && ... && noexcept(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor))))
 			)
-			-> t_CReturn
+			-> tf_CReturn
 		{
 			if (_Index == mcp_Member0Typed)
-				return TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor));
+				return TCCallVisitorSet<mcp_Member0>::template fs_CallFirstRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor));
 
 			auto TypeID = _Index;
-			TCAggregateSimple<t_CReturn> Ret;
+			TCAggregateSimple<tf_CReturn> Ret;
 
 #if defined DMibContractConfigure_CheckEnabled
 			bool bFound = false;
@@ -1302,7 +1304,7 @@ namespace NMib::NStorage
 						{
 							if (tp_Member == TypeID)
 							{
-								Ret.f_Construct(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<t_CReturn>(this, fg_Forward<t_CVisitor>(_Visitor)));
+								Ret.f_Construct(TCCallVisitorSet<CIndexInteger(tp_Member)>::template fs_CallRet<tf_CReturn>(this, fg_Forward<tf_CVisitor>(_Visitor)));
 								return true;
 							}
 							return false;
@@ -1378,7 +1380,7 @@ namespace NMib::NStorage
 							NPrivate::TCFirstConstructibleWith
 							<
 								CIndexInteger
-								, void (t_CInType)
+								, void (t_CInType _Param)
 								, NTraits::CCompileTimeTrue
 								, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...
 							>::mc_Value
@@ -1429,100 +1431,100 @@ namespace NMib::NStorage
 
 		////////////////////////////////////////
 		//
-		template <CIndexInteger t_iMember>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set()
+		template <CIndexInteger tf_iMember>
+		typename TCEvalReturnType<tf_iMember>::CType fp_Set()
 		{
-			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>)
-				fp_SetTypeID(t_iMember);
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>)
+				fp_SetTypeID(tf_iMember);
 			else
 			{
-				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+				using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 
 				auto pRet = new(mp_Storage.m_Storage) CConstructType();
 
-				fp_SetTypeID(t_iMember);
-				using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
-				return TCEvalReturn<TCTypeFromMemberInt<t_iMember>>::template fs_Value<CReturnType>(pRet);
+				fp_SetTypeID(tf_iMember);
+				using CReturnType = typename TCEvalReturnType<tf_iMember>::CType;
+				return TCEvalReturn<TCTypeFromMemberInt<tf_iMember>>::template fs_Value<CReturnType>(pRet);
 			}
 		}
 
-		template <CIndexInteger t_iMember, typename t_CParam0>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0)
-			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&>)
+		template <CIndexInteger tf_iMember, typename tf_CParam0>
+		typename TCEvalReturnType<tf_iMember>::CType fp_Set(tf_CParam0 &&_Param0)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<tf_iMember>, tf_CParam0 &&>)
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CType = TCTypeFromMemberInt<tf_iMember>;
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 
 			CConstructType *pRet;
-			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<t_iMember>>)
+			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<tf_iMember>>)
 				pRet = new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
-				pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+				pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<tf_CParam0>(_Param0));
 
-			fp_SetTypeID(t_iMember);
-			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+			fp_SetTypeID(tf_iMember);
+			using CReturnType = typename TCEvalReturnType<tf_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
 
-		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
-		typename TCEvalReturnType<t_iMember>::CType fp_Set(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&, tp_CParams && ...>)
+		template <CIndexInteger tf_iMember, typename tf_CParam0, typename ...tfp_CParams>
+		typename TCEvalReturnType<tf_iMember>::CType fp_Set(tf_CParam0 &&_Param0, tfp_CParams && ...p_Params)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<tf_iMember>, tf_CParam0 &&, tfp_CParams && ...>)
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CType = TCTypeFromMemberInt<tf_iMember>;
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 
-			auto pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
-			fp_SetTypeID(t_iMember);
-			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
+			auto pRet = new(mp_Storage.m_Storage) CConstructType(fg_Forward<tf_CParam0>(_Param0), fg_Forward<tfp_CParams>(p_Params)...);
+			fp_SetTypeID(tf_iMember);
+			using CReturnType = typename TCEvalReturnType<tf_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
 		}
 
-		template <CIndexInteger t_iMember>
+		template <CIndexInteger tf_iMember>
 		void fp_SetNoRet()
 		{
-			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>)
-				fp_SetTypeID(t_iMember);
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<tf_iMember>::CType>)
+				fp_SetTypeID(tf_iMember);
 			else
 			{
-				using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+				using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 				new((void *)mp_Storage.m_Storage) CConstructType();
-				fp_SetTypeID(t_iMember);
+				fp_SetTypeID(tf_iMember);
 			}
 		}
 
-		template <CIndexInteger t_iMember, typename t_CParam0>
-		void fp_SetNoRet(t_CParam0 &&_Param0)
-			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&>)
+		template <CIndexInteger tf_iMember, typename tf_CParam0>
+		void fp_SetNoRet(tf_CParam0 &&_Param0)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<tf_iMember>, tf_CParam0 &&>)
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
-			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<t_iMember>>)
+			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<tf_iMember>>)
 				new(mp_Storage.m_Storage) CConstructType(&_Param0);
 			else
-				new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0));
+				new(mp_Storage.m_Storage) CConstructType(fg_Forward<tf_CParam0>(_Param0));
 
-			fp_SetTypeID(t_iMember);
+			fp_SetTypeID(tf_iMember);
 		}
 
-		template <CIndexInteger t_iMember, typename t_CParam0, typename ...tp_CParams>
-		void fp_SetNoRet(t_CParam0 &&_Param0, tp_CParams && ...p_Params)
-			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&, tp_CParams && ...>)
+		template <CIndexInteger tf_iMember, typename tf_CParam0, typename ...tfp_CParams>
+		void fp_SetNoRet(tf_CParam0 &&_Param0, tfp_CParams && ...p_Params)
+			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<tf_iMember>, tf_CParam0 &&, tfp_CParams && ...>)
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CConstructType = typename TCEvalConstructType<tf_iMember>::CType;
 
-			new(mp_Storage.m_Storage) CConstructType(fg_Forward<t_CParam0>(_Param0), fg_Forward<tp_CParams>(p_Params)...);
-			fp_SetTypeID(t_iMember);
+			new(mp_Storage.m_Storage) CConstructType(fg_Forward<tf_CParam0>(_Param0), fg_Forward<tfp_CParams>(p_Params)...);
+			fp_SetTypeID(tf_iMember);
 		}
 
 		template <typename tf_CType, typename ...tfp_CParams, umint ...tfp_Indidies>
-		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &)
+		void fp_AssignConstruct(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, NMeta::TCIndices<tfp_Indidies...> const &_Indices)
 			requires
 			(
-				TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value >= 0
+				TCEvalManyParamConstruction<void (tfp_CParams ...p_Params)>::mc_Value >= 0
 				&& mcp_FirstNothrowDefaultConstructible != -1
 				&& requires ()
 				{
-					this->fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...);
+					this->fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams ...p_Params)>::mc_Value>(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...);
 				}
 			)
 		{
@@ -1530,7 +1532,7 @@ namespace NMib::NStorage
 
 			try
 			{
-				fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams...)>::mc_Value>(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...);
+				fp_SetNoRet<TCEvalManyParamConstruction<void (tfp_CParams ...p_Params)>::mc_Value>(fg_Forward<tfp_CParams>(fg_Get<tfp_Indidies>(_CreateParams.m_Params))...);
 			}
 			catch (...)
 			{
@@ -1563,7 +1565,7 @@ namespace NMib::NStorage
 			{
 			}
 
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 				static constexpr CIndexInteger s_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
 
@@ -1571,10 +1573,10 @@ namespace NMib::NStorage
 				m_This.fp_SetNoRet<s_ToConstruct>();
 			}
 
-			template <typename t_CParam0>
-			void operator () (t_CParam0 &&_Param0)
+			template <typename tf_CParam0>
+			void operator () (tf_CParam0 &&_Param0)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<NTraits::TCAddRValueReference<t_CParam0>>::mc_Value;
+				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<NTraits::TCAddRValueReference<tf_CParam0>>::mc_Value;
 
 				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (move constructor)");
 				m_This.fp_SetNoRet<s_ToConstruct>(fg_Move(_Param0));
@@ -1589,7 +1591,7 @@ namespace NMib::NStorage
 			{
 			}
 
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 				static constexpr CIndexInteger s_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
 
@@ -1597,14 +1599,14 @@ namespace NMib::NStorage
 				m_This.fp_SetNoRet<s_ToConstruct>();
 			}
 
-			template <typename t_CParam0>
-			void operator () (t_CParam0 &&_Param0)
+			template <typename tf_CParam0>
+			void operator () (tf_CParam0 &&_Param0)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<t_CParam0>::mc_Value;
+				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<tf_CParam0>::mc_Value;
 
 				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (copy constructor)");
 
-				m_This.fp_SetNoRet<s_ToConstruct>(fg_Forward<t_CParam0>(_Param0));
+				m_This.fp_SetNoRet<s_ToConstruct>(fg_Forward<tf_CParam0>(_Param0));
 			}
 		};
 
@@ -1714,14 +1716,29 @@ namespace NMib::NStorage
 #endif
 		}
 
-		template <typename tf_CParam0, typename ...tfp_CParams, TCEnableIf<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value >= 0> * = nullptr>
+		template
+		<
+			typename tf_CParam0
+			, typename ...tfp_CParams
+			, TCEnableIf<TCEvalManyParamConstruction<void (tf_CParam0 &&_Param0, tfp_CParams ...p_RestOfParams)>::mc_Value >= 0> * = nullptr
+		>
 		TCVariantCommon(tf_CParam0 &&_Param0, tfp_CParams && ...p_RestOfParams)
 			requires requires ()
 			{
-				this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value>(fg_Forward<tf_CParam0>(_Param0), fg_Forward<tfp_CParams>(p_RestOfParams)...);
+				this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&_Param0, tfp_CParams ...p_RestOfParams)>::mc_Value>
+					(
+						fg_Forward<tf_CParam0>(_Param0)
+						, fg_Forward<tfp_CParams>(p_RestOfParams)...
+					)
+				;
 			}
 		{
-			this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&, tfp_CParams...)>::mc_Value>(fg_Forward<tf_CParam0>(_Param0), fg_Forward<tfp_CParams>(p_RestOfParams)...);
+			this->fp_SetNoRet<TCEvalManyParamConstruction<void (tf_CParam0 &&_Param0, tfp_CParams ...p_RestOfParams)>::mc_Value>
+				(
+					fg_Forward<tf_CParam0>(_Param0)
+					, fg_Forward<tfp_CParams>(p_RestOfParams)...
+				)
+			;
 #ifdef DDebugger_VisualStudio
 			TCVariantCommon::fp_ReferenceDebugInfo();
 #endif
@@ -1921,10 +1938,10 @@ namespace NMib::NStorage
 			return (t_CIndex)mp_Storage.m_CurrentType;
 		}
 
-		template <typename t_CType>
+		template <typename tf_CType>
 		inline_small bool f_IsOfType() const
 		{
-			return fp_GetTypeID() == TCMemberFromTypeInt<t_CType>::mc_Value;
+			return fp_GetTypeID() == TCMemberFromTypeInt<tf_CType>::mc_Value;
 		}
 
 		/***************************************************************************************************\
@@ -1933,38 +1950,38 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <t_CIndex t_iMember>
-		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Get()
+		template <t_CIndex tf_iMember>
+		typename TCEvalReturnType<CIndexInteger(tf_iMember)>::CType f_Get()
 		{
-			DMibFastCheck(f_GetTypeID() == t_iMember);
+			DMibFastCheck(f_GetTypeID() == tf_iMember);
 
-			return fp_GetAs<CIndexInteger(t_iMember)>();
+			return fp_GetAs<CIndexInteger(tf_iMember)>();
 		}
 
-		template <t_CIndex t_iMember>
-		typename TCEvalReturnTypeConst<CIndexInteger(t_iMember)>::CType f_Get() const
+		template <t_CIndex tf_iMember>
+		typename TCEvalReturnTypeConst<CIndexInteger(tf_iMember)>::CType f_Get() const
 		{
-			DMibFastCheck(f_GetTypeID() == t_iMember);
+			DMibFastCheck(f_GetTypeID() == tf_iMember);
 
-			return fp_GetAs<CIndexInteger(t_iMember)>();
+			return fp_GetAs<CIndexInteger(tf_iMember)>();
 		}
 
-		template <typename t_CType>
-		typename TCEvalReturnType<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_GetAsType()
-			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		template <typename tf_CType>
+		typename TCEvalReturnType<TCMemberFromTypeInt<tf_CType>::mc_Value>::CType f_GetAsType()
+			requires (TCMemberFromTypeInt<tf_CType>::mc_Value >= 0)
 		{
-			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<tf_CType>::mc_Value;
 
 			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
 			return fp_GetAs<c_ToGet>();
 		}
 
-		template <typename t_CType>
-		typename TCEvalReturnTypeConst<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_GetAsType() const
-			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		template <typename tf_CType>
+		typename TCEvalReturnTypeConst<TCMemberFromTypeInt<tf_CType>::mc_Value>::CType f_GetAsType() const
+			requires (TCMemberFromTypeInt<tf_CType>::mc_Value >= 0)
 		{
-			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<tf_CType>::mc_Value;
 
 			DMibFastCheck(fp_GetTypeID() == c_ToGet);
 
@@ -1977,29 +1994,29 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <t_CIndex t_iMember>
-		typename TCEvalTryGetReturnType<CIndexInteger(t_iMember)>::CType f_TryGet()
+		template <t_CIndex tf_iMember>
+		typename TCEvalTryGetReturnType<CIndexInteger(tf_iMember)>::CType f_TryGet()
 		{
-			if (f_GetTypeID() != t_iMember)
+			if (f_GetTypeID() != tf_iMember)
 				return nullptr;
 
-			return &fp_GetAs<CIndexInteger(t_iMember)>();
+			return &fp_GetAs<CIndexInteger(tf_iMember)>();
 		}
 
-		template <t_CIndex t_iMember>
-		typename TCEvalTryGetReturnTypeConst<CIndexInteger(t_iMember)>::CType f_TryGet() const
+		template <t_CIndex tf_iMember>
+		typename TCEvalTryGetReturnTypeConst<CIndexInteger(tf_iMember)>::CType f_TryGet() const
 		{
-			if (f_GetTypeID() != t_iMember)
+			if (f_GetTypeID() != tf_iMember)
 				return nullptr;
 
-			return &fp_GetAs<CIndexInteger(t_iMember)>();
+			return &fp_GetAs<CIndexInteger(tf_iMember)>();
 		}
 
-		template <typename t_CType>
-		typename TCEvalTryGetReturnType<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType()
-			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		template <typename tf_CType>
+		typename TCEvalTryGetReturnType<TCMemberFromTypeInt<tf_CType>::mc_Value>::CType f_TryGetAsType()
+			requires (TCMemberFromTypeInt<tf_CType>::mc_Value >= 0)
 		{
-			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<tf_CType>::mc_Value;
 
 			if (fp_GetTypeID() != c_ToGet)
 				return nullptr;
@@ -2007,11 +2024,11 @@ namespace NMib::NStorage
 			return &fp_GetAs<c_ToGet>();
 		}
 
-		template <typename t_CType>
-		typename TCEvalTryGetReturnTypeConst<TCMemberFromTypeInt<t_CType>::mc_Value>::CType f_TryGetAsType() const
-			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		template <typename tf_CType>
+		typename TCEvalTryGetReturnTypeConst<TCMemberFromTypeInt<tf_CType>::mc_Value>::CType f_TryGetAsType() const
+			requires (TCMemberFromTypeInt<tf_CType>::mc_Value >= 0)
 		{
-			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<t_CType>::mc_Value;
+			static constexpr CIndexInteger c_ToGet = TCMemberFromTypeInt<tf_CType>::mc_Value;
 
 			if (fp_GetTypeID() != c_ToGet)
 				return nullptr;
@@ -2025,30 +2042,30 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <t_CIndex t_iMember>
-		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Set()
+		template <t_CIndex tf_iMember>
+		typename TCEvalReturnType<CIndexInteger(tf_iMember)>::CType f_Set()
 			requires
 			(
 				(
-					NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>
-					|| NTraits::cIsNothrowDefaultConstructible<TCTypeFromMemberInt<t_iMember>>
+					NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(tf_iMember)>::CType>
+					|| NTraits::cIsNothrowDefaultConstructible<TCTypeFromMemberInt<tf_iMember>>
 					|| mcp_FirstNothrowDefaultConstructible != -1
 				)
 				&& requires ()
 				{
-					this->fp_Set<CIndexInteger(t_iMember)>();
+					this->fp_Set<CIndexInteger(tf_iMember)>();
 				}
 			)
 		{
 			fp_DestroyCurrent();
 
-			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType>)
-				return fp_Set<CIndexInteger(t_iMember)>();
+			if constexpr (NTraits::cIsVoid<typename TCEvalReturnType<CIndexInteger(tf_iMember)>::CType>)
+				return fp_Set<CIndexInteger(tf_iMember)>();
 			else
 			{
 				try
 				{
-					return fp_Set<CIndexInteger(t_iMember)>();
+					return fp_Set<CIndexInteger(tf_iMember)>();
 				}
 				catch (...)
 				{
@@ -2058,13 +2075,13 @@ namespace NMib::NStorage
 			}
 		}
 
-		template <t_CIndex t_iMember, typename ...tp_CParams>
-		typename TCEvalReturnType<CIndexInteger(t_iMember)>::CType f_Set(tp_CParams && ...p_Params)
+		template <t_CIndex tf_iMember, typename ...tfp_CParams>
+		typename TCEvalReturnType<CIndexInteger(tf_iMember)>::CType f_Set(tfp_CParams && ...p_Params)
 			requires
 			(
 				mcp_FirstNothrowDefaultConstructible != -1 && requires ()
 				{
-					this->fp_Set<CIndexInteger(t_iMember)>(fg_Forward<tp_CParams>(p_Params)...);
+					this->fp_Set<CIndexInteger(tf_iMember)>(fg_Forward<tfp_CParams>(p_Params)...);
 				}
 			)
 		{
@@ -2072,7 +2089,7 @@ namespace NMib::NStorage
 
 			try
 			{
-				return fp_Set<CIndexInteger(t_iMember)>(fg_Forward<tp_CParams>(p_Params)...);
+				return fp_Set<CIndexInteger(tf_iMember)>(fg_Forward<tfp_CParams>(p_Params)...);
 			}
 			catch (...)
 			{
@@ -2081,11 +2098,11 @@ namespace NMib::NStorage
 			}
 		}
 
-		template <typename t_CType, typename ...tp_CParams>
-		auto f_SetAsType(tp_CParams && ...p_Params) -> decltype(f_Set<t_CIndex(TCMemberFromTypeInt<t_CType>::mc_Value)>(fg_Forward<tp_CParams>(p_Params)...))
-			requires (TCMemberFromTypeInt<t_CType>::mc_Value >= 0)
+		template <typename tf_CType, typename ...tfp_CParams>
+		auto f_SetAsType(tfp_CParams && ...p_Params) -> decltype(f_Set<t_CIndex(TCMemberFromTypeInt<tf_CType>::mc_Value)>(fg_Forward<tfp_CParams>(p_Params)...))
+			requires (TCMemberFromTypeInt<tf_CType>::mc_Value >= 0)
 		{
-			return f_Set<t_CIndex(TCMemberFromTypeInt<t_CType>::mc_Value)>(fg_Forward<tp_CParams>(p_Params)...);
+			return f_Set<t_CIndex(TCMemberFromTypeInt<tf_CType>::mc_Value)>(fg_Forward<tfp_CParams>(p_Params)...);
 		}
 
 		// Formatting
@@ -2281,14 +2298,14 @@ namespace NMib::NStorage
 		|___________________________________________________________________________________________________|
 		\***************************************************************************************************/
 
-		template <typename t_CParam>
-		inline_small TCVariant &operator = (t_CParam &&_Param)
+		template <typename tf_CParam>
+		inline_small TCVariant &operator = (tf_CParam &&_Param)
 			requires requires ()
 			{
-				this->CParent::operator = (fg_Forward<t_CParam>(_Param));
+				this->CParent::operator = (fg_Forward<tf_CParam>(_Param));
 			}
 		{
-			this->CParent::operator = (fg_Forward<t_CParam>(_Param));
+			this->CParent::operator = (fg_Forward<tf_CParam>(_Param));
 			return *this;
 		}
 	};
@@ -2312,14 +2329,14 @@ namespace NMib::NStream
 			{
 			}
 
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 			}
 
-			template <typename t_CType>
-			void operator () (t_CType &&_Data)
+			template <typename tf_CType>
+			void operator () (tf_CType &&_Data)
 			{
-				m_Stream << fg_Forward<t_CType>(_Data);
+				m_Stream << fg_Forward<tf_CType>(_Data);
 			}
 
 			t_CStream &m_Stream;
@@ -2333,12 +2350,12 @@ namespace NMib::NStream
 			{
 			}
 
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 			}
 
-			template <typename t_CType>
-			void operator () (t_CType &&_Data)
+			template <typename tf_CType>
+			void operator () (tf_CType &&_Data)
 			{
 				m_Stream << fg_Move(_Data);
 			}
@@ -2354,14 +2371,14 @@ namespace NMib::NStream
 			{
 			}
 
-			void operator () (CVoidTag)
+			void operator () (CVoidTag _Tag)
 			{
 			}
 
-			template <typename t_CType>
-			void operator () (t_CType &&_Data)
+			template <typename tf_CType>
+			void operator () (tf_CType &&_Data)
 			{
-				m_Stream >> fg_Forward<t_CType>(_Data);
+				m_Stream >> fg_Forward<tf_CType>(_Data);
 			}
 
 			t_CStream &m_Stream;

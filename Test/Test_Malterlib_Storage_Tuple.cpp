@@ -12,7 +12,7 @@ namespace
 	{
 		struct CTestWithManyInit
 		{
-			CTestWithManyInit(int, fp32, fp64)
+			CTestWithManyInit(int _Int, fp32 _Fp32, fp64 _Fp64)
 			{
 			}
 		};
@@ -68,15 +68,15 @@ namespace
 
 		struct CNonCopyableEmpty
 		{
-			CNonCopyableEmpty(CNonCopyableEmpty const &) = delete;
-			CNonCopyableEmpty &operator = (CNonCopyableEmpty const &) = delete;
+			CNonCopyableEmpty(CNonCopyableEmpty const &_Other) = delete;
+			CNonCopyableEmpty &operator = (CNonCopyableEmpty const &_Other) = delete;
 			CNonCopyableEmpty() = default;
 		};
 
 		struct CNonCopyable
 		{
-			CNonCopyable(CNonCopyable const &) = delete;
-			CNonCopyable &operator = (CNonCopyable const &) = delete;
+			CNonCopyable(CNonCopyable const &_Other) = delete;
+			CNonCopyable &operator = (CNonCopyable const &_Other) = delete;
 			CNonCopyable() = default;
 
 		private:
@@ -101,8 +101,8 @@ namespace
 
 		struct CMovableOnly
 		{
-			CMovableOnly(CMovableOnly const &) = delete;
-			CMovableOnly &operator = (CMovableOnly const &) = delete;
+			CMovableOnly(CMovableOnly const &_Other) = delete;
+			CMovableOnly &operator = (CMovableOnly const &_Other) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnly()
@@ -118,8 +118,8 @@ namespace
 
 		struct CMovableOnlyExcept
 		{
-			CMovableOnlyExcept(CMovableOnlyExcept const &) = delete;
-			CMovableOnlyExcept &operator = (CMovableOnlyExcept const &) = delete;
+			CMovableOnlyExcept(CMovableOnlyExcept const &_Other) = delete;
+			CMovableOnlyExcept &operator = (CMovableOnlyExcept const &_Other) = delete;
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
 			CMovableOnlyExcept()
@@ -135,8 +135,8 @@ namespace
 
 		struct CMovableAssignOnly
 		{
-			CMovableAssignOnly(CMovableAssignOnly const &);
-			CMovableAssignOnly &operator = (CMovableAssignOnly const &);
+			CMovableAssignOnly(CMovableAssignOnly const &_Other);
+			CMovableAssignOnly &operator = (CMovableAssignOnly const &_Other);
 
 		public:
 			zint32 m_Moved;
@@ -155,8 +155,8 @@ namespace
 
 		struct CMovableAssignOnlyExcept
 		{
-			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &) = delete;
-			CMovableAssignOnlyExcept &operator = (CMovableAssignOnlyExcept const &) = delete;
+			CMovableAssignOnlyExcept(CMovableAssignOnlyExcept const &_Other) = delete;
+			CMovableAssignOnlyExcept &operator = (CMovableAssignOnlyExcept const &_Other) = delete;
 
 			zint32 m_Moved;
 			zint32 m_MovedFrom;
@@ -174,8 +174,8 @@ namespace
 
 		struct CMovableOnlyEmpty
 		{
-			CMovableOnlyEmpty(CMovableOnlyEmpty const &) = delete;
-			CMovableOnlyEmpty &operator = (CMovableOnlyEmpty const &) = delete;
+			CMovableOnlyEmpty(CMovableOnlyEmpty const &_Other) = delete;
+			CMovableOnlyEmpty &operator = (CMovableOnlyEmpty const &_Other) = delete;
 			CMovableOnlyEmpty()
 			{
 			}
@@ -188,8 +188,8 @@ namespace
 
 		struct CMovableOnlyEmptyExcept
 		{
-			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept const &) = delete;
-			CMovableOnlyEmptyExcept &operator = (CMovableOnlyEmptyExcept const &) = delete;
+			CMovableOnlyEmptyExcept(CMovableOnlyEmptyExcept const &_Other) = delete;
+			CMovableOnlyEmptyExcept &operator = (CMovableOnlyEmptyExcept const &_Other) = delete;
 
 			CMovableOnlyEmptyExcept()
 			{
@@ -203,8 +203,8 @@ namespace
 
 		struct CMovableAssignOnlyEmpty
 		{
-			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &) = delete;
-			CMovableAssignOnlyEmpty &operator = (CMovableAssignOnlyEmpty const &) = delete;
+			CMovableAssignOnlyEmpty(CMovableAssignOnlyEmpty const &_Other) = delete;
+			CMovableAssignOnlyEmpty &operator = (CMovableAssignOnlyEmpty const &_Other) = delete;
 
 			CMovableAssignOnlyEmpty()
 			{
@@ -219,8 +219,8 @@ namespace
 
 		struct CMovableAssignOnlyEmptyExcept
 		{
-			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &) = delete;
-			CMovableAssignOnlyEmptyExcept &operator = (CMovableAssignOnlyEmptyExcept const &) = delete;
+			CMovableAssignOnlyEmptyExcept(CMovableAssignOnlyEmptyExcept const &_Other) = delete;
+			CMovableAssignOnlyEmptyExcept &operator = (CMovableAssignOnlyEmptyExcept const &_Other) = delete;
 			CMovableAssignOnlyEmptyExcept()
 			{
 			}

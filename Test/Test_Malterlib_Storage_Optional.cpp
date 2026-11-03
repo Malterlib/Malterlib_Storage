@@ -17,8 +17,8 @@ namespace
 		{
 		}
 
-		CValue(CValue const &) = default;
-		CValue &operator = (CValue const &) = default;
+		CValue(CValue const &_Other) = default;
+		CValue &operator = (CValue const &_Other) = default;
 
 		CValue(CValue &&_Other)
 			: m_Value(_Other.m_Value)
@@ -51,7 +51,7 @@ namespace
 		{
 		}
 
-		COptionalOwner(COptionalOwner &&) = default;
+		COptionalOwner(COptionalOwner &&_Other) = default;
 
 		~COptionalOwner()
 		{

@@ -126,10 +126,10 @@ namespace NMib
 
 namespace NMib::NStorage
 {
-	template <typename ...tp_CTypes>
-	constexpr inline_always TCTuple<tp_CTypes & ...> fg_TupleReferences(tp_CTypes & ...p_Params) noexcept
+	template <typename ...tfp_CTypes>
+	constexpr inline_always TCTuple<tfp_CTypes & ...> fg_TupleReferences(tfp_CTypes & ...p_Params) noexcept
 	{
-		return TCTuple<tp_CTypes & ...>(p_Params...);
+		return TCTuple<tfp_CTypes & ...>(p_Params...);
 	}
 
 	template <typename ...tfp_CParams>
@@ -174,8 +174,8 @@ namespace NMib::NStorage
 			(
 				tf_FFunctor &&_fFunctor
 				, tf_CTuple &&_Tuple
-				, NMeta::TCTypeList<tfp_CTypes...> const &
-				, NMeta::TCIndices<tfp_Indices...> const &
+				, NMeta::TCTypeList<tfp_CTypes...> const &_TypeList
+				, NMeta::TCIndices<tfp_Indices...> const &_Indices
 			)
 		{
 			return fg_Forward<tf_FFunctor>(_fFunctor)(fg_Forward<tfp_CTypes>(fg_Get<tfp_Indices>(_Tuple))...);

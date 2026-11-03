@@ -39,23 +39,23 @@ namespace NMib::NStorage::NReference
 
 	public:
 		template <typename ...tfp_CParams>
-		mark_artificial inline_always NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...)> operator () (tfp_CParams && ...p_Params) const volatile
-			requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...)>)
+		mark_artificial inline_always NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...p_Params)> operator () (tfp_CParams && ...p_Params) const volatile
+			requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...p_Params)>)
 		;
 
 		///
 		/// Member access
 		/// =============
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always NFunction::TCMemberFunctionBoundFunctor<t_CMemberPtr, t_CType *> operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-			requires (NTraits::cIsMemberFunctionPointer<t_CMemberPtr>)
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *> operator ->* (tf_CMemberPtr const &_MemberPtr) const volatile
+			requires (NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>)
 		;
 
-		template <typename t_CMemberPtr>
-		mark_artificial mark_nodebug inline_always auto operator ->* (t_CMemberPtr const &_MemberPtr) const volatile
-			-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<t_CMemberPtr>>
-			requires (NTraits::cIsMemberObjectPointer<t_CMemberPtr>)
+		template <typename tf_CMemberPtr>
+		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const volatile
+			-> NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>
+			requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 		;
 
 	private:
@@ -139,28 +139,28 @@ namespace NMib
 	|___________________________________________________________________________________________________|
 	\***************************************************************************************************/
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(t_CType &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(tf_CType &_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(t_CType const &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(tf_CType const &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(t_CType volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(tf_CType volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(t_CType const volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(tf_CType const volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(_Type);
 	}
 
 	/***************************************************************************************************\
@@ -169,124 +169,124 @@ namespace NMib
 	|___________________________________________________________________________________________________|
 	\***************************************************************************************************/
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(NStorage::TCReference<t_CType> &&_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(NStorage::TCReference<tf_CType> &&_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(NStorage::TCReference<t_CType> &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(NStorage::TCReference<tf_CType> &_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(NStorage::TCReference<t_CType> const &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(NStorage::TCReference<tf_CType> const &_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(NStorage::TCReference<t_CType> volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(NStorage::TCReference<tf_CType> volatile &_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<t_CType> fg_Reference(NStorage::TCReference<t_CType> const volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<tf_CType> fg_Reference(NStorage::TCReference<tf_CType> const volatile &_Type)
 	{
-		return NStorage::TCReference<t_CType>(_Type);
+		return NStorage::TCReference<tf_CType>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(NStorage::TCReference<t_CType> &&_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(NStorage::TCReference<tf_CType> &&_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(fg_Move(_Type));
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(fg_Move(_Type));
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(NStorage::TCReference<t_CType> &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(NStorage::TCReference<tf_CType> &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(NStorage::TCReference<t_CType> const &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(NStorage::TCReference<tf_CType> const &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(NStorage::TCReference<t_CType> volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(NStorage::TCReference<tf_CType> volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConst<t_CType>> fg_ConstReference(NStorage::TCReference<t_CType> const volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConst<tf_CType>> fg_ConstReference(NStorage::TCReference<tf_CType> const volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConst<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConst<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(NStorage::TCReference<t_CType> &&_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(NStorage::TCReference<tf_CType> &&_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(fg_Move(_Type));
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(fg_Move(_Type));
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(NStorage::TCReference<t_CType> &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(NStorage::TCReference<tf_CType> &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(NStorage::TCReference<t_CType> const &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(NStorage::TCReference<tf_CType> const &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(NStorage::TCReference<t_CType> volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(NStorage::TCReference<tf_CType> volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddVolatile<t_CType>> fg_VolatileReference(NStorage::TCReference<t_CType> const volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>> fg_VolatileReference(NStorage::TCReference<tf_CType> const volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(NStorage::TCReference<t_CType> &&_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(NStorage::TCReference<tf_CType> &&_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(fg_Move(_Type));
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(fg_Move(_Type));
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(NStorage::TCReference<t_CType> &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(NStorage::TCReference<tf_CType> &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(NStorage::TCReference<t_CType> const &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(NStorage::TCReference<tf_CType> const &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(NStorage::TCReference<t_CType> volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(NStorage::TCReference<tf_CType> volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(_Type);
 	}
 
-	template <typename t_CType>
-	NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>> fg_ConstVolatileReference(NStorage::TCReference<t_CType> const volatile &_Type)
+	template <typename tf_CType>
+	NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>> fg_ConstVolatileReference(NStorage::TCReference<tf_CType> const volatile &_Type)
 	{
-		return NStorage::TCReference<NTraits::TCAddConstVolatile<t_CType>>(_Type);
+		return NStorage::TCReference<NTraits::TCAddConstVolatile<tf_CType>>(_Type);
 	}
 }
 
