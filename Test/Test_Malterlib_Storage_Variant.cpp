@@ -54,12 +54,12 @@ namespace
 
 		enum EStreamID
 		{
-			EStreamID_void
+			EStreamID_Void
 			, EStreamID_Vector
-			, EStreamID_fp32
-			, EStreamID_fp64
-			, EStreamID_int32
-			, EStreamID_int64
+			, EStreamID_fp32  // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
+			, EStreamID_fp64  // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
+			, EStreamID_int32 // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
+			, EStreamID_int64 // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
 		};
 
 		struct CTest0
@@ -216,7 +216,7 @@ namespace
 
 				CManyVariantStreamable ManyVariantStream = Test2;
 
-				NMib::NStream::CBinaryStreamMemory<> Stream;
+				NMib::NStream::TCBinaryStreamMemory<> Stream;
 				Stream << ManyVariantStream;
 				Stream.f_SetPosition(0);
 

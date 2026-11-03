@@ -543,6 +543,7 @@ namespace NMib::NStorage
 		static_assert(NPrivate::TCAllAreUniqueIndex<t_CIndex, tp_Member...>::mc_Value);
 
 		template <CIndexInteger t_iMember>
+		// NOLINTNEXTLINE(malterlib-type-naming): the type of a member, which can be an enum
 		using TCTypeFromMemberInt = typename NPrivate::TCGetMemberByIndex<CIndexInteger, t_iMember, TCVariantMember<CIndexInteger, tp_CTypes, CIndexInteger(tp_Member)>...>::CType;
 
 		template <typename t_CType>
@@ -562,7 +563,8 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		struct TCEvalConstructType
 		{
-			using CMemberType = TCTypeFromMemberInt<t_iMember>;
+			using CMemberType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			// NOLINTNEXTLINE(malterlib-type-naming): the type of a member, which can be an enum
 			using CType = TCConditional<NTraits::cIsReference<CMemberType>, NTraits::TCAddPointer<NTraits::TCRemoveReference<CMemberType>>, NTraits::TCRemoveQualifiers<CMemberType>>;
 		};
 
@@ -629,14 +631,14 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		struct TCEvalReturnType
 		{
-			using CMemberType = TCTypeFromMemberInt<t_iMember>;
+			using CMemberType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 			using CType = TCConditional<NTraits::cIsRValueReference<CMemberType>, NTraits::TCAddRValueReference<CMemberType>, NTraits::TCAddLValueReference<CMemberType>>;
 		};
 
 		template <CIndexInteger t_iMember>
 		struct TCEvalReturnTypeConst
 		{
-			using CMemberType = TCTypeFromMemberInt<t_iMember>;
+			using CMemberType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 			using CType = TCConditional
 				<
 					NTraits::cIsRValueReference<CMemberType>
@@ -889,8 +891,8 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		mark_nodebug inline_small auto fp_GetAs() -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, typename TCEvalReturnType<t_iMember>::CType>
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
 			using CReturnType = typename TCEvalReturnType<t_iMember>::CType;
 			return TCEvalReturn<CType>::template fs_Value<CReturnType>(pRet);
@@ -904,8 +906,8 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		mark_nodebug inline_small auto fp_GetAs() const -> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnTypeConst<t_iMember>::CType>, typename TCEvalReturnTypeConst<t_iMember>::CType>
 		{
-			using CType = TCTypeFromMemberInt<t_iMember>;
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CType = TCTypeFromMemberInt<t_iMember>; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
 			CConstructType const *pRet = (CConstructType const *)mp_Storage.m_Storage;
 
@@ -917,7 +919,7 @@ namespace NMib::NStorage
 		mark_nodebug inline_small auto fp_GetAsStorage()
 			-> TCEnableIf<!NTraits::cIsVoid<typename TCEvalReturnType<t_iMember>::CType>, NTraits::TCAddLValueReference<typename TCEvalConstructType<t_iMember>::CType>>
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
 			CConstructType *pRet = (CConstructType *)mp_Storage.m_Storage;
 			return *pRet;
@@ -1492,7 +1494,7 @@ namespace NMib::NStorage
 		void fp_SetNoRet(t_CParam0 &&_Param0)
 			requires (NTraits::cIsConstructibleWith<TCTypeFromMemberInt<t_iMember>, t_CParam0 &&>)
 		{
-			using CConstructType = typename TCEvalConstructType<t_iMember>::CType;
+			using CConstructType = typename TCEvalConstructType<t_iMember>::CType; // NOLINT(malterlib-type-naming): the type of a member, which can be an enum
 
 			if constexpr (NTraits::cIsReference<TCTypeFromMemberInt<t_iMember>>)
 				new(mp_Storage.m_Storage) CConstructType(&_Param0);

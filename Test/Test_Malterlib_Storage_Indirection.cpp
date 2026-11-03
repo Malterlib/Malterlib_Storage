@@ -145,7 +145,7 @@ namespace
 
 			CCCCC TestInt;
 			TestInt.TestInt = 50;
-			NStream::CBinaryStreamMemory<> Stream;
+			NStream::TCBinaryStreamMemory<> Stream;
 			Stream << StreamTest;
 			uint32 Temp = TestInt.TestInt;
 			Stream << Temp;
