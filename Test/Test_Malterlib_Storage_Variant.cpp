@@ -43,12 +43,10 @@ namespace
 		return 0;
 	}
 
-	class CVariant_Tests : public NMib::NTest::CTest
+	struct CVariant_Tests : public NMib::NTest::CTest
 	{
-	public:
-		class CTestWithManyInit
+		struct CTestWithManyInit
 		{
-		public:
 			CTestWithManyInit(int, fp32, fp64)
 			{
 			}

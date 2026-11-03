@@ -10,13 +10,11 @@ namespace
 	using namespace NMib::NStorage;
 	namespace
 	{
-		class CTestClass
+		struct CTestClass
 		{
-		public:
-			class CTestUndefined;
-			class CTestDefined
+			struct CTestUndefined;
+			struct CTestDefined
 			{
-			public:
 				int m_Data;
 				void operator () ()
 				{
@@ -51,9 +49,8 @@ namespace
 			TCIndirection<CTestDefined> m_Defined;
 		};
 
-		class CIndirection_Tests : public NTest::CTest
+		struct CIndirection_Tests : public NTest::CTest
 		{
-		public:
 			void f_DoDefinedTests(CTestClass &_Indirection);
 			void f_DoTests()
 			{
@@ -62,9 +59,8 @@ namespace
 			}
 		};
 
-		class CTestClass::CTestUndefined
+		struct CTestClass::CTestUndefined
 		{
-		public:
 			int m_Data;
 			void operator () ()
 			{

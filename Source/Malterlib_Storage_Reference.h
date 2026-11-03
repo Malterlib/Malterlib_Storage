@@ -8,7 +8,7 @@
 namespace NMib::NStorage::NReference
 {
 	template <typename t_CType>
-	class TCReference;
+	struct TCReference;
 }
 
 #include "Private/Malterlib_Storage_Reference_Traits.h"
@@ -24,7 +24,7 @@ namespace NMib::NStorage
 namespace NMib::NStorage::NReference
 {
 	template <typename t_CType>
-	class TCReference
+	struct TCReference
 	{
 	protected:
 		struct CData

@@ -62,9 +62,10 @@ namespace NMib::NStorage
 	}
 
 	template <typename t_CType, typename ...tp_COptions>
-	class TCUniquePointer
+	struct TCUniquePointer
 	{
-		template <typename t_CType2, typename ...tp_COptions2> friend class TCUniquePointer;
+	private:
+		template <typename t_CType2, typename ...tp_COptions2> friend struct TCUniquePointer;
 
 		using CParsedOptions = NPrivate::TCParseUniquePointerOptions<void, tp_COptions...>;
 
@@ -75,16 +76,6 @@ namespace NMib::NStorage
 	private:
 		struct CData : public CAllocator
 		{
-		private:
-			CData(CData const &_Other)
-			{
-			}
-
-			CData(CData &&_Other)
-			{
-			}
-
-		public:
 			t_CType *m_pPointTo;
 
 			CData()
@@ -104,6 +95,15 @@ namespace NMib::NStorage
 			template <typename t_CParam0>
 			CData(t_CParam0 &&_Other)
 				: CAllocator(fg_Forward<t_CParam0>(_Other))
+			{
+			}
+
+		private:
+			CData(CData const &_Other)
+			{
+			}
+
+			CData(CData &&_Other)
 			{
 			}
 		};

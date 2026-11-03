@@ -5,12 +5,12 @@
 
 namespace NMib
 {
-	class CSystem;
-	class CSystemModule;
+	struct CSystem;
+	struct CSystemModule;
 	namespace NThread
 	{
 		template <typename t_CEvent, bool t_bAllowRecursive>
-		class TCMutualAggregate;
+		struct TCMutualAggregate;
 
 		using CMutualAggregate = TCMutualAggregate<CEventAutoResetAggregate, true>;
 	}
@@ -19,8 +19,9 @@ namespace NMib
 namespace NMib::NStorage
 {
 	template <typename t_CData = aint>
-	class TCAggregateSimple
+	struct TCAggregateSimple
 	{
+	private:
 		using CData = t_CData;
 
 	public:
@@ -71,7 +72,7 @@ namespace NMib::NStorage
 	};
 
 	template <typename t_CData, aint t_Priority = 128, typename t_CLock = NThread::CLowLevelLockAggregate>
-	class TCAggregate;
+	struct TCAggregate;
 
 	using CAggregate = TCAggregate<aint, 128, NThread::CNoLock>;
 
@@ -84,8 +85,9 @@ namespace NMib::NStorage
 	};
 
 	template <typename t_CData, aint t_Priority, typename t_CLock>
-	class TCAggregate
+	struct TCAggregate
 	{
+	private:
 		using CData = t_CData;
 
 	public:

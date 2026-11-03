@@ -19,9 +19,8 @@ namespace NMib
 
 namespace
 {
-	class CWeakPointer_Tests : public NMib::NTest::CTest
+	struct CWeakPointer_Tests : public NMib::NTest::CTest
 	{
-	public:
 		struct CTestWeakIntrusive
 		{
 			NStorage::CIntrusiveRefCountWithWeak m_RefCount;

@@ -8,7 +8,7 @@
 namespace NMib::NStorage::NIndirection
 {
 	template <typename t_CType, typename t_CAllocator>
-	class TCIndirection;
+	struct TCIndirection;
 }
 
 #include "Private/Malterlib_Storage_Indirection_Traits.h"
@@ -24,7 +24,7 @@ namespace NMib::NStorage
 namespace NMib::NStorage::NIndirection
 {
 	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator>
-	class TCIndirection final
+	struct TCIndirection final
 	{
 	protected:
 		struct CData : public t_CAllocator

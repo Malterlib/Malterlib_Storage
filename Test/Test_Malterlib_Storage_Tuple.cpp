@@ -8,20 +8,17 @@
 namespace
 {
 	int32 g_MovedEmpty = 0;
-	class CTuple_Tests : public NMib::NTest::CTest
+	struct CTuple_Tests : public NMib::NTest::CTest
 	{
-	public:
-		class CTestWithManyInit
+		struct CTestWithManyInit
 		{
-		public:
 			CTestWithManyInit(int, fp32, fp64)
 			{
 			}
 		};
 
-		class CEmpty
+		struct CEmpty
 		{
-		public:
 			operator int ()
 			{
 				return -1;
@@ -43,63 +40,62 @@ namespace
 			}
 		};
 
-		class CNonEmpty
+		struct CNonEmpty
 		{
+			operator int ()
+			{
+				return -1;
+			}
+
+			operator int () const
+			{
+				return -2;
+			}
+
+			operator int () volatile
+			{
+				return -3;
+			}
+
+			operator int () const volatile
+			{
+				return -4;
+			}
+
+		private:
 			uint8 m_Member;
-
-		public:
-			operator int ()
-			{
-				return -1;
-			}
-
-			operator int () const
-			{
-				return -2;
-			}
-
-			operator int () volatile
-			{
-				return -3;
-			}
-
-			operator int () const volatile
-			{
-				return -4;
-			}
 		};
 
-		class CNonCopyableEmpty
+		struct CNonCopyableEmpty
 		{
-		public:
 			CNonCopyableEmpty(CNonCopyableEmpty const &) = delete;
 			CNonCopyableEmpty &operator = (CNonCopyableEmpty const &) = delete;
 			CNonCopyableEmpty() = default;
 		};
 
-		class CNonCopyable
+		struct CNonCopyable
 		{
-			uint8 m_Test;
-
-		public:
 			CNonCopyable(CNonCopyable const &) = delete;
 			CNonCopyable &operator = (CNonCopyable const &) = delete;
 			CNonCopyable() = default;
+
+		private:
+			uint8 m_Test;
 		};
 
-		class CEmpty0
+		struct CEmpty0
 		{
 		};
 
-		class CEmpty1
+		struct CEmpty1
 		{
 		};
 
-		class CEmpty2
+		struct CEmpty2
 		{
 		};
 
-		class CEmptyAll : CEmpty0, CEmpty1, CEmpty2
+		struct CEmptyAll : private CEmpty0, private CEmpty1, private CEmpty2
 		{
 		};
 

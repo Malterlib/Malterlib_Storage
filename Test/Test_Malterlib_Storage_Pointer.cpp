@@ -12,9 +12,8 @@ using namespace NMib::NStorage;
 
 namespace
 {
-	class CSmartPtr_Tests : public NMib::NTest::CTest
+	struct CSmartPtr_Tests : public NMib::NTest::CTest
 	{
-	public:
 		struct CTestStruct
 		{
 			int m_0;

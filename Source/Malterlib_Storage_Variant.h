@@ -663,7 +663,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitor
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAs<t_iMember>())))
@@ -698,7 +697,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitor<t_iMember, void>
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept
 			{
@@ -726,7 +724,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitorStorage
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template fp_GetAsStorage<t_iMember>())))
@@ -761,7 +758,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitorStorage<t_iMember, void>
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept
 			{
@@ -789,7 +785,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember, typename t_CReturnType = typename TCEvalReturnType<t_iMember>::CType>
 		struct TCCallVisitorSet
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor)
 				noexcept(noexcept((fg_Forward<t_CVisitor>(_Visitor))((fg_Forward<t_CThis>(_pThis))->template f_Set<t_CIndex(t_iMember)>())))
@@ -824,7 +819,6 @@ namespace NMib::NStorage
 		template <CIndexInteger t_iMember>
 		struct TCCallVisitorSet<t_iMember, void>
 		{
-		public:
 			template <typename t_CThis, typename t_CVisitor>
 			mark_artificial inline_small static void fs_Call(t_CThis &&_pThis, t_CVisitor &&_Visitor) noexcept(noexcept(fg_Forward<t_CThis>(_pThis)->template f_Set<t_CIndex(t_iMember)>()))
 			{
@@ -859,7 +853,6 @@ namespace NMib::NStorage
 		template <typename t_CType, bool t_bIsReference = NTraits::cIsReference<t_CType>, bool t_bIsArray = NTraits::cIsArray<t_CType>>
 		struct TCEvalReturn
 		{
-		public:
 			template <typename tf_CType0, typename tf_CType1>
 			mark_nodebug inline_small static auto fs_Value(tf_CType1 &&_pToRet) -> decltype(*_pToRet)
 			{
@@ -870,7 +863,6 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCEvalReturn<t_CType, false, true>
 		{
-		public:
 			template <typename tf_CType0, typename tf_CType1>
 			mark_nodebug inline_small static t_CType &fs_Value(tf_CType1 &&_pToRet)
 			{
@@ -881,7 +873,6 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCEvalReturn<t_CType, true, false>
 		{
-		public:
 			template <typename tf_CType0, typename tf_CType1>
 			mark_nodebug inline_small static TCEnableIf<NTraits::cIsLValueReference<tf_CType0>, tf_CType0> fs_Value(tf_CType1 &&_pToRet)
 			{
@@ -2376,8 +2367,9 @@ namespace NMib::NStream
 	}
 
 	template <typename t_CStream, typename t_CIndex, typename ...tp_CMembers>
-	class TCBinaryStreamTypeReference<t_CStream, NStorage::TCVariantCommon<t_CIndex, tp_CMembers...>>
+	struct TCBinaryStreamTypeReference<t_CStream, NStorage::TCVariantCommon<t_CIndex, tp_CMembers...>>
 	{
+	private:
 		using CStreamableVariant = NStorage::TCVariantCommon<t_CIndex, tp_CMembers...>;
 
 	public:
