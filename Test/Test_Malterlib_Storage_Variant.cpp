@@ -540,17 +540,17 @@ namespace
 
 					struct CUtil
 					{
-						static void Do(char _V)
+						static void fs_Do(char _V)
 						{
 						}
 
-						static void Do(int const &_V)
+						static void fs_Do(int const &_V)
 						{
 						}
 					};
 
 					int const &Ref = VarRef.f_Get<1>();
-					CUtil::Do(VarRef.f_Get<1>());
+					CUtil::fs_Do(VarRef.f_Get<1>());
 				}
 			};
 		}
