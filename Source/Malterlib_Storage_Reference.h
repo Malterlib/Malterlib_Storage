@@ -32,7 +32,7 @@ namespace NMib::NStorage::NReference
 			t_CType *m_pPointTo;
 		};
 
-		CData m_Data;
+		CData mp_Data;
 
 	public:
 		mark_artificial mark_nodebug inline_always t_CType &f_Get() const volatile;

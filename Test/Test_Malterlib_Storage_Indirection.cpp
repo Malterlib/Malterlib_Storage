@@ -140,14 +140,14 @@ namespace
 
 			struct CCCCC
 			{
-				uint32 TestInt:24;
+				uint32 m_TestInt:24;
 			};
 
 			CCCCC TestInt;
-			TestInt.TestInt = 50;
+			TestInt.m_TestInt = 50;
 			NStream::TCBinaryStreamMemory<> Stream;
 			Stream << StreamTest;
-			uint32 Temp = TestInt.TestInt;
+			uint32 Temp = TestInt.m_TestInt;
 			Stream << Temp;
 
 			TCIndirection<uint32> StreamTest2;

@@ -1567,19 +1567,19 @@ namespace NMib::NStorage
 
 			void operator () (CVoidTag _Tag)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
+				static constexpr CIndexInteger c_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
 
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with void argument type");
-				m_This.fp_SetNoRet<s_ToConstruct>();
+				static_assert(c_ToConstruct >= 0, "No type in the variant can be constructed with void argument type");
+				m_This.fp_SetNoRet<c_ToConstruct>();
 			}
 
 			template <typename tf_CParam0>
 			void operator () (tf_CParam0 &&_Param0)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<NTraits::TCAddRValueReference<tf_CParam0>>::mc_Value;
+				static constexpr CIndexInteger c_ToConstruct = TCEvalOneParamConstruction<NTraits::TCAddRValueReference<tf_CParam0>>::mc_Value;
 
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (move constructor)");
-				m_This.fp_SetNoRet<s_ToConstruct>(fg_Move(_Param0));
+				static_assert(c_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (move constructor)");
+				m_This.fp_SetNoRet<c_ToConstruct>(fg_Move(_Param0));
 			}
 		};
 
@@ -1593,20 +1593,20 @@ namespace NMib::NStorage
 
 			void operator () (CVoidTag _Tag)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
+				static constexpr CIndexInteger c_ToConstruct = TCMemberFromTypeInt<void>::mc_Value;
 
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with void argument type");
-				m_This.fp_SetNoRet<s_ToConstruct>();
+				static_assert(c_ToConstruct >= 0, "No type in the variant can be constructed with void argument type");
+				m_This.fp_SetNoRet<c_ToConstruct>();
 			}
 
 			template <typename tf_CParam0>
 			void operator () (tf_CParam0 &&_Param0)
 			{
-				static constexpr CIndexInteger s_ToConstruct = TCEvalOneParamConstruction<tf_CParam0>::mc_Value;
+				static constexpr CIndexInteger c_ToConstruct = TCEvalOneParamConstruction<tf_CParam0>::mc_Value;
 
-				static_assert(s_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (copy constructor)");
+				static_assert(c_ToConstruct >= 0, "No type in the variant can be constructed with this argument type (copy constructor)");
 
-				m_This.fp_SetNoRet<s_ToConstruct>(fg_Forward<tf_CParam0>(_Param0));
+				m_This.fp_SetNoRet<c_ToConstruct>(fg_Forward<tf_CParam0>(_Param0));
 			}
 		};
 

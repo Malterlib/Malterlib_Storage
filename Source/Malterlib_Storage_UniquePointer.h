@@ -108,25 +108,25 @@ namespace NMib::NStorage
 			}
 		};
 
-		CData m_Data;
+		CData mp_Data;
 
 		CAllocator &fp_GetAllocator()
 		{
-			return m_Data;
+			return mp_Data;
 		}
 
 		CAllocator const &fp_GetAllocator() const
 		{
-			return m_Data;
+			return mp_Data;
 		}
 
 		template <typename tf_CDummy>
 		void fp_Delete()
 		{
-			if (m_Data.m_pPointTo)
+			if (mp_Data.m_pPointTo)
 			{
-				fg_DeleteObject(fp_GetAllocator(), m_Data.m_pPointTo);
-				m_Data.m_pPointTo = nullptr;
+				fg_DeleteObject(fp_GetAllocator(), mp_Data.m_pPointTo);
+				mp_Data.m_pPointTo = nullptr;
 			}
 		}
 
@@ -144,7 +144,7 @@ namespace NMib::NStorage
 	public:
 		TCUniquePointer()
 		{
-			m_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = nullptr;
 		}
 
 		~TCUniquePointer()
@@ -153,34 +153,34 @@ namespace NMib::NStorage
 		}
 
 		TCUniquePointer(TCCopy<TCUniquePointer> const &_Other)
-			: m_Data((*_Other).fp_GetAllocator())
+			: mp_Data((*_Other).fp_GetAllocator())
 		{
-			m_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator(), *((*_Other).m_Data.m_pPointTo));
+			mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator(), *((*_Other).mp_Data.m_pPointTo));
 		}
 
 		template <typename tf_CType>
 		TCUniquePointer(TCExplicit<tf_CType> &&_Other)
 		{
-			m_Data.m_pPointTo = *_Other;
+			mp_Data.m_pPointTo = *_Other;
 		}
 
 		template <typename tf_CType, typename tf_CAllocator>
 		TCUniquePointer(TCExplicit<tf_CType> &&_Other, tf_CAllocator &&_Allocator)
-			: m_Data(fg_Forward<tf_CAllocator>(_Allocator))
+			: mp_Data(fg_Forward<tf_CAllocator>(_Allocator))
 		{
-			m_Data.m_pPointTo = *_Other;
+			mp_Data.m_pPointTo = *_Other;
 		}
 
 		template <typename tf_CType, typename ...tfp_CParams>
 		TCUniquePointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams)
 		{
 			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
-			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
+			mp_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 		}
 
 		template <typename tf_CType, typename ...tfp_CParams, typename tf_CAllocator>
 		TCUniquePointer(TCConstruct<tf_CType, tfp_CParams...> &&_CreateParams, tf_CAllocator &&_Allocator)
-			: m_Data(fg_Forward<tf_CAllocator>(_Allocator))
+			: mp_Data(fg_Forward<tf_CAllocator>(_Allocator))
 		{
 			static_assert
 				(
@@ -188,83 +188,83 @@ namespace NMib::NStorage
 					, "Not a valid conversion"
 				)
 			;
-			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
+			mp_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 		}
 
 		template <typename tf_CType, typename ...tfp_COptions>
 		TCUniquePointer(TCUniquePointer<tf_CType, tfp_COptions...> &&_Other)
 			requires (NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, typename TCUniquePointer<tf_CType, tfp_COptions...>::CAllocator>::mc_Value)
-			: m_Data(fg_Move(_Other.fp_GetAllocator()))
+			: mp_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			m_Data.m_pPointTo = _Other.f_Detach();
+			mp_Data.m_pPointTo = _Other.f_Detach();
 		}
 
 		TCUniquePointer(TCUniquePointer &&_Other)
-			: m_Data(fg_Move(_Other.fp_GetAllocator()))
+			: mp_Data(fg_Move(_Other.fp_GetAllocator()))
 		{
-			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
-			_Other.m_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
+			_Other.mp_Data.m_pPointTo = nullptr;
 		}
 
 		explicit TCUniquePointer(t_CType *_pPtr)
 		{
-			m_Data.m_pPointTo = _pPtr;
+			mp_Data.m_pPointTo = _pPtr;
 		}
 
 		template <typename tf_CParam0>
 		explicit TCUniquePointer(t_CType *_pPtr, tf_CParam0 &&_Param0)
-			: m_Data(fg_Forward<tf_CParam0>(_Param0))
+			: mp_Data(fg_Forward<tf_CParam0>(_Param0))
 		{
-			m_Data.m_pPointTo = _pPtr;
+			mp_Data.m_pPointTo = _pPtr;
 		}
 
 		TCUniquePointer(CNullPtr _pNull)
 		{
-			m_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = nullptr;
 		}
 
 		t_CType *f_Detach()
 		{
-			t_CType *pRet = m_Data.m_pPointTo;
-			m_Data.m_pPointTo = nullptr;
+			t_CType *pRet = mp_Data.m_pPointTo;
+			mp_Data.m_pPointTo = nullptr;
 			return pRet;
 		}
 
 		t_CType *f_Get() const
 		{
-			return m_Data.m_pPointTo;
+			return mp_Data.m_pPointTo;
 		}
 
 		t_CType *operator -> () const
 		{
-			return m_Data.m_pPointTo;
+			return mp_Data.m_pPointTo;
 		}
 
 		template <typename tf_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
 			-> TCEnableIf<NTraits::cIsMemberFunctionPointer<tf_CMemberPtr>, NFunction::TCMemberFunctionBoundFunctor<tf_CMemberPtr, t_CType *>>
 		{
-			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, (t_CType *)m_Data.m_pPointTo);
+			return NFunction::fg_MemberFunctionFunctor(_MemberPtr, (t_CType *)mp_Data.m_pPointTo);
 		}
 
 		template <typename tf_CMemberPtr>
 		mark_artificial mark_nodebug inline_always auto operator ->* (tf_CMemberPtr const &_MemberPtr) const
 			-> TCEnableIf<NTraits::cIsMemberObjectPointer<tf_CMemberPtr>, NTraits::TCAddLValueReference<NTraits::TCRemoveMemberObjectPointer<tf_CMemberPtr>>>
 		{
-			return ((t_CType *)m_Data.m_pPointTo)->*_MemberPtr;
+			return ((t_CType *)mp_Data.m_pPointTo)->*_MemberPtr;
 		}
 
 		mark_nodebug NTraits::TCAddLValueReference<t_CType> operator * () const
 			requires (!NTraits::cIsVoid<t_CType>)
 		{
-			return *m_Data.m_pPointTo;
+			return *mp_Data.m_pPointTo;
 		}
 
 		template <typename tf_CType>
 		TCUniquePointer &operator = (TCExplicit<tf_CType> &&_Other)
 		{
 			fp_Delete();
-			m_Data.m_pPointTo = *_Other;
+			mp_Data.m_pPointTo = *_Other;
 			return *this;
 		}
 
@@ -272,7 +272,7 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			fp_GetAllocator() = (*_Other).fp_GetAllocator();
-			m_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator(), *(*_Other).m_Data.m_pPointTo);
+			mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator(), *(*_Other).mp_Data.m_pPointTo);
 			return *this;
 		}
 
@@ -280,15 +280,15 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
-			m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
-			_Other.m_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
+			_Other.mp_Data.m_pPointTo = nullptr;
 			return *this;
 		}
 
 		TCUniquePointer &operator = (CNullPtr _pNull)
 		{
 			fp_Delete();
-			m_Data.m_pPointTo = nullptr;
+			mp_Data.m_pPointTo = nullptr;
 			return *this;
 		}
 
@@ -298,7 +298,7 @@ namespace NMib::NStorage
 		{
 			fp_Delete();
 			fp_GetAllocator() = fg_Move(_Other.fp_GetAllocator());
-			m_Data.m_pPointTo = _Other.f_Detach();
+			mp_Data.m_pPointTo = _Other.f_Detach();
 			return *this;
 		}
 
@@ -307,7 +307,7 @@ namespace NMib::NStorage
 		{
 			static_assert(NTraits::cIsVoid<tf_CType> || NPrivate::TCIsValidConversion<t_CType, tf_CType, CAllocator, CAllocator>::mc_Value, "Not a valid conversion");
 			fp_Delete();
-			m_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
+			mp_Data.m_pPointTo = _CreateParams.template f_Create<t_CType>(fp_GetAllocator());
 			return *this;
 		}
 
@@ -352,7 +352,7 @@ namespace NMib::NStorage
 
 		bool f_IsEmpty() const
 		{
-			return m_Data.m_pPointTo == nullptr;
+			return mp_Data.m_pPointTo == nullptr;
 		}
 
 		inline_small explicit operator bool () const

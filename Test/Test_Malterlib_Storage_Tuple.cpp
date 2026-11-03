@@ -63,7 +63,7 @@ namespace
 			}
 
 		private:
-			uint8 m_Member;
+			uint8 mp_Member;
 		};
 
 		struct CNonCopyableEmpty
@@ -80,7 +80,7 @@ namespace
 			CNonCopyable() = default;
 
 		private:
-			uint8 m_Test;
+			uint8 mp_Test;
 		};
 
 		struct CEmpty0
@@ -591,46 +591,46 @@ namespace
 
 			DMibTestSuite("Create")
 			{
-				int x = 5;
+				int Value = 5;
 
-				TCTuple<int &&> TupleRValueRef(fg_Move(x));
-				++x;
+				TCTuple<int &&> TupleRValueRef(fg_Move(Value));
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(TupleRValueRef)) == DMibExpr(6));
 
 				TCTuple<int &&> TupleRValueRef2(fg_Move(TupleRValueRef));
-				++x;
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(TupleRValueRef2)) == DMibExpr(7));
 
-				TCTuple<int &> TupleLValueRef(x);
-				++x;
+				TCTuple<int &> TupleLValueRef(Value);
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(TupleLValueRef)) == DMibExpr(8));
 
 				TCTuple<int &> TupleLValueRef2(TupleLValueRef);
-				++x;
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(TupleLValueRef2)) == DMibExpr(9));
 
-				auto MadeTuple = fg_Tuple(x);
-				++x;
+				auto MadeTuple = fg_Tuple(Value);
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(MadeTuple)) == DMibExpr(9));
 
-				auto MadeTuple2 = fg_TupleReferences(x);
-				++x;
+				auto MadeTuple2 = fg_TupleReferences(Value);
+				++Value;
 				DMibTest(DMibExpr(fg_Get<0>(MadeTuple2)) == DMibExpr(11));
 
-				auto MadeTuple3 = fg_TuplePerfectForward(fg_Move(x));
+				auto MadeTuple3 = fg_TuplePerfectForward(fg_Move(Value));
 				static_assert(NMib::NTraits::cIsSame<decltype(MadeTuple3), TCTuple<int &&>>);
-				++x;
+				++Value;
 				int &&MadeTuple3Value = fg_GetForward<0>(fg_Move(MadeTuple3));
 				DMibTest(DMibExpr(MadeTuple3Value) == DMibExpr(12));
 			};
 
 			DMibTestSuite("Concatenate")
 			{
-				int x = 5;
-				int x2 = 6;
+				int Value = 5;
+				int Value2 = 6;
 
-				TCTuple<int &&> TupleRValueRef(fg_Move(x));
-				TCTuple<int &> TupleLValueRef(x2);
+				TCTuple<int &&> TupleRValueRef(fg_Move(Value));
+				TCTuple<int &> TupleLValueRef(Value2);
 				TCTuple<int> Tuple(7);
 
 				auto Concatenated0 = fg_TupleConcatenate(Tuple);

@@ -10,17 +10,17 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	t_CAllocator &TCIndirection<t_CType, t_CAllocator>::fp_GetAllocator()
 	{
-		return m_Data;
+		return mp_Data;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	template <typename tf_CDummy>
 	void TCIndirection<t_CType, t_CAllocator>::fp_Delete()
 	{
-		if (m_Data.m_pPointTo)
+		if (mp_Data.m_pPointTo)
 		{
-			fg_DeleteObject(fp_GetAllocator(), (t_CType *)m_Data.m_pPointTo);
-			m_Data.m_pPointTo = nullptr;
+			fg_DeleteObject(fp_GetAllocator(), (t_CType *)mp_Data.m_pPointTo);
+			mp_Data.m_pPointTo = nullptr;
 		}
 	}
 
@@ -34,7 +34,7 @@ namespace NMib::NStorage::NIndirection
 	template <typename tf_CDummy>
 	void TCIndirection<t_CType, t_CAllocator>::fp_Create()
 	{
-		m_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator());
+		mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(fp_GetAllocator());
 	}
 
 	template <typename t_CType, typename t_CAllocator>
@@ -46,19 +46,19 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator>
 	mark_artificial mark_nodebug inline_always t_CType const &TCIndirection<t_CType, t_CAllocator>::f_Get() const &
 	{
-		return *m_Data.m_pPointTo;
+		return *mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	mark_artificial mark_nodebug inline_always t_CType &TCIndirection<t_CType, t_CAllocator>::f_Get() &
 	{
-		return *m_Data.m_pPointTo;
+		return *mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	mark_artificial mark_nodebug inline_always t_CType &&TCIndirection<t_CType, t_CAllocator>::f_Get() &&
 	{
-		return fg_Move(*m_Data.m_pPointTo);
+		return fg_Move(*mp_Data.m_pPointTo);
 	}
 
 	template <typename t_CType, typename t_CAllocator>
@@ -128,26 +128,26 @@ namespace NMib::NStorage::NIndirection
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(tfp_CParams && ...p_Params)
 		requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams && ...>
 	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tfp_CParams>(p_Params)...);
+		this->mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), fg_Forward<tfp_CParams>(p_Params)...);
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection const &_Other)
 	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
+		this->mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection &_Other)
 	{
-		this->m_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
+		this->mp_Data.m_pPointTo = fg_ConstructObject<t_CType>(this->fp_GetAllocator(), _Other.f_Get());
 	}
 
 	template <typename t_CType, typename t_CAllocator>
 	TCIndirection<t_CType, t_CAllocator>::TCIndirection(TCIndirection &&_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
-		_Other.m_Data.m_pPointTo = nullptr;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
+		_Other.mp_Data.m_pPointTo = nullptr;
 	}
 
 	template <typename t_CType, typename t_CAllocator>
@@ -176,8 +176,8 @@ namespace NMib::NStorage::NIndirection
 	TCIndirection<t_CType, t_CAllocator> &TCIndirection<t_CType, t_CAllocator>::operator = (TCIndirection &&_Other)
 	{
 		this->fp_Delete();
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
-		_Other.m_Data.m_pPointTo = nullptr;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
+		_Other.mp_Data.m_pPointTo = nullptr;
 		return *this;
 	}
 

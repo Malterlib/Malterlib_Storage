@@ -7,15 +7,15 @@ namespace NMib::NStorage
 	template <typename ...tfp_CData>
 	void TCLazyInit<t_CData, t_CLock>::fp_Construct(tfp_CData && ...p_Params)
 	{
-		DMibLockTyped(t_CLock, m_Lock);
-		uint32 OldFlags = m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire);
+		DMibLockTyped(t_CLock, mp_Lock);
+		uint32 OldFlags = mp_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire);
 
 		DMibSafeCheck(!(OldFlags & uint32(ELifetimeFlag_Destructed)), "Already destructed, cannot construct again");
 
 		if (!(OldFlags & uint32(ELifetimeFlag_Constructed)))
 		{
-			new(m_ObjectSpace) t_CData(fg_Forward<tfp_CData>(p_Params)...);
-			OldFlags = m_LifetimeFlags.f_FetchOr(uint32(ELifetimeFlag_Constructed), NAtomic::gc_MemoryOrder_Release);
+			new(mp_ObjectSpace) t_CData(fg_Forward<tfp_CData>(p_Params)...);
+			OldFlags = mp_LifetimeFlags.f_FetchOr(uint32(ELifetimeFlag_Constructed), NAtomic::gc_MemoryOrder_Release);
 			DMibSafeCheck(!(OldFlags & uint32(ELifetimeFlag_Destructed)), "Already destructed, cannot construct again");
 		}
 	}
@@ -28,12 +28,12 @@ namespace NMib::NStorage
 	template <typename t_CData, typename t_CLock>
 	TCLazyInit<t_CData, t_CLock>::~TCLazyInit()
 	{
-		uint32 LifetimeFlags = m_LifetimeFlags.f_FetchOr(uint32(ELifetimeFlag_Destructed));
+		uint32 LifetimeFlags = mp_LifetimeFlags.f_FetchOr(uint32(ELifetimeFlag_Destructed));
 		if ((LifetimeFlags & uint32(ELifetimeFlag_Constructed)) && !(LifetimeFlags & uint32(ELifetimeFlag_Destructed)))
 		{
-			((t_CData *)m_ObjectSpace)->~t_CData();
+			((t_CData *)mp_ObjectSpace)->~t_CData();
 
-			m_LifetimeFlags.f_FetchAnd(~uint32(ELifetimeFlag_Constructed), NAtomic::gc_MemoryOrder_Release);
+			mp_LifetimeFlags.f_FetchAnd(~uint32(ELifetimeFlag_Constructed), NAtomic::gc_MemoryOrder_Release);
 		}
 	}
 
@@ -41,27 +41,27 @@ namespace NMib::NStorage
 	template <typename ...tfp_CParam>
 	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator () (tfp_CParam && ...p_Param)
 	{
-		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
+		if (!(mp_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct(fg_Forward<tfp_CParam>(p_Param)...);
 
-		return *((t_CData *)m_ObjectSpace);
+		return *((t_CData *)mp_ObjectSpace);
 	}
 
 	template <typename t_CData, typename t_CLock>
 	inline_small t_CData *TCLazyInit<t_CData, t_CLock>::operator -> ()
 	{
-		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
+		if (!(mp_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct();
 
-		return ((t_CData *)m_ObjectSpace);
+		return ((t_CData *)mp_ObjectSpace);
 	}
 
 	template <typename t_CData, typename t_CLock>
 	inline_small t_CData &TCLazyInit<t_CData, t_CLock>::operator * ()
 	{
-		if (!(m_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
+		if (!(mp_LifetimeFlags.f_Load(NAtomic::gc_MemoryOrder_Acquire) & uint32(ELifetimeFlag_Constructed)))
 			fp_Construct();
 
-		return *((t_CData *)m_ObjectSpace);
+		return *((t_CData *)mp_ObjectSpace);
 	}
 }

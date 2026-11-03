@@ -16,351 +16,351 @@ namespace
 	{
 		struct CTestStruct
 		{
-			int m_0;
-			int m_1;
-			int m_2;
-			int m_3;
-			int m_4;
-			int m_5;
-			int m_6;
-			int m_7;
-			int m_8;
-			int m_9;
+			int m_Value0;
+			int m_Value1;
+			int m_Value2;
+			int m_Value3;
+			int m_Value4;
+			int m_Value5;
+			int m_Value6;
+			int m_Value7;
+			int m_Value8;
+			int m_Value9;
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8, int _Value9)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(_Value8)
-				, m_9(_Value9)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(_Value8)
+				, m_Value9(_Value9)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(_Value8)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(_Value8)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2, int _Value3)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1, int _Value2)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0, int _Value1)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct(int _Value0)
-				: m_0(_Value0)
-				, m_1(0)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(0)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStruct()
-				: m_0(0)
-				, m_1(0)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(0)
+				, m_Value1(0)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			bool operator == (CTestStruct const &_Other) const noexcept
 			{
-				return m_0 == _Other.m_0
-					&& m_1 == _Other.m_1
-					&& m_2 == _Other.m_2
-					&& m_3 == _Other.m_3
-					&& m_4 == _Other.m_4
-					&& m_5 == _Other.m_5
-					&& m_6 == _Other.m_6
-					&& m_7 == _Other.m_7
-					&& m_8 == _Other.m_8
-					&& m_9 == _Other.m_9
+				return m_Value0 == _Other.m_Value0
+					&& m_Value1 == _Other.m_Value1
+					&& m_Value2 == _Other.m_Value2
+					&& m_Value3 == _Other.m_Value3
+					&& m_Value4 == _Other.m_Value4
+					&& m_Value5 == _Other.m_Value5
+					&& m_Value6 == _Other.m_Value6
+					&& m_Value7 == _Other.m_Value7
+					&& m_Value8 == _Other.m_Value8
+					&& m_Value9 == _Other.m_Value9
 				;
 			}
 		};
 
 		struct CTestStructVirtual
 		{
-			int m_0;
-			int m_1;
-			int m_2;
-			int m_3;
-			int m_4;
-			int m_5;
-			int m_6;
-			int m_7;
-			int m_8;
-			int m_9;
+			int m_Value0;
+			int m_Value1;
+			int m_Value2;
+			int m_Value3;
+			int m_Value4;
+			int m_Value5;
+			int m_Value6;
+			int m_Value7;
+			int m_Value8;
+			int m_Value9;
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8, int _Value9)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(_Value8)
-				, m_9(_Value9)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(_Value8)
+				, m_Value9(_Value9)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7, int _Value8)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(_Value8)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(_Value8)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6, int _Value7)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(_Value7)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(_Value7)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5, int _Value6)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(_Value6)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(_Value6)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4, int _Value5)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(_Value5)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(_Value5)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3, int _Value4)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(_Value4)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(_Value4)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2, int _Value3)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(_Value3)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(_Value3)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1, int _Value2)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(_Value2)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(_Value2)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0, int _Value1)
-				: m_0(_Value0)
-				, m_1(_Value1)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(_Value1)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual(int _Value0)
-				: m_0(_Value0)
-				, m_1(0)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(_Value0)
+				, m_Value1(0)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
 			CTestStructVirtual()
-				: m_0(0)
-				, m_1(0)
-				, m_2(0)
-				, m_3(0)
-				, m_4(0)
-				, m_5(0)
-				, m_6(0)
-				, m_7(0)
-				, m_8(0)
-				, m_9(0)
+				: m_Value0(0)
+				, m_Value1(0)
+				, m_Value2(0)
+				, m_Value3(0)
+				, m_Value4(0)
+				, m_Value5(0)
+				, m_Value6(0)
+				, m_Value7(0)
+				, m_Value8(0)
+				, m_Value9(0)
 			{
 			}
 
@@ -370,16 +370,16 @@ namespace
 
 			bool operator == (CTestStructVirtual const &_Other) const noexcept
 			{
-				return m_0 == _Other.m_0
-					&& m_1 == _Other.m_1
-					&& m_2 == _Other.m_2
-					&& m_3 == _Other.m_3
-					&& m_4 == _Other.m_4
-					&& m_5 == _Other.m_5
-					&& m_6 == _Other.m_6
-					&& m_7 == _Other.m_7
-					&& m_8 == _Other.m_8
-					&& m_9 == _Other.m_9
+				return m_Value0 == _Other.m_Value0
+					&& m_Value1 == _Other.m_Value1
+					&& m_Value2 == _Other.m_Value2
+					&& m_Value3 == _Other.m_Value3
+					&& m_Value4 == _Other.m_Value4
+					&& m_Value5 == _Other.m_Value5
+					&& m_Value6 == _Other.m_Value6
+					&& m_Value7 == _Other.m_Value7
+					&& m_Value8 == _Other.m_Value8
+					&& m_Value9 == _Other.m_Value9
 				;
 			}
 		};
@@ -1342,7 +1342,7 @@ namespace
 
 		void f_TestSharedPointerInheritance()
 		{
-			static constexpr bool s_bReportMemory = false;
+			static constexpr bool c_bReportMemory = false;
 
 			using namespace NStr;
 
@@ -1600,14 +1600,14 @@ namespace
 					, m_Size(_Size)
 				{
 #if DMibConfig_Memory_Shims_Enable
-					if constexpr (s_bReportMemory)
+					if constexpr (c_bReportMemory)
 						m_pScope = fg_Construct(*this);
 #endif
 				}
 
 				~CReportScope()
 				{
-					if constexpr (s_bReportMemory)
+					if constexpr (c_bReportMemory)
 						DMibTraceSafe("{}   Total {sj3}   ({sj2} + Allocs {})\n", m_Description, m_Size + m_Allocated, m_Size, m_Allocations);
 				}
 
@@ -1734,7 +1734,7 @@ namespace
 					std::shared_ptr<CBase> pSharedPointer(new CBase());
 				}
 			}
-			if constexpr (s_bReportMemory)
+			if constexpr (c_bReportMemory)
 				DMibTraceSafe("\n");
 
 			{
@@ -1743,55 +1743,55 @@ namespace
 					CReportScope ReportScope("TCUniquePointer            CBase                                              ", sizeof(TCUniquePointer<CBase>));
 					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CBase>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("unique_ptr                 CBase                                              ", sizeof(std::unique_ptr<CBase>));
 					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CBase>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pUniquePointer->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CBaseIntrusive                                     ", sizeof(TCSharedPointer<CBaseIntrusive>));
 					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CBaseIntrusive>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CBaseIntrusiveSupportWeak                          ", sizeof(TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak>));
 					TCSharedPointer<CBaseIntrusiveSupportWeak> pMalterlibSharedPointerIntrusiveSupportWeak(fg_Construct<CBaseIntrusiveSupportWeak>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusiveSupportWeak->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CBase                                              ", sizeof(TCSharedPointer<CBase>));
 					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CBase>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CBase                                              ", sizeof(TCSharedPointerSupportWeak<CBase>));
 					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CBase>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("make_shared                CBase                                              ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pMakeShared(std::make_shared<CBase>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMakeShared->f_GetValue(), ==, 0);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CBase                                              ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pSharedPointer(new CBase());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pSharedPointer->f_GetValue(), ==, 0);
 				}
 			}
-			if constexpr (s_bReportMemory)
+			if constexpr (c_bReportMemory)
 				DMibTraceSafe("\n");
 
 			{
@@ -1800,56 +1800,56 @@ namespace
 					CReportScope ReportScope("TCUniquePointer            CDerived                                           ", sizeof(TCUniquePointer<CBase>));
 					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerived>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("unique_ptr                 CDerived                                           ", sizeof(std::unique_ptr<CBase>));
 					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerived>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pUniquePointer->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CDerivedIntrusive                                  ", sizeof(TCSharedPointer<CBaseIntrusive>));
 					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerivedIntrusive>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CDerivedIntrusiveSupportWeak                       ", sizeof(TCSharedPointer<CBaseIntrusiveSupportWeak>));
 					TCSharedPointer<CBaseIntrusiveSupportWeak> pMalterlibSharedPointerIntrusiveSupportWeak(fg_Construct<CDerivedIntrusiveSupportWeak>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusiveSupportWeak->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CDerived                                           ", sizeof(TCSharedPointer<CBase>));
 					TCSharedPointer<CBase> pMalterlibSharedPointer(fg_Construct<CDerived>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointer->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CDerived                                           ", sizeof(TCSharedPointerSupportWeak<CBase>));
 					TCSharedPointerSupportWeak<CBase> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerived>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerived                                           ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pMakeShared(std::make_shared<CDerived>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMakeShared->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerived                                           ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pSharedPointer(new CDerived());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pSharedPointer->f_GetValue(), ==, 1);
 				}
 			}
 
-			if constexpr (s_bReportMemory)
+			if constexpr (c_bReportMemory)
 				DMibTraceSafe("\n");
 
 			{
@@ -1858,43 +1858,43 @@ namespace
 					CReportScope ReportScope("TCUniquePointer            CDerivedVirtual                                    ", sizeof(TCUniquePointer<CBase>));
 					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerivedVirtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("unique_ptr                 CDerivedVirtual                                    ", sizeof(std::unique_ptr<CBase>));
 					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerivedVirtual>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pUniquePointer->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CDerivedVirtualIntrusive                           ", sizeof(TCSharedPointer<CBaseIntrusive>));
 					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerivedVirtualIntrusive>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CDerivedVirtualIntrusiveSupportWeak                ", sizeof(TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak>));
 					TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerivedVirtualIntrusiveSupportWeak>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerivedVirtual                                    ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pMakeShared(std::make_shared<CDerivedVirtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMakeShared->f_GetValue(), ==, 1);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerivedVirtual                                    ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pSharedPointer(new CDerivedVirtual());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pSharedPointer->f_GetValue(), ==, 1);
 				}
 			}
-			if constexpr (s_bReportMemory)
+			if constexpr (c_bReportMemory)
 				DMibTraceSafe("\n");
 
 			{
@@ -1903,43 +1903,43 @@ namespace
 					CReportScope ReportScope("TCUniquePointer            CDerived2Virtual                                   ", sizeof(TCUniquePointer<CBase>));
 					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CDerived2Virtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("unique_ptr                 CDerived2Virtual                                   ", sizeof(std::unique_ptr<CBase>));
 					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CDerived2Virtual>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pUniquePointer->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CDerived2VirtualIntrusive                          ", sizeof(TCSharedPointer<CBaseIntrusive>));
 					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CDerived2VirtualIntrusive>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CDerived2VirtualIntrusiveSupportWeak               ", sizeof(TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak>));
 					TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak> pMalterlibSharedPointerSupportWeak(fg_Construct<CDerived2VirtualIntrusiveSupportWeak>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("make_shared                CDerived2Virtual                                   ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pMakeShared(new CDerived2Virtual());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMakeShared->f_GetValue(), ==, 2);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CDerived2Virtual                                   ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pSharedPointer(std::make_shared<CDerived2Virtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pSharedPointer->f_GetValue(), ==, 2);
 				}
 			}
-			if constexpr (s_bReportMemory)
+			if constexpr (c_bReportMemory)
 				DMibTraceSafe("\n");
 
 			{
@@ -1948,39 +1948,39 @@ namespace
 					CReportScope ReportScope("TCUniquePointer            CAligned32DiamondDerivedVirtual                    ", sizeof(TCUniquePointer<CBase>));
 					TCUniquePointer<CBase> pMalterlibUniquePointer(fg_Construct<CAligned32DiamondDerivedVirtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibUniquePointer->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("unique_ptr                 CAligned32DiamondDerivedVirtual                    ", sizeof(std::unique_ptr<CBase>));
 					std::unique_ptr<CBase> pUniquePointer(std::make_unique<CAligned32DiamondDerivedVirtual>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pUniquePointer->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointer            CAligned32DiamondDerivedVirtualIntrusive           ", sizeof(TCSharedPointer<CBaseIntrusive>));
 					TCSharedPointer<CBaseIntrusive> pMalterlibSharedPointerIntrusive(fg_Construct<CAligned32DiamondDerivedVirtualIntrusive>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerIntrusive->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("TCSharedPointerSupportWeak CAligned32DiamondDerivedVirtualIntrusiveSupportWeak", sizeof(TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak>));
 					TCSharedPointerSupportWeak<CBaseIntrusiveSupportWeak> pMalterlibSharedPointerSupportWeak(fg_Construct<CAligned32DiamondDerivedVirtualIntrusiveSupportWeak>());
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMalterlibSharedPointerSupportWeak->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("make_shared                CAligned32DiamondDerivedVirtual                    ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pMakeShared(std::make_shared<CAligned32DiamondDerivedVirtual>());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pMakeShared->f_GetValue(), ==, 3);
 				}
 				{
 					CReportScope ReportScope("shared_ptr                 CAligned32DiamondDerivedVirtual                    ", sizeof(std::shared_ptr<CBase>));
 					std::shared_ptr<CBase> pSharedPointer(new CAligned32DiamondDerivedVirtual());
 
-					if constexpr (!s_bReportMemory)
+					if constexpr (!c_bReportMemory)
 						DMibExpect(pSharedPointer->f_GetValue(), ==, 3);
 				}
 			}

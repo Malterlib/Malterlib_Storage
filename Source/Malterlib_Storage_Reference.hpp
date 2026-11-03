@@ -8,7 +8,7 @@ namespace NMib::NStorage::NReference
 	template <typename t_CType>
 	mark_artificial mark_nodebug inline_always t_CType &TCReference<t_CType>::f_Get() const volatile
 	{
-		return *m_Data.m_pPointTo;
+		return *mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>
@@ -41,37 +41,37 @@ namespace NMib::NStorage::NReference
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(t_CType &_Param0)
 	{
-		this->m_Data.m_pPointTo = &_Param0;
+		this->mp_Data.m_pPointTo = &_Param0;
 	}
 
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(TCReference const &_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(TCReference volatile &_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(TCReference const volatile &_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(TCReference &_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>
 	TCReference<t_CType>::TCReference(TCReference &&_Other)
 	{
-		this->m_Data.m_pPointTo = _Other.m_Data.m_pPointTo;
+		this->mp_Data.m_pPointTo = _Other.mp_Data.m_pPointTo;
 	}
 
 	template <typename t_CType>

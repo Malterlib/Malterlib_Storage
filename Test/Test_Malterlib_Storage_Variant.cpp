@@ -113,8 +113,8 @@ namespace
 				{
 					CTestBase Test;
 					NMib::NStorage::TCVariant<void, CTestRRef> Variant(NMib::fg_Move(Test));
-					auto &&test = Variant.f_Set<1>(NMib::fg_Move(Test));
-					int ntheounheo = 0;
+					auto &&SetResult = Variant.f_Set<1>(NMib::fg_Move(Test));
+					int Unused = 0;
 				}
 				{
 					CTestWithManyInit Test(6, 7, 8);
@@ -175,7 +175,7 @@ namespace
 				auto &Test32 = TestVarConst.f_Get<0>();
 				auto &Test33 = TestVarConst.f_GetAsType<int const>();
 
-				int notehuenothu = 0;
+				int Unused = 0;
 
 				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit(0, 0, 0);
 				NMib::NStorage::TCVariant<void, CTestWithManyInit> VarManyInit2(2.5, fp64(3.5), fp32(3.5f));

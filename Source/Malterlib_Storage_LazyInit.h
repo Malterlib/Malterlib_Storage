@@ -50,9 +50,9 @@ namespace NMib::NStorage
 
 		using CData = t_CData;
 
-		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)] = {};
-		t_CLock m_Lock;
-		NAtomic::TCAtomic<uint32> m_LifetimeFlags = ELifetimeFlag_None;
+		alignas(CData) uint8 mp_ObjectSpace[sizeof(CData)] = {};
+		t_CLock mp_Lock;
+		NAtomic::TCAtomic<uint32> mp_LifetimeFlags = ELifetimeFlag_None;
 	};
 }
 

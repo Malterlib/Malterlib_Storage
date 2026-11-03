@@ -32,7 +32,7 @@ namespace NMib::NStorage::NIndirection
 			t_CType *m_pPointTo;
 		};
 
-		CData m_Data;
+		CData mp_Data;
 
 		t_CAllocator &fp_GetAllocator();
 
