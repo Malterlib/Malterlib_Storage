@@ -56,10 +56,10 @@ namespace
 		{
 			EStreamID_Void
 			, EStreamID_Vector
-			, EStreamID_fp32  // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
-			, EStreamID_fp64  // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
-			, EStreamID_int32 // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
-			, EStreamID_int64 // NOLINT(malterlib-type-naming): the check doesn't take a built-in type as the value of an enumerator
+			, EStreamID_fp32
+			, EStreamID_fp64
+			, EStreamID_int32
+			, EStreamID_int64
 		};
 
 		struct CTest0
