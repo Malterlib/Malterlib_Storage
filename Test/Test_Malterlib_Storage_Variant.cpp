@@ -192,11 +192,11 @@ namespace
 				NMib::NStr::CStr StrTestUTF8 = MixedStr;
 				NMib::NStr::CStr Empty;
 
-				NMib::NStr::CFStr256 FStrTest = "Testing\nonteuhneotuh\nTNOehunoetuh\nnotheuneth";
-				NMib::NStr::CFWStr256 FStrTest2 = FStrTest;
-				NMib::NStr::CFUStr256 FStrTest3 = FStrTest;
-				NMib::NStr::CFStr256 FStrTestUTF8 = MixedStr;
-				NMib::NStr::CFStr256 FEmpty;
+				NMib::NStr::CFStr256 FixedStrTest = "Testing\nonteuhneotuh\nTNOehunoetuh\nnotheuneth";
+				NMib::NStr::CFWStr256 FixedStrTest2 = FixedStrTest;
+				NMib::NStr::CFUStr256 FixedStrTest3 = FixedStrTest;
+				NMib::NStr::CFStr256 FixedStrTestUTF8 = MixedStr;
+				NMib::NStr::CFStr256 FixedEmpty;
 
 				NMib::NContainer::CRegistryPreserveWhitespace TestingReg;
 				TestingReg.f_SetValue("ntaoheunh/notehunoethu", "anoetuhoanehu");
