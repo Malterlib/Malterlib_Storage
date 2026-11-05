@@ -67,10 +67,11 @@ namespace NMib::NStorage
 	template <typename t_CType>
 	struct TCAutoClearPtrMemberDebug
 	{
-		DMibListLinkDS_List(CAutoClearPtr, m_Link) m_Linked;
 		~TCAutoClearPtrMemberDebug();
 
 		void f_Clear();
+
+		DMibListLinkDS_List(CAutoClearPtr, m_Link) m_Linked;
 	};
 
 	template <typename t_CType>
@@ -106,8 +107,9 @@ namespace NMib::NStorage
 		bool operator == (TCAutoClearPtr<tf_CType2> const &_pOther) const noexcept;
 
 	private:
-		t_CType *mp_pPointTo;
 		void fp_RemoveOld();
+
+		t_CType *mp_pPointTo;
 	};
 
 	template <typename t_CType>
@@ -143,8 +145,9 @@ namespace NMib::NStorage
 		bool operator == (TCAutoClearPtrDebug<tf_CType2> const &_pOther) const noexcept;
 
 	private:
-		t_CType *mp_pPointTo;
 		void fp_RemoveOld();
+
+		t_CType *mp_pPointTo;
 	};
 
 #define DMibAutoClearPtrDeclare mutable NMib::NStorage::CAutoClearPtrMember m_AutoClearPtrMember
@@ -188,9 +191,9 @@ namespace NMib::NStorage
 		bool operator == (TCDebugPointer<tf_CType2> const &_Other) const noexcept;
 
 	private:
-		t_CType *mp_pPointTo;
-
 		void fp_RemoveOld();
+
+		t_CType *mp_pPointTo;
 	};
 
 #else
@@ -430,14 +433,14 @@ namespace NMib::NStorage
 
 			using CInternalData = typename TCChooseSharedPointerTypeImp<t_CType, t_Options>::CType;
 
-			CInternalData *m_pPointTo;
-			DIfRefCountDebugging(mutable NStorage::CRefCountDebugReference m_DebugRef);
-
 			TCSharedPointerData();
 			TCSharedPointerData(t_CAllocator const &_Other);
 			TCSharedPointerData(t_CAllocator &&_Other);
 			template <typename tf_CParam0>
 			TCSharedPointerData(tf_CParam0 &&_Other);
+
+			CInternalData *m_pPointTo;
+			DIfRefCountDebugging(mutable NStorage::CRefCountDebugReference m_DebugRef);
 
 		private:
 			TCSharedPointerData(TCSharedPointerData const &_Other);
@@ -469,19 +472,20 @@ namespace NMib::NStorage
 	struct TCSharedPointer
 	{
 	private:
+		template <typename t_CType2, typename ...tp_COptions2>
+		friend struct TCSharedPointer;
+		template <typename t_CType2, typename ...tp_COptions2>
+		friend struct TCWeakPointer;
+
 		// Declared before the public section, which uses them.
 		using COptions = NPrivate::TCParseSharedPointerOptions<tp_COptions...>;
 		using CAllocator = typename COptions::CAllocator;
 
-	public:
-		TCSharedPointer<t_CType const, tp_COptions...> f_ShareAsConst() const;
-
+	public: // NOLINT(malterlib-member-order): The public declarations use CAllocator.
 		using CWeakPointer = TCWeakPointer<t_CType, CAllocator>;
 
 		TCSharedPointer();
 		~TCSharedPointer();
-
-		void f_ForceDelete();
 
 		TCSharedPointer(TCCopy<TCSharedPointer> const &_Other);
 		TCSharedPointer(TCSharedPointer const &_pOther);
@@ -525,6 +529,10 @@ namespace NMib::NStorage
 		TCSharedPointer(TCAttach<tf_CType> &&_Other, tf_CAllocator &&_Allocator);
 
 		TCSharedPointer(CNullPtr _pNull);
+
+		TCSharedPointer<t_CType const, tp_COptions...> f_ShareAsConst() const;
+
+		void f_ForceDelete();
 
 		t_CType *f_Detach();
 		bool f_Clear();
@@ -608,24 +616,18 @@ namespace NMib::NStorage
 		umint f_GetRefCount() const;
 
 	private:
-		template <typename t_CType2, typename ...tp_COptions2>
-		friend struct TCSharedPointer;
-		template <typename t_CType2, typename ...tp_COptions2>
-		friend struct TCWeakPointer;
-
-		static constexpr bool mcp_bSupportWeak = COptions::mc_bSupportWeak;
+		static constexpr bool mcp_bSupportWeak = COptions::mc_bSupportWeak; // NOLINT(malterlib-member-order): Declared before CData, which uses it.
 
 		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, mcp_bSupportWeak ? ESharedPointerOption_SupportWeakPointer : ESharedPointerOption_None>;
 		using CInternalData = typename CData::CInternalData;
 
-		CData mp_Data;
+		TCSharedPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo);
+		TCSharedPointer(CAllocator const &_Allocator);
 
 		CAllocator &fp_GetAllocator();
 		CAllocator const &fp_GetAllocator() const;
 
 		void fp_Set(CInternalData *_pPtr);
-
-		TCSharedPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo);
 
 		void fp_SetAttach(CInternalData *_pPtr);
 		void fp_SetInit(CInternalData *_pPtr);
@@ -636,7 +638,7 @@ namespace NMib::NStorage
 
 		bool fp_Delete();
 
-		TCSharedPointer(CAllocator const &_Allocator);
+		CData mp_Data;
 	};
 
 	template <typename tf_CType>
@@ -654,16 +656,19 @@ namespace NMib::NStorage
 	struct TCWeakPointer
 	{
 	private:
+		template <typename t_CType2, typename ...tp_COptions2>
+		friend struct TCSharedPointer;
+		template <typename t_CType2, typename ...tp_COptions2>
+		friend struct TCWeakPointer;
+
 		// Declared before the public section, which uses them.
 		using CAllocator = typename NPrivate::TCParseSharedPointerOptions<tp_COptions...>::CAllocator;
 		using CData = NPrivate::TCSharedPointerData<t_CType, CAllocator, ESharedPointerOption_SupportWeakPointer>;
 		using CInternalData = typename CData::CInternalData;
 
-	public:
+	public: // NOLINT(malterlib-member-order): The public declarations use CAllocator and CInternalData.
 		TCWeakPointer();
 		~TCWeakPointer();
-
-		TCWeakPointer<t_CType const, tp_COptions...> f_ShareAsConst() const;
 
 		TCWeakPointer(TCWeakPointer const &_pOther);
 		TCWeakPointer(TCWeakPointer &&_pOther);
@@ -692,12 +697,6 @@ namespace NMib::NStorage
 		template <typename tf_CParam0>
 		explicit TCWeakPointer(t_CType *_pPtr, tf_CParam0 &&_Param0);
 
-		CInternalData *f_UnsafeGetPointerValue() const;
-		t_CType *f_Unsafe_Detach();
-
-		template <typename tf_CStr>
-		void f_Format(tf_CStr &o_Str) const;
-
 		template <typename tf_CType>
 		TCWeakPointer(TCExplicit<tf_CType> &&_Other);
 		template <typename tf_CType, typename tf_CAllocator>
@@ -722,6 +721,14 @@ namespace NMib::NStorage
 		;
 
 		TCWeakPointer(CNullPtr _pNull);
+
+		TCWeakPointer<t_CType const, tp_COptions...> f_ShareAsConst() const;
+
+		CInternalData *f_UnsafeGetPointerValue() const;
+		t_CType *f_Unsafe_Detach();
+
+		template <typename tf_CStr>
+		void f_Format(tf_CStr &o_Str) const;
 
 		bool f_Clear();
 
@@ -771,19 +778,12 @@ namespace NMib::NStorage
 		inline_small explicit operator bool () const;
 
 	private:
-		template <typename t_CType2, typename ...tp_COptions2>
-		friend struct TCSharedPointer;
-		template <typename t_CType2, typename ...tp_COptions2>
-		friend struct TCWeakPointer;
-
-		CData mp_Data;
+		TCWeakPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo);
 
 		CAllocator &fp_GetAllocator();
 		CAllocator const &fp_GetAllocator() const;
 
 		void fp_Set(CInternalData *_pPtr);
-
-		TCWeakPointer(NPrivate::CShareAsConstTag _Tag, CAllocator const &_Allocator, CInternalData *_pPointTo);
 
 		void fp_SetInit(CInternalData *_pPtr);
 
@@ -794,6 +794,8 @@ namespace NMib::NStorage
 		bool fp_Delete();
 
 		t_CType *fp_GetContained() const;
+
+		CData mp_Data;
 	};
 }
 

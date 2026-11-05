@@ -26,30 +26,24 @@ namespace NMib::NStorage::NIndirection
 	template <typename t_CType, typename t_CAllocator = NMib::NMemory::CDefaultAllocator>
 	struct TCIndirection final
 	{
-	protected:
-		struct CData : public t_CAllocator
-		{
-			t_CType *m_pPointTo;
-		};
+		using CType = t_CType;
 
-		CData mp_Data;
+		TCIndirection();
+		~TCIndirection();
 
-		t_CAllocator &fp_GetAllocator();
+		template <typename ...tfp_CParams>
+		TCIndirection(tfp_CParams && ...p_Params)
+			requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams && ...>
+		;
 
-		template <typename tf_CDummy>
-		void fp_Delete();
-		void fp_Delete();
+		TCIndirection(TCIndirection const &_Other);
+		TCIndirection(TCIndirection &_Other);
+		TCIndirection(TCIndirection &&_Other);
 
-		template <typename tf_CDummy>
-		void fp_Create();
-		void fp_Create();
-
-	public:
 		mark_artificial mark_nodebug inline_always t_CType const &f_Get() const &;
 		mark_artificial mark_nodebug inline_always t_CType &f_Get() &;
 		mark_artificial mark_nodebug inline_always t_CType &&f_Get() &&;
 
-	public:
 		template <typename ...tfp_CParams>
 		mark_artificial inline_always auto operator () (tfp_CParams && ...p_Params);
 
@@ -82,20 +76,6 @@ namespace NMib::NStorage::NIndirection
 			requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 		;
 
-	public:
-		using CType = t_CType;
-
-		TCIndirection();
-		~TCIndirection();
-
-		template <typename ...tfp_CParams>
-		TCIndirection(tfp_CParams && ...p_Params)
-			requires NTraits::cIsPlacementNewConstructibleWith<t_CType, tfp_CParams && ...>
-		;
-
-		TCIndirection(TCIndirection const &_Other);
-		TCIndirection(TCIndirection &_Other);
-		TCIndirection(TCIndirection &&_Other);
 		template <typename tf_CParam0>
 		TCIndirection &operator = (tf_CParam0 &&_Param0);
 		TCIndirection &operator = (TCIndirection const &_Other);
@@ -121,6 +101,24 @@ namespace NMib::NStorage::NIndirection
 
 		template <typename tf_CType, typename tf_CAllocator>
 		auto operator == (TCIndirection<tf_CType, tf_CAllocator> const &_Right) const noexcept(noexcept(this->f_Get() == _Right.f_Get()));
+
+	protected:
+		struct CData : public t_CAllocator
+		{
+			t_CType *m_pPointTo;
+		};
+
+		t_CAllocator &fp_GetAllocator();
+
+		template <typename tf_CDummy>
+		void fp_Delete();
+		void fp_Delete();
+
+		template <typename tf_CDummy>
+		void fp_Create();
+		void fp_Create();
+
+		CData mp_Data;
 	};
 }
 
