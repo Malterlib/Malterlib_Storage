@@ -65,10 +65,12 @@ namespace NMib::NStorage
 	struct TCUniquePointer
 	{
 	private:
+		template <typename t_CType2, typename ...tp_COptions2> friend struct TCUniquePointer;
+
 		// Declared before the public section, which uses it.
 		using CParsedOptions = NPrivate::TCParseUniquePointerOptions<void, tp_COptions...>;
 
-	public:
+	public: // NOLINT(malterlib-member-order): The public declarations use CParsedOptions.
 		using CAllocator = typename CParsedOptions::CAllocator;
 		using CTag = typename CParsedOptions::CTag;
 
@@ -148,24 +150,24 @@ namespace NMib::NStorage
 		inline_small explicit operator bool () const;
 
 	private:
-		template <typename t_CType2, typename ...tp_COptions2> friend struct TCUniquePointer;
-
 		struct CData : public CAllocator
 		{
-			t_CType *m_pPointTo;
-
 			CData();
 			CData(CAllocator const &_Other);
 			CData(CAllocator &&_Other);
 			template <typename tf_CParam0>
 			CData(tf_CParam0 &&_Other);
 
+			t_CType *m_pPointTo;
+
 		private:
 			CData(CData const &_Other);
 			CData(CData &&_Other);
 		};
 
-		CData mp_Data;
+		// Disable copy construction
+
+		TCUniquePointer(TCUniquePointer const &_pOther) = delete;
 
 		CAllocator &fp_GetAllocator();
 		CAllocator const &fp_GetAllocator() const;
@@ -174,10 +176,9 @@ namespace NMib::NStorage
 		void fp_Delete();
 		void fp_Delete();
 
-		// Disable copy construction
-
-		TCUniquePointer(TCUniquePointer const &_pOther) = delete;
 		TCUniquePointer &operator = (TCUniquePointer const &_pOther) = delete;
+
+		CData mp_Data;
 	};
 }
 

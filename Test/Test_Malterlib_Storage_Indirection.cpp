@@ -15,32 +15,19 @@ namespace
 			struct CTestUndefined;
 			struct CTestDefined
 			{
-				int m_Data;
-				void operator () ()
-				{
-				}
+				void operator () ();
 
-				uint16 operator () () const
-				{
-					return 0;
-				}
+				uint16 operator () () const;
 
-				uint32 operator () () volatile
-				{
-					return 0;
-				}
+				uint32 operator () () volatile;
 
-				uint64 operator () () const volatile
-				{
-					return 0;
-				}
+				uint64 operator () () const volatile;
 
-				auto operator <=> (float _Value) const noexcept
-				{
-					return m_Data <=> _Value;
-				}
+				auto operator <=> (float _Value) const noexcept;
 
 				COrdering_Weak operator <=> (CTestUndefined const &_Other) const noexcept;
+
+				int m_Data;
 			};
 
 			CTestClass();
@@ -49,48 +36,87 @@ namespace
 			TCIndirection<CTestDefined> m_Defined;
 		};
 
+		void CTestClass::CTestDefined::operator () ()
+		{
+		}
+
+		uint16 CTestClass::CTestDefined::operator () () const
+		{
+			return 0;
+		}
+
+		uint32 CTestClass::CTestDefined::operator () () volatile
+		{
+			return 0;
+		}
+
+		uint64 CTestClass::CTestDefined::operator () () const volatile
+		{
+			return 0;
+		}
+
+		auto CTestClass::CTestDefined::operator <=> (float _Value) const noexcept
+		{
+			return m_Data <=> _Value;
+		}
+
 		struct CIndirection_Tests : public NTest::CTest
 		{
 			void f_DoDefinedTests(CTestClass &_Indirection);
-			void f_DoTests()
-			{
-				CTestClass Indirection;
-				f_DoDefinedTests(Indirection);
-			}
+			void f_DoTests();
 		};
+
+		void CIndirection_Tests::f_DoTests()
+		{
+			CTestClass Indirection;
+			f_DoDefinedTests(Indirection);
+		}
 
 		struct CTestClass::CTestUndefined
 		{
+			void operator () ();
+
+			uint16 operator () () const;
+
+			uint32 operator () () volatile;
+
+			uint64 operator () () const volatile;
+
+			auto operator <=> (float _Value) const noexcept;
+
+			auto operator <=> (CTestDefined const &_Other) noexcept;
+
 			int m_Data;
-			void operator () ()
-			{
-			}
-
-			uint16 operator () () const
-			{
-				return 0;
-			}
-
-			uint32 operator () () volatile
-			{
-				return 0;
-			}
-
-			uint64 operator () () const volatile
-			{
-				return 0;
-			}
-
-			auto operator <=> (float _Value) const noexcept
-			{
-				return m_Data <=> _Value;
-			}
-
-			auto operator <=> (CTestDefined const &_Other) noexcept
-			{
-				return m_Data <=> _Other.m_Data;
-			}
 		};
+
+		void CTestClass::CTestUndefined::operator () ()
+		{
+		}
+
+		uint16 CTestClass::CTestUndefined::operator () () const
+		{
+			return 0;
+		}
+
+		uint32 CTestClass::CTestUndefined::operator () () volatile
+		{
+			return 0;
+		}
+
+		uint64 CTestClass::CTestUndefined::operator () () const volatile
+		{
+			return 0;
+		}
+
+		auto CTestClass::CTestUndefined::operator <=> (float _Value) const noexcept
+		{
+			return m_Data <=> _Value;
+		}
+
+		auto CTestClass::CTestUndefined::operator <=> (CTestDefined const &_Other) noexcept
+		{
+			return m_Data <=> _Other.m_Data;
+		}
 
 		COrdering_Weak CTestClass::CTestDefined::operator <=> (CTestUndefined const &_Other) const noexcept
 		{

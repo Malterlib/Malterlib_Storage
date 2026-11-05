@@ -28,6 +28,20 @@ namespace NMib::NStorage
 
 		TCOptional(t_CType const &_Value);
 		TCOptional(t_CType &&_Value);
+
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> const &_Value);
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &_Value);
+		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
+		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &&_Value);
+
+		TCOptional() noexcept = default;
+		TCOptional(CNullPtr _pNull) noexcept;
+		TCOptional(TCOptional const &_Other) = default;
+		TCOptional(TCOptional &_Other) = default;
+		TCOptional(TCOptional &&_Other);
+
 		TCOptional &operator = (t_CType const &_Value)
 			requires requires ()
 			{
@@ -48,13 +62,6 @@ namespace NMib::NStorage
 				*((CVariant *)this) = fg_Forward<tf_CType>(_Value);
 			}
 		;
-
-		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
-		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> const &_Value);
-		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
-		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &_Value);
-		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
-		TCOptional(TCOptional<tf_CType, tf_MoveSemantics> &&_Value);
 
 		template <typename tf_CType, EOptionalMoveSemantics tf_MoveSemantics>
 		TCOptional &operator = (TCOptional<tf_CType, tf_MoveSemantics> const &_Value)
@@ -86,11 +93,6 @@ namespace NMib::NStorage
 			}
 		;
 
-		TCOptional() noexcept = default;
-		TCOptional(CNullPtr _pNull) noexcept;
-		TCOptional(TCOptional const &_Other) = default;
-		TCOptional(TCOptional &_Other) = default;
-		TCOptional(TCOptional &&_Other);
 		TCOptional &operator = (TCOptional const &_Other) = default;
 		TCOptional &operator = (TCOptional &_Other) = default;
 		TCOptional &operator = (TCOptional &&_Other);
@@ -133,15 +135,15 @@ namespace NMib::NStorage
 		template <typename t_CType>
 		struct TCIsOptional
 		{
-			static constexpr bool mc_bValue = false;
 			using CType = t_CType;
+			static constexpr bool mc_bValue = false;
 		};
 
 		template <typename t_CType, EOptionalMoveSemantics t_MoveSemantics>
 		struct TCIsOptional<TCOptional<t_CType, t_MoveSemantics>>
 		{
-			static constexpr bool mc_bValue = true;
 			using CType = t_CType;
+			static constexpr bool mc_bValue = true;
 		};
 	}
 
