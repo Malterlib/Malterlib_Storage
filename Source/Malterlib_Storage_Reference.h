@@ -26,18 +26,17 @@ namespace NMib::NStorage::NReference
 	template <typename t_CType>
 	struct TCReference
 	{
-	protected:
-		struct CData
-		{
-			t_CType *m_pPointTo;
-		};
+		using CType = t_CType;
 
-		CData mp_Data;
+		explicit TCReference(t_CType &_Param0);
+		TCReference(TCReference const &_Other);
+		TCReference(TCReference volatile &_Other);
+		TCReference(TCReference const volatile &_Other);
+		TCReference(TCReference &_Other);
+		TCReference(TCReference &&_Other);
 
-	public:
 		mark_artificial mark_nodebug inline_always t_CType &f_Get() const volatile;
 
-	public:
 		template <typename ...tfp_CParams>
 		mark_artificial inline_always NTraits::TCCallableReturnTypeFor<t_CType, void (tfp_CParams && ...p_Params)> operator () (tfp_CParams && ...p_Params) const volatile
 			requires (NTraits::cIsCallableWith<t_CType, void (tfp_CParams && ...p_Params)>)
@@ -58,6 +57,16 @@ namespace NMib::NStorage::NReference
 			requires (NTraits::cIsMemberObjectPointer<tf_CMemberPtr>)
 		;
 
+		mark_artificial mark_nodebug inline_always operator t_CType & () const volatile;
+
+	protected:
+		struct CData
+		{
+			t_CType *m_pPointTo;
+		};
+
+		CData mp_Data;
+
 	private:
 		TCReference();
 		TCReference &operator = (TCReference const &_Other);
@@ -65,17 +74,6 @@ namespace NMib::NStorage::NReference
 		TCReference &operator = (TCReference &_Other);
 		TCReference &operator = (TCReference const volatile &_Other);
 		TCReference &operator = (TCReference &&_Other);
-
-	public:
-		using CType = t_CType;
-
-		explicit TCReference(t_CType &_Param0);
-		TCReference(TCReference const &_Other);
-		TCReference(TCReference volatile &_Other);
-		TCReference(TCReference const volatile &_Other);
-		TCReference(TCReference &_Other);
-		TCReference(TCReference &&_Other);
-		mark_artificial mark_nodebug inline_always operator t_CType & () const volatile;
 	};
 
 	DMibTempImplementReferenceBinaryOperator(==);

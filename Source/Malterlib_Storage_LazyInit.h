@@ -45,10 +45,10 @@ namespace NMib::NStorage
 			, ELifetimeFlag_Destructed  = DMibBit(1)
 		};
 
+		using CData = t_CData;
+
 		template <typename ...tfp_CData>
 		void fp_Construct(tfp_CData && ...p_Params);
-
-		using CData = t_CData;
 
 		alignas(CData) uint8 mp_ObjectSpace[sizeof(CData)] = {};
 		t_CLock mp_Lock;

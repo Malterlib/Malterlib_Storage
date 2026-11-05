@@ -25,9 +25,7 @@ namespace NMib::NStorage
 		// Declared before the public section, which uses it.
 		using CData = t_CData;
 
-	public:
-		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
-
+	public: // NOLINT(malterlib-member-order): The public declarations use CData.
 		inline_always TCAggregateSimple() = default;
 		constexpr TCAggregateSimple(EAggregateInitialization _Init);
 
@@ -46,6 +44,8 @@ namespace NMib::NStorage
 		{
 			return *((t_CData *)m_ObjectSpace);
 		}*/
+
+		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
 	};
 
 	template <typename t_CData, aint t_Priority = 128, typename t_CLock = NThread::CLowLevelLockAggregate>
@@ -68,21 +68,11 @@ namespace NMib::NStorage
 		// Declared before the public section, which uses it.
 		using CData = t_CData;
 
-	public:
-		TCAggregate() = delete;
-		constexpr TCAggregate(EAggregateInitialization _Init);
-
+	public: // NOLINT(malterlib-member-order): The public declarations use CData.
 		using FAggregateDestruct = void (CAggregate *_pThis);
 
-		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
-		DMibListLinkDA_Link(TCAggregate, m_Link);
-		aint m_Priority;
-
-		FAggregateDestruct *m_fDestruct;
-
-		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
-
-		t_CLock m_Lock;
+		TCAggregate() = delete;
+		constexpr TCAggregate(EAggregateInitialization _Init);
 
 		static void fs_Destruct(CAggregate *_pThis);
 
@@ -127,6 +117,16 @@ namespace NMib::NStorage
 
 			return *((t_CData *)m_ObjectSpace);
 		}*/
+
+		NAtomic::TCAtomic<uint32> m_LifeTimeFlags;
+		DMibListLinkDA_Link(TCAggregate, m_Link);
+		aint m_Priority;
+
+		FAggregateDestruct *m_fDestruct;
+
+		alignas(CData) uint8 m_ObjectSpace[sizeof(CData)];
+
+		t_CLock m_Lock;
 	};
 }
 
